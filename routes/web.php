@@ -27,4 +27,6 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
     Route::resource('/complaint', ComplaintController::class);
+    Route::get('/complaints', [ComplaintController::class, 'complaints'])->name('complaints');
+    Route::get('/addComplaint', [ComplaintController::class, 'addComplaint'])->name('addComplaint');
 });

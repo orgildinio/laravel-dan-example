@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ComplaintStoreRequest;
+use App\Models\Category;
 use App\Models\Complaint;
 use App\Models\File;
+use App\Models\Organization;
 use Illuminate\Http\Request;
 
 class ComplaintController extends Controller
@@ -13,6 +16,20 @@ class ComplaintController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function complaints()
+    {
+        $complaints = Complaint::all();
+
+        return view('complaints.complaints', compact('complaints'));
+    }
+
+    public function addComplaint()
+    {
+        $categories = Category::all();
+        $orgs = Organization::all();
+        return view('complaints.create', compact('categories', 'orgs'));
+    }
+
     public function index()
     {
         $complaints = Complaint::all();
@@ -27,7 +44,9 @@ class ComplaintController extends Controller
      */
     public function create()
     {
-        return view('complaints.create');
+        $categories = Category::all();
+        $orgs = Organization::all();
+        return view('complaints.create', compact('categories', 'orgs'));
     }
 
     /**
@@ -36,15 +55,10 @@ class ComplaintController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ComplaintStoreRequest $request)
     {
         // dd($request);
         $input = $request->all();
-
-        $request->validate([
-            'firstname' => 'required',
-            'lastname' => 'required',
-        ]);
 
         if ($file = $request->file('file')) {
             $name = time() . $file->getClientOriginalName();
@@ -54,14 +68,12 @@ class ComplaintController extends Controller
 
             $input['file_id'] = $filename->id;
         }
-        $input['category_id'] = 1;
         $input['channel_id'] = 1;
-        $input['status_id'] = 1;
-        $input['organization_id'] = 1;
+        $input['status_id'] = 0;
 
         Complaint::create($input);
 
-        return redirect()->route('complaint.index')->with('success', 'Санал хүсэлт амжилттай бүртгэлээ.');
+        return redirect()->route('complaint.create')->with('success', 'Санал хүсэлт амжилттай бүртгэлээ.');
     }
 
     /**

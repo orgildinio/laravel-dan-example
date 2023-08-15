@@ -16,19 +16,19 @@
                         {{ __('Нүүр') }}
                     </x-nav-link>
                 </div>
-                {{-- <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
-                </div> --}}
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link href="{{ route('complaint.index') }}" :active="request()->routeIs('complaint.index')">
+                    <x-nav-link href="{{ route('complaints') }}" :active="request()->routeIs('complaints')">
                         {{ __('Санал хүсэлт') }}
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link href="{{ route('complaint.create') }}" :active="request()->routeIs('complaint.create')">
+                    <x-nav-link href="{{ route('addComplaint') }}" :active="request()->routeIs('addComplaint')">
                         {{ __('Санал хүсэлт илгээх') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
+                        {{ __('Хянах самбар') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -126,13 +126,18 @@
             </x-responsive-nav-link>
         </div>
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link href="{{ route('complaint.index') }}" :active="request()->routeIs('complaint.index')">
+            <x-responsive-nav-link href="{{ route('complaints') }}" :active="request()->routeIs('complaints')">
                 {{ __('Санал хүсэлт') }}
             </x-responsive-nav-link>
         </div>
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link href="{{ route('complaint.create') }}" :active="request()->routeIs('complaint.create')">
+            <x-responsive-nav-link href="{{ route('addComplaint') }}" :active="request()->routeIs('addComplaint')">
                 {{ __('Санал хүсэлт илгээх') }}
+            </x-responsive-nav-link>
+        </div>
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
+                {{ __('Хянах самбар') }}
             </x-responsive-nav-link>
         </div>
 

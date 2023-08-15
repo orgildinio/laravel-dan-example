@@ -1,15 +1,17 @@
-<x-admin-layout>
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Санал хүсэлт илгээх') }}
+        </h2>
+    </x-slot>
+
     <div class="py-8">
         <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-5 m-5">
-                <div>
-                    <h1 class="py-4 mb-2 mt-0 text-2xl font-medium leading-tight text-gray">Санал, хүсэлт
-                        шинээр бүртгэх</h1>
-                </div>
                 <form method="POST" action="{{ route('complaint.store') }}" enctype="multipart/form-data">
                     @csrf
                     @if ($message = Session::get('success'))
-                    <div class="bg-green-100 border-l-4 border-green-500 text-green-700 text-sm p-2 mb-4" role="alert">
+                    <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-2 mb-4" role="alert">
                         <p>{{ $message }}</p>
                     </div>
                     @endif
@@ -22,11 +24,8 @@
                         </div>
                         <div class="md:w-2/3">
                             <input
-                                class="bg-gray-200 appearance-none  rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight @if($errors->has('lastname')) border border-red-500 @else border-1 border-gray-200 @endif"
-                                type="text" name="lastname" value="{{old('lastname')}}">
-                            @error('lastname')
-                            <div class="text-red-500 text-sm">{{ $message }}</div>
-                            @enderror
+                                class="bg-gray-200 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
+                                id="inline-full-name" type="text" name="lastname" value="">
                         </div>
                     </div>
                     <div class="md:flex md:items-center mb-2">
@@ -38,11 +37,8 @@
                         </div>
                         <div class="md:w-2/3">
                             <input
-                                class="bg-gray-200 appearance-none rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight @if($errors->has('firstname')) border border-red-500 @else border-1 border-gray-200 @endif"
-                                type="text" name="firstname" value="{{old('firstname')}}">
-                            @error('firstname')
-                            <div class="text-red-500 text-sm mt-1 mb-1">{{ $message }}</div>
-                            @enderror
+                                class="bg-gray-200 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
+                                id="inline-full-name" type="text" name="firstname" value="">
                         </div>
                     </div>
                     <div class="md:flex md:items-center mb-2">
@@ -54,11 +50,8 @@
                         </div>
                         <div class="md:w-2/3">
                             <input
-                                class="bg-gray-200 appearance-none rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight @if($errors->has('registerNumber')) border border-red-500 @else border-1 border-gray-200 @endif"
-                                type="text" name="registerNumber" value="{{old('registerNumber')}}">
-                            @error('registerNumber')
-                            <div class="text-red-500 text-sm mt-1 mb-1">{{ $message }}</div>
-                            @enderror
+                                class="bg-gray-200 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
+                                id="inline-full-name" type="text" name="registerNumber" value="">
                         </div>
                     </div>
                     <div class="md:flex md:items-center mb-2">
@@ -70,11 +63,8 @@
                         </div>
                         <div class="md:w-2/3">
                             <input
-                                class="bg-gray-200 appearance-none rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight @if($errors->has('phone')) border border-red-500 @else border-1 border-gray-200 @endif"
-                                type="text" name="phone" value="{{old('phone')}}">
-                            @error('phone')
-                            <div class="text-red-500 text-sm mt-1 mb-1">{{ $message }}</div>
-                            @enderror
+                                class="bg-gray-200 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
+                                id="inline-full-name" type="text" name="phone" value="">
                         </div>
                     </div>
                     <div class="md:flex md:items-center mb-2">
@@ -86,11 +76,8 @@
                         </div>
                         <div class="md:w-2/3">
                             <input
-                                class="bg-gray-200 appearance-none rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight @if($errors->has('email')) border border-red-500 @else border-1 border-gray-200 @endif"
-                                type="email" name="email" value="{{old('email')}}">
-                            @error('email')
-                            <div class="text-red-500 text-sm mt-1 mb-1">{{ $message }}</div>
-                            @enderror
+                                class="bg-gray-200 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
+                                id="inline-full-name" type="email" name="email" value="">
                         </div>
                     </div>
                     <div class="md:flex md:items-center mb-2">
@@ -102,11 +89,8 @@
                         </div>
                         <div class="md:w-2/3">
                             <input
-                                class="bg-gray-200 appearance-none rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight @if($errors->has('country')) border border-red-500 @else border-1 border-gray-200 @endif"
-                                type="text" name="country" value="{{old('country')}}">
-                            @error('country')
-                            <div class="text-red-500 text-sm mt-1 mb-1">{{ $message }}</div>
-                            @enderror
+                                class="bg-gray-200 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
+                                id="inline-full-name" type="text" name="country" value="">
                         </div>
                     </div>
                     <div class="md:flex md:items-center mb-2">
@@ -118,11 +102,8 @@
                         </div>
                         <div class="md:w-2/3">
                             <input
-                                class="bg-gray-200 appearance-none rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight @if($errors->has('district')) border border-red-500 @else border-1 border-gray-200 @endif"
-                                type="text" name="district" value="{{old('district')}}">
-                            @error('district')
-                            <div class="text-red-500 text-sm mt-1 mb-1">{{ $message }}</div>
-                            @enderror
+                                class="bg-gray-200 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
+                                id="inline-full-name" type="text" name="district" value="">
                         </div>
                     </div>
                     <div class="md:flex md:items-center mb-2">
@@ -134,11 +115,8 @@
                         </div>
                         <div class="md:w-2/3">
                             <input
-                                class="bg-gray-200 appearance-none rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight @if($errors->has('khoroo')) border border-red-500 @else border-1 border-gray-200 @endif"
-                                type="text" name="khoroo" value="{{old('khoroo')}}">
-                            @error('khoroo')
-                            <div class="text-red-500 text-sm mt-1 mb-1">{{ $message }}</div>
-                            @enderror
+                                class="bg-gray-200 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
+                                id="inline-full-name" type="text" name="khoroo" value="">
                         </div>
                     </div>
                     <div class="md:flex md:items-center mb-2">
@@ -150,11 +128,8 @@
                         </div>
                         <div class="md:w-2/3">
                             <textarea
-                                class="bg-gray-200 appearance-none rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight @if($errors->has('addressDetail')) border border-red-500 @else border-1 border-gray-200 @endif"
-                                name="addressDetail" rows="3">{{old('addressDetail')}}</textarea>
-                            @error('addressDetail')
-                            <div class="text-red-500 text-sm mt-1 mb-1">{{ $message }}</div>
-                            @enderror
+                                class="bg-gray-200 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
+                                name="addressDetail" rows="3"></textarea>
                         </div>
                     </div>
                     <div class="md:flex md:items-center mb-2">
@@ -166,11 +141,8 @@
                         </div>
                         <div class="md:w-2/3">
                             <textarea
-                                class="bg-gray-200 appearance-none rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight @if($errors->has('complaint')) border border-red-500 @else border-1 border-gray-200 @endif"
-                                name="complaint" rows="3">{{old('complaint')}}</textarea>
-                            @error('complaint')
-                            <div class="text-red-500 text-sm mt-1 mb-1">{{ $message }}</div>
-                            @enderror
+                                class="bg-gray-200 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
+                                name="complaint" rows="3"></textarea>
                         </div>
                     </div>
                     <div class="md:flex md:items-center mb-2">
@@ -229,4 +201,4 @@
             </div>
         </div>
     </div>
-</x-admin-layout>
+</x-app-layout>
