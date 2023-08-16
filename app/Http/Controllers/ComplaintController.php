@@ -27,7 +27,7 @@ class ComplaintController extends Controller
     {
         $categories = Category::all();
         $orgs = Organization::all();
-        return view('complaints.create', compact('categories', 'orgs'));
+        return view('complaints.addComplaint', compact('categories', 'orgs'));
     }
 
     public function index()
