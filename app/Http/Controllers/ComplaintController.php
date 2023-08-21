@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ComplaintStoreRequest;
+use App\Http\Livewire\ComplaintStep;
+use App\Models\File;
 use App\Models\Category;
 use App\Models\Complaint;
-use App\Models\File;
 use App\Models\Organization;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\ComplaintStoreRequest;
+use App\Models\Channel;
+use App\Models\ComplaintStep as ModelsComplaintStep;
 
 class ComplaintController extends Controller
 {
@@ -46,7 +50,8 @@ class ComplaintController extends Controller
     {
         $categories = Category::all();
         $orgs = Organization::all();
-        return view('complaints.create', compact('categories', 'orgs'));
+        $channels = Channel::all();
+        return view('complaints.create', compact('categories', 'orgs', 'channels'));
     }
 
     /**
@@ -59,6 +64,7 @@ class ComplaintController extends Controller
     {
         // dd($request);
         $input = $request->all();
+        $user = Auth::user();
 
         if ($file = $request->file('file')) {
             $name = time() . $file->getClientOriginalName();
@@ -68,8 +74,9 @@ class ComplaintController extends Controller
 
             $input['file_id'] = $filename->id;
         }
-        $input['channel_id'] = 1;
+        if ($input['channel_id'] == null) $input['channel_id'] = 1;
         $input['status_id'] = 0;
+        $input['created_user_id'] = $user->id;
 
         Complaint::create($input);
 
@@ -85,7 +92,10 @@ class ComplaintController extends Controller
     public function show($id)
     {
         $complaint = Complaint::findOrFail($id);
-        return view('complaints.show', compact('complaint'));
+        $complaint_steps = ModelsComplaintStep::where('complaint_id', $id)->get();
+
+        // dd($complaint_steps);
+        return view('complaints.show', compact('complaint', 'complaint_steps'));
     }
 
     /**
@@ -97,7 +107,10 @@ class ComplaintController extends Controller
     public function edit($id)
     {
         $complaint = Complaint::findOrFail($id);
-        return view('complaints.edit', compact('complaint'));
+        $categories = Category::all();
+        $orgs = Organization::all();
+        $channels = Channel::all();
+        return view('complaints.edit', compact('complaint', 'categories', 'orgs', 'channels'));
     }
 
     /**
@@ -107,17 +120,29 @@ class ComplaintController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ComplaintStoreRequest $request, $id)
     {
         $complaint = Complaint::findOrFail($id);
+        $user = Auth::user();
+        $input = $request->all();
 
-        $request->validate([
-            'firstname' => 'required',
-            'lastname' => 'required',
-        ]);
+        if ($file = $request->file('file')) {
+            $name = time() . $file->getClientOriginalName();
 
-        $complaint->fill($request->post())->save();
-        return redirect()->route('complaints.index')->with('success', 'Амжилттай хадгаллаа.');
+            $file->move('files', $name);
+            $filename = File::create(['filename' => $name]);
+
+            $input['file_id'] = $filename->id;
+        }
+
+        $input['status_id'] = 0;
+        $input['updated_user_id'] = $user->id;
+
+        // dd($input);
+
+        $complaint->update($input);
+
+        return redirect()->route('complaint.index')->with('success', 'Амжилттай хадгаллаа.');
     }
 
     /**
@@ -132,6 +157,6 @@ class ComplaintController extends Controller
 
         $complaint->delete();
 
-        return redirect()->route('complaints.index')->with('success', 'Амжилттай устгалаа.');
+        return redirect()->route('complaint.index')->with('success', 'Амжилттай устгалаа.');
     }
 }

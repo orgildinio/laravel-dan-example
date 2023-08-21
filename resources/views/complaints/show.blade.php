@@ -4,6 +4,16 @@
             <div class="lg:flex items-center justify-center w-full mt-7">
                 <div tabindex="0" aria-label="card 1"
                     class="focus:outline-none lg:w-full lg:mr-7 lg:mb-0 mb-7 bg-white  p-6 shadow rounded">
+                    @if (session()->has('message'))
+                    <div class="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md my-3"
+                        role="alert">
+                        <div class="flex">
+                            <div>
+                                <p class="text-sm">{{ session('message') }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    @endif
                     <div class="flex items-center border-b border-gray-200  pb-6">
 
                         <div class="flex items-center justify-center h-16 w-16 bg-red-100 rounded-full">
@@ -16,16 +26,17 @@
 
                         <div class="flex items-start justify-between w-full">
                             <div class="pl-3 w-full">
-                                <p tabindex="0"
-                                    class="focus:outline-none text-xl font-medium leading-5 text-gray-800 ">
+                                <p tabindex="0" class="focus:outline-none text-xl font-medium leading-5 text-gray-800 ">
                                     {{$complaint->category->name}} - №{{$complaint->id}}</p>
-                                <p tabindex="0"
-                                    class="focus:outline-none text-sm leading-normal pt-2 text-gray-500">
+                                <p tabindex="0" class="focus:outline-none text-sm leading-normal pt-2 text-gray-500">
                                     {{$complaint->created_at}}</p>
+                                <p class="text-sm my-1"><span
+                                        class="bg-gray-300 p-1 rounded">{{$complaint->organization->name}} хүлээн
+                                        авсан.</span></p>
                             </div>
                             <div role="img" aria-label="bookmark">
-                                <svg class="focus:outline-none text-gray-800" width="28" height="28"
-                                    viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg class="focus:outline-none text-gray-800" width="28" height="28" viewBox="0 0 28 28"
+                                    fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path
                                         d="M10.5001 4.66667H17.5001C18.1189 4.66667 18.7124 4.9125 19.15 5.35009C19.5876 5.78767 19.8334 6.38117 19.8334 7V23.3333L14.0001 19.8333L8.16675 23.3333V7C8.16675 6.38117 8.41258 5.78767 8.85017 5.35009C9.28775 4.9125 9.88124 4.66667 10.5001 4.66667Z"
                                         stroke="currentColor" stroke-width="1.25" stroke-linecap="round"
@@ -35,15 +46,42 @@
                         </div>
                     </div>
                     <div class="px-2">
-                        <h6 class="text-sm font-bold text-gray pt-4">Гомдол мэдүүлсэн: {{mb_substr($complaint->lastname, 0, 1)}}.{{$complaint->firstname}}</h6>
-                        <p tabindex="0" class="focus:outline-none text-sm leading-5 py-4 text-gray-600 text-justify">{{$complaint->complaint}}</p>
+                        <h6 class="text-sm font-bold text-gray pt-4">Гомдол мэдүүлсэн: {{mb_substr($complaint->lastname,
+                            0, 1)}}.{{$complaint->firstname}}</h6>
+                        <p tabindex="0" class="focus:outline-none text-sm leading-5 py-4 text-gray-600 text-justify">
+                            {{$complaint->complaint}}</p>
                         <div tabindex="0" class="focus:outline-none flex">
-                            <div class="py-2 px-4 text-xs leading-3 text-orange-700 rounded-full bg-orange-100">
-                                {{$complaint->status ? $complaint->status->name : 'Хүлээж авсан'}}</div>
+                            <div>
+                                <livewire:complaint-step :complaint="$complaint" />
+                            </div>
                         </div>
+
+                    </div>
+
+                    <div class="flex items-center border-t border-gray-200  p-6 m-6">
+
+                        <ol
+                            class="relative text-gray-500 border-l border-gray-200">
+                            @foreach($complaint_steps as $step)
+                            <li class="mb-10 ml-6">
+                                <span
+                                    class="absolute flex items-center justify-center w-8 h-8 bg-green-200 rounded-full -left-4 ring-4 ring-white">
+                                    <svg class="w-3.5 h-3.5 text-green-500" aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5" />
+                                    </svg>
+                                </span>
+                                <h3 class="font-medium leading-tight">{{$step->org?->name}} руу шилжүүлсэн</h3>
+                                <p class="text-sm">{{$step->desc}}</p>
+                                <p class="text-sm">{{$step->sent_date}}</p>
+                            </li>
+                            @endforeach
+                        </ol>
+
                     </div>
                 </div>
             </div>
         </div>
-     </div>
+
 </x-admin-layout>

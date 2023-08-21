@@ -14,6 +14,9 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    
+    <!-- Styles -->
+    @livewireStyles
 </head>
 
 <body>
@@ -36,6 +39,9 @@
     </div>
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <script src="https://demo.themesberg.com/windster/app.bundle.js"></script>
+    @livewireScripts
+    <!-- Include Livewire Modal Scripts -->
+    {{-- @livewire('livewire-ui/modal') --}}
 </body>
 
 </html>
