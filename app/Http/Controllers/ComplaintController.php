@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ComplaintStoreRequest;
 use App\Models\Channel;
 use App\Models\ComplaintStep as ModelsComplaintStep;
+use Illuminate\Support\Facades\Redis;
 
 class ComplaintController extends Controller
 {
@@ -60,9 +61,11 @@ class ComplaintController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ComplaintStoreRequest $request)
+    public function store(Request $request)
     {
+        // $audio = $request->file('audio');
         // dd($request);
+        // dd($request->file('audio_file'));
         $input = $request->all();
         $user = Auth::user();
 
@@ -74,13 +77,31 @@ class ComplaintController extends Controller
 
             $input['file_id'] = $filename->id;
         }
-        if ($input['channel_id'] == null) $input['channel_id'] = 1;
+        if ($file = $request->file('audio_file')) {
+            $name = time() . $file->getClientOriginalName();
+
+            $file->move('files', $name);
+            $filename = File::create(['filename' => $name]);
+
+            $input['file_id'] = $filename->id;
+        }
+
+        // if ($input['channel_id'] == null) $input['channel_id'] = 1;
+        $input['channel_id'] = 1;
         $input['status_id'] = 0;
         $input['created_user_id'] = $user->id;
 
         Complaint::create($input);
 
         return redirect()->route('complaint.create')->with('success', 'Санал хүсэлт амжилттай бүртгэлээ.');
+    }
+    public function upload(Request $request)
+    {
+        dd($request);
+        $audio = $request->file('audio');
+        $path = $audio->store('uploads');
+
+        return response()->json(['message' => 'Audio uploaded successfully', 'path' => $path]);
     }
 
     /**
