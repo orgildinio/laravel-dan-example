@@ -8,21 +8,7 @@
     <div class="py-8">
         <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-5 m-5">
-                {{-- <div class="container mx-auto mt-5 text-center">
-                    <h1>Record Audio</h1>
-                    <div>
-                        <button id="startRecording" class="bg-blue-500 p-5 rounded text-white ml-5">Start Recording</button>
-                        <button id="stopRecording" class="bg-red-500 p-5 rounded text-white" disabled>Stop Recording</button>
-                    </div>
-                    <div>
-                        <audio controls id="recordedAudio" style="display: none;"></audio>
-                    </div>
-                    <form action="{{ route('complaint.store') }}" method="POST">
-                        @csrf
-                        <input type="hidden" name="audio_data" id="audioData">
-                        <button type="submit" class="bg-black p-5 rounded m-5 text-white">Save Audio</button>
-                    </form>
-                </div> --}}
+                
                 <form id="submitForm" method="POST" action="{{ route('complaint.store') }}" enctype="multipart/form-data">
                     @csrf
                     @if ($message = Session::get('success'))
@@ -147,17 +133,20 @@
                                 name="addressDetail" rows="3"></textarea>
                         </div>
                     </div>
+                    <hr />
+                    <br>
                     <div class="md:flex md:items-center mb-2">
                         <div class="md:w-1/3">
-                            <label class="block text-gray-500 text-sm font-bold md:text-right mb-1 md:mb-0 pr-4"
-                                for="inline-full-name">
-                                Санал, хүсэлт
-                            </label>
                         </div>
-                        <div class="md:w-2/3">
-                            <textarea
-                                class="bg-gray-200 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
-                                name="complaint" rows="3"></textarea>
+                        <div class="md:w-2/3 flex">
+                            <div class="flex items-center px-8 border border-gray-200 rounded grow mr-5">
+                                <input checked id="bordered-radio-1" type="radio" value="1" name="energy_type_id" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2 ">
+                                <label for="bordered-radio-1" class="w-full py-4 ml-2 text-sm font-medium text-gray-900">Цахилгаан</label>
+                            </div>
+                            <div class="flex items-center px-8 border border-gray-200 rounded grow">
+                                <input id="bordered-radio-2" type="radio" value="2" name="energy_type_id" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500  focus:ring-2">
+                                <label for="bordered-radio-2" class="w-full py-4 ml-2 text-sm font-medium text-gray-900">Дулаан</label>
+                            </div>
                         </div>
                     </div>
                     <div class="md:flex md:items-center mb-2">
@@ -172,6 +161,22 @@
                                 class="bg-gray-200 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500">
                                 @foreach ($categories as $category)
                                 <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="md:flex md:items-center mb-2">
+                        <div class="md:w-1/3">
+                            <label class="block text-gray-500 text-sm font-bold md:text-right mb-1 md:mb-0 pr-4"
+                                for="inline-full-name">
+                                Гомдлын төрөл
+                            </label>
+                        </div>
+                        <div class="md:w-2/3">
+                            <select name="complaint_type_id"
+                                class="bg-gray-200 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500">
+                                @foreach ($complaint_types as $type)
+                                <option value="{{ $type->id }}">{{ $type->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -196,6 +201,20 @@
                         <div class="md:w-1/3">
                             <label class="block text-gray-500 text-sm font-bold md:text-right mb-1 md:mb-0 pr-4"
                                 for="inline-full-name">
+                                Санал, хүсэлт
+                            </label>
+                        </div>
+                        <div class="md:w-2/3">
+                            <textarea
+                                class="bg-gray-200 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
+                                name="complaint" rows="3"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="md:flex md:items-center mb-2">
+                        <div class="md:w-1/3">
+                            <label class="block text-gray-500 text-sm font-bold md:text-right mb-1 md:mb-0 pr-4"
+                                for="inline-full-name">
                                 Файл хавсаргах
                             </label>
                         </div>
@@ -214,20 +233,27 @@
                             </label>
                         </div>
                         <div class="md:w-2/3">
-                            <button id="micBtn" class="font-bold bg-gray-50 p-4 rounded-full mb-5 shadow-md">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                    stroke="currentColor" class="w-8 h-8">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z" />
-                                </svg>
-                            </button>
-                            <ul id="playlist">
-                                <li>
-                                    <audio id="audio" name="audio" controls></audio>
-                                </li>
-                            </ul>
-                            <input type="hidden" id="audio_input" />
-                            <input type="file" id="audio_file_upload" name="audio_file" />
+                            <div class="flex justify-center items-center">
+                                <div class="m-5">
+                                    <button id="micBtn" class="font-bold bg-gray-50 p-4 rounded-full shadow-md">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                            stroke="currentColor" class="w-8 h-8">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z" />
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="m-5">
+                                    <ul id="playlist">
+                                        <li>
+                                            <audio id="audio" name="audio" controls></audio>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="audio_record">
+                                <input type="file" id="audio_file_upload" name="audio_file" />
+                            </div>
                         </div>
                     </div>
 
@@ -248,7 +274,7 @@
         const button = document.getElementById("micBtn");
         const submitButton = document.getElementById("sbmBtn");
         const audioFile = document.getElementById('audio');
-        const audioInputFile = document.getElementById('audio_input');
+        // const audioInputFile = document.getElementById('audio_input');
         const audio_file_upload = document.getElementById('audio_file_upload');
 
         // const form = document.getElementById("submitForm");
@@ -269,7 +295,7 @@
             .start()
             .then(() => {
                 console.log("record start...");
-                button.classList.add("bg-red-600", "animate-pulse", "text-white");
+                button.classList.add("bg-red-600", "animation-pulse", "text-white");
                 button.removeEventListener("click", startRecording);
                 button.addEventListener("click", stopRecording);
             })
@@ -283,13 +309,13 @@
 
             recorder.stop().getMp3().then(([buffer, blob]) => {
                 // console.log(buffer);
-                const file = new File(buffer, 'music.mp3', {
+                const file = new File(buffer, 'record.mp3', {
                     type: blob.type,
                     lastModified: Date.now()
                 });
                 console.log(URL.createObjectURL(blob));
                 // audioInputFile.type = "file";
-                audioInputFile.value = file;
+                // audioInputFile.value = file;
 
                 const dataTransfer = new DataTransfer();
                 dataTransfer.items.add(file);
@@ -302,7 +328,7 @@
                 li.appendChild(player);
                 playlist.replaceChild(li, playlist.firstElementChild);
 
-                button.classList.remove("bg-red-600", "animate-pulse", "text-white");
+                button.classList.remove("bg-red-600", "animation-pulse", "text-white");
                 button.removeEventListener('click', stopRecording);
                 button.addEventListener('click', startRecording);
 
@@ -312,71 +338,5 @@
         }
 
     </script>
-
-{{-- <script>
-    const startRecordingButton = document.getElementById('startRecording');
-    const stopRecordingButton = document.getElementById('stopRecording');
-    const recordedAudioElement = document.getElementById('recordedAudio');
-    const audioDataInput = document.getElementById('audioData');
-    
-    let mediaRecorder;
-    let audioChunks = [];
-
-    startRecordingButton.addEventListener('click', () => {
-        navigator.mediaDevices.getUserMedia({ audio: true })
-            .then((stream) => {
-                mediaRecorder = new MediaRecorder(stream);
-                mediaRecorder.ondataavailable = (event) => {
-                    if (event.data.size > 0) {
-                        audioChunks.push(event.data);
-                    }
-                };
-
-                mediaRecorder.onstop = () => {
-                    const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
-                    const audioUrl = URL.createObjectURL(audioBlob);
-
-                    recordedAudioElement.src = audioUrl;
-                    recordedAudioElement.style.display = 'block';
-                    audioDataInput.value = audioBlob;
-
-                    startRecordingButton.disabled = true;
-                    stopRecordingButton.disabled = true;
-                };
-
-                startRecordingButton.disabled = true;
-                stopRecordingButton.disabled = false;
-
-                mediaRecorder.start();
-            })
-            .catch((error) => {
-                console.error('Error accessing microphone:', error);
-            });
-    });
-
-    stopRecordingButton.addEventListener('click', () => {
-        if (mediaRecorder.state === 'recording') {
-            mediaRecorder.stop();
-        }
-    });
-
-    
-
-    // fetch('/complaint', {
-    //     method: 'POST',
-    //     body: formData,
-    // })
-    // .then(response => response.json())
-    // .then(data => {
-    //     console.log('Audio uploaded:', data);
-    // })
-    // .catch(error => {
-    //     console.error('Error uploading audio:', error);
-    // });
-
-
-</script> --}}
-
-
     @endpush
 </x-app-layout>

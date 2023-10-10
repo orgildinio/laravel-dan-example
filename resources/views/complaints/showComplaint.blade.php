@@ -1,5 +1,5 @@
-<x-admin-layout>
-    <div class="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8  2xl:col-span-1">
+<x-app-layout>
+    <div class="shadow rounded-lg p-4 sm:p-6 xl:p-8  2xl:col-span-1">
         <div class="flex items-center justify-between mb-4">
             <div class="lg:flex items-center justify-center w-full mt-7">
                 <div tabindex="0" aria-label="card 1"
@@ -35,47 +35,60 @@
                                         авсан.</span></p>
                             </div>
                             <div role="img" aria-label="bookmark">
-                                <div>
-                                    <livewire:complaint-step :complaint="$complaint" />
-                                </div>
+                                <svg class="focus:outline-none text-gray-800" width="28" height="28" viewBox="0 0 28 28"
+                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M10.5001 4.66667H17.5001C18.1189 4.66667 18.7124 4.9125 19.15 5.35009C19.5876 5.78767 19.8334 6.38117 19.8334 7V23.3333L14.0001 19.8333L8.16675 23.3333V7C8.16675 6.38117 8.41258 5.78767 8.85017 5.35009C9.28775 4.9125 9.88124 4.66667 10.5001 4.66667Z"
+                                        stroke="currentColor" stroke-width="1.25" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </svg>
                             </div>
                         </div>
                     </div>
                     <div class="px-2">
                         <h6 class="text-sm font-bold text-gray pt-4">Гомдол мэдүүлсэн: {{mb_substr($complaint->lastname,
                             0, 1)}}.{{$complaint->firstname}}</h6>
-                        <p tabindex="0" class="focus:outline-none text-sm leading-5 py-4 text-gray-600 text-justify">
+                        <p tabindex="0"
+                            class="focus:outline-none text-sm leading-5 py-4 text-gray-600 text-justify border-b-2 border-gray-100 mb-5">
                             {{$complaint->complaint}}</p>
-                            <div class="flex justify-start items-center">
 
-                                @if ($complaint->file_id != null)
-                                <div>
-                                    <a href="/files/{{$complaint->file?->filename}}" target="_blank">
-                                        <div
-                                            class="group text-sm border-transparent border-2 bg-green-50 hover:bg-white hover:border-indigo-600">
-                                            <div class="mx-16 my-10">
-                                                <i class="fa-solid fa-file-lines fa-3x group-hover:hidden"></i>
-                                                <i class="fa-solid fa-download fa-3x hidden group-hover:block"></i>
-                                            </div>
+
+                        <div class="flex justify-start items-center">
+
+                            @if ($complaint->file_id != null)
+                            <div>
+                                <a href="/files/{{$complaint->file?->filename}}" target="_blank">
+                                    <div
+                                        class="group text-sm border-transparent border-2 bg-green-50 hover:bg-white hover:border-indigo-600">
+                                        <div class="mx-16 my-10">
+                                            <i class="fa-solid fa-file-lines fa-3x group-hover:hidden"></i>
+                                            <i class="fa-solid fa-download fa-3x hidden group-hover:block"></i>
                                         </div>
-                                    </a>
-                                    <div>
-                                        <p>{{mb_substr($complaint->file?->filename, 0, 10)}}...
-                                            .{{pathinfo($complaint->file?->filename, PATHINFO_EXTENSION)}}</p>
                                     </div>
+                                </a>
+                                <div>
+                                    <p>{{mb_substr($complaint->file?->filename, 0, 10)}}...
+                                        .{{pathinfo($complaint->file?->filename, PATHINFO_EXTENSION)}}</p>
                                 </div>
-                                @endif
-    
-                                @if ($complaint->audio_file_id != null)
-                                <div class="text-sm ml-10">
-                                    <audio controls>
-                                        <source src="/files/{{$complaint->audioFile?->filename}}" type="audio/mpeg">
-                                        Your browser does not support the audio tag.
-                                    </audio>
-                                    <p>Бичлэг</p>
-                                </div>
-                                @endif
                             </div>
+                            @endif
+
+                            @if ($complaint->audio_file_id != null)
+                            <div class="text-sm ml-10">
+                                <audio controls>
+                                    <source src="/files/{{$complaint->audioFile?->filename}}" type="audio/mpeg">
+                                    Your browser does not support the audio tag.
+                                </audio>
+                                <p>Бичлэг</p>
+                            </div>
+                            @endif
+                        </div>
+                        {{-- <div tabindex="0" class="focus:outline-none flex">
+                            <div>
+                                <livewire:complaint-step :complaint="$complaint" />
+                            </div>
+                        </div> --}}
+
                     </div>
 
                     <div class="flex items-center border-t border-gray-200  p-6 m-6">
@@ -88,7 +101,8 @@
                                         <i class="fa-regular fa-user"></i>
                                     </div>
                                     <div class="ml-3">
-                                        <p class="text-sm text-black bg-gray-300 p-1 rounded">{{$step->org?->name}} руу шилжүүлсэн</p>
+                                        <p class="text-sm text-black bg-gray-300 p-1 rounded">{{$step->org?->name}} руу
+                                            шилжүүлсэн</p>
                                         <p class="text-sm">{{$step->sent_date}}</p>
                                         <p class="text-sm mt-5">{{$step->desc}}</p>
                                     </div>
@@ -102,4 +116,4 @@
             </div>
         </div>
 
-</x-admin-layout>
+</x-app-layout>

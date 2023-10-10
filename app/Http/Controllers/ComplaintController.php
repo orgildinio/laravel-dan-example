@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ComplaintStoreRequest;
 use App\Models\Channel;
 use App\Models\ComplaintStep as ModelsComplaintStep;
+use App\Models\ComplaintType;
+use App\Models\EnergyType;
 use Illuminate\Support\Facades\Redis;
 
 class ComplaintController extends Controller
@@ -32,7 +34,19 @@ class ComplaintController extends Controller
     {
         $categories = Category::all();
         $orgs = Organization::all();
-        return view('complaints.addComplaint', compact('categories', 'orgs'));
+        $complaint_types = ComplaintType::all();
+        $energy_types = EnergyType::all();
+
+        return view('complaints.addComplaint', compact('categories', 'orgs', 'complaint_types', 'energy_types'));
+    }
+
+    public function showComplaint($id)
+    {
+        $complaint = Complaint::findOrFail($id);
+        $complaint_steps = ModelsComplaintStep::where('complaint_id', $id)->get();
+
+        // dd($complaint_steps);
+        return view('complaints.showComplaint', compact('complaint', 'complaint_steps'));
     }
 
     public function index()
@@ -63,9 +77,6 @@ class ComplaintController extends Controller
      */
     public function store(Request $request)
     {
-        // $audio = $request->file('audio');
-        // dd($request);
-        // dd($request->file('audio_file'));
         $input = $request->all();
         $user = Auth::user();
 
@@ -77,13 +88,13 @@ class ComplaintController extends Controller
 
             $input['file_id'] = $filename->id;
         }
-        if ($file = $request->file('audio_file')) {
-            $name = time() . $file->getClientOriginalName();
+        if ($audio_file = $request->file('audio_file')) {
+            $name = time() . $audio_file->getClientOriginalName();
 
-            $file->move('files', $name);
+            $audio_file->move('files', $name);
             $filename = File::create(['filename' => $name]);
 
-            $input['file_id'] = $filename->id;
+            $input['audio_file_id'] = $filename->id;
         }
 
         // if ($input['channel_id'] == null) $input['channel_id'] = 1;
@@ -94,14 +105,6 @@ class ComplaintController extends Controller
         Complaint::create($input);
 
         return redirect()->route('complaint.create')->with('success', 'Санал хүсэлт амжилттай бүртгэлээ.');
-    }
-    public function upload(Request $request)
-    {
-        dd($request);
-        $audio = $request->file('audio');
-        $path = $audio->store('uploads');
-
-        return response()->json(['message' => 'Audio uploaded successfully', 'path' => $path]);
     }
 
     /**

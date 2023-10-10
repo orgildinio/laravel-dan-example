@@ -11,8 +11,8 @@
                 @foreach ($complaints as $complaint)
                 <div class="lg:flex items-center justify-center w-full mt-7">
                     <div tabindex="0" aria-label="card 1"
-                        class="focus:outline-none lg:w-full lg:mr-7 lg:mb-0 mb-7 bg-white  p-6 shadow rounded">
-                        <div class="flex items-center border-b border-gray-200  pb-6">
+                        class="focus:outline-none lg:w-full lg:mr-7 lg:mb-0 mb-7 bg-white p-6 shadow rounded">
+                        <div class="flex items-center border-b border-gray-200 pb-6">
 
                             <livewire:channel-icon :category="$complaint->category->name"
                                 :channel="$complaint->channel->name" />
@@ -38,11 +38,11 @@
                             </div>
                         </div>
                         <div class="px-2">
-                            <h6 class="text-sm font-bold text-gray pt-4">Гомдол мэдүүлсэн:
-                                {{mb_substr($complaint->lastname, 0, 1)}}.{{$complaint->firstname}}</h6>
-                            <p tabindex="0"
-                                class="focus:outline-none text-sm leading-5 py-4 text-gray-600 text-justify">
-                                {{$complaint->complaint}}</p>
+                            <a href="{{route('showComplaint', $complaint->id)}}" class="text-gray-600 hover:text-blue-600">
+                                <p tabindex="0"
+                                    class="focus:outline-none text-sm leading-5 py-4 text-justify">
+                                    {{$complaint->complaint}}</p>
+                            </a>
                             <div tabindex="0" class="focus:outline-none flex">
                                 <div class="py-2 px-4 text-xs leading-3 text-orange-700 rounded-full bg-orange-100">
                                     {{$complaint->status ? $complaint->status->name : 'Хүлээж авсан'}}</div>
