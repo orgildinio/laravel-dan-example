@@ -6,7 +6,7 @@
             </div>
             
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg mt-5">
-                <div class="bg-gradient-to-r from-rose-100 to-teal-100 py-24 sm:py-32">
+                <div class="bg-white py-24 sm:py-32">
                     <div class="mx-auto max-w-7xl px-6 lg:px-8">
                       <dl class="grid grid-cols-1 gap-x-8 gap-y-16 text-center lg:grid-cols-3">
                         <div class="mx-auto flex max-w-xs flex-col gap-y-4">

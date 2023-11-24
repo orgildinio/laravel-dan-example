@@ -3,6 +3,7 @@
 use App\Http\Controllers\ComplaintController;
 use App\Http\Controllers\UserController;
 use App\Http\Livewire\ComplaintStep;
+use App\Models\Complaint;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,6 +33,7 @@ Route::middleware([
     Route::resource('/user', UserController::class);
     Route::get('complaintSteps', ComplaintStep::class);
     Route::get('/addComplaint', [ComplaintController::class, 'addComplaint'])->name('addComplaint');
+    Route::get('/complaintStatus/{id}', [ComplaintController::class, 'complaintStatus'])->name('complaintStatus');
     // Route::post('/upload', [ComplaintController::class, 'upload'])->name('upload');
 });
 Route::get('/complaints', [ComplaintController::class, 'complaints'])->name('complaints');

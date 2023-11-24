@@ -25,7 +25,7 @@
                         </div>
 
                         <div class="flex items-start justify-between w-full">
-                            <div class="pl-3 w-full">
+                            <div class="pl-3">
                                 <p tabindex="0" class="focus:outline-none text-xl font-medium leading-5 text-gray-800 ">
                                     {{$complaint->category->name}} - №{{$complaint->id}}</p>
                                 <p tabindex="0" class="focus:outline-none text-sm leading-normal pt-2 text-gray-500">
@@ -46,36 +46,40 @@
                             0, 1)}}.{{$complaint->firstname}}</h6>
                         <p tabindex="0" class="focus:outline-none text-sm leading-5 py-4 text-gray-600 text-justify">
                             {{$complaint->complaint}}</p>
-                            <div class="flex justify-start items-center">
+                        
+                    </div>
 
-                                @if ($complaint->file_id != null)
-                                <div>
-                                    <a href="/files/{{$complaint->file?->filename}}" target="_blank">
-                                        <div
-                                            class="group text-sm border-transparent border-2 bg-green-50 hover:bg-white hover:border-indigo-600">
-                                            <div class="mx-16 my-10">
-                                                <i class="fa-solid fa-file-lines fa-3x group-hover:hidden"></i>
-                                                <i class="fa-solid fa-download fa-3x hidden group-hover:block"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <div>
-                                        <p>{{mb_substr($complaint->file?->filename, 0, 10)}}...
-                                            .{{pathinfo($complaint->file?->filename, PATHINFO_EXTENSION)}}</p>
+                    <div>
+                        @if ($complaint->audio_file_id != null)
+                        <div class="text-sm px-2">
+                            <p>Бичлэг</p>
+                            <audio controls class="w-full">
+                                <source src="/files/{{$complaint->audioFile?->filename}}" type="audio/mpeg">
+                                Your browser does not support the audio tag.
+                            </audio>
+                        </div>
+                        @endif
+
+                        @if ($complaint->file_id != null)
+                        <div class="py-5 px-2">
+                            <p>Файл</p>
+                            <a href="/files/{{$complaint->file?->filename}}" target="_blank">
+                                <div
+                                    class="group text-sm border-transparent border-2 bg-green-50 hover:bg-white hover:border-indigo-600 w-40">
+                                    <div class="mx-16 my-10">
+                                        <i class="fa-solid fa-file-lines fa-3x group-hover:hidden"></i>
+                                        <i class="fa-solid fa-download fa-3x hidden group-hover:block"></i>
                                     </div>
                                 </div>
-                                @endif
-    
-                                @if ($complaint->audio_file_id != null)
-                                <div class="text-sm ml-10">
-                                    <audio controls>
-                                        <source src="/files/{{$complaint->audioFile?->filename}}" type="audio/mpeg">
-                                        Your browser does not support the audio tag.
-                                    </audio>
-                                    <p>Бичлэг</p>
-                                </div>
-                                @endif
+                            </a>
+                            <div>
+                                <p>{{mb_substr($complaint->file?->filename, 0, 10)}}...
+                                    .{{pathinfo($complaint->file?->filename, PATHINFO_EXTENSION)}}</p>
                             </div>
+                        </div>
+                        @endif
+
+                        
                     </div>
 
                     <div class="flex items-center border-t border-gray-200  p-6 m-6">

@@ -233,7 +233,7 @@
                             </label>
                         </div>
                         <div class="md:w-2/3">
-                            <div class="flex justify-center items-center">
+                            <div class="flex justify-start items-center">
                                 <div class="m-5">
                                     <button id="micBtn" class="font-bold bg-gray-50 p-4 rounded-full shadow-md">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"

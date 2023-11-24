@@ -56,6 +56,13 @@ class ComplaintController extends Controller
         return view('complaints.index', compact('complaints'));
     }
 
+    public function complaintStatus($status_id)
+    {
+        $complaints = Complaint::where('status_id', $status_id)->orderby('created_at', 'desc')->get();
+
+        return view('complaints.indexDetail', compact('complaints'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -66,7 +73,10 @@ class ComplaintController extends Controller
         $categories = Category::all();
         $orgs = Organization::all();
         $channels = Channel::all();
-        return view('complaints.create', compact('categories', 'orgs', 'channels'));
+        $complaint_types = ComplaintType::all();
+        $energy_types = EnergyType::all();
+
+        return view('complaints.create', compact('categories', 'orgs', 'channels', 'complaint_types', 'energy_types'));
     }
 
     /**
@@ -134,7 +144,10 @@ class ComplaintController extends Controller
         $categories = Category::all();
         $orgs = Organization::all();
         $channels = Channel::all();
-        return view('complaints.edit', compact('complaint', 'categories', 'orgs', 'channels'));
+        $complaint_types = ComplaintType::all();
+        $energy_types = EnergyType::all();
+
+        return view('complaints.edit', compact('complaint', 'categories', 'orgs', 'channels', 'complaint_types', 'energy_types'));
     }
 
     /**

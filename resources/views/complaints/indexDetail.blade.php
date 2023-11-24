@@ -3,7 +3,7 @@
         <div class="flex items-center justify-between mb-4">
             <div class="container max-w-7xl mx-auto mt-8">
                 <div class="mb-4">
-                    <h1 class="text-xl font-bold"> Нийт ирсэн санал, хүсэлт</h1>
+                    <h1 class="text-xl font-bold"> Санал, хүсэлт</h1>
                     <div class="flex justify-end">
                         <a href="{{ route('complaint.create') }}"
                             class="px-4 py-2 rounded-md bg-black text-sky-100 hover:bg-gray-600">Нэмэх</a>
