@@ -62,7 +62,7 @@
                                     <tr>
                                         <td class="p-2 whitespace-no-wrap border-b border-gray-200">
                                             <div class="flex items-center">
-                                                {{$complaint->id}}
+                                                {{++$i}}
                                             </div>
                                         </td>
 
@@ -77,7 +77,7 @@
                                         </td>
 
                                         <td class="p-2 whitespace-no-wrap border-b border-gray-200">
-                                            <div class="text-sm leading-5 text-gray-900">{{$complaint->status->name}}
+                                            <div class="text-sm leading-5 text-gray-900">{{$complaint->status?->name}}
                                             </div>
                                         </td>
 
@@ -157,6 +157,9 @@
                                 </tbody>
                             </table>
                         </div>
+                        <br>
+                        <br>
+                        {!! $complaints->links() !!}
                     </div>
                 </div>
             </div>

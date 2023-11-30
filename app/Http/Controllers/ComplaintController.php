@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Livewire\ComplaintStep;
 use App\Models\File;
+use App\Models\Channel;
 use App\Models\Category;
 use App\Models\Complaint;
+use App\Models\EnergyType;
 use App\Models\Organization;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\ComplaintStoreRequest;
-use App\Models\Channel;
-use App\Models\ComplaintStep as ModelsComplaintStep;
 use App\Models\ComplaintType;
-use App\Models\EnergyType;
+use App\Http\Livewire\ComplaintStep;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redis;
+use App\Http\Requests\ComplaintStoreRequest;
+use App\Models\ComplaintStep as ModelsComplaintStep;
 
 class ComplaintController extends Controller
 {
@@ -40,6 +41,25 @@ class ComplaintController extends Controller
         return view('complaints.addComplaint', compact('categories', 'orgs', 'complaint_types', 'energy_types'));
     }
 
+    public function getOrg(Request $request)
+    {
+        $lat = $request->input('lat');
+        $lng = $request->input('lng');
+
+        $coords = ["lat" => $lat, "lng" => $lng];
+
+        //Send Http request to get org_id
+        // $response = Http::get('http://192.168.1.4:3000/getOrg', $coords);
+        // $result = $response->json();
+        // $org_id = $result["org_id"];
+
+        $org_id = 1;
+
+        $orgData = Organization::findOrFail($org_id);
+
+        return response()->json($orgData);
+    }
+
     public function showComplaint($id)
     {
         $complaint = Complaint::findOrFail($id);
@@ -51,16 +71,19 @@ class ComplaintController extends Controller
 
     public function index()
     {
-        $complaints = Complaint::all();
+        $complaints = Complaint::latest()->paginate(5);
 
-        return view('complaints.index', compact('complaints'));
+        return view('complaints.index', compact('complaints'))
+            ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     public function complaintStatus($status_id)
     {
-        $complaints = Complaint::where('status_id', $status_id)->orderby('created_at', 'desc')->get();
+        $org_id = Auth::user()->org_id;
 
-        return view('complaints.indexDetail', compact('complaints'));
+        $complaints = Complaint::where('status_id', $status_id)->where('organization_id', $org_id)->latest()->paginate(5);
+
+        return view('complaints.indexDetail', compact('complaints'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**

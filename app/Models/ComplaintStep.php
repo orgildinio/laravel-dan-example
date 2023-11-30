@@ -2,17 +2,23 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Status;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class ComplaintStep extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['org_id', 'complaint_id', 'recieved_user_id', 'sent_user_id', 'recieved_date', 'sent_date', 'desc'];
+    protected $fillable = ['org_id', 'complaint_id', 'recieved_user_id', 'sent_user_id', 'recieved_date', 'sent_date', 'desc', 'status_id'];
 
     public function org()
     {
         return $this->belongsTo(Organization::class);
+    }
+
+    public function status()
+    {
+        return $this->belongsTo(Status::class);
     }
 }

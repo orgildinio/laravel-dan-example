@@ -92,7 +92,7 @@
                                         <i class="fa-regular fa-user"></i>
                                     </div>
                                     <div class="ml-3">
-                                        <p class="text-sm text-black bg-gray-300 p-1 rounded">{{$step->org?->name}} руу шилжүүлсэн</p>
+                                        <p class="text-sm"><span class="text-black bg-gray-300 p-1 rounded">{{$step->org?->name}}</span>{{$step->status?->name}}</p>
                                         <p class="text-sm">{{$step->sent_date}}</p>
                                         <p class="text-sm mt-5">{{$step->desc}}</p>
                                     </div>

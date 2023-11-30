@@ -181,6 +181,21 @@
                             </select>
                         </div>
                     </div>
+
+                    <!-- Create a div to hold the map -->
+                    <div class="md:flex md:items-center mb-2">
+                        <div class="md:w-1/3">
+                            <label class="block text-gray-500 text-sm font-bold md:text-right mb-1 md:mb-0 pr-4"
+                                for="inline-full-name">
+                                Байршил сонгох
+                            </label>
+                        </div>
+                        <div class="md:w-2/3">
+                            <div id="map" style="height: 400px;"></div>
+                        </div>
+                    </div>
+                    
+
                     <div class="md:flex md:items-center mb-2">
                         <div class="md:w-1/3">
                             <label class="block text-gray-500 text-sm font-bold md:text-right mb-1 md:mb-0 pr-4"
@@ -189,11 +204,12 @@
                             </label>
                         </div>
                         <div class="md:w-2/3">
-                            <select name="organization_id"
+                            <select name="organization_id" id="sel_org"
                                 class="bg-gray-200 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500">
-                                @foreach ($orgs as $org)
+                                {{-- <option value='0'>-- Байгууллага сонгох --</option> --}}
+                                {{-- @foreach ($orgs as $org)
                                 <option value="{{ $org->id }}">{{ $org->name }}</option>
-                                @endforeach
+                                @endforeach --}}
                             </select>
                         </div>
                     </div>
@@ -270,6 +286,8 @@
         </div>
     </div>
     @push('scripts')
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
         const button = document.getElementById("micBtn");
         const submitButton = document.getElementById("sbmBtn");
@@ -334,6 +352,62 @@
 
             }).catch((e) => {
                 console.error(e);
+            });
+        }
+
+        // Initialize the map
+        var map = L.map('map').setView([47.93077880351261, 106.91095779606707], 12);
+        var popup = L.popup();
+        var marker;
+
+        // Set up the OSM layer
+        L.tileLayer(
+        'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+        ).addTo(map);
+        
+
+        // Add a click event listener to the map
+        map.on('click', function(e) {
+            // Retrieve the clicked coordinates
+            var lat = e.latlng.lat;
+            var lng = e.latlng.lng;
+
+            // Now, you can send these coordinates to your Laravel backend
+            // using AJAX or any other method.
+            sendCoordinates(lat, lng);
+            if (marker) { // check
+                map.removeLayer(marker); // remove old layers
+            }
+            marker = new L.Marker([e.latlng.lat, e.latlng.lng]).addTo(map);
+            // popup.setLatLng(e.latlng)
+            //     .setContent(e.latlng.toString())
+            //     .openOn(map);
+            // console.log(lat, lng);
+        });
+
+        function sendCoordinates(lat, lng) {
+            // Use AJAX to send the coordinates to your Laravel backend
+            $.ajax({
+                url: '/getOrg',
+                method: 'POST',
+                headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+                data: {
+                    lat: lat,
+                    lng: lng
+                },
+                success: function(response) {
+                    console.log('Coordinates saved successfully', response);
+                    // var len = 0;
+                     if(response != null){
+                          var id = response.id;
+                          var name = response.name;
+                          var option = "<option value='"+id+"'>"+name+"</option>";
+                          $("#sel_org").append(option); 
+                     }
+                },
+                error: function(error) {
+                    console.error('Error getting org data...');
+                }
             });
         }
 

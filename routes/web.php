@@ -34,6 +34,7 @@ Route::middleware([
     Route::get('complaintSteps', ComplaintStep::class);
     Route::get('/addComplaint', [ComplaintController::class, 'addComplaint'])->name('addComplaint');
     Route::get('/complaintStatus/{id}', [ComplaintController::class, 'complaintStatus'])->name('complaintStatus');
+    Route::post('/getOrg', [ComplaintController::class, 'getOrg']);
     // Route::post('/upload', [ComplaintController::class, 'upload'])->name('upload');
 });
 Route::get('/complaints', [ComplaintController::class, 'complaints'])->name('complaints');

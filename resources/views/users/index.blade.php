@@ -5,7 +5,7 @@
                 <div class="mb-4">
                     <h1 class="text-xl font-bold"> Хэрэглэгчийн мэдээлэл</h1>
                     <div class="flex justify-end">
-                        <a href="{{ route('complaint.create') }}"
+                        <a href="{{ route('user.create') }}"
                             class="px-4 py-2 rounded-md bg-black text-sky-100 hover:bg-gray-600">Нэмэх</a>
                     </div>
                 </div>
@@ -23,7 +23,7 @@
                                     <tr>
                                         <th
                                             class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
-                                            ID</th>
+                                            No</th>
                                         <th
                                             class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
                                             Нэр</th>
@@ -33,6 +33,9 @@
                                         <th
                                             class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
                                             Байгууллага</th>
+                                        <th
+                                            class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
+                                            Албан тушаал</th>
                                         <th
                                             class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
                                             Огноо</th>
@@ -47,7 +50,7 @@
                                     <tr>
                                         <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                             <div class="flex items-center">
-                                                {{$user->id}}
+                                                {{++$i}}
                                             </div>
                                         </td>
 
@@ -63,6 +66,10 @@
 
                                         <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm">
                                             <p>{{$user->org?->name}}</p>
+                                        </td>
+
+                                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm">
+                                            <p>{{$user->division}}</p>
                                         </td>
 
                                         <td
@@ -116,6 +123,7 @@
                                     @endforeach
                                 </tbody>
                             </table>
+                            {!! $users->links() !!}
                         </div>
                     </div>
                 </div>

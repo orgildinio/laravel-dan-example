@@ -22,7 +22,9 @@ class ComplaintStep extends Component
         $this->complaint_steps = ComplaintStep::all();
         $this->orgs = Organization::all();
         $this->all_status = Status::all();
-        $this->actions = ['Шилжүүлэх', 'Судалж байгаа', 'Буцаах', 'Шийдвэрлэх', 'Сунгах'];
+        // $this->status_id = null;
+        // $this->org_id = null;
+        $this->actions = ['Тайлбар', 'Шилжүүлэх', 'Хүлээн авах', 'Хянаж байгаа', 'Цуцлах', 'Буцаах', 'Шийдвэрлэх', 'Сунгах'];
     }
 
     public function render()
@@ -62,10 +64,15 @@ class ComplaintStep extends Component
             'complaint_id' => $this->complaint_id,
             'recieved_user_id' => 1,
             'sent_user_id' => $this->sent_user_id,
+            'status_id' => $this->status_id,
             'recieved_date' => Carbon::now()->toDateTimeString(),
             'sent_date' => Carbon::now()->toDateTimeString(),
             'desc' => $this->desc
         ]);
+
+        $complaint = Complaint::findOrFail($this->complaint_id);
+        $complaint->status_id = $this->status_id;
+        $complaint->save();
 
         session()->flash(
             'message',
