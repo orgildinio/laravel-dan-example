@@ -396,6 +396,7 @@
                     lng: lng
                 },
                 success: function(response) {
+                    resetInput();
                     console.log('Coordinates saved successfully', response);
                     // var len = 0;
                      if(response != null){
@@ -409,6 +410,10 @@
                     console.error('Error getting org data...');
                 }
             });
+        }
+        function resetInput(){
+            var x = document.getElementById("sel_org");
+            x.remove(x.selectedIndex);
         }
 
     </script>

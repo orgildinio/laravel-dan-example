@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use App\Models\File;
 use App\Models\Channel;
 use App\Models\Category;
@@ -26,7 +27,7 @@ class ComplaintController extends Controller
      */
     public function complaints()
     {
-        $complaints = Complaint::all();
+        $complaints = Complaint::latest()->get();
 
         return view('complaints.complaints', compact('complaints'));
     }
@@ -48,14 +49,33 @@ class ComplaintController extends Controller
 
         $coords = ["lat" => $lat, "lng" => $lng];
 
-        //Send Http request to get org_id
-        // $response = Http::get('http://192.168.1.4:3000/getOrg', $coords);
-        // $result = $response->json();
-        // $org_id = $result["org_id"];
+        // try {
+        //     // Send Http request to get org_id
+        //     $response = Http::withHeaders(['Content-Type' => 'application/json'])->get('http://172.20.10.11:3000/consumer/api/building/heat-provider?lat=' . $lat . '&lng=' . $lng);
 
-        $org_id = 1;
+        //     $result = $response->json();
+        //     // dd($result[0]["id"]);
+        //     $org_id = $result[0]["id"];
+        // } catch (Exception $e) {
+        //     $org_id = 1;
+        //     return [
+        //         'ok' => false,
+        //         'message' => $e->getMessage()
+        //     ];
+        // }
+        $response = Http::withHeaders(['Content-Type' => 'application/json'])->get('http://172.20.10.11:3000/consumer/api/building/heat-provider?lat=' . $lat . '&lng=' . $lng);
+
+        $result = $response->json();
+        // dd($result);
+        if (!empty($result)) {
+            $org_id = $result[0]["id"];
+        } else {
+            $org_id = 1;
+        }
+
 
         $orgData = Organization::findOrFail($org_id);
+        // dd($orgData);
 
         return response()->json($orgData);
     }
@@ -137,7 +157,7 @@ class ComplaintController extends Controller
 
         Complaint::create($input);
 
-        return redirect()->route('complaint.create')->with('success', 'Санал хүсэлт амжилттай бүртгэлээ.');
+        return redirect()->route('complaints')->with('success', 'Санал хүсэлт амжилттай бүртгэлээ.');
     }
 
     /**

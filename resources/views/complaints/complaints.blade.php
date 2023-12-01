@@ -45,7 +45,7 @@
                             </a>
                             <div tabindex="0" class="focus:outline-none flex">
                                 <div class="py-2 px-4 text-xs leading-3 text-orange-700 rounded-full bg-orange-100">
-                                    {{$complaint->status ? $complaint->status->name : 'Хүлээж авсан'}}</div>
+                                    {{$complaint->status ? $complaint->status->name : 'Шинээр ирсэн'}}</div>
                             </div>
                         </div>
                     </div>
