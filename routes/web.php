@@ -1,10 +1,12 @@
 <?php
 
-use App\Http\Controllers\ComplaintController;
-use App\Http\Controllers\UserController;
-use App\Http\Livewire\ComplaintStep;
 use App\Models\Complaint;
+use App\Http\Livewire\ComplaintStep;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+use Laravel\Socialite\Facades\Socialite;
+use App\Http\Controllers\ComplaintController;
+use App\Http\Controllers\DanAuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,3 +41,8 @@ Route::middleware([
 });
 Route::get('/complaints', [ComplaintController::class, 'complaints'])->name('complaints');
 Route::get('/showComplaint/{id}', [ComplaintController::class, 'showComplaint'])->name('showComplaint');
+
+// Дан системээр нэвтрэх
+
+Route::get('auth/redirect', [DanAuthController::class, 'redirectToDan']);
+Route::get('auth/callback', [DanAuthController::class, 'handleDanCallback']);
