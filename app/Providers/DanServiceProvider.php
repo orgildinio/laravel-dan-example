@@ -34,7 +34,7 @@ class DanServiceProvider extends AbstractProvider implements ProviderInterface
      */
     protected function getTokenUrl()
     {
-        return 'https://sso.gov.mn/oauth2/api/v1/service';
+        return 'https://sso.gov.mn/oauth2/token';
     }
 
     /**
