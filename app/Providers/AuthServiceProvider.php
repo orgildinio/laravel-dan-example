@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
+use App\Providers\DanServiceProvider;
+use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -25,6 +27,8 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Socialite::extend('dan', function ($app) {
+            return Socialite::buildProvider(DanServiceProvider::class, config('services.dan'));
+        });
     }
 }
