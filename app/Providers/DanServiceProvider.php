@@ -46,12 +46,12 @@ class DanServiceProvider extends AbstractProvider implements ProviderInterface
      */
     protected function getUserByToken($token)
     {
-        dd($token);
         $response = $this->getHttpClient()->get('https://sso.gov.mn/oauth2/api/v1/service', [
             'headers' => [
                 'Authorization' => 'Bearer ' . $token,
             ],
         ]);
+        dd(json_decode($response->getBody(), true));
 
         return json_decode($response->getBody(), true);
     }
@@ -62,8 +62,6 @@ class DanServiceProvider extends AbstractProvider implements ProviderInterface
      */
     protected function mapUserToObject(array $user)
     {
-        dd($user);
-
         return (new User())->setRaw($user)->map([
             'id' => $user['sub'],
             'email' => $user['email'],
