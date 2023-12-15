@@ -10,7 +10,7 @@
                      <div class="flex items-center mr-5">
                         <div class="mr-3">
                            <div class="inline-block relative shrink-0 cursor-pointer rounded-[.95rem]">
-                           <img class="w-[40px] h-[40px] shrink-0 inline-block rounded-[.95rem]" src="https://raw.githubusercontent.com/Loopple/loopple-public-assets/main/riva-dashboard-tailwind/img/avatars/avatar1.jpg" alt="avatar image">
+                           <img class="w-[40px] h-[40px] shrink-0 inline-block rounded-[.95rem]" src="{{ asset('/image/user-profile-icon.svg')}}" alt="avatar image">
                            </div>
                         </div>
                         <div>
