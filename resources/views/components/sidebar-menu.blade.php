@@ -104,14 +104,21 @@
                   </a>
                </li>
                <li>
-                  <form method="POST" action="{{ route('logout') }}" x-data>
+                  {{-- <form method="POST" action="{{ route('logout') }}" x-data>
                      @csrf
-                     <a href="{{ route('logout') }}"
+                     @method("POST")
+                     <a href="{{ url('logout') }}"
                      class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
                         <i class="fa-solid fa-arrow-right-from-bracket"></i>
                         <span class="ml-3 flex-1 whitespace-nowrap">{{ __('Гарах') }}</span>
                      </a>
-                  </form>
+                  </form> --}}
+                  <form method="POST" action="{{ route('logout') }}" x-data>
+                     @csrf
+                     <x-responsive-nav-link href="{{ route('logout') }}" @click.prevent="$root.submit();" >
+                         {{ __('Гарах') }}
+                     </x-responsive-nav-link>
+                 </form>
                </li>
             </ul>
          </div>
