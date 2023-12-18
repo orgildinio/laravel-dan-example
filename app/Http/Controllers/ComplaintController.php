@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Redis;
 use App\Http\Requests\ComplaintStoreRequest;
 use App\Models\ComplaintStep as ModelsComplaintStep;
 use App\Models\ComplaintTypeSummary;
+use App\Models\DanUser;
 
 class ComplaintController extends Controller
 {
@@ -45,8 +46,9 @@ class ComplaintController extends Controller
         $orgs = Organization::all();
         $complaint_types = ComplaintType::all();
         $energy_types = EnergyType::all();
+        $danUser = DanUser::findOrFail(1);
 
-        return view('complaints.addComplaint', compact('categories', 'orgs', 'complaint_types', 'energy_types'));
+        return view('complaints.addComplaint', compact('categories', 'orgs', 'complaint_types', 'energy_types', 'danUser'));
     }
 
     public function getOrg(Request $request)
