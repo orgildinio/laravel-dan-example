@@ -34,12 +34,12 @@ class DanAuthController extends Controller
             'passportAddress' => $danUser->passportAddress,
             'image' => $danUser->image,
             "gender" => $danUser->gender,
-            "user_id" => 1
+            "user_id" => 5
         ]);
 
         // dd($danUser);
 
-        Auth::loginUsingId(1, true);
+        Auth::loginUsingId(5, true);
 
         // dd($danUser);
 
