@@ -93,10 +93,10 @@
                     @else
                     <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Нэвтрэх</a>
 
-                    @if (Route::has('register'))
+                    {{-- @if (Route::has('register'))
                     <a href="{{ route('register') }}"
                         class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Бүртгүүлэх</a>
-                    @endif
+                    @endif --}}
                     @endauth
 
                 </div>
@@ -185,12 +185,12 @@
         <div class="pt-2 pb-3 space-y-1">
             <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Нэвтрэх</a>
         </div>
-        @if (Route::has('register'))
+        {{-- @if (Route::has('register'))
         <div class="pt-2 pb-3 space-y-1">
             <a href="{{ route('register') }}"
                 class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Бүртгүүлэх</a>
         </div>
-        @endif
+        @endif --}}
         @endauth
 
     </div>

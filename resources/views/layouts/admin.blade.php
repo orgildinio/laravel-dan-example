@@ -14,6 +14,7 @@
 
    <!-- Scripts -->
    @vite(['resources/css/app.css', 'resources/js/app.js'])
+   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
    <!-- Styles -->
    @livewireStyles
@@ -38,6 +39,9 @@
    </div>
    {{-- <script async defer src="https://buttons.github.io/buttons.js"></script> --}}
    <script src="https://demo.themesberg.com/windster/app.bundle.js"></script>
+
+   @stack('scripts')
+   
    @livewireScripts
 </body>
 

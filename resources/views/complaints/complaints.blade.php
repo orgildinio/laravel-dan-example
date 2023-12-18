@@ -24,7 +24,7 @@
                                         {{$complaint->category->name}} - №{{$complaint->id}}</p>
                                     <p tabindex="0"
                                         class="focus:outline-none text-sm leading-normal pt-2 text-gray-500">
-                                        {{$complaint->created_at}}</p>
+                                        {{$complaint->complaint_date}}</p>
                                 </div>
                                 <div role="img" aria-label="bookmark">
                                     <svg class="focus:outline-none text-gray-800" width="28" height="28"
@@ -37,20 +37,140 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="px-2">
-                            <a href="{{route('showComplaint', $complaint->id)}}" class="text-gray-600 hover:text-blue-600">
-                                <p tabindex="0"
-                                    class="focus:outline-none text-sm leading-5 py-4 text-justify">
-                                    {{$complaint->complaint}}</p>
-                            </a>
-                            <div tabindex="0" class="focus:outline-none flex">
-                                <div class="py-2 px-4 text-xs leading-3 text-orange-700 rounded-full bg-orange-100">
-                                    {{$complaint->status ? $complaint->status->name : 'Шинээр ирсэн'}}</div>
+                        <div class="px-2 mb-8">
+                            <div>
+                                <a href="{{route('showComplaint', $complaint->id)}}" class="text-gray-600 hover:text-blue-600">
+                                    <p tabindex="0"
+                                        class="focus:outline-none text-sm leading-5 py-4 text-justify">
+                                        {{$complaint->complaint}}</p>
+                                </a>
                             </div>
+                            
+                            <div>
+                                <h2 class="sr-only">Steps</h2>
+                              
+                                <div class="after:mt-4 after:block after:h-1 after:w-full after:rounded-lg after:bg-gray-200">
+                                  <ol class="grid grid-cols-3 text-sm font-medium text-gray-500">
+                                    <li class="relative flex justify-start text-{{$complaint->status_id == 2 || $complaint->status_id==3 ? 'blue' : 'gray'}}-600">
+                                      <span class="absolute -bottom-[1.75rem] start-0 rounded-full bg-{{$complaint->status_id == 2 || $complaint->status_id==3 ? 'blue' : 'gray'}}-600 text-white">
+                                        <svg
+                                          class="h-5 w-5"
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          viewBox="0 0 20 20"
+                                          fill="currentColor"
+                                        >
+                                          <path
+                                            fill-rule="evenodd"
+                                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                            clip-rule="evenodd"
+                                          />
+                                        </svg>
+                                      </span>
+                              
+                                      <span class="hidden sm:block"> Хүлээн авсан </span>
+                              
+                                      <svg
+                                        class="h-6 w-6 sm:hidden"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                      >
+                                        <path
+                                          stroke-linecap="round"
+                                          stroke-linejoin="round"
+                                          d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"
+                                        />
+                                      </svg>
+                                    </li>
+                              
+                                    <li class="relative flex justify-center text-{{$complaint->status_id == 3 ? 'blue' : 'gray'}}-600">
+                                      <span
+                                        class="absolute -bottom-[1.75rem] left-1/2 -translate-x-1/2 rounded-full bg-{{$complaint->status_id == 3 ? 'blue' : 'gray'}}-600 text-white"
+                                      >
+                                        <svg
+                                          class="h-5 w-5"
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          viewBox="0 0 20 20"
+                                          fill="currentColor"
+                                        >
+                                          <path
+                                            fill-rule="evenodd"
+                                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                            clip-rule="evenodd"
+                                          />
+                                        </svg>
+                                      </span>
+                              
+                                      <span class="hidden sm:block"> Хянаж байгаа </span>
+                              
+                                      <svg
+                                        class="mx-auto h-6 w-6 sm:hidden"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                      >
+                                        <path
+                                          stroke-linecap="round"
+                                          stroke-linejoin="round"
+                                          d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                                        />
+                                        <path
+                                          stroke-linecap="round"
+                                          stroke-linejoin="round"
+                                          d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                                        />
+                                      </svg>
+                                    </li>
+                              
+                                    <li class="relative flex justify-end text-{{$complaint->status_id == 6 ? 'blue' : 'gray'}}-600">
+                                      <span class="absolute -bottom-[1.75rem] end-0 rounded-full bg-{{$complaint->status_id == 6 ? 'blue' : 'gray'}}-600 text-white">
+                                        <svg
+                                          class="h-5 w-5"
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          viewBox="0 0 20 20"
+                                          fill="currentColor"
+                                        >
+                                          <path
+                                            fill-rule="evenodd"
+                                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                            clip-rule="evenodd"
+                                          />
+                                        </svg>
+                                      </span>
+                              
+                                      <span class="hidden sm:block"> Шийдвэрлэсэн </span>
+                              
+                                      <svg
+                                        class="h-6 w-6 sm:hidden"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                      >
+                                        <path
+                                          stroke-linecap="round"
+                                          stroke-linejoin="round"
+                                          d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
+                                        />
+                                      </svg>
+                                    </li>
+                                  </ol>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
                 @endforeach
+                <br>
+                <div class="mr-7">
+                    {!! $complaints->links() !!}
+                </div>
             </div>
         </div>
     </div>

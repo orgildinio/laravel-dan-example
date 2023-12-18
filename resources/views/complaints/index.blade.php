@@ -4,10 +4,10 @@
             <div class="container max-w-7xl mx-auto mt-8">
                 <div class="mb-4">
                     <h1 class="text-xl font-bold"> Нийт ирсэн санал, хүсэлт</h1>
-                    <div class="flex justify-end">
+                    {{-- <div class="flex justify-end">
                         <a href="{{ route('complaint.create') }}"
                             class="px-4 py-2 rounded-md bg-black text-sky-100 hover:bg-gray-600">Нэмэх</a>
-                    </div>
+                    </div> --}}
                 </div>
                 @if ($message = Session::get('success'))
                 <div class="bg-green-100 border-l-4 border-green-500 text-green-700 text-sm p-2 mb-4" role="alert">
@@ -51,9 +51,9 @@
                                         <th
                                             class="p-2 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
                                             Огноо</th>
-                                        {{-- <th class="px-6 py-3 text-sm text-left text-gray-500 border-b border-gray-200 bg-gray-50"
+                                        <th class="px-6 py-3 text-sm text-left text-gray-500 border-b border-gray-200 bg-gray-50"
                                             colspan="3">
-                                            Үйлдэл</th> --}}
+                                            Үйлдэл</th>
                                     </tr>
                                 </thead>
 
@@ -107,10 +107,10 @@
 
                                         <td
                                             class="p-2 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200">
-                                            <span>{{$complaint->created_at}}</span>
+                                            <span>{{$complaint->complaint_date}}</span>
                                         </td>
 
-                                        {{-- <td
+                                        <td
                                             class="text-sm font-medium leading-5 text-center whitespace-no-wrap border-b border-gray-200 ">
                                             <a href="{{route('complaint.edit', $complaint->id)}}"
                                                 class="text-indigo-600 hover:text-indigo-900">
@@ -151,7 +151,7 @@
                                                             d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                                     </svg></button>
                                             </form>
-                                        </td> --}}
+                                        </td>
                                     </tr>
                                     @endforeach
                                 </tbody>

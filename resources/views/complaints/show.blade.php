@@ -1,9 +1,36 @@
 <x-admin-layout>
     <div class="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8  2xl:col-span-1">
         <div class="flex items-center justify-between mb-4">
-            <div class="lg:flex items-center justify-center w-full mt-7">
-                <div tabindex="0" aria-label="card 1"
-                    class="focus:outline-none lg:w-full lg:mr-7 lg:mb-0 mb-7 bg-white  p-6 shadow rounded">
+            <div class="w-full mt-7 grid grid-cols-4 gap-4">
+                
+                <div class="col-span-1 h-full mr-4 p-6 bg-gray-50 shadow text-sm">
+                    <h1 class="text-black font-bold mb-4 text-lg">Гомдол гаргасан:</h1>
+                    <dl class="max-w-md text-gray-900 divide-y divide-gray-200">
+                        <div class="flex flex-col pb-3">
+                            <dt class="mb-1 text-gray-500">Овог нэр</dt>
+                            <dd class="font-semibold">{{mb_substr($complaint->lastname,
+                                0, 1)}}.{{$complaint->firstname}}</dd>
+                        </div>
+                        <div class="flex flex-col py-3">
+                            <dt class="mb-1 text-gray-500">Регистр</dt>
+                            <dd class="font-semibold">{{$complaint->registerNumber}}</dd>
+                        </div>
+                        <div class="flex flex-col pt-3">
+                            <dt class="mb-1 text-gray-500">Утас</dt>
+                            <dd class="font-semibold">{{$complaint->phone}}</dd>
+                        </div>
+                        <div class="flex flex-col pt-3">
+                            <dt class="mb-1 text-gray-500">И-мэйл</dt>
+                            <dd class="font-semibold">{{$complaint->email}}</dd>
+                        </div>
+                        <div class="flex flex-col pt-3">
+                            <dt class="mb-1 text-gray-500">Хаяг</dt>
+                            <dd class="font-semibold">{{$complaint->addressDetail}}</dd>
+                        </div>
+                    </dl>
+                </div>
+                
+                <div class="col-span-3 mb-7 bg-white p-6 shadow rounded">
                     @if (session()->has('message'))
                     <div class="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md my-3"
                         role="alert">
@@ -42,8 +69,8 @@
                         </div>
                     </div>
                     <div class="px-2">
-                        <h6 class="text-sm font-bold text-gray pt-4">Гомдол мэдүүлсэн: {{mb_substr($complaint->lastname,
-                            0, 1)}}.{{$complaint->firstname}}</h6>
+                        {{-- <h6 class="text-sm font-bold text-gray pt-4">Гомдол мэдүүлсэн: {{mb_substr($complaint->lastname,
+                            0, 1)}}.{{$complaint->firstname}}</h6> --}}
                         <p tabindex="0" class="focus:outline-none text-sm leading-5 py-4 text-gray-600 text-justify">
                             {{$complaint->complaint}}</p>
                         
@@ -59,6 +86,8 @@
                             </audio>
                         </div>
                         @endif
+
+                        <br>
 
                         @if ($complaint->file_id != null)
                         <div class="py-5 px-2">

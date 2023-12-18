@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Exception;
+use Carbon\Carbon;
 use App\Models\File;
 use App\Models\Channel;
 use App\Models\Category;
@@ -17,6 +18,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redis;
 use App\Http\Requests\ComplaintStoreRequest;
 use App\Models\ComplaintStep as ModelsComplaintStep;
+use App\Models\ComplaintTypeSummary;
 
 class ComplaintController extends Controller
 {
@@ -27,9 +29,14 @@ class ComplaintController extends Controller
      */
     public function complaints()
     {
-        $complaints = Complaint::latest()->get();
+        // $complaints = Complaint::latest()->get();
 
-        return view('complaints.complaints', compact('complaints'));
+        // return view('complaints.complaints', compact('complaints'));
+
+        $complaints = Complaint::latest()->paginate(5);
+
+        return view('complaints.complaints', compact('complaints'))
+            ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     public function addComplaint()
@@ -113,13 +120,14 @@ class ComplaintController extends Controller
      */
     public function create()
     {
-        $categories = Category::all();
-        $orgs = Organization::all();
+        $categories = Category::orderBy('name', 'asc')->get();
+        $orgs = Organization::orderBy('name', 'asc')->get();;
         $channels = Channel::all();
         $complaint_types = ComplaintType::all();
         $energy_types = EnergyType::all();
+        $complaint_type_summaries = ComplaintTypeSummary::all();
 
-        return view('complaints.create', compact('categories', 'orgs', 'channels', 'complaint_types', 'energy_types'));
+        return view('complaints.create', compact('categories', 'orgs', 'channels', 'complaint_types', 'energy_types', 'complaint_type_summaries'));
     }
 
     /**

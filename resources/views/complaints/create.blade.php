@@ -15,37 +15,87 @@
                     @endif
                     <div class="md:flex md:items-center mb-2">
                         <div class="md:w-1/3">
-                            <label class="block text-gray-500 text-sm font-bold md:text-right mb-1 md:mb-0 pr-4"
-                                for="inline-full-name">
-                                Таны овог
-                            </label>
                         </div>
-                        <div class="md:w-2/3">
-                            <input
-                                class="bg-gray-200 appearance-none  rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight @if($errors->has('lastname')) border border-red-500 @else border-1 border-gray-200 @endif"
-                                type="text" name="lastname" value="{{old('lastname')}}">
-                            @error('lastname')
-                            <div class="text-red-500 text-sm">{{ $message }}</div>
-                            @enderror
+                        <div class="md:w-2/3 flex">
+                            <div class="flex items-center px-8 border border-gray-200 rounded grow mr-5">
+                                <input checked id="bordered-radio-1" type="radio" value="1" name="complaint_maker_type_id" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2 ">
+                                <label for="bordered-radio-1" class="w-full py-4 ml-2 text-sm font-medium text-gray-900">Иргэн</label>
+                            </div>
+                            <div class="flex items-center px-8 border border-gray-200 rounded grow">
+                                <input id="bordered-radio-2" type="radio" value="2" name="complaint_maker_type_id" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500  focus:ring-2">
+                                <label for="bordered-radio-2" class="w-full py-4 ml-2 text-sm font-medium text-gray-900">ААН</label>
+                            </div>
                         </div>
                     </div>
                     <div class="md:flex md:items-center mb-2">
                         <div class="md:w-1/3">
                             <label class="block text-gray-500 text-sm font-bold md:text-right mb-1 md:mb-0 pr-4"
                                 for="inline-full-name">
-                                Таны нэр
+                                Өргөдөл гаргасан огноо
                             </label>
                         </div>
                         <div class="md:w-2/3">
-                            <input
-                                class="bg-gray-200 appearance-none rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight @if($errors->has('firstname')) border border-red-500 @else border-1 border-gray-200 @endif"
-                                type="text" name="firstname" value="{{old('firstname')}}">
-                            @error('firstname')
-                            <div class="text-red-500 text-sm mt-1 mb-1">{{ $message }}</div>
+                            <input type="text" id="datetime" name="complaint_date" class="bg-gray-200 appearance-none  rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight border-1 border-gray-200" />
+                            @error('lastname')
+                            <div class="text-red-500 text-sm">{{ $message }}</div>
                             @enderror
                         </div>
                     </div>
-                    <div class="md:flex md:items-center mb-2">
+                    <div id="conditionalInput1">
+                        <div class="md:flex md:items-center mb-2">
+                            <div class="md:w-1/3">
+                                <label class="block text-gray-500 text-sm font-bold md:text-right mb-1 md:mb-0 pr-4"
+                                    for="inline-full-name">
+                                    Овог
+                                </label>
+                            </div>
+                            <div class="md:w-2/3">
+                                <input
+                                    class="bg-gray-200 appearance-none  rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight @if($errors->has('lastname')) border border-red-500 @else border-1 border-gray-200 @endif"
+                                    type="text" name="lastname" value="{{old('lastname')}}testlastname">
+                                @error('lastname')
+                                <div class="text-red-500 text-sm">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+                    <div id="conditionalInput2">
+                        <div class="md:flex md:items-center mb-2">
+                            <div class="md:w-1/3">
+                                <label class="block text-gray-500 text-sm font-bold md:text-right mb-1 md:mb-0 pr-4"
+                                    for="inline-full-name">
+                                    Нэр
+                                </label>
+                            </div>
+                            <div class="md:w-2/3">
+                                <input
+                                    class="bg-gray-200 appearance-none rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight @if($errors->has('firstname')) border border-red-500 @else border-1 border-gray-200 @endif"
+                                    type="text" name="firstname" value="{{old('firstname')}}testfirstname">
+                                @error('firstname')
+                                <div class="text-red-500 text-sm mt-1 mb-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+                    <div id="conditionalInput3" class="hidden">
+                        <div class="hidden md:flex md:items-center mb-2">
+                            <div class="md:w-1/3">
+                                <label class="block text-gray-500 text-sm font-bold md:text-right mb-1 md:mb-0 pr-4"
+                                    for="inline-full-name">
+                                    ААН-ийн нэр
+                                </label>
+                            </div>
+                            <div class="md:w-2/3">
+                                <input
+                                    class="bg-gray-200 appearance-none rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight @if($errors->has('complaint_maker_org_name')) border border-red-500 @else border-1 border-gray-200 @endif"
+                                    type="text" name="complaint_maker_org_name" value="{{old('complaint_maker_org_name')}}testmakerorgname">
+                                @error('complaint_maker_org_name')
+                                <div class="text-red-500 text-sm mt-1 mb-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+                    {{-- <div class="md:flex md:items-center mb-2">
                         <div class="md:w-1/3">
                             <label class="block text-gray-500 text-sm font-bold md:text-right mb-1 md:mb-0 pr-4"
                                 for="inline-full-name">
@@ -60,7 +110,7 @@
                             <div class="text-red-500 text-sm mt-1 mb-1">{{ $message }}</div>
                             @enderror
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="md:flex md:items-center mb-2">
                         <div class="md:w-1/3">
                             <label class="block text-gray-500 text-sm font-bold md:text-right mb-1 md:mb-0 pr-4"
@@ -71,7 +121,7 @@
                         <div class="md:w-2/3">
                             <input
                                 class="bg-gray-200 appearance-none rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight @if($errors->has('phone')) border border-red-500 @else border-1 border-gray-200 @endif"
-                                type="text" name="phone" value="{{old('phone')}}">
+                                type="text" name="phone" value="{{old('phone')}}99999999">
                             @error('phone')
                             <div class="text-red-500 text-sm mt-1 mb-1">{{ $message }}</div>
                             @enderror
@@ -87,7 +137,7 @@
                         <div class="md:w-2/3">
                             <input
                                 class="bg-gray-200 appearance-none rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight @if($errors->has('email')) border border-red-500 @else border-1 border-gray-200 @endif"
-                                type="email" name="email" value="{{old('email')}}">
+                                type="email" name="email" value="{{old('email')}}test@mail.com">
                             @error('email')
                             <div class="text-red-500 text-sm mt-1 mb-1">{{ $message }}</div>
                             @enderror
@@ -103,7 +153,7 @@
                         <div class="md:w-2/3">
                             <input
                                 class="bg-gray-200 appearance-none rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight @if($errors->has('country')) border border-red-500 @else border-1 border-gray-200 @endif"
-                                type="text" name="country" value="{{old('country')}}">
+                                type="text" name="country" value="{{old('country')}}test">
                             @error('country')
                             <div class="text-red-500 text-sm mt-1 mb-1">{{ $message }}</div>
                             @enderror
@@ -119,7 +169,7 @@
                         <div class="md:w-2/3">
                             <input
                                 class="bg-gray-200 appearance-none rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight @if($errors->has('district')) border border-red-500 @else border-1 border-gray-200 @endif"
-                                type="text" name="district" value="{{old('district')}}">
+                                type="text" name="district" value="{{old('district')}}test">
                             @error('district')
                             <div class="text-red-500 text-sm mt-1 mb-1">{{ $message }}</div>
                             @enderror
@@ -135,7 +185,7 @@
                         <div class="md:w-2/3">
                             <input
                                 class="bg-gray-200 appearance-none rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight @if($errors->has('khoroo')) border border-red-500 @else border-1 border-gray-200 @endif"
-                                type="text" name="khoroo" value="{{old('khoroo')}}">
+                                type="text" name="khoroo" value="{{old('khoroo')}}test">
                             @error('khoroo')
                             <div class="text-red-500 text-sm mt-1 mb-1">{{ $message }}</div>
                             @enderror
@@ -151,7 +201,7 @@
                         <div class="md:w-2/3">
                             <textarea
                                 class="bg-gray-200 appearance-none rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight @if($errors->has('addressDetail')) border border-red-500 @else border-1 border-gray-200 @endif"
-                                name="addressDetail" rows="3">{{old('addressDetail')}}</textarea>
+                                name="addressDetail" rows="3">{{old('addressDetail')}}test</textarea>
                             @error('addressDetail')
                             <div class="text-red-500 text-sm mt-1 mb-1">{{ $message }}</div>
                             @enderror
@@ -210,6 +260,22 @@
                         <div class="md:w-1/3">
                             <label class="block text-gray-500 text-sm font-bold md:text-right mb-1 md:mb-0 pr-4"
                                 for="inline-full-name">
+                                Өргөдлийн товч утга
+                            </label>
+                        </div>
+                        <div class="md:w-2/3">
+                            <select name="complaint_type_summary_id"
+                                class="bg-gray-200 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500">
+                                @foreach ($complaint_type_summaries as $type)
+                                <option value="{{ $type->id }}">{{ $type->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    {{-- <div class="md:flex md:items-center mb-2">
+                        <div class="md:w-1/3">
+                            <label class="block text-gray-500 text-sm font-bold md:text-right mb-1 md:mb-0 pr-4"
+                                for="inline-full-name">
                                 Суваг
                             </label>
                         </div>
@@ -221,12 +287,12 @@
                                 @endforeach
                             </select>
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="md:flex md:items-center mb-2">
                         <div class="md:w-1/3">
                             <label class="block text-gray-500 text-sm font-bold md:text-right mb-1 md:mb-0 pr-4"
                                 for="inline-full-name">
-                                Байгууллага
+                                Холбогдох ТЗЭ
                             </label>
                         </div>
                         <div class="md:w-2/3">
@@ -279,3 +345,35 @@
         </div>
     </div>
 </x-admin-layout>
+
+@push('scripts')
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        flatpickr("#datetime", {
+            enableTime: true,
+            dateFormat: "Y-m-d H:i",
+            time_24hr: true,
+            // defaultDate: new Date(),
+            defaultHour: "9",
+            defaultMinute: "00",
+        });
+    });
+
+    var radioButtons = document.querySelectorAll('input[name="complaint_maker_type_id"]');
+    // var conditionalInput = document.getElementById('conditionalInput');
+
+    radioButtons.forEach(function(radioButton) {
+        radioButton.addEventListener('change', function() {
+
+            var selectedValue = radioButton.value;
+
+            // Show or hide input fields based on the selected value
+            document.getElementById('conditionalInput1').classList.toggle('hidden', selectedValue !== '1');
+            document.getElementById('conditionalInput2').classList.toggle('hidden', selectedValue !== '1');
+            document.getElementById('conditionalInput3').classList.toggle('hidden', selectedValue == '1');
+
+        });
+    });
+
+</script>

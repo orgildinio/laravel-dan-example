@@ -24,7 +24,7 @@ class ComplaintStep extends Component
         $this->all_status = Status::all();
         // $this->status_id = null;
         // $this->org_id = null;
-        $this->actions = ['Тайлбар', 'Шилжүүлэх', 'Хүлээн авах', 'Хянаж байгаа', 'Цуцлах', 'Буцаах', 'Шийдвэрлэх', 'Сунгах'];
+        $this->actions = ['Тайлбар', 'Шилжүүлэх', 'Хянаж байгаа', 'Цуцлах', 'Буцаах', 'Шийдвэрлэх', 'Сунгах'];
     }
 
     public function render()
