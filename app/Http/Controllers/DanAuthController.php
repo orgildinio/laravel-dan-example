@@ -8,6 +8,7 @@ use App\Models\EnergyType;
 use App\Models\Organization;
 use Illuminate\Http\Request;
 use App\Models\ComplaintType;
+use App\Models\DanUser;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -22,12 +23,20 @@ class DanAuthController extends Controller
     {
         $danUser = Socialite::driver('dan')->user();
 
-        dd($danUser);
+        $danUserModel = DanUser::create([
+            'personId' => $danUser->personId,
+            'firstname' => $danUser->firstname,
+            'lastname' => $danUser->lastname,
+            'regnum' => $danUser->regnum,
+            'aimagCityName' => $danUser->aimagCityName,
+            'soumDistrictName' => $danUser->soumDistrictName,
+            'bagKhorooName' => $danUser->bagKhorooName,
+            'passportAddress' => $danUser->passportAddress,
+            'image' => $danUser->image,
+            "gender" => $danUser->gender
+        ]);
 
-        // $categories = Category::all();
-        // $orgs = Organization::all();
-        // $complaint_types = ComplaintType::all();
-        // $energy_types = EnergyType::all();
+        // dd($danUser);
 
         Auth::loginUsingId(1, true);
 
