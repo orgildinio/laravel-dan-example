@@ -63,14 +63,12 @@ class DanServiceProvider extends AbstractProvider implements ProviderInterface
      */
     protected function mapUserToObject(array $user)
     {
-        dd($user);
+        // dd($user);
 
         return (new User())->setRaw($user)->map([
-            'id' => $user['sub'],
-            'email' => $user['email'],
-            'username' => $user['username'],
-            'email_verified' => $user['email_verified'],
-            'family_name' => $user['family_name'],
+            'personId' => $user['personId'],
+            'firstname' => $user['firstname'],
+            'lastname' => $user['lastname'],
         ]);
     }
 }
