@@ -34,5 +34,6 @@ class DanAuthController extends Controller
         // Auth::login($user, true);
 
         return redirect()->route("welcome")->with('success', 'Амжилттай нэвтэрлээ.');
+        return view('complaints.addComplaint', ['user' => $danUser]);
     }
 }
