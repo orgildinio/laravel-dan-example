@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('soumDistrictName');
             $table->string('bagKhorooName');
             $table->text('passportAddress');
-            $table->string('image');
+            $table->text('image');
             $table->string('gender');
             $table->integer('user_id');
             $table->timestamps();
