@@ -130,7 +130,7 @@
                         <div class="md:w-2/3">
                             <textarea
                                 class="bg-gray-200 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
-                                name="addressDetail" rows="3">{{isset($danUser) ? $danUser->addressDetial : ''}}</textarea>
+                                name="addressDetail" rows="3">{{isset($danUser) ? $danUser->passportAddress : ''}}</textarea>
                         </div>
                     </div>
                     <hr />
