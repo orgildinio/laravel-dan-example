@@ -75,7 +75,7 @@ class DanServiceProvider extends AbstractProvider implements ProviderInterface
             'aimagCityName' => $userData['aimagCityName'],
             'soumDistrictName' => $userData['soumDistrictName'],
             'bagKhorooName' => $userData['bagKhorooName'],
-            'addressDetial' => $userData['addressDetial'],
+            'addressDetail' => $userData['addressDetail'],
         ]);
     }
 }
