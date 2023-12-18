@@ -33,7 +33,8 @@ class DanAuthController extends Controller
             'bagKhorooName' => $danUser->bagKhorooName,
             'passportAddress' => $danUser->passportAddress,
             'image' => $danUser->image,
-            "gender" => $danUser->gender
+            "gender" => $danUser->gender,
+            "user_id" => 1
         ]);
 
         // dd($danUser);
