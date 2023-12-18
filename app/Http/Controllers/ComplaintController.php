@@ -50,9 +50,9 @@ class ComplaintController extends Controller
         $energy_types = EnergyType::all();
         $danUser = DanUser::latest()->first();
 
-        dd($danUser);
+        // dd($danUser);
 
-        // return view('complaints.addComplaint', compact('categories', 'orgs', 'complaint_types', 'energy_types', 'danUser'));
+        return view('complaints.addComplaint', compact('categories', 'orgs', 'complaint_types', 'energy_types', 'danUser'));
     }
 
     public function getOrg(Request $request)
