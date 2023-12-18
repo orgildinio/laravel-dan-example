@@ -22,10 +22,12 @@ class DanAuthController extends Controller
     {
         $danUser = Socialite::driver('dan')->user();
 
-        $categories = Category::all();
-        $orgs = Organization::all();
-        $complaint_types = ComplaintType::all();
-        $energy_types = EnergyType::all();
+        dd($danUser);
+
+        // $categories = Category::all();
+        // $orgs = Organization::all();
+        // $complaint_types = ComplaintType::all();
+        // $energy_types = EnergyType::all();
 
         Auth::loginUsingId(1, true);
 
@@ -45,7 +47,7 @@ class DanAuthController extends Controller
 
         // Auth::login($user, true);
 
-        // return redirect()->route("welcome")->with('success', 'Амжилттай нэвтэрлээ.');
-        return view('complaints.addComplaint', compact('categories', 'orgs', 'complaint_types', 'energy_types', 'danUser'));
+        return redirect()->route("welcome")->with('success', 'Амжилттай нэвтэрлээ.');
+        // return view('complaints.addComplaint', compact('categories', 'orgs', 'complaint_types', 'energy_types', 'danUser'));
     }
 }
