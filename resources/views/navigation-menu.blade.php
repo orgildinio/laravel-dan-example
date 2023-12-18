@@ -43,9 +43,9 @@
                             @if (Auth::user()->danUser())
                             <button
                                 class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
-                                <img src="data:image/png;base64,{{ Auth::user()->danUser()->image }}" alt="profile">
-                                {{-- <span class="mr-3">{{ Auth::user()->danUser()->firstname }}</span>
-                                <img class="h-8 w-8 rounded-full object-cover"
+                                {{-- <img src="data:image/png;base64,{{ Auth::user()->danUser()->image }}" alt="profile"> --}}
+                                <span class="mr-3">{{ Auth::user()->danUser()->firstname }}</span>
+                                {{-- <img class="h-8 w-8 rounded-full object-cover"
                                     src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" /> --}}
                             </button>
                             @else
