@@ -65,7 +65,7 @@ class DanServiceProvider extends AbstractProvider implements ProviderInterface
     {
 
         $userData = $user[1]["services"]["WS100101_getCitizenIDCardInfo"]["response"];
-        dd($userData);
+        // dd($userData);
 
         return (new User())->setRaw($userData)->map([
             'personId' => $userData['personId'],
