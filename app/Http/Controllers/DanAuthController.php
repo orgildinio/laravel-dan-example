@@ -16,7 +16,7 @@ class DanAuthController extends Controller
     public function handleDanCallback()
     {
         $user = Socialite::driver('dan')->user();
-        dd($user->user);
+        // dd($user->user);
 
         // Auth::login($user, true);
 
