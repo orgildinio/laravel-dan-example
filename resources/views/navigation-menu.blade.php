@@ -40,11 +40,11 @@
                     @auth
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
-                            @if (Auth::user()->danUser())
+                            @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
                             <button
                                 class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
-                                {{-- <img src="data:image/png;base64,{{ Auth::user()->danUser()->image }}" alt="profile"> --}}
-                                <span class="mr-3">{{ Auth::user()->danUser()->firstname }}</span>
+                                <img class="h-8 w-8 rounded-full object-cover"
+                                    src="{{ asset('/image/user-profile-icon.svg')}}" alt="{{ Auth::user()->name }}" />
                                 {{-- <img class="h-8 w-8 rounded-full object-cover"
                                     src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" /> --}}
                             </button>
@@ -55,7 +55,10 @@
 
                                     <span class="mr-3">{{ Auth::user()->name }}</span>
                                     {{-- <img class="h-8 w-8 rounded-full object-cover"
-                                    src="{{ asset('/image/user-profile-icon.svg')}}" alt="{{ Auth::user()->name }}" /> --}}
+                                    src="{{ asset('/image/user-profile-icon.svg')}}" alt="{{ Auth::user()->name }}" />
+                                    <img src="data:image/png;base64,{{ Auth::user()->danUser()->image }}" alt="{{ $image->title }}"> --}}
+
+
                                     <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none"
                                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round"
