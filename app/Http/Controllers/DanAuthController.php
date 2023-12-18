@@ -37,27 +37,17 @@ class DanAuthController extends Controller
             "user_id" => 5
         ]);
 
+        $appUser = User::where('id', 5)->first();
+        $appUser->update([
+            'name' => $danUser->firstname
+        ]);
+
         // dd($danUser);
 
         Auth::loginUsingId(5, true);
 
-        // dd($danUser);
-
-        // Check if the user already exists in your database
-        // $user = User::where('email', $danUser->email)->first();
-
-        // if (!$user) {
-        //     // If the user doesn't exist, create a new user in your database
-        //     $user = User::create([
-        //         'name' => $danUser->name,
-        //         'email' => $danUser->email,
-        //         // Add any other fields you want to store
-        //     ]);
-        // }
-
         // Auth::login($user, true);
 
         return redirect()->route("welcome")->with('success', 'Амжилттай нэвтэрлээ.');
-        // return view('complaints.addComplaint', compact('categories', 'orgs', 'complaint_types', 'energy_types', 'danUser'));
     }
 }
