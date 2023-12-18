@@ -18,7 +18,7 @@ class DanAuthController extends Controller
         $user = Socialite::driver('dan')->user();
         // dd($user->user);
 
-        // Auth::login($user, true);
+        Auth::login($user, true);
 
         return redirect()->route("welcome")->with('success', 'Амжилттай нэвтэрлээ.');
     }
