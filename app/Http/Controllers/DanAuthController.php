@@ -27,6 +27,8 @@ class DanAuthController extends Controller
         $complaint_types = ComplaintType::all();
         $energy_types = EnergyType::all();
 
+        Auth::loginUsingId(1, true);
+
         // dd($danUser);
 
         // Check if the user already exists in your database
