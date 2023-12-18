@@ -26,7 +26,7 @@
                         <div class="md:w-2/3">
                             <input
                                 class="bg-gray-200 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
-                                id="inline-full-name" type="text" name="lastname" value="{{isset($danUser) ? $danUser->lastname : ''}}">
+                                id="inline-full-name" type="text" name="lastname" value="{{$danUser->lastname }}">
                         </div>
                     </div>
                     <div class="md:flex md:items-center mb-2">
@@ -39,7 +39,7 @@
                         <div class="md:w-2/3">
                             <input
                                 class="bg-gray-200 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
-                                id="inline-first-name" type="text" name="firstname" value="{{isset($danUser) ? $danUser->firstname : ''}}">
+                                id="inline-first-name" type="text" name="firstname" value="">
                         </div>
                     </div>
                     <div class="md:flex md:items-center mb-2">
@@ -52,7 +52,7 @@
                         <div class="md:w-2/3">
                             <input
                                 class="bg-gray-200 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
-                                id="inline-register-name" type="text" name="registerNumber" value="{{isset($danUser) ? $danUser->regnum : ''}}">
+                                id="inline-register-name" type="text" name="registerNumber" value="">
                         </div>
                     </div>
                     <div class="md:flex md:items-center mb-2">
@@ -91,7 +91,7 @@
                         <div class="md:w-2/3">
                             <input
                                 class="bg-gray-200 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
-                                id="inline-country" type="text" name="country" value="{{isset($danUser) ? $danUser->aimagCityName : ''}}">
+                                id="inline-country" type="text" name="country" value="">
                         </div>
                     </div>
                     <div class="md:flex md:items-center mb-2">
@@ -104,7 +104,7 @@
                         <div class="md:w-2/3">
                             <input
                                 class="bg-gray-200 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
-                                id="inline-discrict-name" type="text" name="district" value="{{isset($danUser) ? $danUser->soumDistrictName : ''}}">
+                                id="inline-discrict-name" type="text" name="district" value="">
                         </div>
                     </div>
                     <div class="md:flex md:items-center mb-2">
@@ -117,7 +117,7 @@
                         <div class="md:w-2/3">
                             <input
                                 class="bg-gray-200 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
-                                id="inline-khoroo-name" type="text" name="khoroo" value="{{isset($danUser) ? $danUser->bagKhorooName : ''}}">
+                                id="inline-khoroo-name" type="text" name="khoroo" value="">
                         </div>
                     </div>
                     <div class="md:flex md:items-center mb-2">
@@ -130,7 +130,7 @@
                         <div class="md:w-2/3">
                             <textarea
                                 class="bg-gray-200 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
-                                name="addressDetail" rows="3">{{isset($danUser) ? $danUser->passportAddress : ''}}</textarea>
+                                name="addressDetail" rows="3"></textarea>
                         </div>
                     </div>
                     <hr />
