@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\DanUser;
 use App\Models\Category;
 use App\Models\EnergyType;
 use App\Models\Organization;
 use Illuminate\Http\Request;
 use App\Models\ComplaintType;
-use App\Models\DanUser;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Laravel\Socialite\Facades\Socialite;
 
 class DanAuthController extends Controller
@@ -23,6 +24,13 @@ class DanAuthController extends Controller
     {
         $danUser = Socialite::driver('dan')->user();
 
+        $user = User::create([
+            'name' => $danUser->firstname,
+            'danImage' => $danUser->image,
+            'danImage' => $danUser->image,
+            'password' => Hash::make(123456)
+        ]);
+
         $danUserModel = DanUser::create([
             'personId' => $danUser->personId,
             'firstname' => $danUser->firstname,
@@ -34,18 +42,18 @@ class DanAuthController extends Controller
             'passportAddress' => $danUser->passportAddress,
             'image' => $danUser->image,
             "gender" => $danUser->gender,
-            "user_id" => 5
+            "user_id" => $user->id
         ]);
 
-        $appUser = User::where('id', 5)->first();
-        $appUser->update([
-            'name' => $danUser->firstname,
-            'danImage' => $danUser->image
-        ]);
+        // $appUser = User::where('id', 5)->first();
+        // $appUser->update([
+        //     'name' => $danUser->firstname,
+        //     'danImage' => $danUser->image
+        // ]);
 
         // dd($danUser);
 
-        Auth::loginUsingId(5, true);
+        Auth::loginUsingId($user->id, true);
 
         // Auth::login($user, true);
 
