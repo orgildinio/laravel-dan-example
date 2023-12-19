@@ -1,12 +1,15 @@
 <?php
 
+use DB;
 use App\Models\Complaint;
 use App\Http\Livewire\ComplaintStep;
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use Laravel\Socialite\Facades\Socialite;
-use App\Http\Controllers\ComplaintController;
 use App\Http\Controllers\DanAuthController;
+use App\Http\Controllers\ComplaintController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,9 +31,10 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified'
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    // Route::get('/dashboard', function () {
+    //     return view('dashboard');
+    // })->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
     Route::resource('/complaint', ComplaintController::class);
     Route::resource('/user', UserController::class);
     Route::get('complaintSteps', ComplaintStep::class);
