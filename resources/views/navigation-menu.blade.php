@@ -57,6 +57,7 @@
                                     class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150">
 
                                     <span class="mr-3">{{ Auth::user()->name }}</span>
+                                    <img src="data:image/png;base64,{{ Auth::user()->danImage }}" alt="profile">
                                     {{-- <img class="h-8 w-8 rounded-full object-cover"
                                     src="{{ asset('/image/user-profile-icon.svg')}}" alt="{{ Auth::user()->name }}" />
                                     <img src="data:image/png;base64,{{ Auth::user()->danUser()->image }}" alt="{{ $image->title }}"> --}}

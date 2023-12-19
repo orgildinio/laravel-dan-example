@@ -29,7 +29,8 @@ class User extends Authenticatable
         'email',
         'password',
         'org_id',
-        'division'
+        'division',
+        'danImage'
     ];
 
     /**
