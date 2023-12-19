@@ -24,12 +24,24 @@ class DanAuthController extends Controller
     {
         $danUser = Socialite::driver('dan')->user();
 
-        $user = User::create([
-            'name' => $danUser->firstname,
-            'danImage' => $danUser->image,
-            'danImage' => $danUser->image,
-            'password' => Hash::make(123456)
-        ]);
+        $user = User::where('regnum', $danUser->regnum)->first();
+
+        if (!$user) {
+            // If the user doesn't exist, create a new user in your database
+            $user = User::create([
+                'name' => $danUser->firstname,
+                'danImage' => $danUser->image,
+                'danFirstname' => $danUser->firstname,
+                'danLastname' => $danUser->lastname,
+                'danRegnum' => $danUser->regnum,
+                'danAimagCityName' => $danUser->aimagCityName,
+                'danSoumDistrictName' => $danUser->soumDistrictName,
+                'danBagKhorooName' => $danUser->bagKhorooName,
+                'danPassportAddress' => $danUser->passportAddress,
+                "danGender" => $danUser->gender,
+                'password' => Hash::make(123456)
+            ]);
+        }
 
         $danUserModel = DanUser::create([
             'personId' => $danUser->personId,
