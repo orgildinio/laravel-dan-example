@@ -42,15 +42,12 @@ class ComplaintController extends Controller
 
     public function addComplaint()
     {
-        $user = Auth::user();
+        $danUser = Auth::user();
 
         $categories = Category::all();
         $orgs = Organization::all();
         $complaint_types = ComplaintType::all();
         $energy_types = EnergyType::all();
-        $danUser = DanUser::latest()->first();
-
-        // dd($danUser);
 
         return view('complaints.addComplaint', compact('categories', 'orgs', 'complaint_types', 'energy_types', 'danUser'));
     }
