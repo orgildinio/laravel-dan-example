@@ -56,7 +56,9 @@
                                     class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150">
 
                                     <span class="mr-3">{{ Auth::user()->name }}</span>
+                                    @if (isset(Auth::user()->danImage))
                                     <img class="h-8 w-8 rounded-full object-cover" src="data:image/png;base64,{{ Auth::user()->danImage }}" alt="profile">
+                                    @endif
                                     {{-- <img class="h-8 w-8 rounded-full object-cover"
                                     src="{{ asset('/image/user-profile-icon.svg')}}" alt="{{ Auth::user()->name }}" />
                                     <img src="data:image/png;base64,{{ Auth::user()->danUser()->image }}" alt="{{ $image->title }}"> --}}
@@ -81,6 +83,11 @@
                             <x-dropdown-link href="{{ route('profile.show') }}">
                                 {{ __('Профайл') }}
                             </x-dropdown-link>
+
+                            <x-dropdown-link href="{{ route('userComplaints') }}">
+                                {{ __('Миний илгээсэн санал') }}
+                            </x-dropdown-link>
+
 
                             @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
                             <x-dropdown-link href="{{ route('api-tokens.index') }}">

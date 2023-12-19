@@ -40,6 +40,7 @@ Route::middleware([
 });
 Route::get('/addComplaint', [ComplaintController::class, 'addComplaint'])->name('addComplaint');
 Route::get('/complaints', [ComplaintController::class, 'complaints'])->name('complaints');
+Route::get('/userComplaints', [ComplaintController::class, 'userComplaints'])->name('userComplaints');
 Route::get('/showComplaint/{id}', [ComplaintController::class, 'showComplaint'])->name('showComplaint');
 
 // Дан системээр нэвтрэх

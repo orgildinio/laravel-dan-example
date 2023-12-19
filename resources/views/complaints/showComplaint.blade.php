@@ -33,8 +33,7 @@
                                     <p tabindex="0" class="focus:outline-none text-sm leading-normal pt-2 text-gray-500">
                                         {{$complaint->created_at}}</p>
                                     <p class="text-sm my-1"><span
-                                            class="bg-gray-300 p-1 rounded">{{$complaint->organization->name}} хүлээн
-                                            авсан.</span></p>
+                                            class="bg-gray-300 p-1 rounded">{{$complaint->organization->name}} {{$complaint->status->name}}.</span></p>
                                 </div>
                                 <div role="img" aria-label="bookmark">
                                     <svg class="focus:outline-none text-gray-800" width="28" height="28" viewBox="0 0 28 28"

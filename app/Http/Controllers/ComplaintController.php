@@ -40,6 +40,16 @@ class ComplaintController extends Controller
             ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
+    public function userComplaints()
+    {
+        $user = Auth::user();
+
+        $complaints = Complaint::where('created_user_id', $user->id)->latest()->paginate(5);
+
+        return view('complaints.userComplaints', compact('complaints'))
+            ->with('i', (request()->input('page', 1) - 1) * 5);
+    }
+
     public function addComplaint()
     {
         $danUser = Auth::user();
