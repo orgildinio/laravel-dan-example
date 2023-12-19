@@ -170,6 +170,9 @@ class ComplaintController extends Controller
 
             $input['audio_file_id'] = $filename->id;
         }
+        if (isset($request->complaint_date)) {
+            $input['complaint_date'] = Carbon::now();
+        }
 
         // if ($input['channel_id'] == null) $input['channel_id'] = 1;
         $input['channel_id'] = 1;
