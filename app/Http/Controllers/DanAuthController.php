@@ -39,7 +39,8 @@ class DanAuthController extends Controller
 
         $appUser = User::where('id', 5)->first();
         $appUser->update([
-            'name' => $danUser->firstname
+            'name' => $danUser->firstname,
+            'danImage' => $danUser->image
         ]);
 
         // dd($danUser);
