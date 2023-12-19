@@ -31,7 +31,7 @@
                                     <p tabindex="0" class="focus:outline-none text-xl font-medium leading-5 text-gray-800 ">
                                         {{$complaint->category?->name}} - №{{$complaint->id}}</p>
                                     <p tabindex="0" class="focus:outline-none text-sm leading-normal pt-2 text-gray-500">
-                                        {{$complaint->created_at}}</p>
+                                        {{$complaint->complaint_date}}</p>
                                     <p class="text-sm my-1"><span
                                             class="bg-gray-300 p-1 rounded">{{$complaint->organization?->name}} {{$complaint->status?->name}}.</span></p>
                                 </div>
