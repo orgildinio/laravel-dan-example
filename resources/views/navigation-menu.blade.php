@@ -26,13 +26,15 @@
                         {{ __('Санал хүсэлт илгээх') }}
                     </x-nav-link>
                 </div>
-                @if (Auth::user()->role->name !== 'dan') 
+                @auth    
+                @if (Auth::user()->role?->name !== 'dan') 
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Хянах самбар') }}
                     </x-nav-link>
                 </div>
                 @endif
+                @endauth
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ml-6">
