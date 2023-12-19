@@ -30,7 +30,15 @@ class User extends Authenticatable
         'password',
         'org_id',
         'division',
-        'danImage'
+        'danImage',
+        'danFirstname',
+        'danLastname',
+        'danRegnum',
+        'danAimagCityName',
+        'danSoumDistrictName',
+        'danBagKhorooName',
+        'danPassportAddress',
+        'danGender'
     ];
 
     /**

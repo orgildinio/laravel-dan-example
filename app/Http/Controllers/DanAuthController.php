@@ -24,7 +24,7 @@ class DanAuthController extends Controller
     {
         $danUser = Socialite::driver('dan')->user();
 
-        $user = User::where('regnum', $danUser->regnum)->first();
+        $user = User::where('danRegnum', $danUser->regnum)->first();
 
         if (!$user) {
             // If the user doesn't exist, create a new user in your database
