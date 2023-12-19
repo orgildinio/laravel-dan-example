@@ -112,7 +112,7 @@
     
                                                 <td
                                                     class="p-2 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200">
-                                                    <span>{{$complaint->complaint_date}} | {{now()}}</span>
+                                                    <span>{{$complaint->complaint_date}}</span>
                                                 </td>
                                                 <td
                                                     class="p-2 text-sm leading-5 text-orange-500 whitespace-no-wrap border-b border-gray-200">

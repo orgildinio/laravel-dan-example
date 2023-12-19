@@ -79,28 +79,25 @@
                         $canceled_complaints!==0 ? $canceled_complaints : '' }}</span>
                   </a>
                </li>
-               <li>
-                  <a href="{{ route('user.index') }}"
-                     class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group {{ Request::routeIs('user.index') ? 'bg-gray-100' : '' }}">
-                     <i class="fa-regular fa-user"></i>
-                     <span class="ml-3 flex-1 whitespace-nowrap">Хэрэглэгчид</span>
-                  </a>
-               </li>
+               @auth
+                  @if (Auth::user()->role?->name !== 'dan' || Auth::user()->role?->name !== 'tze')   
+                  <li>
+                     <a href="{{ route('user.index') }}"
+                        class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group {{ Request::routeIs('user.index') ? 'bg-gray-100' : '' }}">
+                        <i class="fa-regular fa-user"></i>
+                        <span class="ml-3 flex-1 whitespace-nowrap">Хэрэглэгчид</span>
+                     </a>
+                  </li>
+                  @endif
+                  @endauth
                <li>
                   <a href="{{ route('complaint.index') }}"
                      class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group {{ Request::routeIs('complaint.index') ? 'bg-gray-100' : '' }}">
-                     <i class="fa-solid fa-inbox"></i>
-                     <span class="ml-3 flex-1 whitespace-nowrap">Бүгд</span>
-                     <span
-                        class="bg-blue-100 text-gray-800 ml-3 text-sm font-medium inline-flex items-center justify-center px-2 rounded-full">{{
-                        $all_complaints }}</span>
-                  </a>
-               </li>
-               <li>
-                  <a href="#"
-                     class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
                      <i class="fa-solid fa-file-lines"></i>
                      <span class="ml-3 flex-1 whitespace-nowrap">Тайлан</span>
+                     {{-- <span
+                        class="bg-blue-100 text-gray-800 ml-3 text-sm font-medium inline-flex items-center justify-center px-2 rounded-full">{{
+                        $all_complaints }}</span> --}}
                   </a>
                </li>
                <li>
