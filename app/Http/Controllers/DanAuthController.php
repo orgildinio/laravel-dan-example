@@ -39,7 +39,8 @@ class DanAuthController extends Controller
                 'danBagKhorooName' => $danUser->bagKhorooName,
                 'danPassportAddress' => $danUser->passportAddress,
                 "danGender" => $danUser->gender,
-                'password' => Hash::make(123456)
+                'password' => Hash::make(123456),
+                'role_id' => 5
             ]);
         }
 

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Role;
 use App\Models\DanUser;
 use Laravel\Sanctum\HasApiTokens;
 use Laravel\Jetstream\HasProfilePhoto;
@@ -38,7 +39,8 @@ class User extends Authenticatable
         'danSoumDistrictName',
         'danBagKhorooName',
         'danPassportAddress',
-        'danGender'
+        'danGender',
+        'role_id'
     ];
 
     /**
@@ -74,6 +76,10 @@ class User extends Authenticatable
     public function org()
     {
         return $this->belongsTo(Organization::class);
+    }
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
     }
     public function danUser()
     {
