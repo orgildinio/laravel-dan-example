@@ -14,11 +14,36 @@
                     <p>{{ $message }}</p>
                 </div>
                 @endif
+                <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 py-4">
+                    <div class="w-full md:w-2/3">
+                        <form method="GET" autocomplete="off" class="flex items-center">
+                            @csrf
+                            <div class="mr-3">
+                                <input type="text" id="simple-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2" placeholder="Хайх" name="search_text" value="{{$search_text}}">
+                            </div>
+                            <div class="mr-3">
+                                <input type="text" id="daterange" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2" placeholder="" name="daterange" value="{{$daterange}}">
+                            </div>
+                            <button type="submit" class="flex items-center justify-center text-white bg-primary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2">
+                                Хайх
+                            </button>
+                        </form>
+                    </div>
+                    <div class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
+                        
+                        <button type="button" id="export-btn" class="flex items-center justify-center flex-shrink-0 px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200">
+                            <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
+                            </svg>
+                            Export
+                        </button>
+                    </div>
+                </div>
                 <div class="flex flex-col">
                     <div class="overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
                         <div
                             class="inline-block min-w-full overflow-hidden align-middle border-b border-gray-200 shadow sm:rounded-lg">
-                            <table class="min-w-full">
+                            <table class="min-w-full" id="complaint-report">
                                 <thead>
                                     <tr>
                                         <th
@@ -197,21 +222,29 @@
 
             window.location.href = '/complaint/' + id;
 
-            // Make an AJAX request to fetch details based on the ID
-            // $.ajax({
-            //     url: '/complaint/' + id,
-            //     type: 'GET',
-            //     success: function(data) {
-            //         console.log("success")
-            //         // Load the 'show.blade.php' view with the fetched data
-            //         // window.location=data.url;
-            //         window.location.href = '/complaint/' + id;
-            //         $('#detailContainer').html(data);
-            //     },
-            //     error: function(error) {
-            //         console.log(error);
-            //     }
-            // });
         });
+    });
+    document.addEventListener('DOMContentLoaded', function () {
+        flatpickr("#daterange", {
+            mode: "range",
+            showMonths: 2,
+            dateFormat: "Y-m-d",
+        });
+    });
+
+
+    document.getElementById('export-btn').addEventListener('click', function () {
+        // Get the HTML table element
+        var table = document.getElementById('complaint-report');
+
+        // Convert the HTML table to a worksheet
+        var ws = XLSX.utils.table_to_sheet(table);
+
+        // Create a workbook and add the worksheet to it
+        var wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+        XLSX.writeFile(wb, "Reports.xlsx", { compression: true });
+
     });
 </script>

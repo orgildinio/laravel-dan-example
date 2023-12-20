@@ -109,21 +109,66 @@ class ComplaintController extends Controller
         return view('complaints.showComplaint', compact('complaint', 'complaint_steps'));
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $complaints = Complaint::latest()->paginate(5);
+        $daterange = $request->query('daterange');
+        $search_text = $request->query('search_text');
 
-        return view('complaints.index', compact('complaints'))
+        if (isset($daterange)) {
+            $dates = explode(' to ', $daterange);
+            $start_date = $dates[0];
+            $end_date = $dates[1];
+        } else {
+            $start_date = now()->subDay(30);
+            $end_date = now();
+        }
+
+        if (empty($search_text)) {
+            $search_text = "";
+        }
+        // dd($search_text);
+
+        // $complaints = Complaint::latest()->paginate(5);
+        $complaints = Complaint::where('complaint', 'LIKE', '%' . $search_text . '%')
+            ->whereBetween('complaint_date', [$start_date, $end_date])
+            ->latest()
+            ->paginate(5);
+
+        return view('complaints.index', compact('complaints', 'daterange', 'search_text'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
-    public function complaintStatus($status_id)
+    public function complaintStatus(Request $request, $status_id)
     {
         $org_id = Auth::user()->org_id;
 
-        $complaints = Complaint::where('status_id', $status_id)->where('organization_id', $org_id)->latest()->paginate(5);
+        $daterange = $request->query('daterange');
+        $search_text = $request->query('search_text');
 
-        return view('complaints.indexDetail', compact('complaints'))->with('i', (request()->input('page', 1) - 1) * 5);
+        if (isset($daterange)) {
+            $dates = explode(' to ', $daterange);
+            $start_date = $dates[0];
+            $end_date = $dates[1];
+        } else {
+            $start_date = now()->subDay(360);
+            $end_date = now();
+        }
+
+        if (empty($search_text)) {
+            $search_text = "";
+        }
+
+        // $complaints = Complaint::latest()->paginate(5);
+        $complaints = Complaint::where('complaint', 'LIKE', '%' . $search_text . '%')
+            ->whereBetween('complaint_date', [$start_date, $end_date])
+            ->where('status_id', $status_id)
+            ->where('organization_id', $org_id)
+            ->latest()
+            ->paginate(5);
+
+        // $complaints = Complaint::where('status_id', $status_id)->where('organization_id', $org_id)->latest()->paginate(5);
+
+        return view('complaints.indexDetail', compact('complaints', 'daterange', 'search_text'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**
