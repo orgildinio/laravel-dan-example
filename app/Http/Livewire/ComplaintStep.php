@@ -8,6 +8,7 @@ use Livewire\Component;
 use App\Models\Complaint;
 use App\Models\ComplaintStep as ModelsComplaintStep;
 use App\Models\Organization;
+use Illuminate\Support\Facades\Auth;
 
 class ComplaintStep extends Component
 {
@@ -23,7 +24,7 @@ class ComplaintStep extends Component
         $this->orgs = Organization::all();
         $this->all_status = Status::all();
         // $this->status_id = null;
-        // $this->org_id = null;
+        $this->org_id = Auth::user()->org_id;
         $this->actions = ['Тайлбар', 'Шилжүүлэх', 'Хянаж байгаа', 'Цуцлах', 'Буцаах', 'Шийдвэрлэх', 'Сунгах'];
     }
 
@@ -71,8 +72,14 @@ class ComplaintStep extends Component
         ]);
 
         $complaint = Complaint::findOrFail($this->complaint_id);
-        $complaint->status_id = $this->status_id;
-        $complaint->save();
+        if ($this->status_id == 1) {
+            $complaint->status_id = 0;
+            $complaint->organization_id = $this->org_id;
+            $complaint->save();
+        } else {
+            $complaint->status_id = $this->status_id;
+            $complaint->save();
+        }
 
         session()->flash(
             'message',
