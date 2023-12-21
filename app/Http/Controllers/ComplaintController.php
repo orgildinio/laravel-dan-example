@@ -6,20 +6,20 @@ use Exception;
 use Carbon\Carbon;
 use App\Models\File;
 use App\Models\Channel;
+use App\Models\DanUser;
 use App\Models\Category;
 use App\Models\Complaint;
 use App\Models\EnergyType;
 use App\Models\Organization;
 use Illuminate\Http\Request;
+use App\Models\ComplaintStep;
 use App\Models\ComplaintType;
-use App\Http\Livewire\ComplaintStep;
+use App\Models\ComplaintTypeSummary;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redis;
 use App\Http\Requests\ComplaintStoreRequest;
 use App\Models\ComplaintStep as ModelsComplaintStep;
-use App\Models\ComplaintTypeSummary;
-use App\Models\DanUser;
 
 class ComplaintController extends Controller
 {
@@ -292,6 +292,37 @@ class ComplaintController extends Controller
         $complaint->update($input);
 
         return redirect()->route('complaint.index')->with('success', 'Амжилттай хадгаллаа.');
+    }
+    // Шинээр ирсэн гомдлыг хүлээн авсан болгох
+    public function updateComplaintStatus($id)
+    {
+        $user = Auth::user();
+        // Find the record by ID
+        $record = Complaint::find($id);
+
+        // Update the record with the new data
+        if ($record->status_id == 0) {
+            $record->update([
+                'status_id' => 2
+            ]);
+            $complaint_step = ComplaintStep::create([
+                'org_id' => $user->org_id,
+                'complaint_id' => $record->id,
+                'recieved_user_id' => $user->id,
+                'sent_user_id' => $record->id,
+                'recieved_date' => now(),
+                'sent_date' => now(),
+                'desc' => 'Хүлээн авсан',
+                'status_id' => 2
+
+            ]);
+            // dd($complaint_step);
+            // Return a response (optional)
+            return response()->json(['message' => 'Record updated successfully', 'record' => $record, 'complaint_step' => $complaint_step]);
+        }
+
+        // Return a response (optional)
+        return response()->json(['message' => 'Record not updated']);
     }
 
     /**

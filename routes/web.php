@@ -1,6 +1,5 @@
 <?php
 
-use DB;
 use App\Models\Complaint;
 use App\Http\Livewire\ComplaintStep;
 use Illuminate\Foundation\Auth\User;
@@ -31,16 +30,13 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified'
 ])->group(function () {
-    // Route::get('/dashboard', function () {
-    //     return view('dashboard');
-    // })->name('dashboard');
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
     Route::resource('/complaint', ComplaintController::class);
     Route::resource('/user', UserController::class);
     Route::get('complaintSteps', ComplaintStep::class);
     Route::get('/complaintStatus/{id}', [ComplaintController::class, 'complaintStatus'])->name('complaintStatus');
+    Route::put('/updateComplaintStatus/{id}', [ComplaintController::class, 'updateComplaintStatus']);
     Route::post('/getOrg', [ComplaintController::class, 'getOrg']);
-    // Route::post('/upload', [ComplaintController::class, 'upload'])->name('upload');
     Route::get('/addComplaint', [ComplaintController::class, 'addComplaint'])->name('addComplaint');
 });
 Route::get('/complaints', [ComplaintController::class, 'complaints'])->name('complaints');
@@ -48,6 +44,5 @@ Route::get('/userComplaints', [ComplaintController::class, 'userComplaints'])->n
 Route::get('/showComplaint/{id}', [ComplaintController::class, 'showComplaint'])->name('showComplaint');
 
 // Дан системээр нэвтрэх
-
 Route::get('auth/redirect', [DanAuthController::class, 'redirectToDan']);
 Route::get('auth/callback', [DanAuthController::class, 'handleDanCallback']);

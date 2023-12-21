@@ -220,6 +220,20 @@
             // Get the value of the 'data-id' attribute of the clicked row
             var id = $(this).data('id');
 
+            $.ajax({
+                url: '/updateComplaintStatus/' + id,
+                method: 'PUT',
+                headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+                data: {
+                },
+                success: function (response) {
+                    console.log(response.message);
+                },
+                error: function (error) {
+                    console.error(error.responseText);
+                }
+            });
+
             window.location.href = '/complaint/' + id;
 
         });

@@ -3,7 +3,7 @@
         <div class="flex items-center justify-between mb-4">
             <div class="w-full mt-7 grid grid-cols-4 gap-4">
                 
-                <div class="col-span-1 h-full mr-4 p-6 bg-gray-50 shadow text-sm">
+                <div class="col-span-1 self-start sticky top-0 mr-4 p-6 bg-gray-50 shadow text-sm">
                     <h1 class="text-black font-bold mb-4 text-lg">Гомдол гаргасан:</h1>
                     <dl class="max-w-md text-gray-900 divide-y divide-gray-200">
                         <div class="flex flex-col pb-3">
