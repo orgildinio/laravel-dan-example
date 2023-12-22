@@ -1,192 +1,329 @@
-<div class="bg-white overflow-hidden shadow-xl sm:rounded-lg mt-5 p-5">
-    <div class="max-w-screen-xl mx-auto px-5 min-h-sceen">
-        <div class="flex flex-col items-center">
-            <h2 class="font-medium text-2xl text-gray-900 mt-5 tracking-tight">
-                Түгээмэл асуулт, хариулт
-            </h2>
-        </div>
-        <div class="grid divide-y divide-neutral-200 mx-auto mt-8">
-            <div class="py-5">
-                <details class="group">
-                    <summary class="flex justify-between items-center font-medium cursor-pointer list-none">
-                        <span> What is a SAAS platform?</span>
-                        <span class="transition group-open:rotate-180">
-                            <svg fill="none" height="24" shape-rendering="geometricPrecision"
-                                stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="1.5" viewBox="0 0 24 24" width="24">
-                                <path d="M6 9l6 6 6-6"></path>
-                            </svg>
-                        </span>
-                    </summary>
-                    <p class="text-neutral-600 mt-3 group-open:animate-fadeIn">
-                        SAAS platform is a cloud-based software service that allows users to access
-                        and use a variety of tools and functionality.
-                    </p>
-                </details>
+<!-- ====== FAQ Section Start -->
+<section
+   x-data="
+   {
+   openFaq1: false, 
+   openFaq2: false, 
+   openFaq3: false, 
+   openFaq4: false, 
+   openFaq5: false, 
+   openFaq6: false
+   }
+   "
+   class="relative z-20 overflow-hidden bg-white dark:bg-dark pt-20 pb-12 lg:pt-[120px] lg:pb-[90px]"
+   >
+   <div class="max-w-7xl mx-auto">
+      <div class="flex flex-wrap -mx-4">
+         <div class="w-full px-4">
+            <div class="mx-auto mb-[60px] max-w-[520px] text-center lg:mb-20">
+               <span class="block mb-2 text-lg font-semibold text-primary">
+               FAQ
+               </span>
+               <h2
+                  class="text-dark dark:text-white mb-4 text-3xl font-bold sm:text-[40px]/[48px]"
+                  >
+                  Түгээмэл асуулт, хариулт
+               </h2>
+               <p class="text-base text-body-color dark:text-dark-6">
+                  There are many variations of passages of Lorem Ipsum available
+                  but the majority have suffered alteration in some form.
+               </p>
             </div>
-            <div class="py-5">
-                <details class="group">
-                    <summary class="flex justify-between items-center font-medium cursor-pointer list-none">
-                        <span> How does billing work?</span>
-                        <span class="transition group-open:rotate-180">
-                            <svg fill="none" height="24" shape-rendering="geometricPrecision"
-                                stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="1.5" viewBox="0 0 24 24" width="24">
-                                <path d="M6 9l6 6 6-6"></path>
-                            </svg>
-                        </span>
-                    </summary>
-                    <p class="text-neutral-600 mt-3 group-open:animate-fadeIn">
-                        We offers a variety of billing options, including monthly and annual subscription
-                        plans,
-                        as well as pay-as-you-go pricing for certain services. Payment is typically made
-                        through a credit
-                        card or other secure online payment method.
-                    </p>
-                </details>
+         </div>
+      </div>
+      <div class="flex flex-wrap -mx-4">
+         <div class="w-full px-4 lg:w-1/2">
+            <div
+               class="w-full p-4 mb-8 bg-white rounded-lg shadow-[0px_20px_95px_0px_rgba(201,203,204,0.30)] dark:shadow-[0px_20px_95px_0px_rgba(0,0,0,0.30)] dark:bg-dark-2 sm:p-8 lg:px-6 xl:px-8"
+               >
+               <button
+                  class="flex w-full text-left faq-btn"
+                  @click="openFaq1 = !openFaq1"
+                  >
+                  <div
+                     class="bg-primary/5 dark:bg-white/5 text-primary mr-5 flex h-10 w-full max-w-[40px] items-center justify-center rounded-lg"
+                     >
+                     <svg
+                        :class="openFaq1 && 'rotate-180'"
+                        width="22"
+                        height="22"
+                        viewBox="0 0 22 22"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        >
+                        <path
+                           d="M11 15.675C10.7937 15.675 10.6219 15.6062 10.45 15.4687L2.54374 7.69998C2.23436 7.3906 2.23436 6.90935 2.54374 6.59998C2.85311 6.2906 3.33436 6.2906 3.64374 6.59998L11 13.7844L18.3562 6.53123C18.6656 6.22185 19.1469 6.22185 19.4562 6.53123C19.7656 6.8406 19.7656 7.32185 19.4562 7.63123L11.55 15.4C11.3781 15.5719 11.2062 15.675 11 15.675Z"
+                           fill="currentColor"
+                           />
+                     </svg>
+                  </div>
+                  <div class="w-full">
+                     <h4
+                        class="mt-1 text-lg font-semibold text-dark dark:text-white"
+                        >
+                        How long we deliver your first blog post?
+                     </h4>
+                  </div>
+               </button>
+               <div x-show="openFaq1" class="faq-content pl-[62px]">
+                  <p
+                     class="py-3 text-base leading-relaxed text-body-color dark:text-dark-6"
+                     >
+                     It takes 2-3 weeks to get your first blog post ready. That
+                     includes the in-depth research & creation of your monthly
+                     content marketing strategy that we do before writing your
+                     first blog post, Ipsum available .
+                  </p>
+               </div>
             </div>
-            <div class="py-5">
-                <details class="group">
-                    <summary class="flex justify-between items-center font-medium cursor-pointer list-none">
-                        <span> Can I get a refund for my subscription?</span>
-                        <span class="transition group-open:rotate-180">
-                            <svg fill="none" height="24" shape-rendering="geometricPrecision"
-                                stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="1.5" viewBox="0 0 24 24" width="24">
-                                <path d="M6 9l6 6 6-6"></path>
-                            </svg>
-                        </span>
-                    </summary>
-                    <p class="text-neutral-600 mt-3 group-open:animate-fadeIn">
-                        We offers a 30-day money-back guarantee for most of its subscription plans. If you
-                        are not
-                        satisfied with your subscription within the first 30 days, you can request a full
-                        refund. Refunds
-                        for subscriptions that have been active for longer than 30 days may be considered on
-                        a case-by-case
-                        basis.
-                    </p>
-                </details>
+            <div
+               class="w-full p-4 mb-8 bg-white rounded-lg shadow-[0px_20px_95px_0px_rgba(201,203,204,0.30)] dark:shadow-[0px_20px_95px_0px_rgba(0,0,0,0.30)] dark:bg-dark-2 sm:p-8 lg:px-6 xl:px-8"
+               >
+               <button
+                  class="flex w-full text-left faq-btn"
+                  @click="openFaq2 = !openFaq2"
+                  >
+                  <div
+                     class="bg-primary/5 dark:bg-white/5 text-primary mr-5 flex h-10 w-full max-w-[40px] items-center justify-center rounded-lg"
+                     >
+                     <svg
+                        :class="openFaq2 && 'rotate-180'"
+                        width="22"
+                        height="22"
+                        viewBox="0 0 22 22"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        >
+                        <path
+                           d="M11 15.675C10.7937 15.675 10.6219 15.6062 10.45 15.4687L2.54374 7.69998C2.23436 7.3906 2.23436 6.90935 2.54374 6.59998C2.85311 6.2906 3.33436 6.2906 3.64374 6.59998L11 13.7844L18.3562 6.53123C18.6656 6.22185 19.1469 6.22185 19.4562 6.53123C19.7656 6.8406 19.7656 7.32185 19.4562 7.63123L11.55 15.4C11.3781 15.5719 11.2062 15.675 11 15.675Z"
+                           fill="currentColor"
+                           />
+                     </svg>
+                  </div>
+                  <div class="w-full">
+                     <h4
+                        class="mt-1 text-lg font-semibold text-dark dark:text-white"
+                        >
+                        How long we deliver your first blog post?
+                     </h4>
+                  </div>
+               </button>
+               <div x-show="openFaq2" class="faq-content pl-[62px]">
+                  <p
+                     class="py-3 text-base leading-relaxed text-body-color dark:text-dark-6"
+                     >
+                     It takes 2-3 weeks to get your first blog post ready. That
+                     includes the in-depth research & creation of your monthly
+                     content marketing strategy that we do before writing your
+                     first blog post, Ipsum available .
+                  </p>
+               </div>
             </div>
-            <div class="py-5">
-                <details class="group">
-                    <summary class="flex justify-between items-center font-medium cursor-pointer list-none">
-                        <span> How do I cancel my subscription?</span>
-                        <span class="transition group-open:rotate-180">
-                            <svg fill="none" height="24" shape-rendering="geometricPrecision"
-                                stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="1.5" viewBox="0 0 24 24" width="24">
-                                <path d="M6 9l6 6 6-6"></path>
-                            </svg>
-                        </span>
-                    </summary>
-                    <p class="text-neutral-600 mt-3 group-open:animate-fadeIn">
-                        To cancel your We subscription, you can log in to your account and navigate to the
-                        subscription management page. From there, you should be able to cancel your
-                        subscription and stop
-                        future billing.
-                    </p>
-                </details>
+            <div
+               class="w-full p-4 mb-8 bg-white rounded-lg shadow-[0px_20px_95px_0px_rgba(201,203,204,0.30)] dark:shadow-[0px_20px_95px_0px_rgba(0,0,0,0.30)] dark:bg-dark-2 sm:p-8 lg:px-6 xl:px-8"
+               >
+               <button
+                  class="flex w-full text-left faq-btn"
+                  @click="openFaq3 = !openFaq3"
+                  >
+                  <div
+                     class="bg-primary/5 dark:bg-white/5 text-primary mr-5 flex h-10 w-full max-w-[40px] items-center justify-center rounded-lg"
+                     >
+                     <svg
+                        :class="openFaq3 && 'rotate-180'"
+                        width="22"
+                        height="22"
+                        viewBox="0 0 22 22"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        >
+                        <path
+                           d="M11 15.675C10.7937 15.675 10.6219 15.6062 10.45 15.4687L2.54374 7.69998C2.23436 7.3906 2.23436 6.90935 2.54374 6.59998C2.85311 6.2906 3.33436 6.2906 3.64374 6.59998L11 13.7844L18.3562 6.53123C18.6656 6.22185 19.1469 6.22185 19.4562 6.53123C19.7656 6.8406 19.7656 7.32185 19.4562 7.63123L11.55 15.4C11.3781 15.5719 11.2062 15.675 11 15.675Z"
+                           fill="currentColor"
+                           />
+                     </svg>
+                  </div>
+                  <div class="w-full">
+                     <h4
+                        class="mt-1 text-lg font-semibold text-dark dark:text-white"
+                        >
+                        How long we deliver your first blog post?
+                     </h4>
+                  </div>
+               </button>
+               <div x-show="openFaq3" class="faq-content pl-[62px]">
+                  <p
+                     class="py-3 text-base leading-relaxed text-body-color dark:text-dark-6"
+                     >
+                     It takes 2-3 weeks to get your first blog post ready. That
+                     includes the in-depth research & creation of your monthly
+                     content marketing strategy that we do before writing your
+                     first blog post, Ipsum available .
+                  </p>
+               </div>
             </div>
-            <div class="py-5">
-                <details class="group">
-                    <summary class="flex justify-between items-center font-medium cursor-pointer list-none">
-                        <span> Can I try this platform for free?</span>
-                        <span class="transition group-open:rotate-180">
-                            <svg fill="none" height="24" shape-rendering="geometricPrecision"
-                                stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="1.5" viewBox="0 0 24 24" width="24">
-                                <path d="M6 9l6 6 6-6"></path>
-                            </svg>
-                        </span>
-                    </summary>
-                    <p class="text-neutral-600 mt-3 group-open:animate-fadeIn">
-                        We offers a free trial of its platform for a limited time. During the trial period,
-                        you will have access to a limited set of features and functionality, but you will
-                        not be charged.
-                    </p>
-                </details>
+         </div>
+         <div class="w-full px-4 lg:w-1/2">
+            <div
+               class="w-full p-4 mb-8 bg-white rounded-lg shadow-[0px_20px_95px_0px_rgba(201,203,204,0.30)] dark:shadow-[0px_20px_95px_0px_rgba(0,0,0,0.30)] dark:bg-dark-2 sm:p-8 lg:px-6 xl:px-8"
+               >
+               <button
+                  class="flex w-full text-left faq-btn"
+                  @click="openFaq4 = !openFaq4"
+                  >
+                  <div
+                     class="bg-primary/5 dark:bg-white/5 text-primary mr-5 flex h-10 w-full max-w-[40px] items-center justify-center rounded-lg"
+                     >
+                     <svg
+                        :class="openFaq4 && 'rotate-180'"
+                        width="22"
+                        height="22"
+                        viewBox="0 0 22 22"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        >
+                        <path
+                           d="M11 15.675C10.7937 15.675 10.6219 15.6062 10.45 15.4687L2.54374 7.69998C2.23436 7.3906 2.23436 6.90935 2.54374 6.59998C2.85311 6.2906 3.33436 6.2906 3.64374 6.59998L11 13.7844L18.3562 6.53123C18.6656 6.22185 19.1469 6.22185 19.4562 6.53123C19.7656 6.8406 19.7656 7.32185 19.4562 7.63123L11.55 15.4C11.3781 15.5719 11.2062 15.675 11 15.675Z"
+                           fill="currentColor"
+                           />
+                     </svg>
+                  </div>
+                  <div class="w-full">
+                     <h4
+                        class="mt-1 text-lg font-semibold text-dark dark:text-white"
+                        >
+                        How long we deliver your first blog post?
+                     </h4>
+                  </div>
+               </button>
+               <div x-show="openFaq4" class="faq-content pl-[62px]">
+                  <p
+                     class="py-3 text-base leading-relaxed text-body-color dark:text-dark-6"
+                     >
+                     It takes 2-3 weeks to get your first blog post ready. That
+                     includes the in-depth research & creation of your monthly
+                     content marketing strategy that we do before writing your
+                     first blog post, Ipsum available .
+                  </p>
+               </div>
             </div>
-            <div class="py-5">
-                <details class="group">
-                    <summary class="flex justify-between items-center font-medium cursor-pointer list-none">
-                        <span> How do I access documentation?</span>
-                        <span class="transition group-open:rotate-180">
-                            <svg fill="none" height="24" shape-rendering="geometricPrecision"
-                                stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="1.5" viewBox="0 0 24 24" width="24">
-                                <path d="M6 9l6 6 6-6"></path>
-                            </svg>
-                        </span>
-                    </summary>
-                    <p class="text-neutral-600 mt-3 group-open:animate-fadeIn">
-                        Documentation is available on the company's website and can be accessed by
-                        logging in to your account. The documentation provides detailed information on how
-                        to use the ,
-                        as well as code examples and other resources.
-                    </p>
-                </details>
+            <div
+               class="w-full p-4 mb-8 bg-white rounded-lg shadow-[0px_20px_95px_0px_rgba(201,203,204,0.30)] dark:shadow-[0px_20px_95px_0px_rgba(0,0,0,0.30)] dark:bg-dark-2 sm:p-8 lg:px-6 xl:px-8"
+               >
+               <button
+                  class="flex w-full text-left faq-btn"
+                  @click="openFaq5 = !openFaq5"
+                  >
+                  <div
+                     class="bg-primary/5 dark:bg-white/5 text-primary mr-5 flex h-10 w-full max-w-[40px] items-center justify-center rounded-lg"
+                     >
+                     <svg
+                        :class="openFaq5 && 'rotate-180'"
+                        width="22"
+                        height="22"
+                        viewBox="0 0 22 22"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        >
+                        <path
+                           d="M11 15.675C10.7937 15.675 10.6219 15.6062 10.45 15.4687L2.54374 7.69998C2.23436 7.3906 2.23436 6.90935 2.54374 6.59998C2.85311 6.2906 3.33436 6.2906 3.64374 6.59998L11 13.7844L18.3562 6.53123C18.6656 6.22185 19.1469 6.22185 19.4562 6.53123C19.7656 6.8406 19.7656 7.32185 19.4562 7.63123L11.55 15.4C11.3781 15.5719 11.2062 15.675 11 15.675Z"
+                           fill="currentColor"
+                           />
+                     </svg>
+                  </div>
+                  <div class="w-full">
+                     <h4
+                        class="mt-1 text-lg font-semibold text-dark dark:text-white"
+                        >
+                        How long we deliver your first blog post?
+                     </h4>
+                  </div>
+               </button>
+               <div x-show="openFaq5" class="faq-content pl-[62px]">
+                  <p
+                     class="py-3 text-base leading-relaxed text-body-color dark:text-dark-6"
+                     >
+                     It takes 2-3 weeks to get your first blog post ready. That
+                     includes the in-depth research & creation of your monthly
+                     content marketing strategy that we do before writing your
+                     first blog post, Ipsum available .
+                  </p>
+               </div>
             </div>
-            <div class="py-5">
-                <details class="group">
-                    <summary class="flex justify-between items-center font-medium cursor-pointer list-none">
-                        <span> How do I contact support?</span>
-                        <span class="transition group-open:rotate-180">
-                            <svg fill="none" height="24" shape-rendering="geometricPrecision"
-                                stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="1.5" viewBox="0 0 24 24" width="24">
-                                <path d="M6 9l6 6 6-6"></path>
-                            </svg>
-                        </span>
-                    </summary>
-                    <p class="text-neutral-600 mt-3 group-open:animate-fadeIn">
-                        If you need help with the platform or have any other questions, you can contact the
-                        company's support team by submitting a support request through the website or by
-                        emailing
-                        support@We.com.
-                    </p>
-                </details>
+            <div
+               class="w-full p-4 mb-8 bg-white rounded-lg shadow-[0px_20px_95px_0px_rgba(201,203,204,0.30)] dark:shadow-[0px_20px_95px_0px_rgba(0,0,0,0.30)] dark:bg-dark-2 sm:p-8 lg:px-6 xl:px-8"
+               >
+               <button
+                  class="flex w-full text-left faq-btn"
+                  @click="openFaq6 = !openFaq6"
+                  >
+                  <div
+                     class="bg-primary/5 dark:bg-white/5 text-primary mr-5 flex h-10 w-full max-w-[40px] items-center justify-center rounded-lg"
+                     >
+                     <svg
+                        :class="openFaq6 && 'rotate-180'"
+                        width="22"
+                        height="22"
+                        viewBox="0 0 22 22"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        >
+                        <path
+                           d="M11 15.675C10.7937 15.675 10.6219 15.6062 10.45 15.4687L2.54374 7.69998C2.23436 7.3906 2.23436 6.90935 2.54374 6.59998C2.85311 6.2906 3.33436 6.2906 3.64374 6.59998L11 13.7844L18.3562 6.53123C18.6656 6.22185 19.1469 6.22185 19.4562 6.53123C19.7656 6.8406 19.7656 7.32185 19.4562 7.63123L11.55 15.4C11.3781 15.5719 11.2062 15.675 11 15.675Z"
+                           fill="currentColor"
+                           />
+                     </svg>
+                  </div>
+                  <div class="w-full">
+                     <h4
+                        class="mt-1 text-lg font-semibold text-dark dark:text-white"
+                        >
+                        How long we deliver your first blog post?
+                     </h4>
+                  </div>
+               </button>
+               <div x-show="openFaq6" class="faq-content pl-[62px]">
+                  <p
+                     class="py-3 text-base leading-relaxed text-body-color dark:text-dark-6"
+                     >
+                     It takes 2-3 weeks to get your first blog post ready. That
+                     includes the in-depth research & creation of your monthly
+                     content marketing strategy that we do before writing your
+                     first blog post, Ipsum available .
+                  </p>
+               </div>
             </div>
-            <div class="py-5">
-                <details class="group">
-                    <summary class="flex justify-between items-center font-medium cursor-pointer list-none">
-                        <span> Do you offer any discounts or promotions?</span>
-                        <span class="transition group-open:rotate-180">
-                            <svg fill="none" height="24" shape-rendering="geometricPrecision"
-                                stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="1.5" viewBox="0 0 24 24" width="24">
-                                <path d="M6 9l6 6 6-6"></path>
-                            </svg>
-                        </span>
-                    </summary>
-                    <p class="text-neutral-600 mt-3 group-open:animate-fadeIn">
-                        We may offer discounts or promotions from time to time. To stay up-to-date on the
-                        latest
-                        deals and special offers, you can sign up for the company's newsletter or follow it
-                        on social media.
-                    </p>
-                </details>
-            </div>
-            <div class="py-5">
-                <details class="group">
-                    <summary class="flex justify-between items-center font-medium cursor-pointer list-none">
-                        <span> How do we compare to other similar services?</span>
-                        <span class="transition group-open:rotate-180">
-                            <svg fill="none" height="24" shape-rendering="geometricPrecision"
-                                stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="1.5" viewBox="0 0 24 24" width="24">
-                                <path d="M6 9l6 6 6-6"></path>
-                            </svg>
-                        </span>
-                    </summary>
-                    <p class="text-neutral-600 mt-3 group-open:animate-fadeIn">
-                        This platform is a highly reliable and feature-rich service that offers a wide range
-                        of tools and functionality. It is competitively priced and offers a variety of
-                        billing options to
-                        suit different needs and budgets.
-                    </p>
-                </details>
-            </div>
-        </div>
-    </div>
-</div>
+         </div>
+      </div>
+   </div>
+   <div class="absolute bottom-0 right-0 z-[-1]">
+      <svg
+         width="1440"
+         height="886"
+         viewBox="0 0 1440 886"
+         fill="none"
+         xmlns="http://www.w3.org/2000/svg"
+         >
+         <path
+            opacity="0.5"
+            d="M193.307 -273.321L1480.87 1014.24L1121.85 1373.26C1121.85 1373.26 731.745 983.231 478.513 729.927C225.976 477.317 -165.714 85.6993 -165.714 85.6993L193.307 -273.321Z"
+            fill="url(#paint0_linear)"
+            />
+         <defs>
+            <linearGradient
+               id="paint0_linear"
+               x1="1308.65"
+               y1="1142.58"
+               x2="602.827"
+               y2="-418.681"
+               gradientUnits="userSpaceOnUse"
+               >
+               <stop stop-color="#3056D3" stop-opacity="0.36" />
+               <stop offset="1" stop-color="#F5F2FD" stop-opacity="0" />
+               <stop offset="1" stop-color="#F5F2FD" stop-opacity="0.096144" />
+            </linearGradient>
+         </defs>
+      </svg>
+   </div>
+</section>
+<!-- ====== FAQ Section End -->

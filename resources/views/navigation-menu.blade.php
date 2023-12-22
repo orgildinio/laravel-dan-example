@@ -23,7 +23,7 @@
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link href="{{ route('addComplaint') }}" :active="request()->routeIs('addComplaint')">
-                        {{ __('Санал хүсэлт илгээх') }}
+                        {{ __('Өргөдөл, гомдол илгээх') }}
                     </x-nav-link>
                 </div>
                 @auth    
@@ -49,10 +49,6 @@
                                 class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
                                 <img class="h-8 w-8 rounded-full object-cover"
                                     src="{{ asset('/image/user-profile-icon.svg')}}" alt="{{ Auth::user()->name }}" />
-                                {{-- <span class="mr-3">{{ Auth::user()->name }}</span>
-                                <img src="data:image/png;base64,{{ Auth::user()->danImage }}" alt="profile"> --}}
-                                {{-- <img class="h-8 w-8 rounded-full object-cover"
-                                    src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" /> --}}
                             </button>
                             @else
                             <span class="inline-flex rounded-md">
@@ -63,10 +59,6 @@
                                     @if (isset(Auth::user()->danImage))
                                     <img class="h-8 w-8 rounded-full object-cover" src="data:image/png;base64,{{ Auth::user()->danImage }}" alt="profile">
                                     @endif
-                                    {{-- <img class="h-8 w-8 rounded-full object-cover"
-                                    src="{{ asset('/image/user-profile-icon.svg')}}" alt="{{ Auth::user()->name }}" />
-                                    <img src="data:image/png;base64,{{ Auth::user()->danUser()->image }}" alt="{{ $image->title }}"> --}}
-
 
                                     <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none"
                                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -112,7 +104,7 @@
                         </x-slot>
                     </x-dropdown>
                     @else
-                    <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Нэвтрэх</a>
+                    <a href="{{ route('login') }}" class="text-sm text-white font-bold bg-primary hover:bg-primaryHover py-2 px-3 rounded-md">Нэвтрэх</a>
 
                     {{-- @if (Route::has('register'))
                     <a href="{{ route('register') }}"
@@ -153,7 +145,7 @@
         </div>
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link href="{{ route('addComplaint') }}" :active="request()->routeIs('addComplaint')">
-                {{ __('Санал хүсэлт илгээх') }}
+                {{ __('Өргөдөл, гомдол илгээх') }}
             </x-responsive-nav-link>
         </div>
         @auth    
@@ -209,7 +201,9 @@
         </div>
         @else
         <div class="pt-2 pb-3 space-y-1">
-            <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Нэвтрэх</a>
+            <x-responsive-nav-link href="{{ route('login') }}">
+                {{ __('Нэвтрэх') }}
+            </x-responsive-nav-link>
         </div>
         {{-- @if (Route::has('register'))
         <div class="pt-2 pb-3 space-y-1">

@@ -16,6 +16,7 @@ module.exports = {
             },
             colors: {
                 primary: "#3e4095",
+                primaryHover: "#2f3171",
             },
         },
     },

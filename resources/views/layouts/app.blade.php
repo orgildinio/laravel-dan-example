@@ -27,7 +27,7 @@
 <body class="font-sans antialiased">
     <x-banner />
 
-    <div class="min-h-screen bg-gray-100" style="background-image: url('{{ asset('/image/interlaced.png')}}');">
+    <div class="min-h-screen" style="background-color: #F8FBFE;">
         @livewire('navigation-menu')
 
         <!-- Page Heading -->
