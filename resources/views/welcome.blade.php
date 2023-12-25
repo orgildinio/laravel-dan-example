@@ -4,7 +4,7 @@
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <x-hero></x-hero>
             </div>
-            <div class="bg-primary text-center">
+            <div class="bg-primary text-center flex items-center justify-center h-32">
                 <div class="max-w-7xl mx-auto text-white p-2 text-lg sm:text-sm md:text-xl lg:text-2xl xl:text-2xl 2xl:text-3xl">
                     <!-- Content with responsive text size -->
                     "Тусгай зөвшөөрөл эзэмшигчдийн хооронд болон тусгай зөвшөөрөл эзэмшигч хэрэглэгч хооронд үүссэн маргааныг харьяаллын дагуу шийдвэрлэх"
