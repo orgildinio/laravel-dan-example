@@ -137,20 +137,6 @@
                     <br>
                     <div class="md:flex md:items-center mb-2">
                         <div class="md:w-1/3">
-                        </div>
-                        <div class="md:w-2/3 flex">
-                            <div class="flex items-center px-8 border border-gray-200 rounded grow mr-5">
-                                <input checked id="bordered-radio-1" type="radio" value="1" name="energy_type_id" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2 ">
-                                <label for="bordered-radio-1" class="w-full py-4 ml-2 text-sm font-medium text-gray-900">Цахилгаан</label>
-                            </div>
-                            <div class="flex items-center px-8 border border-gray-200 rounded grow">
-                                <input id="bordered-radio-2" type="radio" value="2" name="energy_type_id" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500  focus:ring-2">
-                                <label for="bordered-radio-2" class="w-full py-4 ml-2 text-sm font-medium text-gray-900">Дулаан</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="md:flex md:items-center mb-2">
-                        <div class="md:w-1/3">
                             <label class="block text-gray-500 text-sm font-bold md:text-right mb-1 md:mb-0 pr-4"
                                 for="inline-full-name">
                                 Төрөл
@@ -167,17 +153,46 @@
                     </div>
                     <div class="md:flex md:items-center mb-2">
                         <div class="md:w-1/3">
+                        </div>
+                        <div class="md:w-2/3 flex">
+                            <div class="flex items-center px-8 border border-gray-200 rounded grow mr-5">
+                                <input id="bordered-radio-1" type="radio" value="1" name="energy_type_id" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2 ">
+                                <label for="bordered-radio-1" class="w-full py-4 ml-2 text-sm font-medium text-gray-900">Цахилгаан</label>
+                            </div>
+                            <div class="flex items-center px-8 border border-gray-200 rounded grow">
+                                <input id="bordered-radio-2" type="radio" value="2" name="energy_type_id" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500  focus:ring-2">
+                                <label for="bordered-radio-2" class="w-full py-4 ml-2 text-sm font-medium text-gray-900">Дулаан</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="md:flex md:items-center mb-2">
+                        <div class="md:w-1/3">
                             <label class="block text-gray-500 text-sm font-bold md:text-right mb-1 md:mb-0 pr-4"
                                 for="inline-full-name">
                                 Гомдлын төрөл
                             </label>
                         </div>
                         <div class="md:w-2/3">
-                            <select name="complaint_type_id"
+                            <select name="complaint_type_id" id="complaint_type_id"
                                 class="bg-gray-200 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500">
                                 @foreach ($complaint_types as $type)
                                 <option value="{{ $type->id }}">{{ $type->name }}</option>
                                 @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="md:flex md:items-center mb-2">
+                        <div class="md:w-1/3">
+                            <label class="block text-gray-500 text-sm font-bold md:text-right mb-1 md:mb-0 pr-4"
+                                for="inline-full-name">
+                                Өргөдлийн товч утга
+                            </label>
+                        </div>
+                        <div class="md:w-2/3">
+                            <select name="complaint_type_summary_id" id="complaint_type_summary_id"
+                                class="bg-gray-200 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500">
                             </select>
                         </div>
                     </div>
@@ -415,6 +430,66 @@
             var x = document.getElementById("sel_org");
             x.remove(x.selectedIndex);
         }
+
+        $("input[name='energy_type_id']").change(function(){
+            if( $(this).is(":checked") ){
+                var energy_type_id = $(this).val();
+            }
+            if($("#complaint_type_id").val() ==null){
+                var complaint_type_id = null;
+            }else{
+
+                var complaint_type_id=$("#complaint_type_id").val();
+            }
+
+            $.ajax({
+                    url: '/getTypeSummary',
+                    method: 'GET',
+                    headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+                    data: {
+                        energy_type_id: energy_type_id,
+                        complaint_type_id: complaint_type_id,
+                    },
+                    success: function (result) {
+                        console.log(result);
+                        $('#complaint_type_summary_id').html('<option value="">-- Сонгох --</option>');
+                        $.each(result.summaries, function (key, value) {
+                            console.log(value.name);
+                            $("#complaint_type_summary_id").append('<option value="' + value
+                                .id + '">' + value.name + '</option>');
+                        });
+                    },
+                    error: function(error) {
+                        console.error('Error getting summary data...');
+                    }
+            });
+        })
+
+        $("#complaint_type_id").change(function(){
+            var complaint_type_id=$(this).val();
+            var energy_type_id = $("input[name='energy_type_id']:checked").val();
+
+            $.ajax({
+                    url: '/getTypeSummary',
+                    method: 'GET',
+                    headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+                    data: {
+                        complaint_type_id: complaint_type_id,
+                        energy_type_id: energy_type_id,
+                    },
+                    success: function (result) {
+                        $('#complaint_type_summary_id').html('<option value="">-- Сонгох --</option>');
+                        $.each(result.summaries, function (key, value) {
+                            console.log(value.name);
+                            $("#complaint_type_summary_id").append('<option value="' + value
+                                .id + '">' + value.name + '</option>');
+                        });
+                    },
+                    error: function(error) {
+                        console.error('Error getting summary data...');
+                    }
+            });
+        })
 
     </script>
     @endpush

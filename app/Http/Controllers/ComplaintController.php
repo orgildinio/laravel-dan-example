@@ -14,6 +14,7 @@ use App\Models\Organization;
 use Illuminate\Http\Request;
 use App\Models\ComplaintStep;
 use App\Models\ComplaintType;
+use Illuminate\Support\Facades\DB;
 use App\Models\ComplaintTypeSummary;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
@@ -98,6 +99,22 @@ class ComplaintController extends Controller
         // dd($orgData);
 
         return response()->json($orgData);
+    }
+    // Өргөдлийн товч утгыг ajax- аар авах
+    public function getTypeSummary(Request $request)
+    {
+        $energy_type_id = $request->input('energy_type_id');
+        $complaint_type_id = $request->input('complaint_type_id');
+
+        $data['summaries'] = ComplaintTypeSummary::get(["name", "id"]);
+
+        if ($request->has('energy_type_id') && $request->has('complaint_type_id')) {
+            $data['summaries'] = ComplaintTypeSummary::where("energy_type_id", $energy_type_id)
+                ->where("complaint_type_id", $complaint_type_id)
+                ->get(["name", "id"]);
+        }
+
+        return response()->json($data);
     }
 
     public function showComplaint($id)

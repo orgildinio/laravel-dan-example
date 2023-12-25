@@ -37,6 +37,7 @@ Route::middleware([
     Route::get('/complaintStatus/{id}', [ComplaintController::class, 'complaintStatus'])->name('complaintStatus');
     Route::put('/updateComplaintStatus/{id}', [ComplaintController::class, 'updateComplaintStatus']);
     Route::post('/getOrg', [ComplaintController::class, 'getOrg']);
+    Route::get('/getTypeSummary', [ComplaintController::class, 'getTypeSummary']);
     Route::get('/addComplaint', [ComplaintController::class, 'addComplaint'])->name('addComplaint');
 });
 Route::get('/complaints', [ComplaintController::class, 'complaints'])->name('complaints');
