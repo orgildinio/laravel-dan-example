@@ -80,7 +80,7 @@
                   </a>
                </li>
                @auth
-                  @if (Auth::user()->role?->name !== 'dan' || Auth::user()->role?->name !== 'tze')   
+                  @if (Auth::user()->role?->name == 'admin')   
                   <li>
                      <a href="{{ route('user.index') }}"
                         class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group {{ Request::routeIs('user.index') ? 'bg-gray-100' : '' }}">
