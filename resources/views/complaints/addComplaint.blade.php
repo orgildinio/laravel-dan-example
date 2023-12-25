@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Санал хүсэлт илгээх') }}
+            {{ __('Өргөдөл, гомдол илгээх') }}
         </h2>
     </x-slot>
 
@@ -26,7 +26,7 @@
                         <div class="md:w-2/3">
                             <input
                                 class="bg-gray-200 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
-                                id="inline-full-name" type="text" name="lastname" value="{{isset($danUser->danLastname) ? $danUser->danLastname : ''}}">
+                                id="inline-full-name" type="text" name="lastname" value="{{isset($danUser->danLastname) ? $danUser->danLastname : ''}}" required>
                         </div>
                     </div>
                     <div class="md:flex md:items-center mb-2">
@@ -39,7 +39,7 @@
                         <div class="md:w-2/3">
                             <input
                                 class="bg-gray-200 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
-                                id="inline-first-name" type="text" name="firstname" value="{{isset($danUser->danFirstname) ? $danUser->danFirstname : ''}}">
+                                id="inline-first-name" type="text" name="firstname" value="{{isset($danUser->danFirstname) ? $danUser->danFirstname : ''}}" required>
                         </div>
                     </div>
                     <div class="md:flex md:items-center mb-2">
@@ -52,7 +52,7 @@
                         <div class="md:w-2/3">
                             <input
                                 class="bg-gray-200 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
-                                id="inline-register-name" type="text" name="registerNumber" value="{{isset($danUser->danRegnum) ? $danUser->danRegnum : ''}}">
+                                id="inline-register-name" type="text" name="registerNumber" value="{{isset($danUser->danRegnum) ? $danUser->danRegnum : ''}}" required>
                         </div>
                     </div>
                     <div class="md:flex md:items-center mb-2">
@@ -65,7 +65,7 @@
                         <div class="md:w-2/3">
                             <input
                                 class="bg-gray-200 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
-                                id="inline-phone" type="text" name="phone" value="">
+                                id="inline-phone" type="text" name="phone" value="" required>
                         </div>
                     </div>
                     <div class="md:flex md:items-center mb-2">
@@ -78,7 +78,7 @@
                         <div class="md:w-2/3">
                             <input
                                 class="bg-gray-200 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
-                                id="inline-email" type="email" name="email" value="">
+                                id="inline-email" type="email" name="email" value="" required>
                         </div>
                     </div>
                     <div class="md:flex md:items-center mb-2">
@@ -91,7 +91,7 @@
                         <div class="md:w-2/3">
                             <input
                                 class="bg-gray-200 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
-                                id="inline-country" type="text" name="country" value="{{isset($danUser->danAimagCityName) ? $danUser->danAimagCityName : ''}}">
+                                id="inline-country" type="text" name="country" value="{{isset($danUser->danAimagCityName) ? $danUser->danAimagCityName : ''}}" required>
                         </div>
                     </div>
                     <div class="md:flex md:items-center mb-2">
@@ -104,7 +104,7 @@
                         <div class="md:w-2/3">
                             <input
                                 class="bg-gray-200 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
-                                id="inline-discrict-name" type="text" name="district" value="{{isset($danUser->danSoumDistrictName) ? $danUser->danSoumDistrictName : ''}}">
+                                id="inline-discrict-name" type="text" name="district" value="{{isset($danUser->danSoumDistrictName) ? $danUser->danSoumDistrictName : ''}}" required>
                         </div>
                     </div>
                     <div class="md:flex md:items-center mb-2">
@@ -117,7 +117,7 @@
                         <div class="md:w-2/3">
                             <input
                                 class="bg-gray-200 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
-                                id="inline-khoroo-name" type="text" name="khoroo" value="{{isset($danUser->danBagKhorooName) ? $danUser->danBagKhorooName : ''}}">
+                                id="inline-khoroo-name" type="text" name="khoroo" value="{{isset($danUser->danBagKhorooName) ? $danUser->danBagKhorooName : ''}}" required>
                         </div>
                     </div>
                     <div class="md:flex md:items-center mb-2">
@@ -130,7 +130,7 @@
                         <div class="md:w-2/3">
                             <textarea
                                 class="bg-gray-200 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
-                                name="addressDetail" rows="3">{{isset($danUser->danPassportAddress) ? $danUser->danPassportAddress : ''}}</textarea>
+                                name="addressDetail" rows="3" required>{{isset($danUser->danPassportAddress) ? $danUser->danPassportAddress : ''}}</textarea>
                         </div>
                     </div>
                     <hr />
@@ -192,7 +192,7 @@
                         </div>
                         <div class="md:w-2/3">
                             <select name="complaint_type_summary_id" id="complaint_type_summary_id"
-                                class="bg-gray-200 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500">
+                                class="bg-gray-200 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500" required>
                             </select>
                         </div>
                     </div>
@@ -215,13 +215,13 @@
                         <div class="md:w-1/3">
                             <label class="block text-gray-500 text-sm font-bold md:text-right mb-1 md:mb-0 pr-4"
                                 for="inline-full-name">
-                                Байгууллага
+                                Холбогдох ТЗЭ
                             </label>
                         </div>
                         <div class="md:w-2/3">
                             <select name="organization_id" id="sel_org"
-                                class="bg-gray-200 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500">
-                                <option value='0'>-- Байгууллага сонгох --</option>
+                                class="bg-gray-200 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500" required>
+                                <option value='0'>-- Холбогдох ТЗЭ сонгох --</option>
                                 @foreach ($orgs as $org)
                                 <option value="{{ $org->id }}">{{ $org->name }}</option>
                                 @endforeach
@@ -238,7 +238,7 @@
                         <div class="md:w-2/3">
                             <textarea
                                 class="bg-gray-200 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
-                                name="complaint" rows="3"></textarea>
+                                name="complaint" rows="3" required></textarea>
                         </div>
                     </div>
 

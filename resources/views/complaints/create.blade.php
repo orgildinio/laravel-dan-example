@@ -3,7 +3,7 @@
         <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-5 m-5">
                 <div>
-                    <h1 class="py-4 mb-2 mt-0 text-2xl font-medium leading-tight text-gray">Санал, хүсэлт
+                    <h1 class="py-4 mb-2 mt-0 text-2xl font-medium leading-tight text-gray">Өргөдөл, гомдол
                         шинээр бүртгэх</h1>
                 </div>
                 <form method="POST" action="{{ route('complaint.store') }}" enctype="multipart/form-data">
@@ -39,6 +39,21 @@
                             @error('lastname')
                             <div class="text-red-500 text-sm">{{ $message }}</div>
                             @enderror
+                        </div>
+                    </div>
+                    <div id="conditionalInput1">
+                        <div class="md:flex md:items-center mb-2">
+                            <div class="md:w-1/3">
+                                <label class="block text-gray-500 text-sm font-bold md:text-right mb-1 md:mb-0 pr-4"
+                                    for="inline-full-name">
+                                    Хэрэглэгчийн код
+                                </label>
+                            </div>
+                            <div class="md:w-2/3">
+                                <input id="consumer_code"
+                                    class="bg-gray-200 appearance-none  rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight @if($errors->has('consumer_code')) border border-red-500 @else border-1 border-gray-200 @endif"
+                                    type="text" name="consumer_code" value="{{old('consumer_code')}}">
+                            </div>
                         </div>
                     </div>
                     <div id="conditionalInput1">
@@ -290,7 +305,7 @@
                             </select>
                         </div>
                     </div> --}}
-                    <div class="md:flex md:items-center mb-2">
+                    {{-- <div class="md:flex md:items-center mb-2">
                         <div class="md:w-1/3">
                             <label class="block text-gray-500 text-sm font-bold md:text-right mb-1 md:mb-0 pr-4"
                                 for="inline-full-name">
@@ -305,7 +320,7 @@
                                 @endforeach
                             </select>
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="md:flex md:items-center mb-2">
                         <div class="md:w-1/3">
                             <label class="block text-gray-500 text-sm font-bold md:text-right mb-1 md:mb-0 pr-4"
@@ -339,7 +354,7 @@
                         <div class="md:w-1/3">
                         </div>
                         <div class="md:w-2/3">
-                            <x-button>Илгээх</x-button>
+                            <x-button>Хадгалах</x-button>
                         </div>
                     </div>
                 </form>

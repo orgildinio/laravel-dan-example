@@ -238,8 +238,17 @@ class ComplaintController extends Controller
 
         // if ($input['channel_id'] == null) $input['channel_id'] = 1;
         $input['channel_id'] = 1;
-        $input['status_id'] = 0;
         $input['created_user_id'] = $user->id;
+
+        if ($user->org_id != null) {
+            $input['status_id'] = 2;
+        } else {
+            $input['status_id'] = 0;
+        }
+
+        if ($input['organization_id'] == null) {
+            $input['organization_id'] = $user->org_id;
+        }
 
         Complaint::create($input);
 
