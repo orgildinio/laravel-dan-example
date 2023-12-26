@@ -56,7 +56,7 @@ class ComplaintController extends Controller
         $danUser = Auth::user();
 
         $categories = Category::all();
-        $orgs = Organization::all();
+        $orgs = Organization::latest()->get();
         $complaint_types = ComplaintType::all();
         $energy_types = EnergyType::all();
 
