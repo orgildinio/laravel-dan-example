@@ -224,6 +224,7 @@ class ComplaintController extends Controller
     public function store(Request $request)
     {
         $input = $request->all();
+        // dd($input);
         $user = Auth::user();
 
         if ($file = $request->file('file')) {
@@ -256,7 +257,7 @@ class ComplaintController extends Controller
             $input['status_id'] = 0;
         }
 
-        if ($input['organization_id'] == null) {
+        if (!isset($input['organization_id'])) {
             $input['organization_id'] = $user->org_id;
         }
 
