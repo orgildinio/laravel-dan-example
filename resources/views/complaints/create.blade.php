@@ -41,7 +41,7 @@
                             @enderror
                         </div>
                     </div>
-                    <div id="conditionalInput1">
+                    <div>
                         <div class="md:flex md:items-center mb-2">
                             <div class="md:w-1/3">
                                 <label class="block text-gray-500 text-sm font-bold md:text-right mb-1 md:mb-0 pr-4"
@@ -65,7 +65,7 @@
                                 </label>
                             </div>
                             <div class="md:w-2/3">
-                                <input
+                                <input id="lastname"
                                     class="bg-gray-200 appearance-none  rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight @if($errors->has('lastname')) border border-red-500 @else border-1 border-gray-200 @endif"
                                     type="text" name="lastname" value="{{old('lastname')}}">
                                 @error('lastname')
@@ -392,7 +392,7 @@
 
         });
     });
-
+    //Өргөдлийн товч утга татах
     $("input[name='energy_type_id']").change(function(){
         if( $(this).is(":checked") ){
             var energy_type_id = $(this).val();
@@ -413,10 +413,8 @@
                     complaint_type_id: complaint_type_id,
                 },
                 success: function (result) {
-                    console.log(result);
                     $('#complaint_type_summary_id').html('<option value="">-- Сонгох --</option>');
                     $.each(result.summaries, function (key, value) {
-                        console.log(value.name);
                         $("#complaint_type_summary_id").append('<option value="' + value
                             .id + '">' + value.name + '</option>');
                     });
@@ -449,6 +447,26 @@
                 },
                 error: function(error) {
                     console.error('Error getting summary data...');
+                }
+        });
+    })
+
+    // Хэрэглэгчийн кодоор мэдээлэл татах
+    $("#consumer_code").change(function(){
+        var consumer_code = $(this).val();
+
+        $.ajax({
+                url: '/getUserDataByCode',
+                method: 'GET',
+                headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+                data: {
+                    consumer_code: consumer_code,
+                },
+                success: function (result) {
+                    console.log(result);
+                },
+                error: function(error) {
+                    console.error('Error getting user data by code...');
                 }
         });
     })

@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redis;
 use App\Http\Requests\ComplaintStoreRequest;
 use App\Models\ComplaintStep as ModelsComplaintStep;
+use App\Models\Registration;
 
 class ComplaintController extends Controller
 {
@@ -115,6 +116,15 @@ class ComplaintController extends Controller
         }
 
         return response()->json($data);
+    }
+    // Хэрэглэгчийн кодоор дамжуулан хэрэглэгчийн мэдээлэл татах
+    public function getUserDataByCode(Request $request)
+    {
+        $code = $request->input('consumer_code');
+
+        $userdata = Registration::where('code', $code)->get();
+
+        return response()->json($userdata);
     }
 
     public function showComplaint($id)
