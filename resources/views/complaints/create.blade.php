@@ -53,6 +53,7 @@
                                 <input id="consumer_code"
                                     class="bg-gray-200 appearance-none  rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight @if($errors->has('consumer_code')) border border-red-500 @else border-1 border-gray-200 @endif"
                                     type="text" name="consumer_code" value="{{old('consumer_code')}}">
+                                    <p id="empty"></p>
                             </div>
                         </div>
                     </div>
@@ -83,7 +84,7 @@
                                 </label>
                             </div>
                             <div class="md:w-2/3">
-                                <input
+                                <input id="firstname"
                                     class="bg-gray-200 appearance-none rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight @if($errors->has('firstname')) border border-red-500 @else border-1 border-gray-200 @endif"
                                     type="text" name="firstname" value="{{old('firstname')}}">
                                 @error('firstname')
@@ -101,7 +102,7 @@
                                 </label>
                             </div>
                             <div class="md:w-2/3">
-                                <input
+                                <input id="complaint_maker_org_name"
                                     class="bg-gray-200 appearance-none rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight @if($errors->has('complaint_maker_org_name')) border border-red-500 @else border-1 border-gray-200 @endif"
                                     type="text" name="complaint_maker_org_name" value="{{old('complaint_maker_org_name')}}">
                                 @error('complaint_maker_org_name')
@@ -134,7 +135,7 @@
                             </label>
                         </div>
                         <div class="md:w-2/3">
-                            <input
+                            <input id="phoneNumber"
                                 class="bg-gray-200 appearance-none rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight @if($errors->has('phone')) border border-red-500 @else border-1 border-gray-200 @endif"
                                 type="text" name="phone" value="{{old('phone')}}">
                             @error('phone')
@@ -150,7 +151,7 @@
                             </label>
                         </div>
                         <div class="md:w-2/3">
-                            <input
+                            <input id="mail"
                                 class="bg-gray-200 appearance-none rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight @if($errors->has('email')) border border-red-500 @else border-1 border-gray-200 @endif"
                                 type="email" name="email" value="{{old('email')}}">
                             @error('email')
@@ -166,7 +167,7 @@
                             </label>
                         </div>
                         <div class="md:w-2/3">
-                            <input
+                            <input id="capitalProvince"
                                 class="bg-gray-200 appearance-none rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight @if($errors->has('country')) border border-red-500 @else border-1 border-gray-200 @endif"
                                 type="text" name="country" value="{{old('country')}}">
                             @error('country')
@@ -182,7 +183,7 @@
                             </label>
                         </div>
                         <div class="md:w-2/3">
-                            <input
+                            <input id="districtsum"
                                 class="bg-gray-200 appearance-none rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight @if($errors->has('district')) border border-red-500 @else border-1 border-gray-200 @endif"
                                 type="text" name="district" value="{{old('district')}}">
                             @error('district')
@@ -198,7 +199,7 @@
                             </label>
                         </div>
                         <div class="md:w-2/3">
-                            <input
+                            <input id="khorooBag"
                                 class="bg-gray-200 appearance-none rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight @if($errors->has('khoroo')) border border-red-500 @else border-1 border-gray-200 @endif"
                                 type="text" name="khoroo" value="{{old('khoroo')}}">
                             @error('khoroo')
@@ -440,7 +441,6 @@
                 success: function (result) {
                     $('#complaint_type_summary_id').html('<option value="">-- Сонгох --</option>');
                     $.each(result.summaries, function (key, value) {
-                        console.log(value.name);
                         $("#complaint_type_summary_id").append('<option value="' + value
                             .id + '">' + value.name + '</option>');
                     });
@@ -464,6 +464,19 @@
                 },
                 success: function (result) {
                     console.log(result);
+                    if(result != null){
+                        $("#lastname").val(result.lastname);
+                        $("#firstname").val(result.firstname);
+                        $("#phoneNumber").val(result.phoneNumber);
+                        $("#capitalProvince").val(result.capitalProvince);
+                        $("#districtsum").val(result.districtsum);
+                        $("#khorooBag").val(result.khorooBag);
+                        $("#mail").val(result.mail);
+                        $("#complaint_maker_org_name").val(result.firstname);
+                    }else{
+                        $("#empty").classList.toggle('hidden', result !== null);;
+                        $("#empty").html("мэдээлэл олдсонгүй");
+                    }
                 },
                 error: function(error) {
                     console.error('Error getting user data by code...');

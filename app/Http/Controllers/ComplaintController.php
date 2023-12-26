@@ -122,7 +122,7 @@ class ComplaintController extends Controller
     {
         $code = $request->input('consumer_code');
 
-        $userdata = Registration::where('code', $code)->get();
+        $userdata = Registration::where('code', $code)->first();
 
         return response()->json($userdata);
     }
