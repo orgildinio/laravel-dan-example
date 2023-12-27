@@ -223,6 +223,19 @@ class ComplaintController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'complaint_maker_org_name' => 'required',
+            'lastname' => 'required',
+            'firstname' => 'required',
+            'phone' => 'required',
+            'email' => 'required|email',
+            'country' => 'required',
+            'district' => 'required',
+            'khoroo' => 'required',
+            'complaint_type_summary_id' => 'required',
+            'complaint' => 'required',
+        ]);
+
         $input = $request->all();
         // dd($input);
         $user = Auth::user();

@@ -36,7 +36,7 @@
                         </div>
                         <div class="md:w-2/3">
                             <input type="text" id="datetime" name="complaint_date" class="bg-gray-200 appearance-none  rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight border-1 border-gray-200" />
-                            @error('lastname')
+                            @error('complaint_date')
                             <div class="text-red-500 text-sm">{{ $message }}</div>
                             @enderror
                         </div>
@@ -51,9 +51,9 @@
                             </div>
                             <div class="md:w-2/3">
                                 <input id="consumer_code"
-                                    class="bg-gray-200 appearance-none  rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight @if($errors->has('consumer_code')) border border-red-500 @else border-1 border-gray-200 @endif"
+                                    class="bg-orange-50 appearance-none  rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight border-gray-200"
                                     type="text" name="consumer_code" value="{{old('consumer_code')}}">
-                                    <p id="empty"></p>
+                                    <span id="empty" class="hidden text-xs text-red-500">Мэдээлэл олдсонгүй</span>
                             </div>
                         </div>
                     </div>
@@ -463,8 +463,9 @@
                     consumer_code: consumer_code,
                 },
                 success: function (result) {
-                    console.log(result);
-                    if(result != null){
+                    // console.log(result);
+                    if(JSON.stringify(result) !== '{}'){
+                        $("#empty").addClass('hidden');
                         $("#lastname").val(result.lastname);
                         $("#firstname").val(result.firstname);
                         $("#phoneNumber").val(result.phoneNumber);
@@ -474,8 +475,15 @@
                         $("#mail").val(result.mail);
                         $("#complaint_maker_org_name").val(result.firstname);
                     }else{
-                        $("#empty").classList.toggle('hidden', result !== null);;
-                        $("#empty").html("мэдээлэл олдсонгүй");
+                        $("#empty").removeClass('hidden');
+                        $("#lastname").val('');
+                        $("#firstname").val('');
+                        $("#phoneNumber").val('');
+                        $("#capitalProvince").val('');
+                        $("#districtsum").val('');
+                        $("#khorooBag").val('');
+                        $("#mail").val('');
+                        $("#complaint_maker_org_name").val('');
                     }
                 },
                 error: function(error) {
