@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Redis;
 use App\Http\Requests\ComplaintStoreRequest;
 use App\Models\ComplaintStep as ModelsComplaintStep;
 use App\Models\Registration;
+use App\Models\Status;
 
 class ComplaintController extends Controller
 {
@@ -138,8 +139,13 @@ class ComplaintController extends Controller
 
     public function index(Request $request)
     {
+        // dd($request);
         $daterange = $request->query('daterange');
         $search_text = $request->query('search_text');
+        $status_id = $request->query('status_id');
+        $org_id = $request->query('org_id');
+
+        $query = Complaint::query();
 
         if (isset($daterange)) {
             $dates = explode(' to ', $daterange);
@@ -149,19 +155,30 @@ class ComplaintController extends Controller
             $start_date = now()->subDay(30);
             $end_date = now();
         }
+        $query->whereBetween('complaint_date', [$start_date, $end_date]);
 
-        if (empty($search_text)) {
-            $search_text = "";
+        if ($search_text !== null) {
+            $query->where('complaint', 'LIKE', '%' . $search_text . '%');
         }
-        // dd($search_text);
 
-        // $complaints = Complaint::latest()->paginate(5);
-        $complaints = Complaint::where('complaint', 'LIKE', '%' . $search_text . '%')
-            ->whereBetween('complaint_date', [$start_date, $end_date])
-            ->latest()
-            ->paginate(5);
+        $selected_status = null;
+        if ($status_id !== null) {
+            $query->where('status_id', $status_id);
+            $selected_status = Status::find($status_id);
+        }
 
-        return view('complaints.index', compact('complaints', 'daterange', 'search_text'))
+        $selected_org = null;
+        if ($org_id !== null) {
+            $query->where('organization_id', $org_id);
+            $selected_org = Organization::find($org_id);
+        }
+
+        $complaints = $query->latest()->paginate(10);
+
+        $statuses = Status::all();
+        $orgs = Organization::all();
+
+        return view('complaints.index', compact('complaints', 'daterange', 'search_text', 'statuses', 'status_id', 'org_id', 'orgs', 'selected_status', 'selected_org'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 

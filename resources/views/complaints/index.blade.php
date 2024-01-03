@@ -1,44 +1,54 @@
 <x-admin-layout>
     <div class="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8  2xl:col-span-1">
         <div class="flex items-center justify-between mb-4">
-            <div class="container max-w-7xl mx-auto mt-8">
+            <div class="container mx-auto mt-8">
                 <div class="mb-4">
                     <h1 class="text-xl font-bold"> Нийт ирсэн санал, хүсэлт</h1>
-                    {{-- <div class="flex justify-end">
-                        <a href="{{ route('complaint.create') }}"
-                            class="px-4 py-2 rounded-md bg-black text-sky-100 hover:bg-gray-600">Нэмэх</a>
-                    </div> --}}
                 </div>
-                @if ($message = Session::get('success'))
-                <div class="bg-green-100 border-l-4 border-green-500 text-green-700 text-sm p-2 mb-4" role="alert">
-                    <p>{{ $message }}</p>
+                <div class="md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
+                    <button type="button" id="export-btn" class="flex items-center justify-center flex-shrink-0 px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200">
+                        <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
+                        </svg>
+                        Export
+                    </button>
                 </div>
-                @endif
-                <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 py-4">
-                    <div class="w-full md:w-2/3">
-                        <form method="GET" autocomplete="off" class="flex items-center">
-                            @csrf
-                            <div class="mr-3">
-                                <input type="text" id="simple-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2" placeholder="Хайх" name="search_text" value="{{$search_text}}">
-                            </div>
-                            <div class="mr-3">
-                                <input type="text" id="daterange" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2" placeholder="" name="daterange" value="{{$daterange}}">
-                            </div>
+                <br>
+                <form method="GET" autocomplete="off">
+                    @csrf
+                    <div class="flex flex-row justify-start items-center">
+                        <div class="mr-1">
+                            <input type="text" id="simple-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2" placeholder="Хайх" name="search_text" value="{{$search_text}}">
+                        </div>
+                        <div class="mr-1">
+                            <input type="text" id="daterange" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2" name="daterange" placeholder="Огноо" value="{{$daterange}}">
+                        </div>
+                        <div class="mr-1">
+                            <select name="status_id" id="status_id"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
+                            <option value="">Төлөв</option>
+                            @foreach ($statuses as $status)
+                            <option value="{{ $status->id }}" @selected($status->id === $selected_status?->id)>{{ $status->name }}</option>
+                            @endforeach
+                            </select>
+                        </div>
+                        <div class="mr-1">
+                            <select name="org_id" id="org_id"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
+                            <option value="">Байгууллага</option>
+                            @foreach ($orgs as $org)
+                            <option value="{{ $org->id }}" @selected($org->id === $selected_org?->id)>{{ $org->name }}</option>
+                            @endforeach
+                            </select>
+                        </div>
+                        <div>
                             <button type="submit" class="flex items-center justify-center text-white bg-primary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2">
                                 Хайх
                             </button>
-                        </form>
+                        </div>
                     </div>
-                    <div class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
-                        
-                        <button type="button" id="export-btn" class="flex items-center justify-center flex-shrink-0 px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200">
-                            <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
-                            </svg>
-                            Export
-                        </button>
-                    </div>
-                </div>
+                    </form>
+                <br>
                 <div class="flex flex-col">
                     <div class="overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
                         <div
