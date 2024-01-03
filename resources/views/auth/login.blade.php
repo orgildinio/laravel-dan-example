@@ -87,6 +87,7 @@
                 </div>
     
                 <div class="mx-auto max-w-xs">
+                    <x-validation-errors class="mb-4" />
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
             
