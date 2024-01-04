@@ -13,16 +13,19 @@
                         </label>
                     </div>
                     <div class="md:w-2/3">
-                        <select wire:model="status_id" name="status_id"
+                        <select wire:model="selectedAction" name="selectedAction"
                             class="bg-gray-200 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500">
                             <option>Сонгох</option>
-                            @foreach ($all_status as $status)
-                            <option value="{{ $status->id }}">{{ $status->action }}</option>
+                            @foreach ($actions as $action)
+                                <option value="{{$action}}">{{$action}}</option>
                             @endforeach
+                            {{-- @foreach ($all_status as $status)
+                            <option value="{{ $status->id }}">{{ $status->action }}</option>
+                            @endforeach --}}
                         </select>
                     </div>
                 </div>
-                @if ($status_id == 1)
+                @if ($selectedAction == "ТЗЭ-рүү шилжүүлэх")
                 <div class="md:flex md:items-center mb-2">
                     <div class="md:w-1/3">
                         <label class="block text-gray-500 text-sm font-bold md:text-right mb-1 md:mb-0 pr-4"
@@ -63,4 +66,14 @@
 
 @push('scripts')
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
+
+    <!-- JavaScript to reload the page after the modal closes -->
+    <script>
+        document.addEventListener('livewire:load', function () {
+            Livewire.on('reloadPage', function () {
+                console.log("reload")
+                location.reload();
+            });
+        });
+    </script>
 @endpush

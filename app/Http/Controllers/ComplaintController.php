@@ -185,6 +185,7 @@ class ComplaintController extends Controller
     public function complaintStatus(Request $request, $status_id)
     {
         $org_id = Auth::user()->org_id;
+        $logged_user_id = Auth::user()->id;
 
         $daterange = $request->query('daterange');
         $search_text = $request->query('search_text');
@@ -207,6 +208,7 @@ class ComplaintController extends Controller
             ->whereBetween('complaint_date', [$start_date, $end_date])
             ->where('status_id', $status_id)
             ->where('organization_id', $org_id)
+            // ->where('controlled_user_id', $logged_user_id)
             ->latest()
             ->paginate(5);
 
@@ -360,7 +362,7 @@ class ComplaintController extends Controller
 
         return redirect()->route('complaint.index')->with('success', 'Амжилттай хадгаллаа.');
     }
-    // Шинээр ирсэн гомдлыг хүлээн авсан болгох
+    // Шинээр ирсэн гомдлыг дарах үед хүлээн авсан болгох
     public function updateComplaintStatus($id)
     {
         $user = Auth::user();
@@ -370,7 +372,8 @@ class ComplaintController extends Controller
         // Update the record with the new data
         if ($record->status_id == 0) {
             $record->update([
-                'status_id' => 2
+                'status_id' => 2,
+                'controlled_user_id' => $user->id,
             ]);
             $complaint_step = ComplaintStep::create([
                 'org_id' => $user->org_id,
