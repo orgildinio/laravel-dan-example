@@ -208,7 +208,7 @@ class ComplaintController extends Controller
             ->whereBetween('complaint_date', [$start_date, $end_date])
             ->where('status_id', $status_id)
             ->where('organization_id', $org_id)
-            // ->where('controlled_user_id', $logged_user_id)
+            ->where('controlled_user_id', $logged_user_id)
             ->latest()
             ->paginate(5);
 
