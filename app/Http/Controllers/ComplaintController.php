@@ -176,7 +176,7 @@ class ComplaintController extends Controller
         $complaints = $query->latest()->paginate(10);
 
         $statuses = Status::all();
-        $orgs = Organization::all();
+        $orgs = Organization::orderBy('name', 'asc')->get();
 
         return view('complaints.index', compact('complaints', 'daterange', 'search_text', 'statuses', 'status_id', 'org_id', 'orgs', 'selected_status', 'selected_org'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
@@ -225,7 +225,7 @@ class ComplaintController extends Controller
     public function create()
     {
         $categories = Category::orderBy('name', 'asc')->get();
-        $orgs = Organization::orderBy('name', 'asc')->get();;
+        $orgs = Organization::orderBy('name', 'asc')->get();
         $channels = Channel::all();
         $complaint_types = ComplaintType::all();
         $energy_types = EnergyType::all();
