@@ -285,6 +285,7 @@ class ComplaintController extends Controller
 
         if ($user->org_id != null) {
             $input['status_id'] = 2;
+            $input['controlled_user_id'] = $user->id;
         } else {
             $input['status_id'] = 0;
         }
