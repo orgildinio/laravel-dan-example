@@ -16,7 +16,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::latest()->paginate(5);
+        $users = User::whereNotNull('org_id')->latest()->paginate(5);
 
         return view('users.index', compact('users'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
