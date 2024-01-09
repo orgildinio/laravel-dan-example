@@ -63,17 +63,3 @@
         </div>
     </div>
 </div>
-
-@push('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
-
-    <!-- JavaScript to reload the page after the modal closes -->
-    <script>
-        document.addEventListener('livewire:load', function () {
-            Livewire.on('reloadPage', function () {
-                console.log("reload")
-                location.reload();
-            });
-        });
-    </script>
-@endpush

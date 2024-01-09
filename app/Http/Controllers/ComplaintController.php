@@ -144,6 +144,7 @@ class ComplaintController extends Controller
         $search_text = $request->query('search_text');
         $status_id = $request->query('status_id');
         $org_id = $request->query('org_id');
+        $energy_type_id = $request->query('energy_type_id');
 
         $query = Complaint::query();
 
@@ -173,12 +174,19 @@ class ComplaintController extends Controller
             $selected_org = Organization::find($org_id);
         }
 
+        $selected_type = null;
+        if ($energy_type_id !== null) {
+            $query->where('energy_type_id', $energy_type_id);
+            $selected_type = EnergyType::find($energy_type_id);
+        }
+
         $complaints = $query->latest()->paginate(10);
 
         $statuses = Status::all();
         $orgs = Organization::orderBy('name', 'asc')->get();
+        $energy_types = EnergyType::all();
 
-        return view('complaints.index', compact('complaints', 'daterange', 'search_text', 'statuses', 'status_id', 'org_id', 'orgs', 'selected_status', 'selected_org'))
+        return view('complaints.index', compact('complaints', 'daterange', 'search_text', 'statuses', 'status_id', 'org_id', 'orgs', 'selected_status', 'selected_org', 'energy_type_id', 'selected_type', 'energy_types'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
@@ -203,14 +211,25 @@ class ComplaintController extends Controller
             $search_text = "";
         }
 
-        // $complaints = Complaint::latest()->paginate(5);
-        $complaints = Complaint::where('complaint', 'LIKE', '%' . $search_text . '%')
-            ->whereBetween('complaint_date', [$start_date, $end_date])
-            ->where('status_id', $status_id)
-            ->where('organization_id', $org_id)
-            ->where('controlled_user_id', $logged_user_id)
-            ->latest()
-            ->paginate(5);
+        if ($status_id == 0) {
+
+            $complaints = Complaint::where('complaint', 'LIKE', '%' . $search_text . '%')
+                ->whereBetween('complaint_date', [$start_date, $end_date])
+                ->where('status_id', $status_id)
+                ->where('organization_id', $org_id)
+                ->latest()
+                ->paginate(5);
+        } else {
+
+            $complaints = Complaint::where('complaint', 'LIKE', '%' . $search_text . '%')
+                ->whereBetween('complaint_date', [$start_date, $end_date])
+                ->where('status_id', $status_id)
+                ->where('organization_id', $org_id)
+                ->where('controlled_user_id', $logged_user_id)
+                ->latest()
+                ->paginate(5);
+        }
+
 
         // $complaints = Complaint::where('status_id', $status_id)->where('organization_id', $org_id)->latest()->paginate(5);
 
@@ -282,6 +301,9 @@ class ComplaintController extends Controller
         // if ($input['channel_id'] == null) $input['channel_id'] = 1;
         $input['channel_id'] = 1;
         $input['created_user_id'] = $user->id;
+
+        $register_date = Carbon::parse($input['complaint_date']);
+        $input['expire_date'] = $register_date->addHours(48);
 
         if ($user->org_id != null) {
             $input['status_id'] = 2;

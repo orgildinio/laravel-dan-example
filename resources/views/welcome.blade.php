@@ -7,7 +7,7 @@
             <div class="bg-primary text-center flex items-center justify-center h-32">
                 <div class="max-w-7xl mx-auto text-white p-2 text-lg sm:text-sm md:text-xl lg:text-2xl xl:text-2xl 2xl:text-3xl">
                     <!-- Content with responsive text size -->
-                    "Тусгай зөвшөөрөл эзэмшигчдийн хооронд болон тусгай зөвшөөрөл эзэмшигч хэрэглэгч хооронд үүссэн маргааныг харьяаллын дагуу шийдвэрлэх"
+                    "Тусгай зөвшөөрөл эзэмшигчдийн хооронд болон тусгай зөвшөөрөл эзэмшигч, хэрэглэгчийн хооронд үүссэн маргааныг харьяаллын дагуу шийдвэрлэх"
                 </div>
             </div>
             <div class="bg-white">

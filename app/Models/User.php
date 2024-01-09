@@ -40,7 +40,8 @@ class User extends Authenticatable
         'danBagKhorooName',
         'danPassportAddress',
         'danGender',
-        'role_id'
+        'role_id',
+        'phone'
     ];
 
     /**

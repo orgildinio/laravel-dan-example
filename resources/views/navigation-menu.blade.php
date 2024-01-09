@@ -16,17 +16,26 @@
                         {{ __('Нүүр') }}
                     </x-nav-link>
                 </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                {{-- <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link href="{{ route('complaints') }}" :active="request()->routeIs('complaints')">
                         {{ __('Санал хүсэлт') }}
                     </x-nav-link>
-                </div>
+                </div> --}}
+                @guest
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link href="{{ route('addComplaint') }}" :active="request()->routeIs('addComplaint')">
                         {{ __('Өргөдөл, гомдол илгээх') }}
                     </x-nav-link>
                 </div>
-                @auth    
+                @endguest
+                @auth
+                @if (Auth::user()->role?->name === 'dan' || Auth::user()->role?->name === 'admin')    
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link href="{{ route('addComplaint') }}" :active="request()->routeIs('addComplaint')">
+                        {{ __('Өргөдөл, гомдол илгээх') }}
+                    </x-nav-link>
+                </div>
+                @endif
                 @if (Auth::user()->role?->name !== 'dan') 
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
@@ -138,17 +147,26 @@
                 {{ __('Нүүр') }}
             </x-responsive-nav-link>
         </div>
-        <div class="pt-2 pb-3 space-y-1">
+        {{-- <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link href="{{ route('complaints') }}" :active="request()->routeIs('complaints')">
                 {{ __('Санал хүсэлт') }}
             </x-responsive-nav-link>
-        </div>
+        </div> --}}
+        @guest
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link href="{{ route('addComplaint') }}" :active="request()->routeIs('addComplaint')">
                 {{ __('Өргөдөл, гомдол илгээх') }}
             </x-responsive-nav-link>
         </div>
+        @endguest
         @auth    
+        @if (Auth::user()->role?->name === 'dan' || Auth::user()->role?->name === 'admin') 
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link href="{{ route('addComplaint') }}" :active="request()->routeIs('addComplaint')">
+                {{ __('Өргөдөл, гомдол илгээх') }}
+            </x-responsive-nav-link>
+        </div>
+        @endif
         @if (Auth::user()->role?->name !== 'dan') 
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">

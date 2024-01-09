@@ -18,14 +18,14 @@
                     @csrf
                     <div class="flex flex-row justify-start items-center">
                         <div class="mr-1">
-                            <input type="text" id="simple-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2" placeholder="Хайх" name="search_text" value="{{$search_text}}">
+                            <input type="text" id="simple-search" class="w-32 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block p-2" placeholder="Хайх" name="search_text" value="{{$search_text}}">
                         </div>
                         <div class="mr-1">
-                            <input type="text" id="daterange" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2" name="daterange" placeholder="Огноо" value="{{$daterange}}">
+                            <input type="text" id="daterange" class="w-32 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2" name="daterange" placeholder="Огноо" value="{{$daterange}}">
                         </div>
                         <div class="mr-1">
                             <select name="status_id" id="status_id"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
+                            class="w-32 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
                             <option value="">Төлөв</option>
                             @foreach ($statuses as $status)
                             <option value="{{ $status->id }}" @selected($status->id === $selected_status?->id)>{{ $status->name }}</option>
@@ -34,10 +34,19 @@
                         </div>
                         <div class="mr-1">
                             <select name="org_id" id="org_id"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
+                            class="w-32 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
                             <option value="">Байгууллага</option>
                             @foreach ($orgs as $org)
                             <option value="{{ $org->id }}" @selected($org->id === $selected_org?->id)>{{ $org->name }}</option>
+                            @endforeach
+                            </select>
+                        </div>
+                        <div class="mr-1">
+                            <select name="energy_type_id" id="energy_type_id"
+                            class="w-32 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
+                            <option value="">Төрөл</option>
+                            @foreach ($energy_types as $type)
+                            <option value="{{ $type->id }}" @selected($type->id === $selected_type?->id)>{{ $type->name }}</option>
                             @endforeach
                             </select>
                         </div>
@@ -70,22 +79,23 @@
                                             Төлөв</th>
                                         <th
                                             class="p-2 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
-                                            Овог, нэр</th>
-                                        <th
-                                            class="p-2 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
-                                            Регистр</th>
-                                        <th
-                                            class="p-2 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
-                                            Утас</th>
-                                        <th
-                                            class="p-2 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
                                             Байгууллага</th>
+                                        <th
+                                            class="p-2 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
+                                            Төрөл цах/дул</th>
+                                        <th
+                                            class="p-2 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
+                                            Овог, нэр</th>
+                                        
                                         <th
                                             class="p-2 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
                                             Санал, хүсэлт</th>
                                         <th
                                             class="p-2 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
                                             Огноо</th>
+                                        <th
+                                            class="p-2 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
+                                            Үлдсэн хугацаа</th>
                                         @if (Auth::user()->role?->name == 'admin') 
                                         <th class="px-6 py-3 text-sm text-left text-gray-500 border-b border-gray-200 bg-gray-50"
                                             colspan="3">
@@ -119,24 +129,21 @@
                                         </td>
 
                                         <td class="p-2 whitespace-no-wrap border-b border-gray-200">
+                                            <div class="text-sm leading-5 text-gray-900">{{$complaint->organization->name}}
+                                            </div>
+                                        </td>
+
+                                        <td class="p-2 whitespace-no-wrap border-b border-gray-200">
+                                            <div class="text-sm leading-5 text-gray-900">{{$complaint->energyType?->name}}
+                                            </div>
+                                        </td>
+
+                                        <td class="p-2 whitespace-no-wrap border-b border-gray-200">
                                             <div class="text-sm leading-5 text-gray-900">{{$complaint->lastname}} {{$complaint->firstname}}
                                             </div>
                                         </td>
 
-                                        <td class="p-2 whitespace-no-wrap border-b border-gray-200">
-                                            <div class="text-sm leading-5 text-gray-900">{{$complaint->registerNumber}}
-                                            </div>
-                                        </td>
-
-                                        <td class="p-2 whitespace-no-wrap border-b border-gray-200">
-                                            <div class="text-sm leading-5 text-gray-900">{{$complaint->phone}}
-                                            </div>
-                                        </td>
-
-                                        <td class="p-2 whitespace-no-wrap border-b border-gray-200">
-                                            <div class="text-sm leading-5 text-gray-900">{{$complaint->organization->name}}
-                                            </div>
-                                        </td>
+                                        
 
                                         <td class="p-2 whitespace-no-wrap border-b border-gray-200 text-sm">
                                             <p>{{$complaint->complaint}}</p>
@@ -145,6 +152,10 @@
                                         <td
                                             class="p-2 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200">
                                             <span>{{$complaint->complaint_date}}</span>
+                                        </td>
+                                        <td
+                                            class="p-2 text-sm leading-5 text-orange-500 whitespace-no-wrap border-b border-gray-200">
+                                            <span>{{ 48 - now()->diffInHours($complaint->complaint_date) > 0 ? 48 - now()->diffInHours($complaint->complaint_date) . " цаг үлдсэн" : "Хугацаа хэтэрсэн" }}</span>
                                         </td>
                                         @if (Auth::user()->role?->name == 'admin')
                                         <td

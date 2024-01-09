@@ -12,8 +12,9 @@ use Illuminate\Support\Facades\Auth;
 
 class ComplaintStep extends Component
 {
-    public $complaint_steps, $org_id, $status_id, $complaint_id, $recieved_user_id, $sent_user_id, $recieved_date, $sent_date, $desc, $orgs, $all_status, $actions, $selectedAction;
+    public $complaint_steps, $org_id, $status_id, $complaint_id, $recieved_user_id, $sent_user_id, $recieved_date, $sent_date, $desc, $orgs, $all_status, $actions, $selectedAction, $controlled_user_id;
     public $isOpen = 0;
+    public $showPermissionWarning = false;
 
     public function mount($complaint)
     {
@@ -22,6 +23,7 @@ class ComplaintStep extends Component
         // $this->sent_user_id = $complaint->created_user_id;
         // $this->status_id = $complaint->status_id;
         $this->org_id = $complaint->organization_id;
+        $this->controlled_user_id = $complaint->controlled_user_id;
         $this->complaint_steps = ComplaintStep::all();
         $this->orgs = Organization::all();
         $this->all_status = Status::all();
@@ -41,7 +43,16 @@ class ComplaintStep extends Component
 
     public function openModal()
     {
-        $this->isOpen = true;
+        // $this->isOpen = true;
+        // Check user permissions before opening the modal
+        if (Auth::user()->id == $this->controlled_user_id) {
+            $this->isOpen = true;
+            $this->showPermissionWarning = false;
+        } else {
+            // Optionally, you can notify the user that they don't have the required permission
+            $this->showPermissionWarning = true;
+            session()->flash('message', 'You do not have permission to open the modal.');
+        }
     }
 
     public function closeModal()
@@ -112,8 +123,8 @@ class ComplaintStep extends Component
                 break;
             case 'Сунгах':
                 // Шийдвэрлэх хугацааг 48 цагаар сунгах, төлөв өөрчлөгдөхгүй
-                $currentDate = Carbon::parse($complaint->complaint_date);
-                $complaint->complaint_date = $currentDate->addHours(48);
+                $expire_date = Carbon::parse($complaint->expire_date);
+                $complaint->expire_date = $expire_date->addHours(48);
                 $complaint->save();
                 break;
 
