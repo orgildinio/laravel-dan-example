@@ -90,6 +90,11 @@ class SidebarMenu extends Component
                 })
                 ->count();
         }
+        // Шилжүүлсэн гомдлын тоо
+        $sent_complaints = Complaint::where('organization_id', Auth::user()->org_id)
+            ->where('status_id', 1)
+            ->where('controlled_user_id', Auth::user()->id)
+            ->count();
 
         // Шийдвэрлэсэн гомдлын тоо
         // $solved_complaints = Complaint::where('status_id', 6)->where('organization_id', $org_id)->where('controlled_user_id', $user_id)->count();
@@ -119,6 +124,6 @@ class SidebarMenu extends Component
 
         $all_complaints = Complaint::all()->count();
 
-        return view('components.sidebar-menu', ['new_complaints' => $new_complaints, 'received_complaints' => $received_complaints, 'under_control_complaints' => $under_control_complaints, 'solved_complaints' => $solved_complaints, 'canceled_complaints' => $canceled_complaints, 'all_complaints' => $all_complaints]);
+        return view('components.sidebar-menu', ['new_complaints' => $new_complaints, 'received_complaints' => $received_complaints, 'under_control_complaints' => $under_control_complaints, 'solved_complaints' => $solved_complaints, 'canceled_complaints' => $canceled_complaints, 'all_complaints' => $all_complaints, 'sent_complaints' => $sent_complaints]);
     }
 }

@@ -260,6 +260,16 @@ class ComplaintController extends Controller
                         ->paginate(5);
                 }
                 break;
+            case '1':
+                // Шинээр ирсэн эсвэл шинээр шилжиж ирсэн
+                $complaints = Complaint::where('complaint', 'LIKE', '%' . $search_text . '%')
+                    ->whereBetween('complaint_date', [$start_date, $end_date])
+                    ->where('organization_id', Auth::user()->org_id)
+                    ->where('status_id', 1)
+                    ->where('controlled_user_id', Auth::user()->id)
+                    ->orderBy('complaints.created_at', 'desc')
+                    ->paginate(5);
+                break;
             case '2':
                 // Хүлээн авсан
                 if (Auth::user()->org_id == 99) {

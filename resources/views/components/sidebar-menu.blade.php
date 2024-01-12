@@ -59,6 +59,18 @@
                         $under_control_complaints !== 0 ? $under_control_complaints : '' }}</span>
                   </a>
                </li>
+               @if (Auth::user()->org_id == 99)
+               <li>
+                  <a href="{{ route('complaintStatus', ['id' => 1]) }}"
+                     class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group {{ request()->is('complaintStatus/1') ? 'bg-gray-100' : '' }}">
+                     <i class="fa-solid fa-inbox"></i>
+                     <span class="ml-3 flex-1 whitespace-nowrap">Шилжүүлсэн</span>
+                     <span
+                        class="bg-orange-100 text-gray-800 ml-3 text-sm font-medium inline-flex items-center justify-center px-2 rounded-full">{{
+                        $sent_complaints !== 0 ? $sent_complaints : '' }}</span>
+                  </a>
+               </li>
+               @endif
                <li>
                   <a href="{{ route('complaintStatus', ['id' => 6]) }}"
                      class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group {{ request()->is('complaintStatus/6') ? 'bg-gray-100' : '' }}">
