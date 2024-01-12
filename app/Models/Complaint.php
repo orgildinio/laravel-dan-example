@@ -8,6 +8,7 @@ use App\Models\Channel;
 use App\Models\Category;
 use App\Models\EnergyType;
 use App\Models\Organization;
+use App\Models\ComplaintStep;
 use App\Models\ComplaintType;
 use App\Models\ComplaintMakerType;
 use App\Models\ComplaintTypeSummary;
@@ -18,7 +19,8 @@ class Complaint extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['lastname', 'firstname', 'registerNumber', 'phone', 'country', 'district', 'khoroo', 'addressDetail', 'complaint', 'file_id', 'category_id', 'status_id', 'channel_id', 'organization_id', 'created_user_id', 'updated_user_id', 'email', 'audio_file_id', 'complaint_type_id', 'energy_type_id', 'complaint_maker_type_id', 'complaint_date', 'complaint_maker_org_name', 'complaint_type_summary_id', 'controlled_user_id', 'expire_date'];
+    protected $fillable = ['lastname', 'firstname', 'registerNumber', 'phone', 'country', 'district', 'khoroo', 'addressDetail', 'complaint', 'file_id', 'category_id', 'status_id', 'channel_id', 'organization_id', 'created_user_id', 'updated_user_id', 'email', 'audio_file_id', 'complaint_type_id', 'energy_type_id', 'complaint_maker_type_id', 'complaint_date', 'complaint_maker_org_name', 'complaint_type_summary_id', 'controlled_user_id', 'expire_date', 'second_org_id', 'second_status_id', 'second_user_id'];
+    // protected $guarded = ['consumer_code'];
 
     public function file()
     {
@@ -64,5 +66,9 @@ class Complaint extends Model
     public function complaintTypeSummary()
     {
         return $this->belongsTo(ComplaintTypeSummary::class);
+    }
+    public function complaintSteps()
+    {
+        return $this->hasMany(ComplaintStep::class);
     }
 }

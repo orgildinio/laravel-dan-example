@@ -174,6 +174,12 @@ class ComplaintController extends Controller
             $selected_org = Organization::find($org_id);
         }
 
+        // Нэвтэрсэн хэрэглэгч ЭХЗХ биш ТЗЭ бол зөвхөн тухайн байгууллагын мэдээллийг харуулна
+        $logged_user_org_id = Auth::user()->org_id;
+        if ($logged_user_org_id != 99) {
+            $query->where('organization_id', $logged_user_org_id);
+        }
+
         $selected_type = null;
         if ($energy_type_id !== null) {
             $query->where('energy_type_id', $energy_type_id);
@@ -211,23 +217,146 @@ class ComplaintController extends Controller
             $search_text = "";
         }
 
-        if ($status_id == 0) {
+        // if ($status_id == 0) {
 
-            $complaints = Complaint::where('complaint', 'LIKE', '%' . $search_text . '%')
-                ->whereBetween('complaint_date', [$start_date, $end_date])
-                ->where('status_id', $status_id)
-                ->where('organization_id', $org_id)
-                ->latest()
-                ->paginate(5);
-        } else {
+        //     $complaints = Complaint::where('complaint', 'LIKE', '%' . $search_text . '%')
+        //         ->whereBetween('complaint_date', [$start_date, $end_date])
+        //         ->where('status_id', $status_id)
+        //         ->where('organization_id', $org_id)
+        //         ->latest()
+        //         ->paginate(5);
+        // } else {
 
-            $complaints = Complaint::where('complaint', 'LIKE', '%' . $search_text . '%')
-                ->whereBetween('complaint_date', [$start_date, $end_date])
-                ->where('status_id', $status_id)
-                ->where('organization_id', $org_id)
-                ->where('controlled_user_id', $logged_user_id)
-                ->latest()
-                ->paginate(5);
+        //     $complaints = Complaint::where('complaint', 'LIKE', '%' . $search_text . '%')
+        //         ->whereBetween('complaint_date', [$start_date, $end_date])
+        //         ->where('status_id', $status_id)
+        //         ->where('organization_id', $org_id)
+        //         ->where('controlled_user_id', $logged_user_id)
+        //         ->latest()
+        //         ->paginate(5);
+        // }
+        switch ($status_id) {
+            case '0':
+                // Шинээр ирсэн эсвэл шинээр шилжиж ирсэн
+                $complaints = Complaint::where('complaint', 'LIKE', '%' . $search_text . '%')
+                    ->whereBetween('complaint_date', [$start_date, $end_date])
+                    ->where(function ($query) {
+                        $query->where('organization_id', Auth::user()->org_id)
+                            ->orWhere('second_org_id', Auth::user()->org_id);
+                    })
+                    ->where(function ($query) {
+                        $query->where('status_id', 0)
+                            ->orWhere('second_status_id', 0);
+                    })
+                    ->orderBy('complaints.created_at', 'desc')
+                    ->paginate(5);
+                break;
+            case '2':
+                // Хүлээн авсан
+                if (Auth::user()->org_id == 99) {
+
+                    $complaints = Complaint::where('complaint', 'LIKE', '%' . $search_text . '%')
+                        ->whereBetween('complaint_date', [$start_date, $end_date])
+                        ->where('organization_id', Auth::user()->org_id)
+                        ->where('status_id', 2)
+                        ->where('controlled_user_id', Auth::user()->id)
+                        ->orderBy('complaints.created_at', 'desc')
+                        ->paginate(5);
+                } else {
+                    $complaints = Complaint::where('complaint', 'LIKE', '%' . $search_text . '%')
+                        ->whereBetween('complaint_date', [$start_date, $end_date])
+                        ->where(function ($query) {
+                            $query->where('organization_id', Auth::user()->org_id)
+                                ->orWhere('second_org_id', Auth::user()->org_id);
+                        })
+                        ->where(function ($query) {
+                            $query->where('status_id', 2)
+                                ->orWhere('second_status_id', 2);
+                        })
+                        ->where(function ($query) {
+                            $query->where('controlled_user_id', Auth::user()->id)
+                                ->orWhere('second_user_id', Auth::user()->id);
+                        })
+                        ->orderBy('complaints.created_at', 'desc')
+                        ->paginate(5);
+                }
+                break;
+            case '3':
+                // Хянаж байгаа
+                if (Auth::user()->org_id == 99) {
+                    $complaints = Complaint::where('complaint', 'LIKE', '%' . $search_text . '%')
+                        ->whereBetween('complaint_date', [$start_date, $end_date])
+                        ->where('organization_id', Auth::user()->org_id)
+                        ->where('status_id', 3)
+                        ->where('controlled_user_id', Auth::user()->id)
+                        ->orderBy('complaints.created_at', 'desc')
+                        ->paginate(5);
+                } else {
+
+                    $complaints = Complaint::where('complaint', 'LIKE', '%' . $search_text . '%')
+                        ->whereBetween('complaint_date', [$start_date, $end_date])
+                        ->where(function ($query) {
+                            $query->where('organization_id', Auth::user()->org_id)
+                                ->orWhere('second_org_id', Auth::user()->org_id);
+                        })
+                        // ->where('status_id', 3)
+                        ->where(function ($query) {
+                            $query->where('status_id', 3)
+                                ->orWhere('second_status_id', 3);
+                        })
+                        ->whereNull('second_status_id')
+                        ->where(function ($query) {
+                            $query->where('controlled_user_id', Auth::user()->id)
+                                ->orWhere('second_user_id', Auth::user()->id);
+                        })
+                        ->orderBy('complaints.created_at', 'desc')
+                        ->paginate(5);
+                }
+                break;
+            case '4':
+                // Цуцалсан
+                $complaints = Complaint::where('complaint', 'LIKE', '%' . $search_text . '%')
+                    ->whereBetween('complaint_date', [$start_date, $end_date])
+                    ->where('status_id', $status_id)
+                    ->where('organization_id', $org_id)
+                    ->where('controlled_user_id', $logged_user_id)
+                    ->latest()
+                    ->paginate(5);
+                break;
+            case '6':
+                // Шийдвэрлэсэн
+                if (Auth::user()->org_id == 99) {
+                    $complaints = Complaint::where('complaint', 'LIKE', '%' . $search_text . '%')
+                        ->whereBetween('complaint_date', [$start_date, $end_date])
+                        ->where('organization_id', Auth::user()->org_id)
+                        ->where('status_id', 6)
+                        ->where('controlled_user_id', Auth::user()->id)
+                        ->orderBy('complaints.created_at', 'desc')
+                        ->paginate(5);
+                } else {
+
+                    $complaints = Complaint::where('complaint', 'LIKE', '%' . $search_text . '%')
+                        ->whereBetween('complaint_date', [$start_date, $end_date])
+                        ->where(function ($query) {
+                            $query->where('organization_id', Auth::user()->org_id)
+                                ->orWhere('second_org_id', Auth::user()->org_id);
+                        })
+                        ->where(function ($query) {
+                            $query->where('status_id', 6)
+                                ->orWhere('second_status_id', 6);
+                        })
+                        ->where(function ($query) {
+                            $query->where('controlled_user_id', Auth::user()->id)
+                                ->orWhere('second_user_id', Auth::user()->id);
+                        })
+                        ->orderBy('complaints.created_at', 'desc')
+                        ->paginate(5);
+                }
+                break;
+
+            default:
+                // Handle the default case or show an error
+                break;
         }
 
 
@@ -262,9 +391,9 @@ class ComplaintController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'complaint_maker_org_name' => 'required',
-            'lastname' => 'required',
-            'firstname' => 'required',
+            // 'complaint_maker_org_name' => 'required',
+            // 'lastname' => 'required',
+            // 'firstname' => 'required',
             'phone' => 'required',
             'email' => 'required|email',
             'country' => 'required',
@@ -318,7 +447,11 @@ class ComplaintController extends Controller
 
         Complaint::create($input);
 
-        return redirect()->route('complaints')->with('success', 'Санал хүсэлт амжилттай бүртгэлээ.');
+        if (Auth::user()->org_id != null) {
+            return redirect()->route('complaint.create')->with('success', 'Санал хүсэлт амжилттай бүртгэлээ.');
+        } else {
+            return redirect()->route('complaints')->with('success', 'Санал хүсэлт амжилттай бүртгэлээ.');
+        }
     }
 
     /**
@@ -391,6 +524,8 @@ class ComplaintController extends Controller
         $user = Auth::user();
         // Find the record by ID
         $record = Complaint::find($id);
+        // $recordStep = ComplaintStep::where('complaint_id', $id)->where('status_id', 0)->first();
+        // $countSteps = ComplaintStep::where('complaint_id', $id)->count();
 
         // Update the record with the new data
         if ($record->status_id == 0) {
@@ -401,20 +536,52 @@ class ComplaintController extends Controller
             $complaint_step = ComplaintStep::create([
                 'org_id' => $user->org_id,
                 'complaint_id' => $record->id,
-                'recieved_user_id' => $user->id,
-                'sent_user_id' => $record->id,
+                // 'recieved_user_id' => $user->id,
+                'sent_user_id' => $user->id,
                 'recieved_date' => now(),
                 'sent_date' => now(),
                 'desc' => 'Хүлээн авсан',
                 'status_id' => 2
 
             ]);
-            // dd($complaint_step);
-            // Return a response (optional)
+
             return response()->json(['message' => 'Record updated successfully', 'record' => $record, 'complaint_step' => $complaint_step]);
         }
+        if ($record->second_status_id == 0 && $record->second_org_id == Auth::user()->org_id) {
+            $record->update([
+                'second_status_id' => 2,
+                'second_user_id' => $user->id,
+            ]);
+            $complaint_step = ComplaintStep::create([
+                'org_id' => $user->org_id,
+                'complaint_id' => $record->id,
+                // 'recieved_user_id' => $user->id,
+                'sent_user_id' => $user->id,
+                'recieved_date' => now(),
+                'sent_date' => now(),
+                'desc' => 'Хүлээн авсан',
+                'status_id' => 2
 
-        // Return a response (optional)
+            ]);
+
+            return response()->json(['message' => 'Record updated successfully', 'record' => $record, 'complaint_step' => $complaint_step]);
+        }
+        // if ($user->org_id == $recordStep->org_id && $recordStep->status_id == 1 && $countSteps == 1) {
+        //     $complaint_step = ComplaintStep::create([
+        //         'org_id' => $user->org_id,
+        //         'complaint_id' => $record->id,
+        //         // 'recieved_user_id' => $user->id,
+        //         'sent_user_id' => $user->id,
+        //         'recieved_date' => now(),
+        //         'sent_date' => now(),
+        //         'desc' => 'Хүлээн авсан',
+        //         'status_id' => 2
+
+        //     ]);
+
+        //     return response()->json(['message' => 'Record updated successfully']);
+        // }
+
         return response()->json(['message' => 'Record not updated']);
     }
 

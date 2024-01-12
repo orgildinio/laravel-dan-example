@@ -32,6 +32,7 @@
                             @endforeach
                             </select>
                         </div>
+                        @if (Auth::user()->org_id == 99)        
                         <div class="mr-1">
                             <select name="org_id" id="org_id"
                             class="w-32 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
@@ -41,6 +42,7 @@
                             @endforeach
                             </select>
                         </div>
+                        @endif
                         <div class="mr-1">
                             <select name="energy_type_id" id="energy_type_id"
                             class="w-32 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
@@ -155,7 +157,7 @@
                                         </td>
                                         <td
                                             class="p-2 text-sm leading-5 text-orange-500 whitespace-no-wrap border-b border-gray-200">
-                                            <span>{{ 48 - now()->diffInHours($complaint->complaint_date) > 0 ? 48 - now()->diffInHours($complaint->complaint_date) . " цаг үлдсэн" : "Хугацаа хэтэрсэн" }}</span>
+                                            <span>{{ now()->diffInHours($complaint->expire_date) > 0 ? now()->diffInHours($complaint->expire_date) . " цаг үлдсэн" : "Хугацаа хэтэрсэн" }}</span>
                                         </td>
                                         @if (Auth::user()->role?->name == 'admin')
                                         <td
