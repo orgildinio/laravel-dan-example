@@ -77,6 +77,7 @@ class SidebarMenu extends Component
                     $query->where('status_id', 3)
                         ->orWhere('second_status_id', 3);
                 })
+                ->whereNull('second_status_id')
                 ->where(function ($query) {
                     $query->where('controlled_user_id', Auth::user()->id)
                         ->orWhere('second_user_id', Auth::user()->id);
