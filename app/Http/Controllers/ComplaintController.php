@@ -238,18 +238,27 @@ class ComplaintController extends Controller
         switch ($status_id) {
             case '0':
                 // Шинээр ирсэн эсвэл шинээр шилжиж ирсэн
-                $complaints = Complaint::where('complaint', 'LIKE', '%' . $search_text . '%')
-                    ->whereBetween('complaint_date', [$start_date, $end_date])
-                    ->where(function ($query) {
-                        $query->where('organization_id', Auth::user()->org_id)
-                            ->orWhere('second_org_id', Auth::user()->org_id);
-                    })
-                    ->where(function ($query) {
-                        $query->where('status_id', 0)
-                            ->orWhere('second_status_id', 0);
-                    })
-                    ->orderBy('complaints.created_at', 'desc')
-                    ->paginate(5);
+                if (Auth::user()->org_id == 99) {
+                    $complaints = Complaint::where('complaint', 'LIKE', '%' . $search_text . '%')
+                        ->whereBetween('complaint_date', [$start_date, $end_date])
+                        ->where('organization_id', Auth::user()->org_id)
+                        ->where('status_id', 0)
+                        ->orderBy('complaints.created_at', 'desc')
+                        ->paginate(5);
+                } else {
+                    $complaints = Complaint::where('complaint', 'LIKE', '%' . $search_text . '%')
+                        ->whereBetween('complaint_date', [$start_date, $end_date])
+                        ->where(function ($query) {
+                            $query->where('organization_id', Auth::user()->org_id)
+                                ->orWhere('second_org_id', Auth::user()->org_id);
+                        })
+                        ->where(function ($query) {
+                            $query->where('status_id', 0)
+                                ->orWhere('second_status_id', 0);
+                        })
+                        ->orderBy('complaints.created_at', 'desc')
+                        ->paginate(5);
+                }
                 break;
             case '2':
                 // Хүлээн авсан
@@ -304,7 +313,7 @@ class ComplaintController extends Controller
                             $query->where('status_id', 3)
                                 ->orWhere('second_status_id', 3);
                         })
-                        ->whereNull('second_status_id')
+                        // ->whereNull('second_status_id')
                         ->where(function ($query) {
                             $query->where('controlled_user_id', Auth::user()->id)
                                 ->orWhere('second_user_id', Auth::user()->id);
