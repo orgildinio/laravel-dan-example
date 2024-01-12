@@ -25,7 +25,7 @@ class ComplaintStep extends Component
         $this->controlled_user_id = $complaint->controlled_user_id;
         $this->second_user_id = $complaint->second_user_id;
         $this->complaint_steps = ComplaintStep::all();
-        $this->orgs = Organization::all();
+        $this->orgs = Organization::orderBy('name', 'asc')->get();
         $this->all_status = Status::all();
         if (Auth::user()->org_id == 99) {
             $this->actions = ['Тайлбар', 'Шилжүүлэх', 'Хянаж байгаа', 'Цуцлах', 'Шийдвэрлэх', 'Сунгах', 'ТЗЭ-рүү шилжүүлэх'];
