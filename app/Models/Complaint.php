@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\File;
+use App\Models\User;
 use App\Models\Status;
 use App\Models\Channel;
 use App\Models\Category;
@@ -58,6 +59,10 @@ class Complaint extends Model
     public function energyType()
     {
         return $this->belongsTo(EnergyType::class);
+    }
+    public function controlledUser()
+    {
+        return $this->belongsTo(User::class);
     }
     public function complaintMakerType()
     {

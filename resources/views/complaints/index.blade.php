@@ -81,6 +81,9 @@
                                             Төлөв</th>
                                         <th
                                             class="p-2 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
+                                            Мэргэжилтэн</th>
+                                        <th
+                                            class="p-2 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
                                             Байгууллага</th>
                                         <th
                                             class="p-2 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
@@ -127,6 +130,11 @@
 
                                         <td class="p-2 whitespace-no-wrap border-b border-gray-200">
                                             <div class="text-sm leading-5 text-gray-900">{{$complaint->status?->name}}
+                                            </div>
+                                        </td>
+
+                                        <td class="p-2 whitespace-no-wrap border-b border-gray-200">
+                                            <div class="text-sm leading-5 text-gray-900">{{$complaint->controlledUser?->name}}
                                             </div>
                                         </td>
 
