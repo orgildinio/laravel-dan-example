@@ -446,8 +446,10 @@ class ComplaintController extends Controller
             $input['complaint_date'] = now();
         }
 
-        // if ($input['channel_id'] == null) $input['channel_id'] = 1;
-        $input['channel_id'] = 1;
+        if ($input['channel_id'] == null) {
+            $input['channel_id'] = 1;
+        }
+        // $input['channel_id'] = 1;
         $input['created_user_id'] = $user->id;
 
         $register_date = Carbon::parse($input['complaint_date']);
