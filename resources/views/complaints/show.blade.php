@@ -6,15 +6,23 @@
                 <div class="col-span-1 self-start sticky top-0 mr-4 p-6 bg-gray-50 shadow text-sm">
                     <h1 class="text-black font-bold mb-4 text-lg">Гомдол гаргасан:</h1>
                     <dl class="max-w-md text-gray-900 divide-y divide-gray-200">
+                        @if ($complaint->complaint_maker_type_id == 1)    
                         <div class="flex flex-col pb-3">
                             <dt class="mb-1 text-gray-500">Овог нэр</dt>
                             <dd class="font-semibold">{{mb_substr($complaint->lastname,
                                 0, 1)}}.{{$complaint->firstname}}</dd>
                         </div>
-                        <div class="flex flex-col py-3">
+                        @endif
+                        @if ($complaint->complaint_maker_type_id == 2)    
+                        <div class="flex flex-col pb-3">
+                            <dt class="mb-1 text-gray-500">ААН</dt>
+                            <dd class="font-semibold">{{$complaint->complaint_maker_org_name}}</dd>
+                        </div>
+                        @endif
+                        {{-- <div class="flex flex-col py-3">
                             <dt class="mb-1 text-gray-500">Регистр</dt>
                             <dd class="font-semibold">{{$complaint->registerNumber}}</dd>
-                        </div>
+                        </div> --}}
                         <div class="flex flex-col pt-3">
                             <dt class="mb-1 text-gray-500">Утас</dt>
                             <dd class="font-semibold">{{$complaint->phone}}</dd>
