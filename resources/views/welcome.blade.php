@@ -10,14 +10,14 @@
                     "Тусгай зөвшөөрөл эзэмшигчдийн хооронд болон тусгай зөвшөөрөл эзэмшигч, хэрэглэгчийн хооронд үүссэн маргааныг харьяаллын дагуу шийдвэрлэх"
                 </div>
             </div>
-            <div class="bg-white">
+            <div class="bg-white mb-10">
                 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <x-welcome />
                 </div>
             </div>
             
             {{-- <x-home-static-data></x-home-static-data> --}}
-            <div class="w-full">
+            <div class="w-full bg-red-500">
                 <x-faq></x-faq>
             </div>
         </div>
