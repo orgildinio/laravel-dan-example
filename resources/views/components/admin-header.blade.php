@@ -3,7 +3,7 @@
       <div class="flex items-center justify-between">
          <div class="flex items-center justify-start">
             <button id="toggleSidebarMobile" aria-expanded="true" aria-controls="sidebar"
-               class="lg:hidden mr-2 text-gray-600 hover:text-gray-900 cursor-pointer p-2 hover:bg-gray-100 focus:bg-gray-100 focus:ring-2 focus:ring-gray-100 rounded">
+               class="md:hidden mr-2 text-gray-600 hover:text-gray-900 cursor-pointer p-2 hover:bg-gray-100 focus:bg-gray-100 focus:ring-2 focus:ring-gray-100 rounded">
                <svg id="toggleSidebarMobileHamburger" class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
                   xmlns="http://www.w3.org/2000/svg">
                   <path fill-rule="evenodd"
@@ -15,6 +15,14 @@
                   <path fill-rule="evenodd"
                      d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
                      clip-rule="evenodd"></path>
+               </svg>
+            </button>
+            <button @click="sidebarOpen = !sidebarOpen" 
+               class="hidden md:block text-gray-600 hover:text-gray-900 cursor-pointer p-2 hover:bg-gray-100 focus:bg-gray-100 focus:ring-2 focus:ring-gray-100 rounded">
+               <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M4 7L7 7M20 7L11 7" stroke="#1C274C" stroke-width="1.5" stroke-linecap="round" />
+                  <path d="M20 17H17M4 17L13 17" stroke="#1C274C" stroke-width="1.5" stroke-linecap="round" />
+                  <path d="M4 12H7L20 12" stroke="#1C274C" stroke-width="1.5" stroke-linecap="round" />
                </svg>
             </button>
             <a href="{{ route('welcome') }}" class="text-xl font-bold flex items-center lg:ml-2.5">
@@ -45,16 +53,13 @@
                class="hidden sm:inline-flex ml-5 text-white bg-primary font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center mr-3">
                Нүүр хуудас
             </a> --}}
-            <button type="button"
-               class="flex mx-3 text-sm rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300"
+            <button type="button" class="flex mx-3 text-sm rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300"
                id="user-menu-button" aria-expanded="false" data-dropdown-toggle="dropdown">
                <span class="sr-only">Open user menu</span>
-               <img class="w-8 h-8 rounded-full" src="{{ asset('/image/account-avatar.svg')}}"
-                  alt="user photo">
+               <img class="w-8 h-8 rounded-full" src="{{ asset('/image/account-avatar.svg')}}" alt="user photo">
             </button>
             <!-- Dropdown menu -->
-            <div
-               class="hidden z-50 my-4 w-56 text-base list-none bg-white rounded divide-y divide-gray-100 shadow"
+            <div class="hidden z-50 my-4 w-56 text-base list-none bg-white rounded divide-y divide-gray-100 shadow"
                id="dropdown">
                <div class="py-3 px-4">
                   <span class="block text-sm font-semibold text-gray-900">{{Auth::user()->name}}</span>
@@ -62,18 +67,18 @@
                </div>
                <ul class="py-1 text-gray-500" aria-labelledby="dropdown">
                   <li>
-                     <a href="{{ route('profile.show') }}"
-                        class="block py-2 px-4 text-sm hover:bg-gray-100">Профайл</a>
+                     <a href="{{ route('profile.show') }}" class="block py-2 px-4 text-sm hover:bg-gray-100">Профайл</a>
                   </li>
                </ul>
                <ul class="py-1 text-gray-500" aria-labelledby="dropdown">
                   <li>
-                        <form method="POST" action="{{ route('logout') }}" x-data>
-                           @csrf
-                           <li>
-                              <a href="{{ route('logout') }}" @click.prevent="$root.submit();" class="block py-2 px-4 text-sm hover:bg-gray-100">{{ __('Гарах') }}</a>
-                          </li>
-                       </form>
+                     <form method="POST" action="{{ route('logout') }}" x-data>
+                        @csrf
+                  <li>
+                     <a href="{{ route('logout') }}" @click.prevent="$root.submit();"
+                        class="block py-2 px-4 text-sm hover:bg-gray-100">{{ __('Гарах') }}</a>
+                  </li>
+                  </form>
                   </li>
                </ul>
             </div>
