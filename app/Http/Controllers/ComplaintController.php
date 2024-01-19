@@ -425,9 +425,9 @@ class ComplaintController extends Controller
             $input['complaint_date'] = now();
         }
 
-        if ($input['channel_id'] == null) {
-            $input['channel_id'] = 1;
-        }
+        // if ($input['channel_id'] == null) {
+        //     $input['channel_id'] = 1;
+        // }
         // $input['channel_id'] = 1;
         $input['created_user_id'] = $user->id;
 
@@ -438,6 +438,7 @@ class ComplaintController extends Controller
             $input['status_id'] = 2;
             $input['controlled_user_id'] = $user->id;
         } else {
+            $input['channel_id'] = 1;
             $input['status_id'] = 0;
         }
 
