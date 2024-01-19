@@ -446,12 +446,12 @@ class ComplaintController extends Controller
             $input['organization_id'] = $user->org_id;
         }
 
-        Complaint::create($input);
+        $complaint = Complaint::create($input);
 
         if (Auth::user()->org_id != null) {
             return redirect()->route('complaint.create')->with('success', 'Санал хүсэлт амжилттай бүртгэлээ.');
         } else {
-            return redirect()->route('complaints')->with('success', 'Санал хүсэлт амжилттай бүртгэлээ.');
+            return redirect()->route('userComplaints', ['id' => $complaint->id])->with('success', 'Санал хүсэлт амжилттай бүртгэлээ.');
         }
     }
 
