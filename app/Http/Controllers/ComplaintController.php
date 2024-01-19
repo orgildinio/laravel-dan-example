@@ -217,24 +217,6 @@ class ComplaintController extends Controller
             $search_text = "";
         }
 
-        // if ($status_id == 0) {
-
-        //     $complaints = Complaint::where('complaint', 'LIKE', '%' . $search_text . '%')
-        //         ->whereBetween('complaint_date', [$start_date, $end_date])
-        //         ->where('status_id', $status_id)
-        //         ->where('organization_id', $org_id)
-        //         ->latest()
-        //         ->paginate(5);
-        // } else {
-
-        //     $complaints = Complaint::where('complaint', 'LIKE', '%' . $search_text . '%')
-        //         ->whereBetween('complaint_date', [$start_date, $end_date])
-        //         ->where('status_id', $status_id)
-        //         ->where('organization_id', $org_id)
-        //         ->where('controlled_user_id', $logged_user_id)
-        //         ->latest()
-        //         ->paginate(5);
-        // }
         switch ($status_id) {
             case '0':
                 // Шинээр ирсэн эсвэл шинээр шилжиж ирсэн
@@ -407,20 +389,17 @@ class ComplaintController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ComplaintStoreRequest $request)
     {
-        $request->validate([
-            // 'complaint_maker_org_name' => 'required',
-            // 'lastname' => 'required',
-            // 'firstname' => 'required',
-            'phone' => 'required',
-            'email' => 'required|email',
-            'country' => 'required',
-            'district' => 'required',
-            'khoroo' => 'required',
-            'complaint_type_summary_id' => 'required',
-            'complaint' => 'required',
-        ]);
+        // $request->validate([
+        //     'phone' => 'required',
+        //     'email' => 'required|email',
+        //     'country' => 'required',
+        //     'district' => 'required',
+        //     'khoroo' => 'required',
+        //     'complaint_type_summary_id' => 'required',
+        //     'complaint' => 'required',
+        // ]);
 
         $input = $request->all();
         // dd($input);
@@ -504,8 +483,9 @@ class ComplaintController extends Controller
         $channels = Channel::all();
         $complaint_types = ComplaintType::all();
         $energy_types = EnergyType::all();
+        $complaint_type_summaries = ComplaintTypeSummary::all();
 
-        return view('complaints.edit', compact('complaint', 'categories', 'orgs', 'channels', 'complaint_types', 'energy_types'));
+        return view('complaints.edit', compact('complaint', 'categories', 'orgs', 'channels', 'complaint_types', 'energy_types', 'complaint_type_summaries'));
     }
 
     /**
@@ -517,6 +497,16 @@ class ComplaintController extends Controller
      */
     public function update(ComplaintStoreRequest $request, $id)
     {
+        $request->validate([
+            'phone' => 'required',
+            'email' => 'required|email',
+            'country' => 'required',
+            'district' => 'required',
+            'khoroo' => 'required',
+            'complaint_type_summary_id' => 'required',
+            'complaint' => 'required',
+        ]);
+
         $complaint = Complaint::findOrFail($id);
         $user = Auth::user();
         $input = $request->all();
@@ -530,7 +520,7 @@ class ComplaintController extends Controller
             $input['file_id'] = $filename->id;
         }
 
-        $input['status_id'] = 0;
+        // $input['status_id'] = 0;
         $input['updated_user_id'] = $user->id;
 
         // dd($input);
@@ -587,21 +577,6 @@ class ComplaintController extends Controller
 
             return response()->json(['message' => 'Record updated successfully', 'record' => $record, 'complaint_step' => $complaint_step]);
         }
-        // if ($user->org_id == $recordStep->org_id && $recordStep->status_id == 1 && $countSteps == 1) {
-        //     $complaint_step = ComplaintStep::create([
-        //         'org_id' => $user->org_id,
-        //         'complaint_id' => $record->id,
-        //         // 'recieved_user_id' => $user->id,
-        //         'sent_user_id' => $user->id,
-        //         'recieved_date' => now(),
-        //         'sent_date' => now(),
-        //         'desc' => 'Хүлээн авсан',
-        //         'status_id' => 2
-
-        //     ]);
-
-        //     return response()->json(['message' => 'Record updated successfully']);
-        // }
 
         return response()->json(['message' => 'Record not updated']);
     }

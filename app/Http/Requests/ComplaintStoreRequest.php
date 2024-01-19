@@ -24,15 +24,15 @@ class ComplaintStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'firstname' => 'required',
-            'lastname' => 'required',
-            'registerNumber' => 'required',
+            // 'firstname' => 'required',
+            // 'lastname' => 'required',
+            // 'registerNumber' => 'required',
             'phone' => 'required',
-            'email' => 'required|email',
-            'country' => 'required',
-            'district' => 'required',
-            'khoroo' => 'required',
-            'addressDetail' => 'required',
+            // 'email' => 'required|email',
+            // 'country' => 'required',
+            // 'district' => 'required',
+            // 'khoroo' => 'required',
+            // 'addressDetail' => 'required',
             'complaint' => 'required',
         ];
     }
@@ -40,15 +40,15 @@ class ComplaintStoreRequest extends FormRequest
     public function messages()
     {
         return [
-            'firstname.required' => 'Заавал бөглөнө үү!',
-            'lastname.required' => 'Заавал бөглөнө үү',
-            'registerNumber.required' => 'Заавал бөглөнө үү!',
+            // 'firstname.required' => 'Заавал бөглөнө үү!',
+            // 'lastname.required' => 'Заавал бөглөнө үү',
+            // 'registerNumber.required' => 'Заавал бөглөнө үү!',
             'phone.required' => 'Заавал бөглөнө үү!',
-            'email.required' => 'Заавал бөглөнө үү!',
-            'country.required' => 'Заавал бөглөнө үү!',
-            'district.required' => 'Заавал бөглөнө үү!',
-            'khoroo.required' => 'Заавал бөглөнө үү!',
-            'addressDetail.required' => 'Заавал бөглөнө үү!',
+            // 'email.required' => 'Заавал бөглөнө үү!',
+            // 'country.required' => 'Заавал бөглөнө үү!',
+            // 'district.required' => 'Заавал бөглөнө үү!',
+            // 'khoroo.required' => 'Заавал бөглөнө үү!',
+            // 'addressDetail.required' => 'Заавал бөглөнө үү!',
             'complaint.required' => 'Заавал бөглөнө үү!',
         ];
     }

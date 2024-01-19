@@ -3,7 +3,7 @@
         <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-5 m-5">
                 <div>
-                    <h1 class="py-4 mb-2 mt-0 text-2xl font-medium leading-tight text-gray">Өргөдөл, гомдол
+                    <h1 class="py-4 mb-2 mt-0 text-2xl font-medium leading-tight text-gray text-center">Өргөдөл, гомдол
                         шинээр бүртгэх</h1>
                 </div>
                 <form method="POST" action="{{ route('complaint.store') }}" enctype="multipart/form-data">
@@ -413,31 +413,6 @@
                 data: {
                     energy_type_id: energy_type_id,
                     complaint_type_id: complaint_type_id,
-                },
-                success: function (result) {
-                    $('#complaint_type_summary_id').html('<option value="">-- Сонгох --</option>');
-                    $.each(result.summaries, function (key, value) {
-                        $("#complaint_type_summary_id").append('<option value="' + value
-                            .id + '">' + value.name + '</option>');
-                    });
-                },
-                error: function(error) {
-                    console.error('Error getting summary data...');
-                }
-        });
-    })
-
-    $("#complaint_type_id").change(function(){
-        var complaint_type_id=$(this).val();
-        var energy_type_id = $("input[name='energy_type_id']:checked").val();
-
-        $.ajax({
-                url: '/getTypeSummary',
-                method: 'GET',
-                headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
-                data: {
-                    complaint_type_id: complaint_type_id,
-                    energy_type_id: energy_type_id,
                 },
                 success: function (result) {
                     $('#complaint_type_summary_id').html('<option value="">-- Сонгох --</option>');

@@ -60,10 +60,14 @@
                                             Төлөв</th> --}}
                                         <th
                                             class="p-2 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
-                                            Овог, нэр</th>
+                                            Төрөл цах/дул</th>
+                                        <th
                                         <th
                                             class="p-2 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
-                                            Регистр</th>
+                                            Овог, нэр</th>
+                                        {{-- <th
+                                            class="p-2 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
+                                            Регистр</th> --}}
                                         <th
                                             class="p-2 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
                                             Утас</th>
@@ -110,16 +114,20 @@
                                                     <div class="text-sm leading-5 text-gray-900">{{$complaint->status->name}}
                                                     </div>
                                                 </td> --}}
+                                                <td class="p-2 whitespace-no-wrap border-b border-gray-200">
+                                                    <div class="text-sm leading-5 text-gray-900">{{$complaint->energyType?->name}}
+                                                    </div>
+                                                </td>
     
                                                 <td class="p-2 whitespace-no-wrap border-b border-gray-200">
                                                     <div class="text-sm leading-5 text-gray-900">{{$complaint->lastname}} {{$complaint->firstname}}
                                                     </div>
                                                 </td>
     
-                                                <td class="p-2 whitespace-no-wrap border-b border-gray-200">
+                                                {{-- <td class="p-2 whitespace-no-wrap border-b border-gray-200">
                                                     <div class="text-sm leading-5 text-gray-900">{{$complaint->registerNumber}}
                                                     </div>
-                                                </td>
+                                                </td> --}}
     
                                                 <td class="p-2 whitespace-no-wrap border-b border-gray-200">
                                                     <div class="text-sm leading-5 text-gray-900">{{$complaint->phone}}

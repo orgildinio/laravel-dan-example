@@ -1,6 +1,5 @@
 <x-admin-layout>
-   <div class="flex h-screen">
-
+   {{-- <div class="flex h-screen">
       <!-- Left Section -->
       <div class="w-1/2 border-r border-gray-300">
          <h1 class="text-xl font-semibold text-center pb-2"><span class="bg-blue-700 text-white px-2 py-1 rounded-md">Эрчим хүчний зохицуулах хороо</span></h1>
@@ -54,13 +53,11 @@
             </div>
          </section>
       </div>
-
       <!-- Right Section -->
       <div class="w-1/2 flex items-center justify-center">
          <h2 class="text-2xl font-semibold">Тусгай зөвшөөрөл эзэмшигчид</h2>
       </div>
-
-   </div>
+   </div> --}}
    <div class="p-4 sm:p-6 xl:p-8">
       {{-- <div class="mr-6">
          <h1 class="text-4xl font-semibold mb-2">Хянах самбар</h1>
