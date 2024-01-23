@@ -9,18 +9,18 @@
             <option value="3">Эрчим хүчний салбарын хэмжээнд</option>
          </select>
       </div>
-      <ul class="hidden text-md font-medium text-center text-gray-900 rounded-lg shadow sm:flex">
+      <ul class="hidden text-md text-center text-gray-900 rounded-lg shadow sm:flex bg-white p-2">
          <li class="w-full">
-            <a href="#" class="inline-block w-full p-4 border-r border-gray-200 bg-blue-700 text-white"
-               @click="activeTab = 1" :class="{ 'active font-bold': activeTab === 1 }">Эрчим хүчний зохицуулах хороо</a>
+            <a href="#" class="inline-block w-full p-4"
+               @click="activeTab = 1" :class="{ 'active font-bold text-white bg-blue-700 rounded-lg': activeTab === 1, 'bg-white': activeTab !== 1 }">Эрчим хүчний зохицуулах хороо</a>
          </li>
          <li class="w-full">
-            <a href="#" class="inline-block w-full p-4 border-r border-gray-200 bg-purple-700 text-white"
-               @click="activeTab = 2" :class="{ 'active font-bold': activeTab === 2 }">Тусгай зөвшөөрөл эзэмшигчид</a>
+            <a href="#" class="inline-block w-full p-4"
+               @click="activeTab = 2" :class="{ 'active font-bold text-white bg-purple-700 rounded-lg': activeTab === 2, 'bg-white': activeTab !== 2 }">Тусгай зөвшөөрөл эзэмшигчид</a>
          </li>
          <li class="w-full">
-            <a href="#" class="inline-block w-full p-4 border-r border-gray-200 bg-cyan-700 text-white"
-               @click="activeTab = 3" :class="{ 'active font-bold': activeTab === 3 }">Эрчим хүчний салбарын
+            <a href="#" class="inline-block w-full p-4"
+               @click="activeTab = 3" :class="{ 'active font-bold text-white bg-cyan-700 rounded-lg': activeTab === 3, 'bg-white': activeTab !== 3 }">Эрчим хүчний салбарын
                хэмжээнд</a>
          </li>
       </ul>
