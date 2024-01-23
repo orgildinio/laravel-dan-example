@@ -395,6 +395,28 @@
         });
     });
     //Өргөдлийн товч утга татах
+
+    // // Attach the change event handler to the select element
+    // $("input[name='energy_type_id']").on('change', function() {
+    //     // Get the selected value
+    //     updateFetchData();
+
+    // });
+    // $('#complaint_type_id').on('change', function() {
+    //     // Get the selected value
+    //     updateFetchData();
+
+    // });
+    // // Function to update the selected values
+    // function updateFetchData() {
+    //     // Get the selected values from both select boxes
+    //     var selectedEnergyTypeId = $('#selectBox1').val();
+    //     var selectedValue2 = $('#selectBox2').val();
+
+    //     // Display the selected values (you can replace this with your own logic)
+    //     $('#selectedValues').text('Selected Value 1: ' + selectedValue1 + '\nSelected Value 2: ' + selectedValue2);
+    // }
+
     $("input[name='energy_type_id']").change(function(){
         if( $(this).is(":checked") ){
             var energy_type_id = $(this).val();
@@ -402,9 +424,9 @@
         if($("#complaint_type_id").val() ==null){
             var complaint_type_id = null;
         }else{
-
             var complaint_type_id=$("#complaint_type_id").val();
         }
+        console.log(complaint_type_id);
 
         $.ajax({
                 url: '/getTypeSummary',
