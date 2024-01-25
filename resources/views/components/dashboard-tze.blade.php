@@ -201,6 +201,7 @@
           ]
        }]
     });
+    const customColorsStacked = ['#fca5a5', '#d1d5db', '#86efac', '#fde047', '#93c5fd', '#fdba74', '#f9fafb'];
     // Create the pie chart Иргэн ААН СӨХ ТЗЭ Төрийн байгууллага
     Highcharts.chart('pieChartStatusTze', {
        chart: {
@@ -222,7 +223,7 @@
              showInLegend: true
           }
        },
-       colors: customColors, // Set custom colors
+       colors: customColorsStacked, // Set custom colors
        series: [{
           name: 'Өргөдөл, гомдол',
           colorByPoint: true,
@@ -264,7 +265,7 @@
        }]
     });
  
-    const customColorsStacked = ['#fca5a5', '#d1d5db', '#86efac', '#fde047', '#93c5fd', '#fdba74', '#f9fafb'];
+    
  
     // Stacked Chart 1
     const dataTze = [

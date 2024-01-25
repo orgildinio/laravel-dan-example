@@ -20,8 +20,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redis;
 use App\Http\Requests\ComplaintStoreRequest;
+use App\Models\Aimag;
 use App\Models\ComplaintStep as ModelsComplaintStep;
 use App\Models\Registration;
+use App\Models\Soum;
 use App\Models\Status;
 
 class ComplaintController extends Controller
@@ -379,8 +381,10 @@ class ComplaintController extends Controller
         $complaint_types = ComplaintType::all();
         $energy_types = EnergyType::all();
         $complaint_type_summaries = ComplaintTypeSummary::all();
+        $aimags = Aimag::orderBy('order', 'asc')->get();
+        $soums = Soum::orderBy('name')->get();
 
-        return view('complaints.create', compact('categories', 'orgs', 'channels', 'complaint_types', 'energy_types', 'complaint_type_summaries'));
+        return view('complaints.create', compact('categories', 'orgs', 'channels', 'complaint_types', 'energy_types', 'complaint_type_summaries', 'aimags', 'soums'));
     }
 
     /**

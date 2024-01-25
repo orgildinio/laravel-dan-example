@@ -84,14 +84,25 @@ class ComplaintStep extends Component
             case 'Тайлбар':
                 // Тайлбар бичихэд төлөв өөрчлөгдөхгүй
                 $complaint->save();
-                ModelsComplaintStep::create([
-                    'org_id' => $this->org_id,
-                    'complaint_id' => $this->complaint_id,
-                    'sent_user_id' => Auth::user()->id,
-                    'status_id' => 8,
-                    'sent_date' => Carbon::now()->toDateTimeString(),
-                    'desc' => $this->desc
-                ]);
+                if ($complaint->second_org_id == null) {
+                    ModelsComplaintStep::create([
+                        'org_id' => $complaint->organization_id,
+                        'complaint_id' => $this->complaint_id,
+                        'sent_user_id' => Auth::user()->id,
+                        'status_id' => 8,
+                        'sent_date' => Carbon::now()->toDateTimeString(),
+                        'desc' => $this->desc
+                    ]);
+                } else {
+                    ModelsComplaintStep::create([
+                        'org_id' => $complaint->second_org_id,
+                        'complaint_id' => $this->complaint_id,
+                        'sent_user_id' => Auth::user()->id,
+                        'status_id' => 8,
+                        'sent_date' => Carbon::now()->toDateTimeString(),
+                        'desc' => $this->desc
+                    ]);
+                }
                 break;
             case 'Шилжүүлэх':
                 // Байгууллага дотроо өөр хүнд шилжүүлэхэд төлөв тухайн хүн хүлээн авсан болно

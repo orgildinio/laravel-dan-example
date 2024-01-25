@@ -170,6 +170,12 @@
                             <input id="capitalProvince"
                                 class="bg-gray-200 appearance-none rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight @if($errors->has('country')) border border-red-500 @else border-1 border-gray-200 @endif"
                                 type="text" name="country" value="{{old('country')}}">
+                            {{-- <select name="aimag_id"
+                                class="bg-gray-200 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500">
+                                @foreach ($aimags as $aimag)
+                                <option value="{{ $aimag->id }}">{{ $aimag->name }}</option>
+                                @endforeach
+                            </select> --}}
                             @error('country')
                             <div class="text-red-500 text-sm mt-1 mb-1">{{ $message }}</div>
                             @enderror
@@ -186,6 +192,12 @@
                             <input id="districtsum"
                                 class="bg-gray-200 appearance-none rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight @if($errors->has('district')) border border-red-500 @else border-1 border-gray-200 @endif"
                                 type="text" name="district" value="{{old('district')}}">
+                            {{-- <select name="soum_id"
+                                class="bg-gray-200 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500">
+                                @foreach ($soums as $soum)
+                                <option value="{{ $soum->id }}">{{ $soum->name }}</option>
+                                @endforeach
+                            </select> --}}
                             @error('district')
                             <div class="text-red-500 text-sm mt-1 mb-1">{{ $message }}</div>
                             @enderror

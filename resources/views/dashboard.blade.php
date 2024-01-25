@@ -1,5 +1,6 @@
 <x-admin-layout>
 
+   @if (Auth::user()->org_id == 99)   
    <div x-data="{ activeTab: 1 }">
       <div class="sm:hidden">
          <select x-model="activeTab" id="tabs"
@@ -11,16 +12,19 @@
       </div>
       <ul class="hidden text-md text-center text-gray-900 rounded-lg shadow sm:flex bg-white p-2">
          <li class="w-full">
-            <a href="#" class="inline-block w-full p-4"
-               @click="activeTab = 1" :class="{ 'active font-bold text-white bg-blue-700 rounded-lg': activeTab === 1, 'bg-white': activeTab !== 1 }">Эрчим хүчний зохицуулах хороо</a>
+            <a href="#" class="inline-block w-full p-4" @click="activeTab = 1"
+               :class="{ 'active font-bold text-white bg-blue-700 rounded-lg': activeTab === 1, 'bg-white': activeTab !== 1 }">Эрчим
+               хүчний зохицуулах хороо</a>
          </li>
          <li class="w-full">
-            <a href="#" class="inline-block w-full p-4"
-               @click="activeTab = 2" :class="{ 'active font-bold text-white bg-purple-700 rounded-lg': activeTab === 2, 'bg-white': activeTab !== 2 }">Тусгай зөвшөөрөл эзэмшигчид</a>
+            <a href="#" class="inline-block w-full p-4" @click="activeTab = 2"
+               :class="{ 'active font-bold text-white bg-purple-700 rounded-lg': activeTab === 2, 'bg-white': activeTab !== 2 }">Тусгай
+               зөвшөөрөл эзэмшигчид</a>
          </li>
          <li class="w-full">
-            <a href="#" class="inline-block w-full p-4"
-               @click="activeTab = 3" :class="{ 'active font-bold text-white bg-cyan-700 rounded-lg': activeTab === 3, 'bg-white': activeTab !== 3 }">Эрчим хүчний салбарын
+            <a href="#" class="inline-block w-full p-4" @click="activeTab = 3"
+               :class="{ 'active font-bold text-white bg-cyan-700 rounded-lg': activeTab === 3, 'bg-white': activeTab !== 3 }">Эрчим
+               хүчний салбарын
                хэмжээнд</a>
          </li>
       </ul>
@@ -34,6 +38,12 @@
          <x-dashboard-ehs></x-dashboard-ehs>
       </div>
    </div>
+   @else
+   <div>
+      <x-dashboard-tze-show></x-dashboard-tze-show>
+   </div>
+   @endif
+
 
 
 

@@ -90,7 +90,7 @@
                                             Төрөл цах/дул</th>
                                         <th
                                             class="p-2 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
-                                            Овог, нэр</th>
+                                            Овог, нэр / ААН</th>
                                         
                                         <th
                                             class="p-2 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
@@ -110,11 +110,11 @@
                                 </thead>
 
                                 <tbody class="bg-white">
-                                    @foreach ($complaints as $complaint)
+                                    @foreach ($complaints as $key => $complaint)
                                     <tr class="table-row hover:bg-gray-100 cursor-pointer" data-id="{{ $complaint->id }}">
                                         <td class="p-2 whitespace-no-wrap border-b border-gray-200">
                                             <div class="flex items-center">
-                                                {{++$i}}
+                                                {{ $key + $complaints->firstItem() }}
                                             </div>
                                         </td>
 
@@ -149,11 +149,9 @@
                                         </td>
 
                                         <td class="p-2 whitespace-no-wrap border-b border-gray-200">
-                                            <div class="text-sm leading-5 text-gray-900">{{$complaint->lastname}} {{$complaint->firstname}}
+                                            <div class="text-sm leading-5 text-gray-900">{{$complaint->complaint_maker_type_id == 1 ? $complaint->lastname . ' ' . $complaint->firstname : $complaint->complaint_maker_org_name}}
                                             </div>
                                         </td>
-
-                                        
 
                                         <td class="p-2 whitespace-no-wrap border-b border-gray-200 text-sm">
                                             <p>{{$complaint->complaint}}</p>
