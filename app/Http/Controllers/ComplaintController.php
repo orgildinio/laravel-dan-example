@@ -188,7 +188,7 @@ class ComplaintController extends Controller
             $selected_type = EnergyType::find($energy_type_id);
         }
 
-        $complaints = $query->latest()->paginate(10);
+        $complaints = $query->latest()->paginate(4);
 
         $statuses = Status::all();
         $orgs = Organization::orderBy('name', 'asc')->get();
@@ -381,10 +381,10 @@ class ComplaintController extends Controller
         $complaint_types = ComplaintType::all();
         $energy_types = EnergyType::all();
         $complaint_type_summaries = ComplaintTypeSummary::all();
-        $aimags = Aimag::orderBy('order', 'asc')->get();
-        $soums = Soum::orderBy('name')->get();
+        // $aimags = Aimag::orderBy('order', 'asc')->get();
+        // $soums = Soum::orderBy('name')->get();
 
-        return view('complaints.create', compact('categories', 'orgs', 'channels', 'complaint_types', 'energy_types', 'complaint_type_summaries', 'aimags', 'soums'));
+        return view('complaints.create', compact('categories', 'orgs', 'channels', 'complaint_types', 'energy_types', 'complaint_type_summaries'));
     }
 
     /**
