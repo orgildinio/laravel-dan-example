@@ -5,26 +5,29 @@ namespace App\Http\Controllers;
 use Exception;
 use Carbon\Carbon;
 use App\Models\File;
+use App\Models\Soum;
+use App\Models\Aimag;
+use App\Models\Status;
 use App\Models\Channel;
 use App\Models\DanUser;
 use App\Models\Category;
 use App\Models\Complaint;
 use App\Models\EnergyType;
 use App\Models\Organization;
+use App\Models\Registration;
 use Illuminate\Http\Request;
 use App\Models\ComplaintStep;
 use App\Models\ComplaintType;
+use App\Exports\ExportComplaint;
+use App\Models\ComplaintMakerType;
 use Illuminate\Support\Facades\DB;
 use App\Models\ComplaintTypeSummary;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Redis;
 use App\Http\Requests\ComplaintStoreRequest;
-use App\Models\Aimag;
 use App\Models\ComplaintStep as ModelsComplaintStep;
-use App\Models\Registration;
-use App\Models\Soum;
-use App\Models\Status;
 
 class ComplaintController extends Controller
 {
@@ -103,6 +106,17 @@ class ComplaintController extends Controller
         // dd($orgData);
 
         return response()->json($orgData);
+    }
+    public function getOrgByEnergyTypeId(Request $request)
+    {
+        $energy_type_id = $request->input('energy_type_id');
+
+        $data['orgs'] = Organization::where("plant_id", $energy_type_id)
+            ->whereNotIn("id", [99])
+            ->orderBy("name")
+            ->get(["name", "id"]);
+
+        return response()->json($data);
     }
     // Өргөдлийн товч утгыг ajax- аар авах
     public function getTypeSummary(Request $request)
@@ -196,6 +210,12 @@ class ComplaintController extends Controller
 
         return view('complaints.index', compact('complaints', 'daterange', 'search_text', 'statuses', 'status_id', 'org_id', 'orgs', 'selected_status', 'selected_org', 'energy_type_id', 'selected_type', 'energy_types'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
+    }
+
+    public function ExportReportExcel(Request $request)
+    {
+        // dd($request->all());
+        return Excel::download(new ExportComplaint, 'complaints.xlsx');
     }
 
     public function complaintStatus(Request $request, $status_id)
@@ -381,10 +401,11 @@ class ComplaintController extends Controller
         $complaint_types = ComplaintType::all();
         $energy_types = EnergyType::all();
         $complaint_type_summaries = ComplaintTypeSummary::all();
+        $complaint_maker_types = ComplaintMakerType::all();
         // $aimags = Aimag::orderBy('order', 'asc')->get();
         // $soums = Soum::orderBy('name')->get();
 
-        return view('complaints.create', compact('categories', 'orgs', 'channels', 'complaint_types', 'energy_types', 'complaint_type_summaries'));
+        return view('complaints.create', compact('categories', 'orgs', 'channels', 'complaint_types', 'energy_types', 'complaint_type_summaries', 'complaint_maker_types'));
     }
 
     /**
@@ -425,6 +446,7 @@ class ComplaintController extends Controller
 
             $input['audio_file_id'] = $filename->id;
         }
+
         if ($request->complaint_date == null) {
             $input['complaint_date'] = now();
         }
@@ -439,11 +461,15 @@ class ComplaintController extends Controller
         $input['expire_date'] = $register_date->addHours(48);
 
         if ($user->org_id != null) {
+            $input['complaint_maker_type_id'] = 1;
             $input['status_id'] = 2;
             $input['controlled_user_id'] = $user->id;
         } else {
-            $input['channel_id'] = 1;
             $input['status_id'] = 0;
+        }
+
+        if (!$request->has('channel_id')) {
+            $input['channel_id'] = 1;
         }
 
         if (!isset($input['organization_id'])) {
@@ -489,8 +515,9 @@ class ComplaintController extends Controller
         $complaint_types = ComplaintType::all();
         $energy_types = EnergyType::all();
         $complaint_type_summaries = ComplaintTypeSummary::all();
+        $complaint_maker_types = ComplaintMakerType::all();
 
-        return view('complaints.edit', compact('complaint', 'categories', 'orgs', 'channels', 'complaint_types', 'energy_types', 'complaint_type_summaries'));
+        return view('complaints.edit', compact('complaint', 'categories', 'orgs', 'channels', 'complaint_types', 'energy_types', 'complaint_type_summaries', 'complaint_maker_types'));
     }
 
     /**
