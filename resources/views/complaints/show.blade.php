@@ -49,24 +49,23 @@
                         </div>
                     </div>
                     @endif
-                    <div class="flex items-center border-b border-gray-200  pb-6">
+                    <div class="flex items-center border-b border-gray-200 pb-3 mb-2">
 
-                        <div class="flex items-center justify-center h-16 w-16 bg-red-100 rounded-full">
+                        {{-- <div class="flex items-center justify-center h-16 w-16 bg-red-100 rounded-full">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="w-8 h-8 rounded-full text-red-700" fill="none">
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                     d="M8.625 9.75a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375m-13.5 3.01c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.184-4.183a1.14 1.14 0 01.778-.332 48.294 48.294 0 005.83-.498c1.585-.233 2.708-1.626 2.708-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" />
                             </svg>
-                        </div>
+                        </div> --}}
 
                         <div class="flex items-start justify-between w-full">
                             <div class="pl-3">
-                                <p tabindex="0" class="focus:outline-none text-xl font-medium leading-5 text-gray-800 ">
+                                <p class="focus:outline-none text-xl font-medium leading-5 text-gray-800 ">
                                     {{$complaint->category->name}} - №{{$complaint->id}}</p>
-                                <p tabindex="0" class="focus:outline-none text-sm leading-normal pt-2 text-gray-500">
+                                <p class="focus:outline-none text-sm leading-normal pt-2 text-gray-500">
                                     {{$complaint->created_at}}</p>
-                                <p class="text-sm my-1"><span
-                                        class="bg-gray-300 p-1 rounded">{{$complaint->organization?->name}}</span> {{$complaint->status?->name}}</p>
+                                <p class="text-sm my-1 bg-gray-200 text-primary font-bold p-1 rounded">{{$complaint->organization?->name}} - {{$complaint->status?->name}}</p>
                             </div>
                             <div role="img" aria-label="bookmark">
                                 <div>
@@ -75,6 +74,13 @@
                             </div>
                         </div>
                     </div>
+                    <div class="mb-2">
+                        <span class="text-blue-900 bg-blue-100 text-sm p-1 m-2 mr-2 rounded-md">{{ $complaint->channel?->name }}</span>
+                        <span class="text-blue-900 bg-blue-100 text-sm p-1 m-2 mr-2 rounded-md">{{ $complaint->energyType?->name }}</span>
+                        <span class="text-blue-900 bg-blue-100 text-sm p-1 m-2 mr-2 rounded-md">{{ $complaint->complaintMakerType?->name }}</span>
+                        <span class="text-blue-900 bg-blue-100 text-sm p-1 m-2 mr-2 rounded-md">{{ $complaint->complaintTypeSummary?->name }}</span>
+                    </div>
+                    <hr>
                     <div class="px-2">
                         {{-- <h6 class="text-sm font-bold text-gray pt-4">Гомдол мэдүүлсэн: {{mb_substr($complaint->lastname,
                             0, 1)}}.{{$complaint->firstname}}</h6> --}}
@@ -114,12 +120,9 @@
                             </div>
                         </div>
                         @endif
-
-                        
                     </div>
 
-                    <div class="flex items-center border-t border-gray-200  p-6 m-6">
-
+                    <div class="flex items-center border-t border-gray-200 m-6 p-6">
                         <ol class="relative text-gray-500 border-l border-gray-200">
                             @foreach($complaint_steps as $step)
                             <li class="mb-10 ml-6">
@@ -128,15 +131,16 @@
                                         <i class="fa-regular fa-user"></i>
                                     </div>
                                     <div class="ml-3">
-                                        <p class="text-sm"><span class="text-black bg-gray-300 p-1 rounded">{{$step->org?->name}}</span> {{$step->status?->name}}</p>
+                                        <p class="text-sm my-1 bg-gray-200 text-primary font-bold p-1 rounded">{{$step->org?->name}} - {{$step->status?->name}}</p>
                                         <p class="text-sm">{{$step->sent_date}}</p>
-                                        <p class="text-sm mt-5">{{$step->desc}}</p>
                                     </div>
+                                </div>
+                                <div class="text-sm mt-5 p-2 border-b border-gray-200">
+                                    <p>{{$step->desc}}</p>
                                 </div>
                             </li>
                             @endforeach
                         </ol>
-
                     </div>
                 </div>
             </div>

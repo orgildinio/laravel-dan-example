@@ -40,6 +40,8 @@ Route::middleware([
     Route::get('/getTypeSummary', [ComplaintController::class, 'getTypeSummary']);
     Route::get('/getUserDataByCode', [ComplaintController::class, 'getUserDataByCode']);
     Route::get('/addComplaint', [ComplaintController::class, 'addComplaint'])->name('addComplaint');
+    Route::get('/getOrgByEnergyTypeId', [ComplaintController::class, 'getOrgByEnergyTypeId']);
+    Route::get('/exportReportExcel', [ComplaintController::class, 'exportReportExcel'])->name('exportReportExcel');
 });
 Route::get('/complaints', [ComplaintController::class, 'complaints'])->name('complaints');
 Route::get('/userComplaints', [ComplaintController::class, 'userComplaints'])->name('userComplaints');

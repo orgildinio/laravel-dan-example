@@ -6,12 +6,15 @@
                     <h1 class="text-xl font-bold"> Нийт ирсэн санал, хүсэлт</h1>
                 </div>
                 <div class="md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
-                    <button type="button" id="export-btn" class="flex items-center justify-center flex-shrink-0 px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200">
+                    {{-- <button type="button" id="export-btn" class="flex items-center justify-center flex-shrink-0 px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200">
                         <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
                         </svg>
                         Export
-                    </button>
+                    </button> --}}
+                    <a class="px-2 py-1 bg-primary hover:bg-primaryHover text-white rounded-md"
+                    href="{{ route('exportReportExcel', ['daterange' => Request::get('daterange'),'energy_type_id' => Request::get('energy_type_id'), 'search_text' => Request::get('search_text'), 'status_id' => Request::get('status_id'), 'org_id' => Request::get('org_id'), 'energy_type_id' => Request('energy_type_id') ])}}">
+                    <i class="fa fa-download"></i> Export</a>
                 </div>
                 <br>
                 <form method="GET" autocomplete="off">
@@ -162,8 +165,12 @@
                                             <span>{{$complaint->complaint_date}}</span>
                                         </td>
                                         <td
-                                            class="p-2 text-sm leading-5 text-orange-500 whitespace-no-wrap border-b border-gray-200">
-                                            <span>{{ now()->diffInHours($complaint->expire_date) > 0 ? now()->diffInHours($complaint->expire_date) . " цаг үлдсэн" : "Хугацаа хэтэрсэн" }}</span>
+                                            class="p-2 text-sm text-center leading-5 whitespace-no-wrap border-b border-gray-200">
+                                            @if (now()->diffInHours($complaint->expire_date) <= 48 )
+                                                <span>{{ now()->diffInHours($complaint->expire_date) }} цаг үлдсэн</span>
+                                            @else
+                                                <span class="text-red-500">Хугацаа хэтэрсэн</span>
+                                            @endif
                                         </td>
                                         @if (Auth::user()->role?->name == 'admin')
                                         <td
