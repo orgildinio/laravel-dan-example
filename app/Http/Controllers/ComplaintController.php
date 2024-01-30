@@ -214,13 +214,8 @@ class ComplaintController extends Controller
 
     public function ExportReportExcel(Request $request)
     {
-<<<<<<< HEAD
-        // dd($request->all());
-        return Excel::download(new ExportComplaint, 'complaints.xlsx');
-=======
-        dd($request->all());
-        // return Excel::download(new ExportComplaint, 'complaints.xlsx');
->>>>>>> a4ca516e26675347e7f17c7ab45235af9e5c9808
+       dd($request->all());
+       // return Excel::download(new ExportComplaint, 'complaints.xlsx');
     }
 
     public function complaintStatus(Request $request, $status_id)
