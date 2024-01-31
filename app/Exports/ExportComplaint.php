@@ -89,7 +89,7 @@ class ExportComplaint implements FromCollection, WithHeadings, ShouldAutoSize, W
             })
             ->orderBy('complaints.complaint_date', 'desc')
             ->get();
-        dd($complaints);
+        // dd($complaints);
         return $complaints;
     }
 
