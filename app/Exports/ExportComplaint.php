@@ -51,21 +51,21 @@ class ExportComplaint implements FromCollection, WithHeadings, ShouldAutoSize, W
             ->join('organizations', 'complaints.organization_id', '=', 'organizations.id')
             ->join('energy_types', 'complaints.energy_type_id', '=', 'energy_types.id')
             ->join('complaint_maker_types', 'complaints.complaint_maker_type_id', '=', 'complaint_maker_types.id')
-            ->select(
-                'categories.name as category',
-                'channels.name as channel',
-                'statuses.name as status',
-                'users.name as name',
-                'organizations.name as org',
-                'energy_types.name as energytype',
-                'complaint_maker_types.name as orgtype',
-                'complaints.lastname',
-                'complaints.firstname',
-                'complaints.complaint_maker_org_name',
-                'complaints.phone',
-                'complaints.complaint',
-                'complaints.complaint_date'
-            )
+            // ->select(
+            //     'categories.name as category',
+            //     'channels.name as channel',
+            //     'statuses.name as status',
+            //     'users.name as name',
+            //     'organizations.name as org',
+            //     'energy_types.name as energytype',
+            //     'complaint_maker_types.name as orgtype',
+            //     'complaints.lastname',
+            //     'complaints.firstname',
+            //     'complaints.complaint_maker_org_name',
+            //     'complaints.phone',
+            //     'complaints.complaint',
+            //     'complaints.complaint_date'
+            // )
             // ->when(isset($_GET['daterange']), function ($query) {
             //     $date_range = explode(' to ', $_GET['daterange']);
             //     $date['start'] = \Carbon\Carbon::parse($date_range[0])->format('Y-m-d H:i:s');
