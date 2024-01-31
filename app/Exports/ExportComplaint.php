@@ -49,7 +49,7 @@ class ExportComplaint implements FromCollection, WithHeadings, ShouldAutoSize, W
             ->join('statuses', 'complaints.status_id', '=', 'statuses.id')
             ->join('users', 'complaints.controlled_user_id', '=', 'users.id')
             ->join('organizations', 'complaints.organization_id', '=', 'organizations.id')
-            // ->join('energy_types', 'complaints.energy_type_id', '=', 'energy_types.id')
+            ->join('energy_types', 'complaints.energy_type_id', '=', 'energy_types.id')
             // ->join('complaint_maker_types', 'complaints.complaint_maker_type_id', '=', 'complaint_maker_types.id')
             ->select(
                 'categories.name as category',
@@ -57,7 +57,7 @@ class ExportComplaint implements FromCollection, WithHeadings, ShouldAutoSize, W
                 'statuses.name as status',
                 'users.name as name',
                 'organizations.name as org',
-                // 'energy_types.name as energy type',
+                'energy_types.name as energy type',
                 // 'complaint_maker_types.name as orgtype',
                 'complaints.lastname',
                 'complaints.firstname',
