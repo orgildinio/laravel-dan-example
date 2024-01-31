@@ -65,15 +65,15 @@ class ExportComplaint implements FromCollection, WithHeadings, ShouldAutoSize, W
                 'complaints.complaint',
                 'complaints.complaint_date'
             )
-            ->when(isset($_GET['daterange']), function ($query) {
-                $date_range = explode(' to ', $_GET['daterange']);
-                $date['start'] = \Carbon\Carbon::parse($date_range[0])->format('Y-m-d H:i:s');
-                $date['end'] = \Carbon\Carbon::parse($date_range[1])->format('Y-m-d H:i:s');
-                $query->whereBetween('complaint_date', [$date['start'], $date['end']]);
-            })
-            ->when(isset($_GET['search_text']), function ($query) {
-                $query->where('complaint', 'like', "%{$_GET['search_text']}%");
-            })
+            // ->when(isset($_GET['daterange']), function ($query) {
+            //     $date_range = explode(' to ', $_GET['daterange']);
+            //     $date['start'] = \Carbon\Carbon::parse($date_range[0])->format('Y-m-d H:i:s');
+            //     $date['end'] = \Carbon\Carbon::parse($date_range[1])->format('Y-m-d H:i:s');
+            //     $query->whereBetween('complaint_date', [$date['start'], $date['end']]);
+            // })
+            // ->when(isset($_GET['search_text']), function ($query) {
+            //     $query->where('complaint', 'like', "%{$_GET['search_text']}%");
+            // })
             // ->when(isset($_GET['status_id']), function ($query) {
             //     $query->where('status_id', $_GET['status_id']);
             // })
