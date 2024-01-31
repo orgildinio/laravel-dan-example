@@ -23,6 +23,7 @@ class ExportComplaint implements FromCollection, WithHeadings, ShouldAutoSize, W
     {
         return [
             'L' => 55,
+            'J' => 20,
         ];
     }
 
@@ -31,6 +32,10 @@ class ExportComplaint implements FromCollection, WithHeadings, ShouldAutoSize, W
         return [
             // Style the first row as bold text.
             1 => ['font' => ['bold' => true]],
+            'J' => ['alignment' => [
+                'vertical' => Alignment::VERTICAL_CENTER,
+                'wrapText' => true,
+            ]],
             'L' => ['alignment' => [
                 // 'horizontal' => Alignment::HORIZONTAL_CENTER,
                 'vertical' => Alignment::VERTICAL_CENTER,
