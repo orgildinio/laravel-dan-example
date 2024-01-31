@@ -74,18 +74,18 @@ class ExportComplaint implements FromCollection, WithHeadings, ShouldAutoSize, W
             ->when(isset($_GET['search_text']), function ($query) {
                 $query->where('complaint', 'like', "%{$_GET['search_text']}%");
             })
-            ->when(isset($_GET['status_id']), function ($query) {
-                $query->where('status_id', $_GET['status_id']);
-            })
-            ->when(isset($_GET['org_id']), function ($query) {
-                $query->where('organization_id', $_GET['org_id']);
-            })
-            ->when(Auth::user()->org_id != 99, function ($query) {
-                $query->where('organization_id', Auth::user()->org_id);
-            })
-            ->when(isset($_GET['energy_type_id']), function ($query) {
-                $query->where('energy_type_id', $_GET['energy_type_id']);
-            })
+            // ->when(isset($_GET['status_id']), function ($query) {
+            //     $query->where('status_id', $_GET['status_id']);
+            // })
+            // ->when(isset($_GET['org_id']), function ($query) {
+            //     $query->where('organization_id', $_GET['org_id']);
+            // })
+            // ->when(Auth::user()->org_id != 99, function ($query) {
+            //     $query->where('organization_id', Auth::user()->org_id);
+            // })
+            // ->when(isset($_GET['energy_type_id']), function ($query) {
+            //     $query->where('energy_type_id', $_GET['energy_type_id']);
+            // })
             ->orderBy('complaints.complaint_date', 'desc')
             ->get();
     }
