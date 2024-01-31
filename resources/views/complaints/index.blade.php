@@ -31,7 +31,7 @@
                             class="w-32 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
                             <option value="">Төлөв</option>
                             @foreach ($statuses as $status)
-                            <option value="{{ $status->id }}" @selected($status->id === $selected_status?->id)>{{ $status->name }}</option>
+                            <option value="{{ $status->id }}" {{ old('status_id', $status_id) === $status->id ? 'selected' : '' }} >{{ $status->name }}</option>
                             @endforeach
                             </select>
                         </div>
@@ -41,7 +41,7 @@
                             class="w-32 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
                             <option value="">Байгууллага</option>
                             @foreach ($orgs as $org)
-                            <option value="{{ $org->id }}" @selected($org->id === $selected_org?->id)>{{ $org->name }}</option>
+                            <option value="{{ $org->id }}" {{ (old('org_id', $org_id) == $org->id ) ? 'selected' : '' }}>{{ $org->name }}</option>
                             @endforeach
                             </select>
                         </div>
@@ -51,7 +51,7 @@
                             class="w-32 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
                             <option value="">Төрөл</option>
                             @foreach ($energy_types as $type)
-                            <option value="{{ $type->id }}" @selected($type->id === $selected_type?->id)>{{ $type->name }}</option>
+                            <option value="{{ $type->id }}" {{ (old('energy_type_id', $energy_type_id) == $type->id ) ? 'selected' : '' }}>{{ $type->name }}</option>
                             @endforeach
                             </select>
                         </div>
@@ -223,7 +223,7 @@
                         </div>
                         <br>
                         <br>
-                        {!! $complaints->links() !!}
+                        {!! $complaints->appends(['search_text' => $search_text, 'daterange' => $daterange, 'status_id' => $status_id, 'org_id' => $org_id, 'energy_type_id' => $energy_type_id])->links() !!}
                     </div>
                 </div>
             </div>

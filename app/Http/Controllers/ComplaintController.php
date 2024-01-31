@@ -26,6 +26,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Redis;
+use Symfony\Component\Console\Input\Input;
 use App\Http\Requests\ComplaintStoreRequest;
 use App\Models\ComplaintStep as ModelsComplaintStep;
 
@@ -163,31 +164,25 @@ class ComplaintController extends Controller
         $energy_type_id = $request->query('energy_type_id');
 
         $query = Complaint::query();
+        $query->orderBy('complaint_date', 'desc');
 
         if (isset($daterange)) {
             $dates = explode(' to ', $daterange);
             $start_date = $dates[0];
             $end_date = $dates[1];
-        } else {
-            $start_date = now()->subDay(30);
-            $end_date = now();
+            $query->whereBetween('complaint_date', [$start_date, $end_date]);
         }
-        $query->whereBetween('complaint_date', [$start_date, $end_date]);
 
         if ($search_text !== null) {
             $query->where('complaint', 'LIKE', '%' . $search_text . '%');
         }
 
-        $selected_status = null;
         if ($status_id !== null) {
             $query->where('status_id', $status_id);
-            $selected_status = Status::find($status_id);
         }
 
-        $selected_org = null;
         if ($org_id !== null) {
             $query->where('organization_id', $org_id);
-            $selected_org = Organization::find($org_id);
         }
 
         // Нэвтэрсэн хэрэглэгч ЭХЗХ биш ТЗЭ бол зөвхөн тухайн байгууллагын мэдээллийг харуулна
@@ -196,20 +191,17 @@ class ComplaintController extends Controller
             $query->where('organization_id', $logged_user_org_id);
         }
 
-        $selected_type = null;
         if ($energy_type_id !== null) {
             $query->where('energy_type_id', $energy_type_id);
-            $selected_type = EnergyType::find($energy_type_id);
         }
 
-        $complaints = $query->latest()->paginate(4);
+        $complaints = $query->paginate(4);
 
         $statuses = Status::all();
         $orgs = Organization::orderBy('name', 'asc')->get();
         $energy_types = EnergyType::all();
 
-        return view('complaints.index', compact('complaints', 'daterange', 'search_text', 'statuses', 'status_id', 'org_id', 'orgs', 'selected_status', 'selected_org', 'energy_type_id', 'selected_type', 'energy_types'))
-            ->with('i', (request()->input('page', 1) - 1) * 5);
+        return view('complaints.index', compact('complaints', 'daterange', 'search_text', 'statuses', 'status_id', 'org_id', 'orgs', 'energy_type_id', 'energy_types'));
     }
 
     public function ExportReportExcel(Request $request)
