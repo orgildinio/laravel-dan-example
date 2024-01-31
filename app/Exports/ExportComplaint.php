@@ -57,7 +57,7 @@ class ExportComplaint implements FromCollection, WithHeadings, ShouldAutoSize, W
                 'statuses.name as status',
                 'users.name as name',
                 'organizations.name as org',
-                'energy_types.name as energy type',
+                'energy_types.name as energytype',
                 'complaint_maker_types.name as orgtype',
                 'complaints.lastname',
                 'complaints.firstname',
