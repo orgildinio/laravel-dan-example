@@ -3,38 +3,39 @@
 namespace App\Exports;
 
 use App\Models\Complaint;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 use PhpOffice\PhpSpreadsheet\Style\Color;
 use PhpOffice\PhpSpreadsheet\Style\Style;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Maatwebsite\Excel\Concerns\WithColumnWidths;
 use Maatwebsite\Excel\Concerns\WithDefaultStyles;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class ExportComplaint implements FromCollection, WithHeadings, ShouldAutoSize, WithStyles
+class ExportComplaint implements FromCollection, WithHeadings, ShouldAutoSize, WithStyles, WithColumnWidths
 {
-    // public function defaultStyles(Style $defaultStyle)
-    // {
-    //     // Configure the default styles
-    //     return $defaultStyle->getFill()->setFillType(Fill::FILL_SOLID);
-
-    //     // Or return the styles array
-    //     return [
-    //         'fill' => [
-    //             'fillType'   => Fill::FILL_SOLID,
-    //             'startColor' => ['argb' => Color::COLOR_RED],
-    //         ],
-    //     ];
-    // }
+    public function columnWidths(): array
+    {
+        return [
+            'L' => 55,
+        ];
+    }
 
     public function styles(Worksheet $sheet)
     {
         return [
             // Style the first row as bold text.
-            1    => ['font' => ['bold' => true]],
+            1 => ['font' => ['bold' => true]],
+            'L' => ['alignment' => [
+                // 'horizontal' => Alignment::HORIZONTAL_CENTER,
+                'vertical' => Alignment::VERTICAL_CENTER,
+                'wrapText' => true,
+            ]],
         ];
     }
     /**
