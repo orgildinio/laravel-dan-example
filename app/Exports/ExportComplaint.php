@@ -46,7 +46,7 @@ class ExportComplaint implements FromCollection, WithHeadings, ShouldAutoSize, W
 
         $complaints = Complaint::join('categories', 'complaints.category_id', '=', 'categories.id')
             ->join('channels', 'complaints.channel_id', '=', 'channels.id')
-            // ->join('statuses', 'complaints.status_id', '=', 'statuses.id')
+            ->join('statuses', 'complaints.status_id', '=', 'statuses.id')
             // ->join('users', 'complaints.controlled_user_id', '=', 'users.id')
             // ->join('organizations', 'complaints.organization_id', '=', 'organizations.id')
             // ->join('energy_types', 'complaints.energy_type_id', '=', 'energy_types.id')
@@ -54,7 +54,7 @@ class ExportComplaint implements FromCollection, WithHeadings, ShouldAutoSize, W
             ->select(
                 'categories.name as category',
                 'channels.name as channel',
-                // 'statuses.name as status',
+                'statuses.name as status',
                 // 'users.name as name',
                 // 'organizations.name as org',
                 // 'energy_types.name as energy type',
