@@ -195,7 +195,7 @@ class ComplaintController extends Controller
             $query->where('energy_type_id', $energy_type_id);
         }
 
-        $complaints = $query->paginate(4);
+        $complaints = $query->paginate(15);
 
         $statuses = Status::all();
         $orgs = Organization::orderBy('name', 'asc')->get();
@@ -240,7 +240,7 @@ class ComplaintController extends Controller
                         ->where('organization_id', Auth::user()->org_id)
                         ->where('status_id', 0)
                         ->orderBy('complaints.created_at', 'desc')
-                        ->paginate(5);
+                        ->paginate(15);
                 } else {
                     $complaints = Complaint::where('complaint', 'LIKE', '%' . $search_text . '%')
                         ->whereBetween('complaint_date', [$start_date, $end_date])
@@ -253,7 +253,7 @@ class ComplaintController extends Controller
                                 ->orWhere('second_status_id', 0);
                         })
                         ->orderBy('complaints.created_at', 'desc')
-                        ->paginate(5);
+                        ->paginate(15);
                 }
                 break;
             case '1':
@@ -264,7 +264,7 @@ class ComplaintController extends Controller
                     ->where('status_id', 1)
                     ->where('controlled_user_id', Auth::user()->id)
                     ->orderBy('complaints.created_at', 'desc')
-                    ->paginate(5);
+                    ->paginate(15);
                 break;
             case '2':
                 // Хүлээн авсан
@@ -276,7 +276,7 @@ class ComplaintController extends Controller
                         ->where('status_id', 2)
                         ->where('controlled_user_id', Auth::user()->id)
                         ->orderBy('complaints.created_at', 'desc')
-                        ->paginate(5);
+                        ->paginate(15);
                 } else {
                     $complaints = Complaint::where('complaint', 'LIKE', '%' . $search_text . '%')
                         ->whereBetween('complaint_date', [$start_date, $end_date])
@@ -293,7 +293,7 @@ class ComplaintController extends Controller
                                 ->orWhere('second_user_id', Auth::user()->id);
                         })
                         ->orderBy('complaints.created_at', 'desc')
-                        ->paginate(5);
+                        ->paginate(15);
                 }
                 break;
             case '3':
@@ -305,7 +305,7 @@ class ComplaintController extends Controller
                         ->where('status_id', 3)
                         ->where('controlled_user_id', Auth::user()->id)
                         ->orderBy('complaints.created_at', 'desc')
-                        ->paginate(5);
+                        ->paginate(15);
                 } else {
 
                     $complaints = Complaint::where('complaint', 'LIKE', '%' . $search_text . '%')
@@ -325,7 +325,7 @@ class ComplaintController extends Controller
                                 ->orWhere('second_user_id', Auth::user()->id);
                         })
                         ->orderBy('complaints.created_at', 'desc')
-                        ->paginate(5);
+                        ->paginate(15);
                 }
                 break;
             case '4':
@@ -336,7 +336,7 @@ class ComplaintController extends Controller
                     ->where('organization_id', $org_id)
                     ->where('controlled_user_id', $logged_user_id)
                     ->latest()
-                    ->paginate(5);
+                    ->paginate(15);
                 break;
             case '6':
                 // Шийдвэрлэсэн
@@ -347,7 +347,7 @@ class ComplaintController extends Controller
                         ->where('status_id', 6)
                         ->where('controlled_user_id', Auth::user()->id)
                         ->orderBy('complaints.created_at', 'desc')
-                        ->paginate(5);
+                        ->paginate(15);
                 } else {
 
                     $complaints = Complaint::where('complaint', 'LIKE', '%' . $search_text . '%')
@@ -365,7 +365,7 @@ class ComplaintController extends Controller
                                 ->orWhere('second_user_id', Auth::user()->id);
                         })
                         ->orderBy('complaints.created_at', 'desc')
-                        ->paginate(5);
+                        ->paginate(15);
                 }
                 break;
 
