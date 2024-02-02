@@ -268,31 +268,38 @@
 @push('scripts')
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    // document.addEventListener('DOMContentLoaded', function () {
+    //     flatpickr("#daterange", {
+    //         mode: "range",
+    //         showMonths: 2,
+    //         dateFormat: "Y-m-d",
+    //     });
+    // });
+
+
+    // document.getElementById('export-btn').addEventListener('click', function () {
+    //     // Get the HTML table element
+    //     var table = document.getElementById('complaint-report');
+
+    //     // Convert the HTML table to a worksheet
+    //     var ws = XLSX.utils.table_to_sheet(table);
+
+    //     // Create a workbook and add the worksheet to it
+    //     var wb = XLSX.utils.book_new();
+    //     XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+    //     XLSX.writeFile(wb, "Reports.xlsx", { compression: true });
+
+    // });
+
+    $(document).ready(function() {
+
         flatpickr("#daterange", {
             mode: "range",
             showMonths: 2,
             dateFormat: "Y-m-d",
         });
-    });
 
-
-    document.getElementById('export-btn').addEventListener('click', function () {
-        // Get the HTML table element
-        var table = document.getElementById('complaint-report');
-
-        // Convert the HTML table to a worksheet
-        var ws = XLSX.utils.table_to_sheet(table);
-
-        // Create a workbook and add the worksheet to it
-        var wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-
-        XLSX.writeFile(wb, "Reports.xlsx", { compression: true });
-
-    });
-
-    $(document).ready(function() {
         // Add click event handler to table rows with class 'table-row'
         $('.table-row').click(function() {
             // Get the value of the 'data-id' attribute of the clicked row
