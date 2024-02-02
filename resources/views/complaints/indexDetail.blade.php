@@ -4,10 +4,6 @@
             <div class="container mx-auto mt-8">
                 <div class="mb-4">
                     <h1 class="text-xl font-bold"> Санал, хүсэлт</h1>
-                    {{-- <div class="flex justify-end">
-                        <a href="{{ route('complaint.create') }}"
-                            class="px-4 py-2 rounded-md bg-black text-sky-100 hover:bg-gray-600">Нэмэх</a>
-                    </div> --}}
                 </div>
                 @if ($message = Session::get('success'))
                 <div class="bg-green-100 border-l-4 border-green-500 text-green-700 text-sm p-2 mb-4" role="alert">
