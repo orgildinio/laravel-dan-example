@@ -377,7 +377,7 @@ class ComplaintController extends Controller
 
         // $complaints = Complaint::where('status_id', $status_id)->where('organization_id', $org_id)->latest()->paginate(5);
 
-        return view('complaints.indexDetail', compact('complaints', 'daterange', 'search_text'))->with('i', (request()->input('page', 1) - 1) * 5);
+        return view('complaints.indexDetail', compact('complaints', 'daterange', 'search_text', 'status_id'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**

@@ -79,10 +79,45 @@
                                             Санал, хүсэлт</th>
                                         <th
                                             class="p-2 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
-                                            Бүртгэсэн огноо</th>
+                                            @switch($status_id)
+                                                @case('0')
+                                                    Бүртгэсэн огноо
+                                                    @break
+
+                                                @case('1')
+                                                    Шилжүүлсэн огноо
+                                                    @break
+
+                                                @case('2')
+                                                    <p>Хүлээн авсан огноо</p>
+                                                    @break
+
+                                                @case('3')
+                                                    <p>Хянасан огноо</p>
+                                                    @break
+
+                                                @case('4')
+                                                    <p>Цуцалсан огноо</p>
+                                                    @break
+
+                                                @case('6')
+                                                    <p>Шийдвэрлэсэн огноо</p>
+                                                    @break
+
+                                                @default
+                                                    <p>Бүртгэсэн огноо</p>
+                                            @endswitch
+                                        </th>
+                                        @if ($status_id == 1)
+                                        <th class="p-2 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
+                                            Шийдвэрлэлтийн төлөв
+                                        </th>
+                                        @endif
+                                        @if ($status_id != 6)
                                         <th
                                             class="p-2 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
                                             Үлдсэн хугацаа</th>
+                                        @endif
                                         <th class="px-6 py-3 text-sm text-left text-gray-500 border-b border-gray-200 bg-gray-50"
                                             colspan="3">
                                             Үйлдэл</th>
@@ -145,12 +180,49 @@
     
                                                 <td
                                                     class="p-2 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200">
-                                                    <span>{{$complaint->complaint_date}}</span>
+                                                    <span>{{$complaint->updated_at}}</span>
                                                 </td>
-                                                @if ($complaint->status_id != 4 || $complaint->status_id != 6)
+                                                @if ($status_id == 1)
+                                                <td class="p-2 whitespace-no-wrap border-b border-gray-200 text-sm">
+                                                    @if ($complaint->second_status_id !== null)
+                                                    @switch($complaint->second_status_id)
+                                                        @case('0')
+                                                            <span class="bg-gray-50 p-1 text-center rounded text-xs">Шинээр ирсэн</span>
+                                                            @break
+
+                                                        @case('2')
+                                                            <span class="bg-orange-300 text-orange-900 p-1 text-center rounded text-xs">Хүлээн авсан</span>
+                                                            @break
+
+                                                        @case('3')
+                                                            <span class="bg-blue-300 text-blue-900 p-1 text-center rounded text-xs">Хянаж байгаа</span>
+                                                            @break
+
+                                                        @case('4')
+                                                            <span class="bg-gray-300 text-gray-900 p-1 text-center rounded text-xs">Цуцалсан</span>
+                                                            @break
+
+                                                        @case('6')
+                                                            <span class="bg-green-300 text-green-900 p-1 text-center rounded text-xs">Шийдвэрлэсэн</span>
+                                                            @break
+
+                                                        @default
+                                                            <p>Шинээр ирсэн</p>
+
+                                                    @endswitch
+                                                    @endif
+                                                </td>
+                                                @endif
+
+                                                @if ($status_id != 6)
                                                 <td
-                                                    class="p-2 text-sm leading-5 text-orange-500 whitespace-no-wrap border-b border-gray-200">
-                                                    <span>{{ now()->diffInHours($complaint->expire_date) > 0 ? now()->diffInHours($complaint->expire_date) . " цаг үлдсэн" : "Хугацаа хэтэрсэн" }}</span>
+                                                    class="p-2 text-xs leading-5 whitespace-no-wrap border-b border-gray-200">
+                                                    @if (($complaint->expire_date) > now() )
+                                                        <span>{{ now()->diffInHours($complaint->expire_date) }} цаг үлдсэн</span>
+                                                    @else
+                                                        {{-- <img src="{{ asset('/image/fire-svgrepo-com.svg')}}" class="fa-beat w-[24px] h-[24px] shrink-0 inline-block" alt="dashboard"> --}}
+                                                        <span class="text-red-500 text-xs">Хугацаа хэтэрсэн</span>
+                                                    @endif
                                                 </td>
                                                 @endif
     
@@ -200,11 +272,11 @@
                                         @endforeach
                                     @else
                                         <tr>
-                                            <td class="w-full text-center mx-auto py-12" colspan="5">
+                                            <td class="w-full text-center mx-auto py-12" colspan="9">
                                             <img class="w-32 h-32 mx-auto"
                                                 src="{{asset('/image/empty.svg')}}"
                                                 alt="image empty states">                                             
-                                            <p class="text-gray-700 font-medium text-lg text-center">Мэдээлэл байхгүй байна.</p>
+                                            <p class="text-gray-500 font-medium text-lg text-center">Мэдээлэл байхгүй байна.</p>
                                             </td>
                                         </tr>
                                     @endif

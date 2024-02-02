@@ -11,37 +11,33 @@
                             <thead class="font-medium">
                                <tr class="border-b bg-blue-700 text-white">
                                   <th scope="col" class="p-1 border-r">{{Auth::user()->org?->name}}</th>
-                                  <th scope="col" class="p-1 text-center">100</th>
+                                  <th scope="col" class="p-1 text-center">{{$all_comp}}</th>
                                </tr>
                             </thead>
                             <tbody>
                                <tr class="border-b bg-gray-50">
                                   <td class="whitespace-nowrap p-1 font-medium border-r">Шинээр ирсэн</td>
-                                  <td class="whitespace-nowrap p-1 text-center">5</td>
+                                  <td class="whitespace-nowrap p-1 text-center">{{$new_comp}}</td>
                                </tr>
                                <tr class="border-b bg-orange-300">
                                   <td class="whitespace-nowrap p-1 font-medium border-r">Хүлээн авсан</td>
-                                  <td class="whitespace-nowrap p-1 text-center">10</td>
+                                  <td class="whitespace-nowrap p-1 text-center">{{$rec_comp}}</td>
                                </tr>
                                <tr class="border-b bg-blue-300">
                                   <td class="whitespace-nowrap p-1 font-medium border-r">Хянаж байгаа</td>
-                                  <td class="whitespace-nowrap p-1 text-center">15</td>
-                               </tr>
-                               <tr class="border-b bg-yellow-300">
-                                  <td class="whitespace-nowrap p-1 font-medium border-r">Шилжүүлсэн</td>
-                                  <td class="whitespace-nowrap p-1 text-center">5</td>
+                                  <td class="whitespace-nowrap p-1 text-center">{{$ctl_comp}}</td>
                                </tr>
                                <tr class="border-b bg-green-300">
                                   <td class="whitespace-nowrap p-1 font-medium border-r">Шийдвэрлэсэн</td>
-                                  <td class="whitespace-nowrap p-1 text-center">50</td>
+                                  <td class="whitespace-nowrap p-1 text-center">{{$slv_comp}}</td>
                                </tr>
                                <tr class="border-b bg-gray-300">
-                                  <td class="whitespace-nowrap p-1 font-medium border-r">Буцаасан</td>
-                                  <td class="whitespace-nowrap p-1 text-center">5</td>
+                                  <td class="whitespace-nowrap p-1 font-medium border-r">Цуцлагдсан</td>
+                                  <td class="whitespace-nowrap p-1 text-center">{{$cnc_comp}}</td>
                                </tr>
                                <tr class="border-b bg-red-300">
                                   <td class="whitespace-nowrap p-1 font-medium border-r">Хугацаа хэтэрсэн</td>
-                                  <td class="whitespace-nowrap p-1 text-center">10</td>
+                                  <td class="whitespace-nowrap p-1 text-center">{{$exp_comp}}</td>
                                </tr>
                             </tbody>
                          </table>

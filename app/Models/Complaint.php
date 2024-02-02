@@ -38,6 +38,11 @@ class Complaint extends Model
         return $this->belongsTo(Status::class);
     }
 
+    public function secondStatus()
+    {
+        return $this->belongsTo(Status::class);
+    }
+
     public function category()
     {
         return $this->belongsTo(Category::class);
