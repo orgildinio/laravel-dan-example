@@ -85,7 +85,29 @@
  </div>
 
  <script type="text/javascript">
- 
+
+   var chartData = <?php echo $compCategoryCounts; ?>;
+   var chartDataCompTypes = <?php echo $compTypeCounts; ?>;
+   var compTypeMakersCount = <?php echo $compTypeMakersCount; ?>;
+   var compChannelsCount = <?php echo $compChannelsCount; ?>;
+
+   var channelLabels = compChannelsCount.map(function(obj) {
+      return obj[Object.keys(obj)[0]];
+   });
+   var channelDatas = compChannelsCount.map(function(obj) {
+      return obj[Object.keys(obj)[1]];
+   });
+
+   var compCountsCurrentYear = <?php echo $compCountsCurrentYear; ?>;
+
+   var monthLabels = compCountsCurrentYear.map(function(obj) {
+      return obj[Object.keys(obj)[0]] + ' сар';
+   });
+   var monthDatas = compCountsCurrentYear.map(function(obj) {
+      return obj[Object.keys(obj)[1]];
+   });
+   // console.log(monthDatas);
+
     // ЭХЗХ Chart энергийн төрлөөр 
     Highcharts.chart('chartEnergyTypeEhs', {
        chart: {
@@ -117,8 +139,8 @@
           name: 'Өргөдөл, гомдол',
           colorByPoint: true,
           data: [
-             { name: 'Цахилгаан', y: 40 },
-             { name: 'Дулаан', y: 60 },
+             { name: 'Цахилгаан', y: {{$tze_tog_count}} },
+             { name: 'Дулаан', y:{{$tze_dulaan_count}} },
           ]
        }]
     });
@@ -154,13 +176,7 @@
         series: [{
             type: 'pie',
             name: 'Өргөдөл, гомдол',
-            data: [
-             { name: 'Санал', y: 30 },
-             { name: 'Гомдол', y: 40 },
-             { name: 'Талархал', y: 20 },
-             { name: 'Бусад', y: 10 },
-             { name: 'Хүсэлт', y: 10 }
-          ]
+            data: chartData
         }]
     });
  
@@ -189,13 +205,7 @@
        series: [{
           name: 'Өргөдөл, гомдол',
           colorByPoint: true,
-          data: [
-             { name: 'Иргэн', y: 30 },
-             { name: 'ААН', y: 40 },
-             { name: 'СӨХ', y: 20 },
-             { name: 'ТЗЭ', y: 10 },
-             { name: 'Төрийн байгууллага', y: 10 }
-          ]
+          data: compTypeMakersCount
        }]
     });
  
@@ -220,18 +230,17 @@
              showInLegend: true
           }
        },
-       colors: ['#fca5a5', '#d1d5db', '#86efac', '#fde047', '#93c5fd', '#fdba74', '#f9fafb'], // Set custom colors
+       colors: ['#fca5a5', '#d1d5db', '#86efac', '#93c5fd', '#fdba74', '#f9fafb'], // Set custom colors
        series: [{
           name: 'Өргөдөл, гомдол',
           colorByPoint: true,
           data: [
-             { name: 'Хугацаа хэтэрсэн', y: 10 },
-             { name: 'Буцаасан', y: 5 },
-             { name: 'Шийдвэрлэсэн', y: 50 },
-             { name: 'Шилжүүлсэн', y: 5 },
-             { name: 'Хянаж байгаа', y: 15 },
-             { name: 'Хүлээн авсан', y: 10 },
-             { name: 'Шинээр ирсэн', y: 5 },
+             { name: 'Хугацаа хэтэрсэн', y: {{$exp_comp}} },
+             { name: 'Буцаасан', y: {{$cnc_comp}} },
+             { name: 'Шийдвэрлэсэн', y: {{$slv_comp}} },
+             { name: 'Хянаж байгаа', y: {{$ctl_comp}} },
+             { name: 'Хүлээн авсан', y: {{$rec_comp}} },
+             { name: 'Шинээр ирсэн', y: {{$new_comp}} },
           ]
        }]
     });
@@ -260,12 +269,7 @@
        series: [{
           name: 'Өргөдөл, гомдол',
           colorByPoint: true,
-          data: [
-             { name: 'Төлбөр тооцоо', y: 10 },
-             { name: 'Хэмжих хэрэгсэл', y: 5 },
-             { name: 'Чанар хангамж', y: 50 },
-             { name: 'Бусад', y: 5 },
-          ]
+          data: chartDataCompTypes
        }]
     });
  
@@ -278,7 +282,7 @@
           text: 'Санал гомдол'
        },
        xAxis: {
-          categories: ['1 сар', '2 сар', '3 сар', '4 сар', '5 сар', '6 сар', '7 сар', '8 сар', '9 сар', '10 сар', '11 сар', '12 сар']
+          categories: monthLabels
        },
        yAxis: {
           title: {
@@ -292,7 +296,7 @@
        },
        series: [{
           name: 'Санал гомдол',
-          data: [5, 0, 15, 2, 25, 12, 45, 26, 32, 19, 24, 36]
+          data: monthDatas
        }]
     });
 
@@ -308,8 +312,7 @@
           text: ''
        },
        xAxis: {
-          categories: ['Беб хуудас', 'Утас', 'И-Мэйл', 'Биечлэн', 'Гар утас', 'Албан бичиг'
-          ]
+          categories: channelLabels
        },
        yAxis: {
           title: {
@@ -329,7 +332,7 @@
        series: [{
           name: 'Нийт',
         //   data: newChartData
-        data: [5, 50, 15, 2, 25, 12]
+        data: channelDatas
        }],
        responsive: {
           rules: [{

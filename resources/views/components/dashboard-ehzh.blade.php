@@ -10,37 +10,37 @@
                             <thead class="font-medium">
                                <tr class="border-b bg-blue-700 text-white">
                                   <th scope="col" class="p-1 border-r">Эрчим хүчний зохицуулах хороо</th>
-                                  <th scope="col" class="p-1 text-center">100</th>
+                                  <th scope="col" class="p-1 text-center">{{$all_comp}}</th>
                                </tr>
                             </thead>
                             <tbody>
                                <tr class="border-b bg-gray-50">
                                   <td class="whitespace-nowrap p-1 font-medium border-r">Шинээр ирсэн</td>
-                                  <td class="whitespace-nowrap p-1 text-center">5</td>
+                                  <td class="whitespace-nowrap p-1 text-center">{{$new_comp}}</td>
                                </tr>
                                <tr class="border-b bg-orange-300">
                                   <td class="whitespace-nowrap p-1 font-medium border-r">Хүлээн авсан</td>
-                                  <td class="whitespace-nowrap p-1 text-center">10</td>
+                                  <td class="whitespace-nowrap p-1 text-center">{{$rec_comp}}</td>
                                </tr>
                                <tr class="border-b bg-blue-300">
                                   <td class="whitespace-nowrap p-1 font-medium border-r">Хянаж байгаа</td>
-                                  <td class="whitespace-nowrap p-1 text-center">15</td>
+                                  <td class="whitespace-nowrap p-1 text-center">{{$ctl_comp}}</td>
                                </tr>
                                <tr class="border-b bg-yellow-300">
                                   <td class="whitespace-nowrap p-1 font-medium border-r">Шилжүүлсэн</td>
-                                  <td class="whitespace-nowrap p-1 text-center">5</td>
+                                  <td class="whitespace-nowrap p-1 text-center">{{$snt_comp}}</td>
                                </tr>
                                <tr class="border-b bg-green-300">
                                   <td class="whitespace-nowrap p-1 font-medium border-r">Шийдвэрлэсэн</td>
-                                  <td class="whitespace-nowrap p-1 text-center">50</td>
+                                  <td class="whitespace-nowrap p-1 text-center">{{$slv_comp}}</td>
                                </tr>
                                <tr class="border-b bg-gray-300">
                                   <td class="whitespace-nowrap p-1 font-medium border-r">Буцаасан</td>
-                                  <td class="whitespace-nowrap p-1 text-center">5</td>
+                                  <td class="whitespace-nowrap p-1 text-center">{{$rtn_comp}}</td>
                                </tr>
                                <tr class="border-b bg-red-300">
                                   <td class="whitespace-nowrap p-1 font-medium border-r">Хугацаа хэтэрсэн</td>
-                                  <td class="whitespace-nowrap p-1 text-center">10</td>
+                                  <td class="whitespace-nowrap p-1 text-center">{{$exp_comp}}</td>
                                </tr>
                             </tbody>
                          </table>
@@ -124,11 +124,43 @@
  
     // var chartDataStatus = <?php //echo json_encode($complaints_by_status)?>;
     // console.log(chartDataStatus);
-    // var chartData3 = chartDataStatus.map(obj => {return {
-    //    name: obj.name,
-    //    y: obj.count};
-    // });
+   //  var chartData3 = chartDataStatus.map(obj => {return {
+   //     name: obj.name,
+   //     y: obj.count};
+   //  });
     //  console.log(chartData3);
+   var chartCategoryData = <?php echo $compCategoryCounts; ?>;
+   var chartDataCompTypes = <?php echo $compTypeCounts; ?>;
+   var compTypeMakersCount = <?php echo $compTypeMakersCount; ?>;
+   
+   var compCountsCurrentYear = <?php echo $compCountsCurrentYear; ?>;
+    
+   var monthLabels = compCountsCurrentYear.map(function(obj) {
+      return obj[Object.keys(obj)[0]] + ' сар';
+   });
+   var monthDatas = compCountsCurrentYear.map(function(obj) {
+      return obj[Object.keys(obj)[1]];
+   });
+
+   var compChannelsCount = <?php echo $compChannelsCount; ?>;
+
+   var channelLabels = compChannelsCount.map(function(obj) {
+      return obj[Object.keys(obj)[0]];
+   });
+   var channelDatas = compChannelsCount.map(function(obj) {
+      return obj[Object.keys(obj)[1]];
+   });
+
+   var compTzeTogCounts = <?php echo $compTzeTogCounts; ?>;
+
+   var chartTzeTogLabels = compTzeTogCounts.map(function(obj) {
+      return obj[Object.keys(obj)[0]];
+   });
+   var chartTzelTogDatas = compChannelsCount.map(function(obj) {
+      return obj[Object.keys(obj)[1]];
+   });
+
+   
  
     // ЭХЗХ Chart энергийн төрлөөр 
     Highcharts.chart('chartEnergyType', {
@@ -156,13 +188,13 @@
              size: '100%' // Set the size of the pie chart
           }
        },
-       colors: ['#3b82f6', '#f97316'],
+       colors: ['#00BFFF', '#FF6347'],
        series: [{
           name: 'Өргөдөл, гомдол',
           colorByPoint: true,
           data: [
-             { name: 'Цахилгаан', y: 40 },
-             { name: 'Дулаан', y: 60 },
+             { name: 'Цахилгаан', y: {{$ehzh_tog_count}} },
+             { name: 'Дулаан', y: {{$ehzh_dulaan_count}} },
           ]
        }]
     });
@@ -198,13 +230,7 @@
         series: [{
             type: 'pie',
             name: 'Өргөдөл, гомдол',
-            data: [
-             { name: 'Санал', y: 30 },
-             { name: 'Гомдол', y: 40 },
-             { name: 'Талархал', y: 20 },
-             { name: 'Бусад', y: 10 },
-             { name: 'Хүсэлт', y: 10 }
-          ]
+            data: chartCategoryData
         }]
     });
  
@@ -238,7 +264,7 @@
           text: 'Цахилгаан түгээх, хангах ТЗЭ-чид'
        },
        xAxis: {
-          categories: ['УБЦТС ТӨХК', 'Эрчим сүлжээ ХХК', 'ДСЦТС ТӨХК', 'Эс Жи И Эн ХХК', 'Хөвсгөл эрчим хүч ХХК', 'Нолго ХХК']
+          categories: chartTzeTogLabels
        },
        yAxis: {
           title: {
@@ -332,13 +358,7 @@
        series: [{
           name: 'Өргөдөл, гомдол',
           colorByPoint: true,
-          data: [
-             { name: 'Иргэн', y: 30 },
-             { name: 'ААН', y: 40 },
-             { name: 'СӨХ', y: 20 },
-             { name: 'ТЗЭ', y: 10 },
-             { name: 'Төрийн байгууллага', y: 10 }
-          ]
+          data: compTypeMakersCount
        }]
     });
  
@@ -368,13 +388,13 @@
           name: 'Өргөдөл, гомдол',
           colorByPoint: true,
           data: [
-             { name: 'Хугацаа хэтэрсэн', y: 10 },
-             { name: 'Буцаасан', y: 5 },
-             { name: 'Шийдвэрлэсэн', y: 50 },
-             { name: 'Шилжүүлсэн', y: 5 },
-             { name: 'Хянаж байгаа', y: 15 },
-             { name: 'Хүлээн авсан', y: 10 },
-             { name: 'Шинээр ирсэн', y: 5 },
+             { name: 'Хугацаа хэтэрсэн', y: {{$exp_comp}} },
+             { name: 'Буцаасан', y: {{$rtn_comp}} },
+             { name: 'Шийдвэрлэсэн', y: {{$slv_comp}} },
+             { name: 'Шилжүүлсэн', y: {{$snt_comp}} },
+             { name: 'Хянаж байгаа', y: {{$ctl_comp}} },
+             { name: 'Хүлээн авсан', y: {{$rec_comp}} },
+             { name: 'Шинээр ирсэн', y: {{$new_comp}} },
           ]
        }]
     });
@@ -412,7 +432,7 @@
        series: [{
           name: 'Нийт',
         //   data: newChartData
-        data: [5, 50, 15, 2, 25, 12]
+        data: compChannelsCount
        }],
        responsive: {
           rules: [{
@@ -439,7 +459,7 @@
           text: 'Санал гомдол'
        },
        xAxis: {
-          categories: ['1 сар', '2 сар', '3 сар', '4 сар', '5 сар', '6 сар', '7 сар', '8 сар', '9 сар', '10 сар', '11 сар', '12 сар']
+          categories: monthLabels
        },
        yAxis: {
           title: {
@@ -453,7 +473,7 @@
        },
        series: [{
           name: 'Санал гомдол',
-          data: [5, 0, 15, 2, 25, 12, 45, 26, 32, 19, 24, 36]
+          data: monthDatas
        }]
     });
  
@@ -483,12 +503,7 @@
        series: [{
           name: 'Өргөдөл, гомдол',
           colorByPoint: true,
-          data: [
-             { name: 'Төлбөр тооцоо', y: 10 },
-             { name: 'Хэмжих хэрэгсэл', y: 5 },
-             { name: 'Чанар хангамж', y: 50 },
-             { name: 'Бусад', y: 5 },
-          ]
+          data: chartDataCompTypes
        }]
     });
  
