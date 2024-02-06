@@ -404,9 +404,9 @@
         checkSelectedOption();
 
         // Өргөдлийн товч утга ajax аар татах
-        $("input[name='energy_type_id'], #complaint_type_id").change(function() {
+        $("input[type=radio][name=energy_type_id], #complaint_type_id").change(function() {
             // Get the selected values
-            var energy_type_id = $(this).val();
+            var energy_type_id = $('input[type=radio][name=energy_type_id]:checked').val();
             console.log("energy: ", energy_type_id);
             var complaint_type_id=$("#complaint_type_id").val();
             console.log("type: ", complaint_type_id);

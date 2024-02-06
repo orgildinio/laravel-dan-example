@@ -198,6 +198,9 @@
                                             class="p-2 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200">
                                             <span>{{$complaint->complaint_date}}</span>
                                         </td>
+                                        @if ($complaint->status_id == 6)
+                                        <td class="p-2 whitespace-no-wrap border-b border-gray-200"></td>
+                                        @else
                                         <td
                                             class="p-2 text-xs text-center leading-5 whitespace-no-wrap border-b border-gray-200">
                                             @if (($complaint->expire_date) > now() )
@@ -206,6 +209,7 @@
                                                 <span class="text-red-500 text-xs">Хугацаа хэтэрсэн</span>
                                             @endif
                                         </td>
+                                        @endif
                                         @if (Auth::user()->role?->name == 'admin')
                                         <td
                                             class="text-sm font-medium leading-5 text-center whitespace-no-wrap border-b border-gray-200 ">
@@ -268,30 +272,7 @@
 @push('scripts')
 
 <script>
-    // document.addEventListener('DOMContentLoaded', function () {
-    //     flatpickr("#daterange", {
-    //         mode: "range",
-    //         showMonths: 2,
-    //         dateFormat: "Y-m-d",
-    //     });
-    // });
-
-
-    // document.getElementById('export-btn').addEventListener('click', function () {
-    //     // Get the HTML table element
-    //     var table = document.getElementById('complaint-report');
-
-    //     // Convert the HTML table to a worksheet
-    //     var ws = XLSX.utils.table_to_sheet(table);
-
-    //     // Create a workbook and add the worksheet to it
-    //     var wb = XLSX.utils.book_new();
-    //     XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-
-    //     XLSX.writeFile(wb, "Reports.xlsx", { compression: true });
-
-    // });
-
+    
     $(document).ready(function() {
 
         flatpickr("#daterange", {
