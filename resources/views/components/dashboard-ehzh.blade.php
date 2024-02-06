@@ -65,7 +65,7 @@
                    <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
                       <div class="overflow-hidden">
                          {{-- <h1 class="text-center font-bold pb-2">Цахилгаан түгээх, хангах ТЗЭ-чид</h1> --}}
-                         <div id="stackedChartContainer1"></div>
+                         <div id="stackedChartTog"></div>
                       </div>
                    </div>
                 </div>
@@ -83,7 +83,7 @@
                 <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
                    <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
                       <div class="overflow-hidden">
-                         <div id="stackedChartContainer2"></div>
+                         <div id="stackedChartDulaan"></div>
                       </div>
                    </div>
                 </div>
@@ -116,19 +116,7 @@
  </div>
 
  <script type="text/javascript">
-    // var chartData = <?php //echo json_encode($complaints_by_channels)?>;
-    // var newChartData = chartData.map(obj => obj.count);
- 
-    // var chartDataMonth = <?php //echo json_encode($complaints_by_months)?>;
-    // var chartData2 = chartDataMonth.map(obj => obj.count);
- 
-    // var chartDataStatus = <?php //echo json_encode($complaints_by_status)?>;
-    // console.log(chartDataStatus);
-   //  var chartData3 = chartDataStatus.map(obj => {return {
-   //     name: obj.name,
-   //     y: obj.count};
-   //  });
-    //  console.log(chartData3);
+    
    var chartCategoryData = <?php echo $compCategoryCounts; ?>;
    var chartDataCompTypes = <?php echo $compTypeCounts; ?>;
    var compTypeMakersCount = <?php echo $compTypeMakersCount; ?>;
@@ -151,16 +139,44 @@
       return obj[Object.keys(obj)[1]];
    });
 
-   var compTzeTogCounts = <?php echo $compTzeTogCounts; ?>;
+   var allTzeTog = <?php echo $allTzeComplaintsWithStatusTog ?>;
+   var allTzeDulaan = <?php echo $allTzeComplaintsWithStatusDulaan ?>;
 
-   var chartTzeTogLabels = compTzeTogCounts.map(function(obj) {
-      return obj[Object.keys(obj)[0]];
-   });
-   var chartTzelTogDatas = compChannelsCount.map(function(obj) {
-      return obj[Object.keys(obj)[1]];
+   // Define the mapping of status_id to category names
+   const statusCategoryMapping = {
+      0: 'Шинээр ирсэн',
+      1: 'Шилжүүлсэн',
+      2: 'Хүлээн авсан',
+      3: 'Хянаж байгаа',
+      4: 'Хугацаа хэтэрсэн',
+      5: 'Буцаасан',
+      6: 'Шийдвэрлэсэн'
+   };
+   const customColors = ['#fca5a5', '#d1d5db', '#fde047', '#93c5fd', '#fdba74', '#f9fafb', '#86efac'];
+
+   const filteredDataTog = allTzeTog.filter(item => {
+      return item.total_count !== 0 || allTzeTog.some(otherItem => otherItem.name === item.name && otherItem.total_count !== 0);
    });
 
-   
+   const uniqueOrganizationNamesTog = [...new Set(filteredDataTog.map(item => item.name))];
+
+   // Group the total_count by status_id
+   const groupedData = filteredDataTog.reduce((acc, curr) => {
+      const { status, total_count } = curr;
+      if (!acc[status]) {
+         acc[status] = { status, values: [total_count] };
+      } else {
+         acc[status].values.push(total_count);
+      }
+      return acc;
+   }, {});
+
+   // Create a new array with the grouped data and category names
+   const newArray = Object.values(groupedData).map(item => ({
+      category: statusCategoryMapping[item.status],
+      status_id: item.status,
+      values: item.values
+   }));
  
     // ЭХЗХ Chart энергийн төрлөөр 
     Highcharts.chart('chartEnergyType', {
@@ -234,29 +250,15 @@
         }]
     });
  
-    const customColors = ['#fca5a5', '#d1d5db', '#86efac', '#fde047', '#93c5fd', '#fdba74', '#f9fafb'];
- 
-    // Stacked Chart 1
-    const data = [
-       { category: 'Хугацаа хэтэрсэн', values: [20, 30, 40, 24, 26, 46] },
-       { category: 'Буцаасан', values: [20, 30, 40, 24, 26, 46] },
-       { category: 'Шийдвэрлэсэн', values: [20, 30, 40, 24, 26, 46] },
-       { category: 'Шилжүүлсэн', values: [20, 30, 40, 24, 26, 46] },
-       { category: 'Хянаж байгаа', values: [20, 30, 40, 24, 26, 46] },
-       { category: 'Хүлээн авсан', values: [15, 25, 35, 39, 26, 54] },
-       { category: 'Шинээр ирсэн', values: [10, 20, 30, 14, 7, 16] },
-    ];
-    
- 
     // Extract series data from the sample data
-    const seriesData = data.map((item, index) => ({
+    const seriesDataTog = newArray.map((item, index) => ({
        name: item.category,
        data: item.values,
        color: customColors[index]
     }));
  
     // Create the stacked bar chart
-    Highcharts.chart('stackedChartContainer1', {
+    Highcharts.chart('stackedChartTog', {
        chart: {
           type: 'bar'
        },
@@ -264,7 +266,7 @@
           text: 'Цахилгаан түгээх, хангах ТЗЭ-чид'
        },
        xAxis: {
-          categories: chartTzeTogLabels
+          categories: uniqueOrganizationNamesTog
        },
        yAxis: {
           title: {
@@ -282,7 +284,7 @@
              }
          }
        },
-       series: seriesData
+       series: seriesDataTog
     });
  
     // Stacked Chart 2
@@ -295,16 +297,39 @@
        { category: 'Хүлээн авсан', values: [15, 25, 5, 9, 26, 4] },
        { category: 'Шинээр ирсэн', values: [10, 20, 30, 14, 7, 6] },
     ];
+    const filteredDataDulaan = allTzeDulaan.filter(item => {
+      return item.total_count !== 0 || allTzeDulaan.some(otherItem => otherItem.name === item.name && otherItem.total_count !== 0);
+   });
+
+   const uniqueOrganizationNamesDulaan = [...new Set(filteredDataDulaan.map(item => item.name))];
+
+   // Group the total_count by status_id
+   const groupedDataDulaan = filteredDataDulaan.reduce((acc, curr) => {
+      const { status, total_count } = curr;
+      if (!acc[status]) {
+         acc[status] = { status, values: [total_count] };
+      } else {
+         acc[status].values.push(total_count);
+      }
+      return acc;
+   }, {});
+
+   // Create a new array with the grouped data and category names
+   const newArrayDulaan = Object.values(groupedDataDulaan).map(item => ({
+      category: statusCategoryMapping[item.status],
+      status_id: item.status,
+      values: item.values
+   }));
  
     // Extract series data from the sample data
-    const seriesData2 = data2.map((item, index) => ({
+    const seriesData2 = newArrayDulaan.map((item, index) => ({
        name: item.category,
        data: item.values,
        color: customColors[index]
     }));
  
     // Create the stacked bar chart
-    Highcharts.chart('stackedChartContainer2', {
+    Highcharts.chart('stackedChartDulaan', {
        chart: {
           type: 'bar'
        },
@@ -312,7 +337,7 @@
           text: 'Дулаан түгээх, хангах ТЗЭ-чид'
        },
        xAxis: {
-          categories: ['УБДС ТӨХК', 'ОСНААУГ ОНӨААТҮГ', 'ДСЦТС ТӨХК', 'Ганбиж ХХК', 'Баянмонгол хотхон ХХК', 'Гангар-Орд ХХК']
+          categories: uniqueOrganizationNamesDulaan
        },
        yAxis: {
           title: {

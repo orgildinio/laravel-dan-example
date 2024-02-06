@@ -88,17 +88,86 @@ class DashboardEhzh extends Component
         $orgs_dulaan = Organization::select('name')->where('plant_id', 2)->orderBy('name', 'asc')->get();
         // dd(json_encode($orgs));
 
-        $compTzeTog = Complaint::from('complaints as c')
+        $compTzeTogNew = Complaint::from('complaints as c')
             ->select(DB::raw('o.NAME AS org_name, COUNT ( C.ID ) AS COUNT'))
             ->leftJoin('organizations as o', 'c.organization_id', '=', 'o.id')
-            ->where('c.status_id', 6)
+            ->where('c.status_id', 0)
+            ->where('plant_id', 1)
             ->groupBy('o.name')
             ->orderBy('o.name')
             ->get();
-        $compTzeTogCounts = json_encode($compTzeTog);
-        // dd($compTzeTogCounts);
+        $compTzeTogNewCounts = json_encode($compTzeTogNew);
+
+        $compTzeTogSent = Complaint::from('complaints as c')
+            ->select(DB::raw('o.NAME AS org_name, COUNT ( C.ID ) AS COUNT'))
+            ->leftJoin('organizations as o', 'c.organization_id', '=', 'o.id')
+            ->where('c.status_id', 1)
+            ->where('plant_id', 1)
+            ->groupBy('o.name')
+            ->orderBy('o.name')
+            ->get();
+        $compTzeTogSent = json_encode($compTzeTogSent);
+
+        $compTzeTogSolved = Complaint::from('complaints as c')
+            ->select(DB::raw('o.NAME AS org_name, COUNT ( C.ID ) AS COUNT'))
+            ->leftJoin('organizations as o', 'c.organization_id', '=', 'o.id')
+            ->where('c.status_id', 6)
+            ->where('plant_id', 1)
+            ->groupBy('o.name')
+            ->orderBy('o.name')
+            ->get();
+        $compTzeTogSolvedCounts = json_encode($compTzeTogSolved);
+        // dd($compTzeTogSolvedCounts);
+
+        $organizations = Complaint::from('complaints as c')
+            ->leftJoin('organizations as o', 'o.id', '=', 'c.organization_id')
+            ->where('o.plant_id', 1)
+            ->groupBy('c.organization_id', 'o.name')
+            ->select('c.organization_id', 'o.name', DB::raw('COALESCE(COUNT(c.id), 0) AS count_tog'))
+            ->orderBy('o.name')
+            ->get();
+
+        $organizations = json_encode($organizations);
+        // dd(json_encode($organizations));
+
+        $resultTog = DB::table('organizations as o')
+            ->crossJoin('statuses as s')
+            ->leftJoin('complaints as c', function ($join) {
+                $join->on('o.id', '=', 'c.organization_id')
+                    ->on('s.id', '=', 'c.status_id');
+            })
+            ->where(function ($query) {
+                $query->whereNull('s.id')
+                    ->orWhereNotIn('s.id', [7, 8]);
+            })
+            ->where('o.plant_id', 1)
+            ->whereNotIn('o.id', [99])
+            ->groupBy('o.id', 'o.name', 's.id')
+            ->orderBy('o.name')
+            ->orderBy('s.id')
+            ->select('o.name', DB::raw('COALESCE(COUNT(c.status_id), 0) as total_count'), 's.id as status')
+            ->get();
+        $allTzeComplaintsWithStatusTog = json_encode($resultTog);
+
+        $resultDulaan = DB::table('organizations as o')
+            ->crossJoin('statuses as s')
+            ->leftJoin('complaints as c', function ($join) {
+                $join->on('o.id', '=', 'c.organization_id')
+                    ->on('s.id', '=', 'c.status_id');
+            })
+            ->where(function ($query) {
+                $query->whereNull('s.id')
+                    ->orWhereNotIn('s.id', [7, 8]);
+            })
+            ->where('o.plant_id', 2)
+            ->groupBy('o.id', 'o.name', 's.id')
+            ->orderBy('o.name')
+            ->orderBy('s.id')
+            ->select('o.name', DB::raw('COALESCE(COUNT(c.status_id), 0) as total_count'), 's.id as status')
+            ->get();
+        $allTzeComplaintsWithStatusDulaan = json_encode($resultDulaan);
 
 
-        return view('components.dashboard-ehzh', ['all_comp' => $all_comp, 'new_comp' => $new_comp, 'snt_comp' => $snt_comp, 'rec_comp' => $rec_comp, 'ctl_comp' => $ctl_comp, 'rtn_comp' => $rtn_comp, 'slv_comp' => $slv_comp, 'cnc_comp' => $cnc_comp, 'exp_comp' => $exp_comp, 'ehzh_tog_count' => $ehzh_tog_count, 'ehzh_dulaan_count' => $ehzh_dulaan_count, 'compCategoryCounts' => $compCategoryCounts, 'compTypeCounts' => $compTypeCounts, 'compTypeMakersCount' => $compTypeMakersCount, 'compChannelsCount' => $compChannelsCount, 'compCountsCurrentYear' => $compCountsCurrentYear, 'orgs_dulaan' => $orgs_dulaan, 'orgs_tog' => $orgs_tog, 'compTzeTogCounts' => $compTzeTogCounts]);
+        return view('components.dashboard-ehzh', ['all_comp' => $all_comp, 'new_comp' => $new_comp, 'snt_comp' => $snt_comp, 'rec_comp' => $rec_comp, 'ctl_comp' => $ctl_comp, 'rtn_comp' => $rtn_comp, 'slv_comp' => $slv_comp, 'cnc_comp' => $cnc_comp, 'exp_comp' => $exp_comp, 'ehzh_tog_count' => $ehzh_tog_count, 'ehzh_dulaan_count' => $ehzh_dulaan_count, 'compCategoryCounts' => $compCategoryCounts, 'compTypeCounts' => $compTypeCounts, 'compTypeMakersCount' => $compTypeMakersCount, 'compChannelsCount' => $compChannelsCount, 'compCountsCurrentYear' => $compCountsCurrentYear, 'allTzeComplaintsWithStatusTog' => $allTzeComplaintsWithStatusTog, 'allTzeComplaintsWithStatusDulaan' => $allTzeComplaintsWithStatusDulaan]);
     }
 }
