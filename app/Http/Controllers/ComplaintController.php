@@ -453,10 +453,10 @@ class ComplaintController extends Controller
         $input['expire_date'] = $register_date->addHours(48);
 
         if ($user->org_id != null) {
-            $input['complaint_maker_type_id'] = 1;
             $input['status_id'] = 2;
             $input['controlled_user_id'] = $user->id;
         } else {
+            $input['complaint_maker_type_id'] = 1;
             $input['status_id'] = 0;
         }
 
