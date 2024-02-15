@@ -86,8 +86,8 @@ class DashboardTze extends Component
 
         $compTypeMakersTog = DB::table('complaints as c')
             ->leftJoin('complaint_maker_types as ct', 'ct.id', '=', 'c.complaint_maker_type_id')
-            ->leftJoin('organizations as o', 'o.id', '=', 'c.organization_id')
-            ->where('o.plant_id', '=', 1)
+            ->where('c.energy_type_id', '=', 1)
+            ->whereNotIn('c.organization_id', [99])
             ->groupBy('ct.name')
             ->select('ct.name', DB::raw('COUNT(c.id) AS y'))
             ->get();
@@ -95,8 +95,8 @@ class DashboardTze extends Component
 
         $compTypeMakersDulaan = DB::table('complaints as c')
             ->leftJoin('complaint_maker_types as ct', 'ct.id', '=', 'c.complaint_maker_type_id')
-            ->leftJoin('organizations as o', 'o.id', '=', 'c.organization_id')
-            ->where('o.plant_id', '=', 2)
+            ->where('c.energy_type_id', '=', 2)
+            ->whereNotIn('c.organization_id', [99])
             ->groupBy('ct.name')
             ->select('ct.name', DB::raw('COUNT(c.id) AS y'))
             ->get();
@@ -105,8 +105,8 @@ class DashboardTze extends Component
         $compTogChannels = Complaint::from('complaints as c')
             ->select('ct.name', DB::raw('COUNT(c.id) as y'))
             ->leftJoin('channels as ct', 'c.channel_id', '=', 'ct.id')
-            ->leftJoin('organizations as o', 'o.id', '=', 'c.organization_id')
-            ->where('o.plant_id', '=', 1)
+            ->where('c.energy_type_id', '=', 1)
+            ->whereNotIn('c.organization_id', [99])
             ->groupBy('ct.name')
             ->get();
         $compTogChannelsCount = json_encode($compTogChannels);
@@ -114,37 +114,16 @@ class DashboardTze extends Component
         $compDulaanChannels = Complaint::from('complaints as c')
             ->select('ct.name', DB::raw('COUNT(c.id) as y'))
             ->leftJoin('channels as ct', 'c.channel_id', '=', 'ct.id')
-            ->leftJoin('organizations as o', 'o.id', '=', 'c.organization_id')
-            ->where('o.plant_id', '=', 2)
+            ->where('c.energy_type_id', '=', 2)
+            ->whereNotIn('c.organization_id', [99])
             ->groupBy('ct.name')
             ->get();
         $compDulaanChannelsCount = json_encode($compDulaanChannels);
 
-        $compStatusTog = Status::select('statuses.id', 'statuses.name')
-            ->selectRaw('COALESCE(COUNT(complaints.id), 0) AS status_count')
-            ->leftJoin('complaints', 'statuses.id', '=', 'complaints.status_id')
-            ->whereNotIn('statuses.id', [7, 8])
-            ->whereNotIn('complaints.organization_id', [99])
-            ->where('complaints.energy_type_id', 1)
-            ->groupBy('statuses.name', 'statuses.id')
-            ->orderBy('statuses.id')
-            ->get();
-        $statusCountTog = json_encode($compStatusTog);
         $statusExpireTog = Complaint::where('expire_date', '<=', Carbon::now())
             ->whereNotIn('organization_id', [99])
             ->where('energy_type_id', 1)
             ->count();
-
-        $compStatusDulaan = Status::select('statuses.id', 'statuses.name')
-            ->selectRaw('COALESCE(COUNT(complaints.id), 0) AS status_count')
-            ->leftJoin('complaints', 'statuses.id', '=', 'complaints.status_id')
-            ->whereNotIn('statuses.id', [7, 8])
-            ->whereNotIn('complaints.organization_id', [99])
-            ->where('complaints.energy_type_id', 2)
-            ->groupBy('statuses.name', 'statuses.id')
-            ->orderBy('statuses.id')
-            ->get();
-        $statusCountDulaan = json_encode($compStatusDulaan);
         $statusExpireDulaan = Complaint::where('expire_date', '<=', Carbon::now())
             ->whereNotIn('organization_id', [99])
             ->where('energy_type_id', 2)
@@ -173,6 +152,6 @@ class DashboardTze extends Component
 
 
 
-        return view('components.dashboard-tze', ['tze_tog' => $tze_tog, 'tze_dulaan' => $tze_dulaan, 'new_comp' => $new_comp, 'snt_comp' => $snt_comp, 'rec_comp' => $rec_comp, 'ctl_comp' => $ctl_comp, 'rtn_comp' => $rtn_comp, 'slv_comp' => $slv_comp, 'cnc_comp' => $cnc_comp, 'exp_comp' => $exp_comp, 'lineChartData' => $lineChartData, 'stackedChartDataTog' => $stackedChartDataTog, 'stackedChartDataDulaan' => $stackedChartDataDulaan, 'compMakerTogCount' => $compMakerTogCount, 'compMakerDulaanCount' => $compMakerDulaanCount, 'compTogChannelsCount' => $compTogChannelsCount, 'compDulaanChannelsCount' => $compDulaanChannelsCount, 'statusCountTog' => $statusCountTog, 'statusExpireTog' => $statusExpireTog, 'statusCountDulaan' => $statusCountDulaan, 'statusExpireDulaan' => $statusExpireDulaan, 'statusTog' => $statusTog, 'statusDulaan' => $statusDulaan]);
+        return view('components.dashboard-tze', ['tze_tog' => $tze_tog, 'tze_dulaan' => $tze_dulaan, 'new_comp' => $new_comp, 'snt_comp' => $snt_comp, 'rec_comp' => $rec_comp, 'ctl_comp' => $ctl_comp, 'rtn_comp' => $rtn_comp, 'slv_comp' => $slv_comp, 'cnc_comp' => $cnc_comp, 'exp_comp' => $exp_comp, 'lineChartData' => $lineChartData, 'stackedChartDataTog' => $stackedChartDataTog, 'stackedChartDataDulaan' => $stackedChartDataDulaan, 'compMakerTogCount' => $compMakerTogCount, 'compMakerDulaanCount' => $compMakerDulaanCount, 'compTogChannelsCount' => $compTogChannelsCount, 'compDulaanChannelsCount' => $compDulaanChannelsCount, 'statusExpireTog' => $statusExpireTog, 'statusExpireDulaan' => $statusExpireDulaan, 'statusTog' => $statusTog, 'statusDulaan' => $statusDulaan]);
     }
 }
