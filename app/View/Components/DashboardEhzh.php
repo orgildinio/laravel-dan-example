@@ -3,6 +3,7 @@
 namespace App\View\Components;
 
 use Carbon\Carbon;
+use App\Models\Status;
 use App\Models\Complaint;
 use App\Models\Organization;
 use Illuminate\View\Component;
@@ -39,6 +40,17 @@ class DashboardEhzh extends Component
         $rtn_comp = Complaint::where('status_id', 5)->where('organization_id', $org_id)->count();
         $slv_comp = Complaint::where('status_id', 6)->where('organization_id', $org_id)->count();
         $exp_comp = Complaint::where('expire_date', '<=', Carbon::now())->where('organization_id', $org_id)->count();
+
+        $statusCount = DB::table('statuses as s')
+            ->select('s.id as status_id', 's.name as status_name', DB::raw('COUNT(c.id) as status_count'))
+            ->leftJoin('complaints as c', function ($join) {
+                $join->on('s.id', '=', 'c.status_id')
+                    ->where('c.organization_id', '=', 99);
+            })
+            ->whereNotIn('s.id', [7, 8])
+            ->groupBy('s.id', 's.name')
+            ->orderBy('s.id')
+            ->get();
 
         $ehzh_tog_count = Complaint::where('energy_type_id', 1)->where('organization_id', $org_id)->count();
         $ehzh_dulaan_count = Complaint::where('energy_type_id', 2)->where('organization_id', $org_id)->count();
@@ -122,6 +134,6 @@ class DashboardEhzh extends Component
         $allTzeComplaintsWithStatusDulaan = json_encode($resultDulaan);
 
 
-        return view('components.dashboard-ehzh', ['all_comp' => $all_comp, 'new_comp' => $new_comp, 'snt_comp' => $snt_comp, 'rec_comp' => $rec_comp, 'ctl_comp' => $ctl_comp, 'rtn_comp' => $rtn_comp, 'slv_comp' => $slv_comp, 'cnc_comp' => $cnc_comp, 'exp_comp' => $exp_comp, 'ehzh_tog_count' => $ehzh_tog_count, 'ehzh_dulaan_count' => $ehzh_dulaan_count, 'compCategoryCounts' => $compCategoryCounts, 'compTypeCounts' => $compTypeCounts, 'compTypeMakersCount' => $compTypeMakersCount, 'compChannelsCount' => $compChannelsCount, 'compCountsCurrentYear' => $compCountsCurrentYear, 'allTzeComplaintsWithStatusTog' => $allTzeComplaintsWithStatusTog, 'allTzeComplaintsWithStatusDulaan' => $allTzeComplaintsWithStatusDulaan]);
+        return view('components.dashboard-ehzh', ['all_comp' => $all_comp, 'new_comp' => $new_comp, 'snt_comp' => $snt_comp, 'rec_comp' => $rec_comp, 'ctl_comp' => $ctl_comp, 'rtn_comp' => $rtn_comp, 'slv_comp' => $slv_comp, 'cnc_comp' => $cnc_comp, 'exp_comp' => $exp_comp, 'ehzh_tog_count' => $ehzh_tog_count, 'ehzh_dulaan_count' => $ehzh_dulaan_count, 'compCategoryCounts' => $compCategoryCounts, 'compTypeCounts' => $compTypeCounts, 'compTypeMakersCount' => $compTypeMakersCount, 'compChannelsCount' => $compChannelsCount, 'compCountsCurrentYear' => $compCountsCurrentYear, 'allTzeComplaintsWithStatusTog' => $allTzeComplaintsWithStatusTog, 'allTzeComplaintsWithStatusDulaan' => $allTzeComplaintsWithStatusDulaan, 'statusCount' => $statusCount]);
     }
 }

@@ -9,7 +9,7 @@
         <div id="stackedChartContainerTze2" class="bg-white shadow rounded-lg"></div>
     </section>
     <section class="grid md:grid-cols-4 xl:grid-cols-4 gap-6 mt-6">
-        <div class="flex flex-col bg-white shadow rounded-lg p-2">
+        {{-- <div class="flex flex-col bg-white shadow rounded-lg p-2">
             <table class="min-w-full text-left text-sm font-light border border-gray-300">
                 <thead class="font-medium">
                     <tr class="border-b bg-blue-700 text-white">
@@ -48,9 +48,10 @@
                     </tr>
                 </tbody>
             </table>
-        </div>
+        </div> --}}
+        <div id="barChartStatusTog" class="bg-white shadow rounded-lg"></div>
         <div id="pieChartMakerElectric" class="bg-white shadow rounded-lg"></div>
-        <div class="flex flex-col bg-white shadow rounded-lg p-2">
+        {{-- <div class="flex flex-col bg-white shadow rounded-lg p-2">
             <table class="min-w-full text-left text-sm font-light border border-gray-300">
                 <thead class="font-medium">
                     <tr class="border-b bg-blue-700 text-white">
@@ -89,7 +90,8 @@
                     </tr>
                 </tbody>
             </table>
-        </div>
+        </div> --}}
+        <div id="barChartStatusDulaan" class="bg-white shadow rounded-lg"></div>
         <div id="pieChartMakerDulaan" class="bg-white shadow rounded-lg"></div>
     </section>
     <section class="grid md:grid-cols-2 xl:grid-cols-2 gap-6 mt-6">
@@ -122,7 +124,8 @@
                     style: {
                         fontSize: '14px',
                         color: '#fff',
-                        fontWeight: 'bold'
+                        fontWeight: 'bold',
+                        textOutline: 'none'
                     },
                 },
                 showInLegend: true,
@@ -190,7 +193,8 @@
                     style: {
                         fontSize: '14px',
                         color: '#fff',
-                        fontWeight: 'bold'
+                        fontWeight: 'bold',
+                        textOutline: 'none'
                     },
                 },
                 showInLegend: true,
@@ -339,7 +343,10 @@
             bar: {
                 stacking: 'normal',
                 dataLabels: {
-                    enabled: true
+                    enabled: true,
+                    style: {
+                        textOutline: 'none'
+                    }
                 }
             }
         },
@@ -412,11 +419,167 @@
             bar: {
                 stacking: 'normal',
                 dataLabels: {
-                    enabled: true
+                    enabled: true,
+                    style: {
+                        textOutline: 'none'
+                    }
                 }
             }
         },
         series: seriesDulaanTab2
+    });
+
+    // Bar chart status tog
+    let statusCountTog = @json($statusTog);
+    let dataStatusTog = statusCountTog.map((obj, index) => ({
+        y: obj['status_count'],
+        color: statusBarColors[index]
+    }));
+    let statusExpireTog = {
+        y: {{ $statusExpireTog }},
+        color: '#fca5a5'
+    };
+    let statusTogDataset = [...dataStatusTog, statusExpireTog];
+
+   //  let datalableTog = statusTogDataset.map(function(obj) {
+   //      return obj[Object.keys(obj)[1]];
+   //  });
+
+    Highcharts.chart('barChartStatusTog', {
+        chart: {
+            type: 'bar'
+        },
+        title: {
+            text: 'Гомдлын төлөв',
+            // align: 'left'
+        },
+        subtitle: {
+            text: '',
+            align: ''
+        },
+        xAxis: {
+            categories: ['Шинээр ирсэн', 'Шилжүүлсэн', 'Хүлээн авсан', 'Хянаж байгаа', 'Цуцалсан', 'Буцаасан',
+                'Шийдвэрлэсэн', 'Хугацаа хэтэрсэн'
+            ],
+            title: {
+                text: null
+            },
+            gridLineWidth: 1,
+            lineWidth: 0
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Санал, гомдлын тоо',
+                // align: 'high'
+            },
+            labels: {
+                overflow: 'justify'
+            },
+            gridLineWidth: 0
+        },
+        tooltip: {
+            valueSuffix: ' ширхэг'
+        },
+        plotOptions: {
+            bar: {
+                borderRadius: '50%',
+                dataLabels: {
+                    enabled: true,
+                    align: 'left', // Justify the data labels to the left
+                    x: 250
+                },
+                // groupPadding: 0.1
+            },
+            series: {
+                pointWidth: 10 // Set the width of the bars to 20 pixels
+            }
+        },
+        legend: {
+            enabled: false
+        },
+        credits: {
+            enabled: false
+        },
+        series: [{
+            name: 'Санал, гомдлын тоо',
+            data: statusTogDataset
+        }, ]
+    });
+
+
+    // Bar chart status dulaan
+    let statusCountDulaan = @json($statusDulaan);
+    let dataStatusDulaan = statusCountDulaan.map((obj, index) => ({
+        y: obj['status_count'],
+        color: statusBarColors[index]
+    }));
+    let statusExpireDulaan = {
+        y: {{ $statusExpireDulaan }},
+        color: '#fca5a5'
+    };
+    let statusDulaanDataset = [...dataStatusDulaan, statusExpireDulaan];
+
+    Highcharts.chart('barChartStatusDulaan', {
+        chart: {
+            type: 'bar'
+        },
+        title: {
+            text: 'Гомдлын төлөв',
+            // align: 'left'
+        },
+        subtitle: {
+            text: '',
+            align: ''
+        },
+        xAxis: {
+            categories: ['Шинээр ирсэн', 'Шилжүүлсэн', 'Хүлээн авсан', 'Хянаж байгаа', 'Цуцалсан', 'Буцаасан',
+                'Шийдвэрлэсэн', 'Хугацаа хэтэрсэн'
+            ],
+            title: {
+                text: null
+            },
+            gridLineWidth: 1,
+            lineWidth: 0
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Санал, гомдлын тоо',
+                // align: 'high'
+            },
+            labels: {
+                overflow: 'justify'
+            },
+            gridLineWidth: 0
+        },
+        tooltip: {
+            valueSuffix: ' ширхэг'
+        },
+        plotOptions: {
+            bar: {
+                borderRadius: '50%',
+                dataLabels: {
+                    enabled: true,
+                    align: 'left', // Justify the data labels to the left
+                    x: 250
+                },
+                // groupPadding: 0.1
+            },
+            series: {
+                pointWidth: 10 // Set the width of the bars to 20 pixels
+            }
+        },
+        legend: {
+            enabled: false
+        },
+        credits: {
+            enabled: false
+        },
+        series: [{
+            name: 'Санал, гомдлын тоо',
+            data: statusDulaanDataset
+        }, ]
     });
 
     var compMakerTogCount = <?php echo $compMakerTogCount; ?>;
@@ -444,7 +607,8 @@
                     style: {
                         fontSize: '14px',
                         color: '#fff',
-                        fontWeight: 'bold'
+                        fontWeight: 'bold',
+                        textOutline: 'none'
                     },
                 },
                 showInLegend: true,
@@ -480,7 +644,8 @@
                     style: {
                         fontSize: '14px',
                         color: '#fff',
-                        fontWeight: 'bold'
+                        fontWeight: 'bold',
+                        textOutline: 'none'
                     },
                 },
                 showInLegend: true,
@@ -565,7 +730,7 @@
             type: 'bar'
         },
         title: {
-            text: 'Хүлээн авсан суваг'
+            text: 'Хүлээн авсан суваг - Дулаан'
         },
         subtitle: {
             text: ''

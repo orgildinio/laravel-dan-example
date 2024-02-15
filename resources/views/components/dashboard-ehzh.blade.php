@@ -1,7 +1,7 @@
 <div class="mt-8">
     <section class="grid md:grid-cols-3 xl:grid-cols-3 gap-6">
         <div class="bg-white shadow rounded-lg p-2">
-            <table class="min-w-full text-left text-sm font-light border border-gray-300">
+            {{-- <table class="min-w-full text-left text-sm font-light border border-gray-300">
                 <thead class="font-medium">
                     <tr class="border-b bg-blue-700 text-white">
                         <th scope="col" class="p-1 border-r">Эрчим хүчний зохицуулах хороо</th>
@@ -38,7 +38,8 @@
                         <td class="whitespace-nowrap p-1 text-center">{{ $exp_comp }}</td>
                     </tr>
                 </tbody>
-            </table>
+            </table> --}}
+            <div id="chartStatus"></div>
         </div>
         <div class="bg-white shadow rounded-lg">
             <div id="chartEnergyType"></div>
@@ -145,6 +146,93 @@
         values: item.values
     }));
 
+    statusBarColors = [
+        '#f9fafb',
+        '#d1d5db',
+        '#fde047',
+        '#93c5fd',
+        '#fdba74',
+        '#fca5a5',
+        '#86efac',
+    ];
+
+    var statusCount = @json($statusCount);
+    console.log(statusCount);
+
+    let dataStatus = statusCount.map((obj, index) => ({
+        y: obj['status_count'],
+        color: statusBarColors[index]
+    }));
+    let expireComp = {
+        y: {{ $exp_comp }},
+        color: '#fca5a5'
+    };
+    let statusDataset = [...dataStatus, expireComp];
+    console.log(statusDataset);
+
+    Highcharts.chart('chartStatus', {
+        chart: {
+            type: 'bar'
+        },
+        title: {
+            text: 'Гомдлын төлөв',
+            // align: 'left'
+        },
+        subtitle: {
+            text: '',
+            align: ''
+        },
+        xAxis: {
+            categories: ['Шинээр ирсэн', 'Шилжүүлсэн', 'Хүлээн авсан', 'Хянаж байгаа', 'Цуцалсан', 'Буцаасан',
+                'Шийдвэрлэсэн', 'Хугацаа хэтэрсэн'
+            ],
+            title: {
+                text: null
+            },
+            gridLineWidth: 1,
+            lineWidth: 0
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Санал, гомдлын тоо',
+                // align: 'high'
+            },
+            labels: {
+                overflow: 'justify'
+            },
+            gridLineWidth: 0
+        },
+        tooltip: {
+            valueSuffix: ' ширхэг'
+        },
+        plotOptions: {
+            bar: {
+                borderRadius: '50%',
+                dataLabels: {
+                    enabled: true,
+                    align: 'left', // Justify the data labels to the left
+                    x: 250
+                },
+                // groupPadding: 0.1
+            },
+            series: {
+                pointWidth: 10 // Set the width of the bars to 20 pixels
+            }
+        },
+        legend: {
+            enabled: false
+        },
+        credits: {
+            enabled: false
+        },
+        series: [{
+            name: 'Санал, гомдлын тоо',
+            data: statusDataset
+        }, ]
+    });
+
+
     // ЭХЗХ Chart энергийн төрлөөр 
     Highcharts.chart('chartEnergyType', {
         chart: {
@@ -166,7 +254,8 @@
                     style: {
                         fontSize: '14px',
                         color: '#fff',
-                        fontWeight: 'bold'
+                        fontWeight: 'bold',
+                        textOutline: 'none'
                     },
                 },
                 showInLegend: true,
@@ -208,7 +297,8 @@
                     style: {
                         fontSize: '14px',
                         color: '#fff',
-                        fontWeight: 'bold'
+                        fontWeight: 'bold',
+                        textOutline: 'none'
                     },
                 },
                 showInLegend: true,
@@ -251,7 +341,10 @@
             bar: {
                 stacking: 'normal',
                 dataLabels: {
-                    enabled: true
+                    enabled: true,
+                    style: {
+                        textOutline: 'none'
+                    }
                 }
             }
         },
@@ -326,7 +419,10 @@
             bar: {
                 stacking: 'normal',
                 dataLabels: {
-                    enabled: true
+                    enabled: true,
+                    style: {
+                        textOutline: 'none'
+                    }
                 }
             }
         },
@@ -363,7 +459,8 @@
                     style: {
                         fontSize: '14px',
                         color: '#fff',
-                        fontWeight: 'bold'
+                        fontWeight: 'bold',
+                        textOutline: 'none'
                     },
                 },
                 showInLegend: true,
@@ -416,18 +513,18 @@
                     style: {
                         fontSize: '14px',
                         color: '#fff',
-                        fontWeight: 'bold'
+                        fontWeight: 'bold',
+                        textOutline: 'none'
                     },
                 },
                 // showInLegend: true,
             }
         },
-        colors: [ '#f9fafb', '#3b82f6', '#f59e0b', '#fde047', '#22c55e', '#64748b', '#ef4444'],
+        colors: ['#f9fafb', '#3b82f6', '#f59e0b', '#fde047', '#22c55e', '#64748b', '#ef4444'],
         series: [{
             name: 'Өргөдөл, гомдол',
             colorByPoint: true,
-            data: [
-                {
+            data: [{
                     name: 'Шинээр ирсэн',
                     y: {{ $new_comp }}
                 },
@@ -564,7 +661,8 @@
                     style: {
                         fontSize: '14px',
                         // color: '#fff',
-                        fontWeight: 'bold'
+                        fontWeight: 'bold',
+                        textOutline: 'none'
                     },
                 },
                 showInLegend: true,

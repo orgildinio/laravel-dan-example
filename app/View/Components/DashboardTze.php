@@ -3,6 +3,7 @@
 namespace App\View\Components;
 
 use Carbon\Carbon;
+use App\Models\Status;
 use App\Models\Complaint;
 use Illuminate\View\Component;
 use Illuminate\Support\Facades\DB;
@@ -119,6 +120,59 @@ class DashboardTze extends Component
             ->get();
         $compDulaanChannelsCount = json_encode($compDulaanChannels);
 
-        return view('components.dashboard-tze', ['tze_tog' => $tze_tog, 'tze_dulaan' => $tze_dulaan, 'new_comp' => $new_comp, 'snt_comp' => $snt_comp, 'rec_comp' => $rec_comp, 'ctl_comp' => $ctl_comp, 'rtn_comp' => $rtn_comp, 'slv_comp' => $slv_comp, 'cnc_comp' => $cnc_comp, 'exp_comp' => $exp_comp, 'lineChartData' => $lineChartData, 'stackedChartDataTog' => $stackedChartDataTog, 'stackedChartDataDulaan' => $stackedChartDataDulaan, 'compMakerTogCount' => $compMakerTogCount, 'compMakerDulaanCount' => $compMakerDulaanCount, 'compTogChannelsCount' => $compTogChannelsCount, 'compDulaanChannelsCount' => $compDulaanChannelsCount]);
+        $compStatusTog = Status::select('statuses.id', 'statuses.name')
+            ->selectRaw('COALESCE(COUNT(complaints.id), 0) AS status_count')
+            ->leftJoin('complaints', 'statuses.id', '=', 'complaints.status_id')
+            ->whereNotIn('statuses.id', [7, 8])
+            ->whereNotIn('complaints.organization_id', [99])
+            ->where('complaints.energy_type_id', 1)
+            ->groupBy('statuses.name', 'statuses.id')
+            ->orderBy('statuses.id')
+            ->get();
+        $statusCountTog = json_encode($compStatusTog);
+        $statusExpireTog = Complaint::where('expire_date', '<=', Carbon::now())
+            ->whereNotIn('organization_id', [99])
+            ->where('energy_type_id', 1)
+            ->count();
+
+        $compStatusDulaan = Status::select('statuses.id', 'statuses.name')
+            ->selectRaw('COALESCE(COUNT(complaints.id), 0) AS status_count')
+            ->leftJoin('complaints', 'statuses.id', '=', 'complaints.status_id')
+            ->whereNotIn('statuses.id', [7, 8])
+            ->whereNotIn('complaints.organization_id', [99])
+            ->where('complaints.energy_type_id', 2)
+            ->groupBy('statuses.name', 'statuses.id')
+            ->orderBy('statuses.id')
+            ->get();
+        $statusCountDulaan = json_encode($compStatusDulaan);
+        $statusExpireDulaan = Complaint::where('expire_date', '<=', Carbon::now())
+            ->whereNotIn('organization_id', [99])
+            ->where('energy_type_id', 2)
+            ->count();
+
+        $statusTog = Status::leftJoin('complaints as c', function ($join) {
+            $join->on('statuses.id', '=', 'c.status_id')
+                ->where('c.energy_type_id', '=', 1)
+                ->whereNotIn('c.organization_id', [99]);
+        })
+            ->whereNotIn('statuses.id', [7, 8])
+            ->groupBy('statuses.id', 'statuses.name')
+            ->orderBy('statuses.id')
+            ->select('statuses.id as status_id', 'statuses.name as status_name', DB::raw('COUNT(c.id) as status_count'))
+            ->get();
+        $statusDulaan = Status::leftJoin('complaints as c', function ($join) {
+            $join->on('statuses.id', '=', 'c.status_id')
+                ->where('c.energy_type_id', '=', 2)
+                ->whereNotIn('c.organization_id', [99]);
+        })
+            ->whereNotIn('statuses.id', [7, 8])
+            ->groupBy('statuses.id', 'statuses.name')
+            ->orderBy('statuses.id')
+            ->select('statuses.id as status_id', 'statuses.name as status_name', DB::raw('COUNT(c.id) as status_count'))
+            ->get();
+
+
+
+        return view('components.dashboard-tze', ['tze_tog' => $tze_tog, 'tze_dulaan' => $tze_dulaan, 'new_comp' => $new_comp, 'snt_comp' => $snt_comp, 'rec_comp' => $rec_comp, 'ctl_comp' => $ctl_comp, 'rtn_comp' => $rtn_comp, 'slv_comp' => $slv_comp, 'cnc_comp' => $cnc_comp, 'exp_comp' => $exp_comp, 'lineChartData' => $lineChartData, 'stackedChartDataTog' => $stackedChartDataTog, 'stackedChartDataDulaan' => $stackedChartDataDulaan, 'compMakerTogCount' => $compMakerTogCount, 'compMakerDulaanCount' => $compMakerDulaanCount, 'compTogChannelsCount' => $compTogChannelsCount, 'compDulaanChannelsCount' => $compDulaanChannelsCount, 'statusCountTog' => $statusCountTog, 'statusExpireTog' => $statusExpireTog, 'statusCountDulaan' => $statusCountDulaan, 'statusExpireDulaan' => $statusExpireDulaan, 'statusTog' => $statusTog, 'statusDulaan' => $statusDulaan]);
     }
 }

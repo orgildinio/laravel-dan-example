@@ -87,6 +87,16 @@
                         $solved_complaints!==0 ? $solved_complaints : '' }}</span>
                   </a>
                </li>
+               {{-- <li>
+                  <a href="{{ route('complaintStatus', ['id' => 6]) }}"
+                     class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group {{ request()->is('complaintStatus/6') ? 'bg-gray-100' : '' }}">
+                     <img src="{{ asset('/image/expire-solid.svg')}}" class="w-[24px] h-[24px] shrink-0 inline-block" alt="report">
+                     <span class="ml-3 flex-1 whitespace-nowrap">Хугацаа хэтэрсэн</span>
+                     <span
+                        class="bg-green-100 text-gray-800 ml-3 text-sm font-medium inline-flex items-center justify-center px-2 rounded-full">{{
+                        $solved_complaints!==0 ? $solved_complaints : '' }}</span>
+                  </a>
+               </li> --}}
                <li>
                   <a href="{{ route('complaintStatus', ['id' => 4]) }}"
                      class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group {{ request()->is('complaintStatus/4') ? 'bg-gray-100' : '' }}">
