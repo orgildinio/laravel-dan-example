@@ -212,7 +212,7 @@
                 dataLabels: {
                     enabled: true,
                     align: 'left', // Justify the data labels to the left
-                    x: 300
+                    x: 400
                 },
                 // groupPadding: 0.1
             },
