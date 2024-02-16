@@ -36,7 +36,7 @@
    // bar chart status
 
    const statusCountEhs = @json($ehs_status_count);
-   console.log(statusCountEhs);
+
    const expireEhs = {
         y: {{ $exp_comp }},
         color: '#fca5a5'
@@ -47,7 +47,7 @@
         color: statusBarColors[index]
     }));
     const statusEhsDataset = [...dataStatusEhs, expireEhs];
-    console.log(statusEhsDataset);
+
    Highcharts.chart('barChartStatusEhs', {
         chart: {
             type: 'bar'
@@ -90,7 +90,7 @@
                 dataLabels: {
                     enabled: true,
                     align: 'left', // Justify the data labels to the left
-                    x: 400
+                    x: 800
                 },
                 // groupPadding: 0.1
             },

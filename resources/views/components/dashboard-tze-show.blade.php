@@ -1,5 +1,5 @@
-<div class="mt-8">
-    <h2 class="text-md text-gray-900 shadow bg-blue-50 p-2 mb-6 border-l-8 border-primary">Хянах самбар: <span
+<div>
+    <h2 class="text-md text-gray-900 shadow bg-blue-50 p-2 mb-4 border-l-8 border-primary">Хянах самбар: <span
             class="text-primary font-bold">{{ Auth::user()->org?->name }}</span></h2>
 
             
@@ -121,7 +121,7 @@
                 dataLabels: {
                     enabled: true,
                     align: 'left', // Justify the data labels to the left
-                    x: 800
+                    x: 1200
                 },
                 // groupPadding: 0.1
             },
