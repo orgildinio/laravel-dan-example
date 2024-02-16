@@ -157,7 +157,6 @@
     ];
 
     var statusCount = @json($statusCount);
-    console.log(statusCount);
 
     let dataStatus = statusCount.map((obj, index) => ({
         y: obj['status_count'],
@@ -168,7 +167,7 @@
         color: '#fca5a5'
     };
     let statusDataset = [...dataStatus, expireComp];
-    console.log(statusDataset);
+    // console.log(statusDataset);
 
     Highcharts.chart('chartStatus', {
         chart: {
@@ -179,8 +178,8 @@
             // align: 'left'
         },
         subtitle: {
-            text: '',
-            align: ''
+            text: 'ЭХЗХ - Гомдлын шийдвэрлэлтийн явц',
+            align: 'center'
         },
         xAxis: {
             categories: ['Шинээр ирсэн', 'Шилжүүлсэн', 'Хүлээн авсан', 'Хянаж байгаа', 'Цуцалсан', 'Буцаасан',
@@ -241,6 +240,10 @@
         title: {
             text: 'Гомдлын төрөл'
         },
+        subtitle: {
+            text: 'ЭХЗХ - Гомдлын төрөл цахилгаан, дулаан',
+            align: 'center'
+        },
         plotOptions: {
             pie: {
                 innerSize: '50%',
@@ -283,6 +286,10 @@
         },
         title: {
             text: 'Өргөдлийн ангилал'
+        },
+        subtitle: {
+            text: 'ЭХЗХ - Ирсэн өргөдөл, гомдлын ангилал',
+            align: 'center'
         },
         plotOptions: {
             pie: {
@@ -446,6 +453,10 @@
         title: {
             text: 'Гомдол гаргагчийн төрөл'
         },
+        subtitle: {
+            text: 'ЭХЗХ - Гомдол гаргагчийн төрлөөр',
+            align: 'center'
+        },
         plotOptions: {
             pie: {
                 innerSize: '50%',
@@ -491,7 +502,11 @@
             type: 'pie'
         },
         title: {
-            text: 'Гомдлын төрөл'
+            text: 'Гомдлын төлөв'
+        },
+        subtitle: {
+            text: 'ЭХЗХ - Гомдлын шийдвэрлэлтийн явц',
+            align: 'center'
         },
         plotOptions: {
             pie: {
@@ -517,7 +532,7 @@
                         textOutline: 'none'
                     },
                 },
-                // showInLegend: true,
+                showInLegend: true,
             }
         },
         colors: ['#f9fafb', '#3b82f6', '#f59e0b', '#fde047', '#22c55e', '#64748b', '#ef4444'],
@@ -565,7 +580,8 @@
             text: 'Хүлээн авсан суваг'
         },
         subtitle: {
-            text: ''
+            text: 'ЭХЗХ - Хүлээн авсан сувгаар',
+            align: 'center'
         },
         xAxis: {
             categories: ['Беб хуудас', 'Утас', 'И-Мэйл', 'Биечлэн', 'Гар утас', 'Албан бичиг']
@@ -614,6 +630,10 @@
         title: {
             text: 'Санал гомдол'
         },
+        subtitle: {
+            text: 'ЭХЗХ - Санал, гомдлын тоо сараар',
+            align: 'center'
+        },
         xAxis: {
             categories: monthLabels
         },
@@ -640,6 +660,10 @@
         },
         title: {
             text: 'Гомдлын төрөл'
+        },
+        subtitle: {
+            text: 'ЭХЗХ - Гомдлын төрлөөр',
+            align: 'center'
         },
         plotOptions: {
             pie: {

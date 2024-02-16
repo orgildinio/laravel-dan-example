@@ -1,86 +1,34 @@
 <div class="mt-8">
     <h2 class="text-md text-gray-900 shadow bg-blue-50 p-2 mb-6 border-l-8 border-primary">Хянах самбар: <span
             class="text-primary font-bold">{{ Auth::user()->org?->name }}</span></h2>
+
+            
     <section class="grid md:grid-cols-3 xl:grid-cols-3 gap-6">
-        <div class="flex flex-col bg-white shadow rounded-lg">
-            <div class="p-4 flex-grow">
-                <div class="flex flex-col">
-                    <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
-                        <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
-                            <div class="overflow-hidden">
-                                <table class="min-w-full text-left text-sm font-light border border-gray-300">
-                                    <thead class="font-medium">
-                                        <tr class="border-b bg-blue-700 text-white">
-                                            <th scope="col" class="p-1 border-r">{{ Auth::user()->org?->name }}</th>
-                                            <th scope="col" class="p-1 text-center">{{ $all_comp }}</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr class="border-b bg-gray-50">
-                                            <td class="whitespace-nowrap p-1 font-medium border-r">Шинээр ирсэн</td>
-                                            <td class="whitespace-nowrap p-1 text-center">{{ $new_comp }}</td>
-                                        </tr>
-                                        <tr class="border-b bg-orange-300">
-                                            <td class="whitespace-nowrap p-1 font-medium border-r">Хүлээн авсан</td>
-                                            <td class="whitespace-nowrap p-1 text-center">{{ $rec_comp }}</td>
-                                        </tr>
-                                        <tr class="border-b bg-blue-300">
-                                            <td class="whitespace-nowrap p-1 font-medium border-r">Хянаж байгаа</td>
-                                            <td class="whitespace-nowrap p-1 text-center">{{ $ctl_comp }}</td>
-                                        </tr>
-                                        <tr class="border-b bg-green-300">
-                                            <td class="whitespace-nowrap p-1 font-medium border-r">Шийдвэрлэсэн</td>
-                                            <td class="whitespace-nowrap p-1 text-center">{{ $slv_comp }}</td>
-                                        </tr>
-                                        <tr class="border-b bg-gray-300">
-                                            <td class="whitespace-nowrap p-1 font-medium border-r">Цуцлагдсан</td>
-                                            <td class="whitespace-nowrap p-1 text-center">{{ $cnc_comp }}</td>
-                                        </tr>
-                                        <tr class="border-b bg-red-300">
-                                            <td class="whitespace-nowrap p-1 font-medium border-r">Хугацаа хэтэрсэн</td>
-                                            <td class="whitespace-nowrap p-1 text-center">{{ $exp_comp }}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="bg-white shadow rounded-lg md:col-span-2 lg:col-span-2">
+            <div id="barChartStatusTze"></div>
         </div>
-        <div class="flex justify-center items-center bg-white shadow rounded-lg">
-            <div id="chartEnergyTypeEhs"></div>
-        </div>
-        <div class="flex justify-center items-center bg-white shadow rounded-lg">
-            <div id="donutChartChannelEhs"></div>
+        <div class="bg-white shadow rounded-lg">
+            <div id="donutChartChannelTze"></div>
         </div>
     </section>
     <section class="grid md:grid-cols-3 xl:grid-cols-3 gap-6 mt-6">
-        <div class="flex flex-col bg-white shadow rounded-lg justify-center align-middle">
-            <div class="p-4 flex-grow">
-                <div id="pieChartStatusEhs"></div>
-            </div>
+        <div class="bg-white shadow rounded-lg">
+            <div id="pieChartStatusTze"></div>
         </div>
-        <div class="flex flex-col bg-white shadow rounded-lg">
-            <div class="p-4 flex-grow">
-                <div id="pieCharTypeSummaryEhs"></div>
-            </div>
+        <div class="bg-white shadow rounded-lg">
+            <div id="pieCharTypeSummaryTze"></div>
         </div>
-        <div class="flex justify-center items-center bg-white shadow rounded-lg">
-            <div id="pieChartMakerEhs"></div>
+        <div class="bg-white shadow rounded-lg">
+            <div id="pieChartMakerTze"></div>
         </div>
     </section>
     <section class="grid md:grid-cols-2 xl:grid-cols-2 gap-6 mt-6">
-        <div class="flex flex-col bg-white shadow rounded-lg">
-            <div class="p-4 flex-grow">
-                <div id="lineChartEhs"></div>
-            </div>
+        <div class="bg-white shadow rounded-lg">
+            <div id="lineChartTze"></div>
         </div>
 
-        <div class="flex flex-col bg-white shadow rounded-lg">
-            <div class="p-4 flex-grow">
-                <div id="barChartChannelEhs"></div>
-            </div>
+        <div class="bg-white shadow rounded-lg">
+            <div id="barChartChannelTze"></div>
         </div>
     </section>
 </div>
@@ -108,72 +56,119 @@
     });
     // console.log(monthDatas);
 
-    // ЭХЗХ Chart энергийн төрлөөр 
-    Highcharts.chart('chartEnergyTypeEhs', {
+    // Barchart status TZE
+    statusBarColorsTze = [
+        '#f9fafb',
+        '#d1d5db',
+        '#fde047',
+        '#93c5fd',
+        '#fdba74',
+        '#fca5a5',
+        '#86efac',
+    ];
+
+    var statusCountTze = @json($statusCount);
+
+    let dataStatusTze = statusCountTze.map((obj, index) => ({
+        y: obj['status_count'],
+        color: statusBarColorsTze[index]
+    }));
+    let expireCompTze = {
+        y: {{ $exp_comp }},
+        color: '#fca5a5'
+    };
+    let statusDatasetTze = [...dataStatusTze, expireCompTze];
+
+    Highcharts.chart('barChartStatusTze', {
         chart: {
-            type: 'pie',
-            width: 300
+            type: 'bar'
         },
         title: {
-            text: 'Гомдлын төрөл'
+            text: 'Гомдлын төлөв',
+            // align: 'left'
         },
-        // tooltip: {
-        //    valueSuffix: '%'
-        // },
+        subtitle: {
+            text: 'ТЗЭ - Гомдлын шийдвэрлэлтийн явц',
+            align: 'center'
+        },
+        xAxis: {
+            categories: ['Шинээр ирсэн', 'Шилжүүлсэн', 'Хүлээн авсан', 'Хянаж байгаа', 'Цуцалсан', 'Буцаасан',
+                'Шийдвэрлэсэн', 'Хугацаа хэтэрсэн'
+            ],
+            title: {
+                text: null
+            },
+            gridLineWidth: 1,
+            lineWidth: 0
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Санал, гомдлын тоо',
+                // align: 'high'
+            },
+            labels: {
+                overflow: 'justify'
+            },
+            gridLineWidth: 0
+        },
+        tooltip: {
+            valueSuffix: ' ширхэг'
+        },
         plotOptions: {
-            pie: {
-                allowPointSelect: true,
-                cursor: 'pointer',
+            bar: {
+                borderRadius: '50%',
                 dataLabels: {
                     enabled: true,
-                    format: '<b>{point.name}</b>:<br> {point.percentage:.1f} %',
-                    distance: -80, // Set distance to move the labels inside
-                    connectorPadding: 0 // Remove connector padding
+                    align: 'left', // Justify the data labels to the left
+                    x: 800
                 },
-                showInLegend: true,
-                size: '100%' // Set the size of the pie chart
+                // groupPadding: 0.1
+            },
+            series: {
+                pointWidth: 10 // Set the width of the bars to 20 pixels
             }
         },
-        colors: ['#3b82f6', '#f97316'],
+        legend: {
+            enabled: false
+        },
+        credits: {
+            enabled: false
+        },
         series: [{
-            name: 'Өргөдөл, гомдол',
-            colorByPoint: true,
-            data: [{
-                    name: 'Цахилгаан',
-                    y: {{ $tze_tog_count }}
-                },
-                {
-                    name: 'Дулаан',
-                    y: {{ $tze_dulaan_count }}
-                },
-            ]
-        }]
+            name: 'Санал, гомдлын тоо',
+            data: statusDatasetTze
+        }, ]
     });
+
     // ЭХЗХ Donut Chart Өргөдлийн ангилал аар
-    Highcharts.chart('donutChartChannelEhs', {
+    Highcharts.chart('donutChartChannelTze', {
         chart: {
-            type: 'pie',
-            width: 300
+            type: 'pie'
         },
         title: {
-            text: 'Өргөдлийн ангилал'
+            text: 'Гомдлын ангилал'
+        },
+        subtitle: {
+            text: 'ТЗЭ - Гомдлын ангилал',
+            align: 'center'
         },
         plotOptions: {
             pie: {
-                innerSize: '50%', // Set inner size to create a donut chart
-                depth: 45, // Add a 3D effect
+                innerSize: '50%',
+                size: 250,
+                depth: 45,
                 dataLabels: {
                     enabled: true,
-                    crop: false,
-                    distance: '-10%',
-                    // style: {
-                    //     fontWeight: 'bold',
-                    //     fontSize: '16px'
-                    // },
-                    connectorWidth: 0,
-                    format: '<b>{point.name}</b>:<br> {point.percentage:.1f} %',
-                    // distance: -30, // Set distance to move the labels inside
-                    // connectorPadding: 0 // Remove connector padding
+                    format: '<b>{point.percentage:.1f}%</b>',
+                    distance: -35,
+                    connectorPadding: 0,
+                    style: {
+                        fontSize: '14px',
+                        color: '#fff',
+                        fontWeight: 'bold',
+                        textOutline: 'none'
+                    },
                 },
                 showInLegend: true,
             }
@@ -185,54 +180,36 @@
         }]
     });
 
-    // Create the pie chart Иргэн ААН СӨХ ТЗЭ Төрийн байгууллага
-    Highcharts.chart('pieChartMakerEhs', {
-        chart: {
-            type: 'pie',
-            width: 300
-        },
-        title: {
-            text: 'Гомдлын төрөл'
-        },
-        plotOptions: {
-            pie: {
-                allowPointSelect: true,
-                cursor: 'pointer',
-                dataLabels: {
-                    enabled: true,
-                    format: '<b>{point.name}</b>:<br> {point.percentage:.1f} %',
-                    distance: -40, // Set distance to move the labels inside
-                    connectorPadding: 0 // Remove connector padding
-                },
-                showInLegend: true
-            }
-        },
-        series: [{
-            name: 'Өргөдөл, гомдол',
-            colorByPoint: true,
-            data: compTypeMakersCount
-        }]
-    });
-
     // // Create the pie chart Иргэн ААН СӨХ ТЗЭ Төрийн байгууллага
-    Highcharts.chart('pieChartStatusEhs', {
+    Highcharts.chart('pieChartStatusTze', {
         chart: {
             type: 'pie'
         },
         title: {
-            text: 'Гомдлын төрөл'
+            text: 'Гомдлын төлөв'
+        },
+        subtitle: {
+            text: 'ТЗЭ - Гомдлын шийдвэрлэлтийн явц',
+            align: 'center'
         },
         plotOptions: {
             pie: {
-                allowPointSelect: true,
-                cursor: 'pointer',
+                innerSize: '50%',
+                size: 250,
+                depth: 45,
                 dataLabels: {
                     enabled: true,
-                    format: '<b>{point.name}</b>:<br> {point.percentage:.1f} %',
-                    distance: -40, // Set distance to move the labels inside
-                    connectorPadding: 0 // Remove connector padding
+                    format: '<b>{point.percentage:.1f}%</b>',
+                    distance: -35,
+                    connectorPadding: 0,
+                    style: {
+                        fontSize: '14px',
+                        color: '#fff',
+                        fontWeight: 'bold',
+                        textOutline: 'none'
+                    },
                 },
-                showInLegend: true
+                showInLegend: true,
             }
         },
         colors: ['#fca5a5', '#d1d5db', '#86efac', '#93c5fd', '#fdba74', '#f9fafb'], // Set custom colors
@@ -267,24 +244,35 @@
         }]
     });
 
-    Highcharts.chart('pieCharTypeSummaryEhs', {
+    Highcharts.chart('pieCharTypeSummaryTze', {
         chart: {
             type: 'pie'
         },
         title: {
             text: 'Гомдлын төрөл'
         },
+        subtitle: {
+            text: 'ТЗЭ - Гомдлын төрлөөр',
+            align: 'center'
+        },
         plotOptions: {
             pie: {
-                allowPointSelect: true,
-                cursor: 'pointer',
+                innerSize: '50%',
+                size: 250,
+                depth: 45,
                 dataLabels: {
                     enabled: true,
-                    format: '<b>{point.name}</b>:<br> {point.percentage:.1f} %',
-                    distance: -40, // Set distance to move the labels inside
-                    connectorPadding: 0 // Remove connector padding
+                    format: '<b>{point.percentage:.1f}%</b>',
+                    distance: -35,
+                    connectorPadding: 0,
+                    style: {
+                        fontSize: '14px',
+                        color: '#fff',
+                        fontWeight: 'bold',
+                        textOutline: 'none'
+                    },
                 },
-                showInLegend: true
+                showInLegend: true,
             }
         },
         colors: ['#082f49', '#075985', '#0284c7', '#38bdf8'], // Set custom colors
@@ -295,8 +283,47 @@
         }]
     });
 
+    // Create the pie chart Иргэн ААН СӨХ ТЗЭ Төрийн байгууллага
+    Highcharts.chart('pieChartMakerTze', {
+        chart: {
+            type: 'pie'
+        },
+        title: {
+            text: 'Гомдлын төрөл'
+        },
+        subtitle: {
+            text: 'ТЗЭ - Гомдол гаргагчийн төрлөөр',
+            align: 'center'
+        },
+        plotOptions: {
+            pie: {
+                innerSize: '50%',
+                size: 250,
+                depth: 45,
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.percentage:.1f}%</b>',
+                    distance: -35,
+                    connectorPadding: 0,
+                    style: {
+                        fontSize: '14px',
+                        color: '#fff',
+                        fontWeight: 'bold',
+                        textOutline: 'none'
+                    },
+                },
+                showInLegend: true,
+            }
+        },
+        series: [{
+            name: 'Өргөдөл, гомдол',
+            colorByPoint: true,
+            data: compTypeMakersCount
+        }]
+    });
+
     // Line chart санал гомдлын тоо
-    Highcharts.chart('lineChartEhs', {
+    Highcharts.chart('lineChartTze', {
         chart: {
             type: 'area'
         },
@@ -323,7 +350,7 @@
     });
 
     // Хүлээн авсан суваг
-    Highcharts.chart('barChartChannelEhs', {
+    Highcharts.chart('barChartChannelTze', {
         chart: {
             type: 'bar'
         },

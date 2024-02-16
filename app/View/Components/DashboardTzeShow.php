@@ -82,7 +82,18 @@ class DashboardTzeShow extends Component
             ->get();
         $compCountsCurrentYear = json_encode($compCounts);
 
+        $statusCount = DB::table('statuses as s')
+            ->select('s.id as status_id', 's.name as status_name', DB::raw('COUNT(c.id) as status_count'))
+            ->leftJoin('complaints as c', function ($join) {
+                $join->on('s.id', '=', 'c.status_id')
+                    ->where('c.organization_id', '=', Auth::user()->org_id);
+            })
+            ->whereNotIn('s.id', [7, 8])
+            ->groupBy('s.id', 's.name')
+            ->orderBy('s.id')
+            ->get();
 
-        return view('components.dashboard-tze-show', ['all_comp' => $all_comp, 'new_comp' => $new_comp, 'rec_comp' => $rec_comp, 'ctl_comp' => $ctl_comp, 'slv_comp' => $slv_comp, 'cnc_comp' => $cnc_comp, 'exp_comp' => $exp_comp, 'tze_tog_count' => $tze_tog_count, 'tze_dulaan_count' => $tze_dulaan_count, 'compCategoryCounts' => $compCategoryCounts, 'compTypeCounts' => $compTypeCounts, 'compTypeMakersCount' => $compTypeMakersCount, 'compChannelsCount' => $compChannelsCount, 'compCountsCurrentYear' => $compCountsCurrentYear]);
+
+        return view('components.dashboard-tze-show', ['all_comp' => $all_comp, 'new_comp' => $new_comp, 'rec_comp' => $rec_comp, 'ctl_comp' => $ctl_comp, 'slv_comp' => $slv_comp, 'cnc_comp' => $cnc_comp, 'exp_comp' => $exp_comp, 'tze_tog_count' => $tze_tog_count, 'tze_dulaan_count' => $tze_dulaan_count, 'compCategoryCounts' => $compCategoryCounts, 'compTypeCounts' => $compTypeCounts, 'compTypeMakersCount' => $compTypeMakersCount, 'compChannelsCount' => $compChannelsCount, 'compCountsCurrentYear' => $compCountsCurrentYear, 'statusCount' => $statusCount]);
     }
 }
