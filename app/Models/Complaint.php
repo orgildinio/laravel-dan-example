@@ -57,6 +57,10 @@ class Complaint extends Model
     {
         return $this->belongsTo(Organization::class);
     }
+    public function secondOrg()
+    {
+        return $this->belongsTo(Organization::class);
+    }
     public function complaintType()
     {
         return $this->belongsTo(ComplaintType::class);

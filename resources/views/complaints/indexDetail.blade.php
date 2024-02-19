@@ -67,9 +67,6 @@
                                         <th
                                             class="p-2 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
                                             Утас</th>
-                                        {{-- <th
-                                            class="p-2 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
-                                            Байгууллага</th> --}}
                                         <th
                                             class="p-2 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
                                             Санал, хүсэлт</th>
@@ -105,6 +102,9 @@
                                             @endswitch
                                         </th>
                                         @if ($status_id == 1)
+                                        <th
+                                            class="p-2 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
+                                            Шилжүүлсэн ТЗЭ</th>
                                         <th class="p-2 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
                                             Шийдвэрлэлтийн төлөв
                                         </th>
@@ -179,6 +179,10 @@
                                                     <span>{{$complaint->updated_at}}</span>
                                                 </td>
                                                 @if ($status_id == 1)
+                                                <td class="p-2 whitespace-no-wrap border-b border-gray-200">
+                                                    <div class="text-sm leading-5 text-gray-900">{{$complaint->secondOrg?->name}}
+                                                    </div>
+                                                </td>
                                                 <td class="p-2 whitespace-no-wrap border-b border-gray-200 text-sm">
                                                     @if ($complaint->second_status_id !== null)
                                                     @switch($complaint->second_status_id)
@@ -208,6 +212,7 @@
                                                     @endswitch
                                                     @endif
                                                 </td>
+                                                
                                                 @endif
 
                                                 @if ($status_id != 6)
