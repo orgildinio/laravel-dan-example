@@ -412,6 +412,9 @@
             // defaultDate: new Date(),
             defaultHour: "9",
             defaultMinute: "00",
+            locale: {
+                firstDayOfWeek: 1
+            }
         });
 
         // Өргөдөл гаргагчийг сонгох

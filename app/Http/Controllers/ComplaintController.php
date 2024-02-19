@@ -408,16 +408,6 @@ class ComplaintController extends Controller
      */
     public function store(ComplaintStoreRequest $request)
     {
-        // $request->validate([
-        //     'phone' => 'required',
-        //     'email' => 'required|email',
-        //     'country' => 'required',
-        //     'district' => 'required',
-        //     'khoroo' => 'required',
-        //     'complaint_type_summary_id' => 'required',
-        //     'complaint' => 'required',
-        // ]);
-
         $input = $request->all();
         // dd($input);
         $user = Auth::user();
@@ -521,16 +511,6 @@ class ComplaintController extends Controller
      */
     public function update(ComplaintStoreRequest $request, $id)
     {
-        $request->validate([
-            'phone' => 'required',
-            'email' => 'required|email',
-            'country' => 'required',
-            'district' => 'required',
-            'khoroo' => 'required',
-            'complaint_type_summary_id' => 'required',
-            'complaint' => 'required',
-        ]);
-
         $complaint = Complaint::findOrFail($id);
         $user = Auth::user();
         $input = $request->all();
@@ -551,7 +531,7 @@ class ComplaintController extends Controller
 
         $complaint->update($input);
 
-        return redirect()->route('complaint.index')->with('success', 'Амжилттай хадгаллаа.');
+        return redirect()->route('complaint.create')->with('success', 'Амжилттай хадгаллаа.');
     }
     // Шинээр ирсэн гомдлыг дарах үед хүлээн авсан болгох
     public function updateComplaintStatus($id)

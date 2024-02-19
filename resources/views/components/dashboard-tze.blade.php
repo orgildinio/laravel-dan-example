@@ -1,11 +1,11 @@
-<div class="mt-8">
+<div class="mt-4">
    
-    <section class="grid md:grid-cols-3 xl:grid-cols-3 gap-6">
+    <section class="grid md:grid-cols-3 xl:grid-cols-3 gap-4">
         <div id="chartEnergyTypeTze" class="bg-white shadow rounded-lg"></div>
         <div id="pieChartStatusTze" class="bg-white shadow rounded-lg"></div>
         <div id="lineChartTze" class="bg-white shadow rounded-lg"></div>
     </section>
-    <section class="grid md:grid-cols-2 xl:grid-cols-2 mt-6 mb-6">
+    <section class="grid md:grid-cols-2 xl:grid-cols-2 mt-4 mb-4">
       <div class="flex items-center border-r border-black">
          <div class="flex-1 border-t border-b border-black mx-4"></div>
          <div class="text-lg font-bold">Цахилгаан</div>
@@ -17,7 +17,7 @@
          <div class="flex-1 border-t border-b border-black mx-4"></div>
       </div>
     </section>
-    <section class="grid md:grid-cols-2 xl:grid-cols-2 gap-6 mt-6">
+    <section class="grid md:grid-cols-2 xl:grid-cols-2 gap-4 mt-4">
          <div class="bg-white shadow rounded-lg">
             <div id="stackedChartContainerTze1"></div>
          </div>
@@ -25,7 +25,7 @@
             <div id="stackedChartContainerTze2"></div>
          </div>
     </section>
-    <section class="grid md:grid-cols-4 xl:grid-cols-4 gap-6 mt-6">
+    <section class="grid md:grid-cols-4 xl:grid-cols-4 gap-4 mt-4">
         {{-- <div class="flex flex-col bg-white shadow rounded-lg p-2">
             <table class="min-w-full text-left text-sm font-light border border-gray-300">
                 <thead class="font-medium">
@@ -111,7 +111,7 @@
         <div id="barChartStatusDulaan" class="bg-white shadow rounded-lg"></div>
         <div id="pieChartMakerDulaan" class="bg-white shadow rounded-lg"></div>
     </section>
-    <section class="grid md:grid-cols-2 xl:grid-cols-2 gap-6 mt-6">
+    <section class="grid md:grid-cols-2 xl:grid-cols-2 gap-4 mt-4">
         <div id="barChartElectric" class="bg-white shadow rounded-lg"></div>
         <div id="barChartDulaan" class="bg-white shadow rounded-lg"></div>
     </section>

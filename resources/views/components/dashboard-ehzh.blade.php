@@ -1,6 +1,6 @@
-<div class="mt-8">
-    <section class="grid md:grid-cols-3 xl:grid-cols-3 gap-6">
-        <div class="bg-white shadow rounded-lg p-2">
+<div class="mt-4">
+    <section class="grid md:grid-cols-3 xl:grid-cols-3 gap-4">
+        <div class="bg-white shadow rounded-lg p-4">
             {{-- <table class="min-w-full text-left text-sm font-light border border-gray-300">
                 <thead class="font-medium">
                     <tr class="border-b bg-blue-700 text-white">
@@ -48,7 +48,7 @@
             <div id="donutChartChannel"></div>
         </div>
     </section>
-    <section class="grid md:grid-cols-3 xl:grid-cols-3 gap-6 mt-6">
+    <section class="grid md:grid-cols-3 xl:grid-cols-3 gap-4 mt-4">
         <div class="bg-white shadow rounded-lg md:col-span-2 lg:col-span-2 overflow-y-auto">
             <div id="stackedChartTog"></div>
         </div>
@@ -56,7 +56,7 @@
             <div id="pieChartMaker"></div>
         </div>
     </section>
-    <section class="grid md:grid-cols-3 xl:grid-cols-3 gap-6 mt-6">
+    <section class="grid md:grid-cols-3 xl:grid-cols-3 gap-4 mt-4">
         <div class="bg-white shadow rounded-lg md:col-span-2 lg:col-span-2 overflow-y-auto">
             <div id="stackedChartDulaan"></div>
         </div>
@@ -64,7 +64,7 @@
             <div id="pieChartStatus"></div>
         </div>
     </section>
-    <section class="grid md:grid-cols-3 xl:grid-cols-3 gap-6 mt-6">
+    <section class="grid md:grid-cols-3 xl:grid-cols-3 gap-4 mt-4">
         <div class="bg-white shadow rounded-lg">
             <div id="chartAreaEhzh"></div>
         </div>

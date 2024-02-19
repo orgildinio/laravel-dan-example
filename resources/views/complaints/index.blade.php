@@ -272,13 +272,16 @@
 @push('scripts')
 
 <script>
-    
+
     $(document).ready(function() {
 
-        flatpickr("#daterange", {
-            mode: "range",
-            showMonths: 2,
-            dateFormat: "Y-m-d",
+        $('#daterange').flatpickr({
+            mode: 'range',
+            // showMonths: 2,
+            // dateFormat: 'Y-m-d',
+            locale: {
+                firstDayOfWeek: 1
+            }
         });
 
         // Add click event handler to table rows with class 'table-row'

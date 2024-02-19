@@ -3,7 +3,7 @@
             class="text-primary font-bold">{{ Auth::user()->org?->name }}</span></h2>
 
             
-    <section class="grid md:grid-cols-3 xl:grid-cols-3 gap-6">
+    <section class="grid md:grid-cols-3 xl:grid-cols-3 gap-4">
         <div class="bg-white shadow rounded-lg md:col-span-2 lg:col-span-2">
             <div id="barChartStatusTze"></div>
         </div>
@@ -11,7 +11,7 @@
             <div id="donutChartChannelTze"></div>
         </div>
     </section>
-    <section class="grid md:grid-cols-3 xl:grid-cols-3 gap-6 mt-6">
+    <section class="grid md:grid-cols-3 xl:grid-cols-3 gap-4 mt-4">
         <div class="bg-white shadow rounded-lg">
             <div id="pieChartStatusTze"></div>
         </div>
@@ -22,7 +22,7 @@
             <div id="pieChartMakerTze"></div>
         </div>
     </section>
-    <section class="grid md:grid-cols-2 xl:grid-cols-2 gap-6 mt-6">
+    <section class="grid md:grid-cols-2 xl:grid-cols-2 gap-4 mt-4">
         <div class="bg-white shadow rounded-lg">
             <div id="lineChartTze"></div>
         </div>

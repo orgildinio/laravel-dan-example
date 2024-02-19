@@ -1,5 +1,5 @@
-<div class="mt-8">
-    <section class="grid md:grid-cols-3 xl:grid-cols-3 gap-6">
+<div class="mt-4">
+    <section class="grid md:grid-cols-3 xl:grid-cols-3 gap-4">
         <div class="bg-white shadow rounded-lg">
             <div id="barChartStatusEhs"></div>
         </div>
@@ -10,7 +10,7 @@
             <div id="pieChartCategoryEhs"></div>
         </div>
     </section>
-    <section class="grid md:grid-cols-3 xl:grid-cols-3 gap-6 mt-6">
+    <section class="grid md:grid-cols-3 xl:grid-cols-3 gap-4 mt-4">
         <div class="bg-white shadow rounded-lg">
             <div id="pieChartStatusEhs"></div>
         </div>
@@ -21,7 +21,7 @@
             <div id="pieChartMakerEhs"></div>
         </div>
     </section>
-    <section class="grid md:grid-cols-2 xl:grid-cols-2 gap-6 mt-6">
+    <section class="grid md:grid-cols-2 xl:grid-cols-2 gap-4 mt-4">
         <div class="bg-white shadow rounded-lg">
             <div id="lineChartEhs"></div>
         </div>
