@@ -138,6 +138,7 @@
                                 <div class="text-sm mt-5 p-2 border-b border-gray-200">
                                     <p>{{$step->desc}}</p>
                                 </div>
+                                @if ($step->file_id != null)
                                 <div class="py-5 px-2">
                                     <p>Файл</p>
                                     <a href="/files/{{$step->file?->filename}}" target="_blank">
@@ -154,6 +155,7 @@
                                             .{{pathinfo($step->file?->filename, PATHINFO_EXTENSION)}}</p>
                                     </div>
                                 </div>
+                                @endif
                             </li>
                             @endforeach
                         </ol>
