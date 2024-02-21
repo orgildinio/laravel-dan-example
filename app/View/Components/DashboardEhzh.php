@@ -39,7 +39,7 @@ class DashboardEhzh extends Component
         $cnc_comp = Complaint::where('status_id', 4)->where('organization_id', $org_id)->count();
         $rtn_comp = Complaint::where('status_id', 5)->where('organization_id', $org_id)->count();
         $slv_comp = Complaint::where('status_id', 6)->where('organization_id', $org_id)->count();
-        $exp_comp = Complaint::where('expire_date', '<=', Carbon::now())->where('organization_id', $org_id)->count();
+        $exp_comp = Complaint::where('expire_date', '<=', Carbon::now())->where('status_id', '!=', 6)->where('organization_id', $org_id)->count();
 
         $statusCount = DB::table('statuses as s')
             ->select('s.id as status_id', 's.name as status_name', DB::raw('COUNT(c.id) as status_count'))

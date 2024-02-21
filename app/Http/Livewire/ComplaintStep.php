@@ -3,17 +3,21 @@
 namespace App\Http\Livewire;
 
 use Carbon\Carbon;
+use App\Models\File;
 use App\Models\User;
 use App\Models\Status;
 use Livewire\Component;
 use App\Models\Complaint;
 use App\Models\Organization;
+use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Auth;
 use App\Models\ComplaintStep as ModelsComplaintStep;
 
 class ComplaintStep extends Component
 {
-    public $complaint_steps, $org_id, $status_id, $complaint_id, $recieved_user_id, $sent_user_id, $recieved_date, $sent_date, $desc, $orgs, $all_status, $actions, $selectedAction, $controlled_user_id, $employees, $selected_user_id, $second_user_id;
+    use WithFileUploads;
+
+    public $complaint_steps, $org_id, $status_id, $complaint_id, $recieved_user_id, $sent_user_id, $recieved_date, $sent_date, $desc, $orgs, $all_status, $actions, $selectedAction, $controlled_user_id, $employees, $selected_user_id, $second_user_id, $file;
     public $isOpen = 0;
     public $showPermissionWarning = false;
 
@@ -76,7 +80,26 @@ class ComplaintStep extends Component
     {
         $this->validate([
             'desc' => 'required',
+            'file' => 'nullable|mimes:jpeg,png,jpg,zip,pdf|max:102400', // 100MB Max
         ]);
+
+        // if ($file = $this->file('file')) {
+        //     $name = time() . $file->getClientOriginalName();
+
+        //     $file->move('files', $name);
+        //     $filename = File::create(['filename' => $name]);
+
+        //     // $input['file_id'] = $filename->id;
+        // }
+
+        $filename = $this->file->getClientOriginalName();
+        $randomName = time() . $filename;
+        $this->file->storeAs('files', $randomName, 'public');
+
+        $filename = File::create([
+            'filename' => $randomName // Associate with the existing model
+        ]);
+
 
         $complaint = Complaint::findOrFail($this->complaint_id);
 
@@ -91,7 +114,8 @@ class ComplaintStep extends Component
                         'sent_user_id' => Auth::user()->id,
                         'status_id' => 8,
                         'sent_date' => Carbon::now()->toDateTimeString(),
-                        'desc' => $this->desc
+                        'desc' => $this->desc,
+                        'file_id' => $filename->id,
                     ]);
                 } else {
                     ModelsComplaintStep::create([
@@ -100,7 +124,8 @@ class ComplaintStep extends Component
                         'sent_user_id' => Auth::user()->id,
                         'status_id' => 8,
                         'sent_date' => Carbon::now()->toDateTimeString(),
-                        'desc' => $this->desc
+                        'desc' => $this->desc,
+                        'file_id' => $filename->id,
                     ]);
                 }
                 break;
@@ -144,7 +169,8 @@ class ComplaintStep extends Component
                         'sent_user_id' => Auth::user()->id,
                         'status_id' => 3,
                         'sent_date' => Carbon::now()->toDateTimeString(),
-                        'desc' => $this->desc
+                        'desc' => $this->desc,
+                        'file_id' => $filename->id,
                     ]);
                 } else {
                     $complaint->second_status_id = 3;
@@ -155,7 +181,8 @@ class ComplaintStep extends Component
                         'sent_user_id' => Auth::user()->id,
                         'status_id' => 3,
                         'sent_date' => Carbon::now()->toDateTimeString(),
-                        'desc' => $this->desc
+                        'desc' => $this->desc,
+                        'file_id' => $filename->id,
                     ]);
                 }
 
@@ -170,7 +197,8 @@ class ComplaintStep extends Component
                     'sent_user_id' => Auth::user()->id,
                     'status_id' => 4,
                     'sent_date' => Carbon::now()->toDateTimeString(),
-                    'desc' => $this->desc
+                    'desc' => $this->desc,
+                    'file_id' => $filename->id,
                 ]);
                 break;
                 // case 'Буцаах':
@@ -191,7 +219,8 @@ class ComplaintStep extends Component
                         'sent_user_id' => Auth::user()->id,
                         'status_id' => 6,
                         'sent_date' => Carbon::now()->toDateTimeString(),
-                        'desc' => $this->desc
+                        'desc' => $this->desc,
+                        'file_id' => $filename->id,
                     ]);
                 } else {
                     if (Auth::user()->org_id == 99) {
@@ -203,7 +232,8 @@ class ComplaintStep extends Component
                             'sent_user_id' => Auth::user()->id,
                             'status_id' => 6,
                             'sent_date' => Carbon::now()->toDateTimeString(),
-                            'desc' => $this->desc
+                            'desc' => $this->desc,
+                            'file_id' => $filename->id,
                         ]);
                     } else {
                         $complaint->second_status_id = 6;
@@ -214,7 +244,8 @@ class ComplaintStep extends Component
                             'sent_user_id' => Auth::user()->id,
                             'status_id' => 6,
                             'sent_date' => Carbon::now()->toDateTimeString(),
-                            'desc' => $this->desc
+                            'desc' => $this->desc,
+                            'file_id' => $filename->id,
                         ]);
                     }
                 }

@@ -10,7 +10,7 @@ class ComplaintStep extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['org_id', 'complaint_id', 'recieved_user_id', 'sent_user_id', 'recieved_date', 'sent_date', 'desc', 'status_id'];
+    protected $fillable = ['org_id', 'complaint_id', 'recieved_user_id', 'sent_user_id', 'recieved_date', 'sent_date', 'desc', 'status_id', 'file_id'];
 
     public function org()
     {
@@ -20,5 +20,10 @@ class ComplaintStep extends Model
     public function status()
     {
         return $this->belongsTo(Status::class);
+    }
+
+    public function file()
+    {
+        return $this->belongsTo(File::class);
     }
 }

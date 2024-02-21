@@ -138,6 +138,22 @@
                                 <div class="text-sm mt-5 p-2 border-b border-gray-200">
                                     <p>{{$step->desc}}</p>
                                 </div>
+                                <div class="py-5 px-2">
+                                    <p>Файл</p>
+                                    <a href="/files/{{$step->file?->filename}}" target="_blank">
+                                        <div
+                                            class="group text-sm border-transparent border-2 bg-green-50 hover:bg-white hover:border-indigo-600 w-40">
+                                            <div class="mx-16 my-10">
+                                                <i class="fa-solid fa-file-lines fa-3x group-hover:hidden"></i>
+                                                <i class="fa-solid fa-download fa-3x hidden group-hover:block"></i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <div>
+                                        <p>{{mb_substr($step->file?->filename, 0, 10)}}...
+                                            .{{pathinfo($step->file?->filename, PATHINFO_EXTENSION)}}</p>
+                                    </div>
+                                </div>
                             </li>
                             @endforeach
                         </ol>

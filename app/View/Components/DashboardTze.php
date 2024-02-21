@@ -37,7 +37,7 @@ class DashboardTze extends Component
         $cnc_comp = Complaint::where('status_id', 4)->whereNotIn('organization_id', [99])->count();
         $rtn_comp = Complaint::where('status_id', 5)->whereNotIn('organization_id', [99])->count();
         $slv_comp = Complaint::where('status_id', 6)->whereNotIn('organization_id', [99])->count();
-        $exp_comp = Complaint::where('expire_date', '<=', Carbon::now())->whereNotIn('organization_id', [99])->count();
+        $exp_comp = Complaint::where('expire_date', '<=', Carbon::now())->whereNotIn('organization_id', [99])->where('status_id', '!=', 6)->count();
 
         $compByMonth = Complaint::select(DB::raw('EXTRACT(\'MONTH\' FROM complaint_date) AS published_month, COUNT(id) AS count'))
             ->whereNotIn('organization_id', [99])
@@ -123,10 +123,12 @@ class DashboardTze extends Component
         $statusExpireTog = Complaint::where('expire_date', '<=', Carbon::now())
             ->whereNotIn('organization_id', [99])
             ->where('energy_type_id', 1)
+            ->where('status_id', '!=', 6)
             ->count();
         $statusExpireDulaan = Complaint::where('expire_date', '<=', Carbon::now())
             ->whereNotIn('organization_id', [99])
             ->where('energy_type_id', 2)
+            ->where('status_id', '!=', 6)
             ->count();
 
         $statusTog = Status::leftJoin('complaints as c', function ($join) {
