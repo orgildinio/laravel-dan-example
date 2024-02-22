@@ -439,21 +439,33 @@ class ComplaintController extends Controller
         // $input['channel_id'] = 1;
         $input['created_user_id'] = $user->id;
 
+        // Дуусах хугацаа
         $register_date = Carbon::parse($input['complaint_date']);
         $input['expire_date'] = $register_date->addHours(48);
 
+        // Хэрэв Иргэн ААН гомдол гаргавал шинээр ирсэн төлөвтэй байна
+        // ЭХЗХ эсвал ТЗЭ нар бүртгэсэн тохиолдолд хүлээн авсан төлөвтэй байна
         if ($user->org_id != null) {
-            $input['status_id'] = 2;
+            // Холбогдох ТЗЭ сонгосон тохиолдолд шилжүүлсэн төлөвт шилжинэ
+            // Тухайн сонгосон ТЗЭ дээр шинээр ирсэн төлөвт очино
+            if ($request->second_org_id != null) {
+                $input['status_id'] = 1;
+                $input['second_status_id'] = 0;
+            } else {
+                $input['status_id'] = 2;
+            }
             $input['controlled_user_id'] = $user->id;
         } else {
             $input['complaint_maker_type_id'] = 1;
             $input['status_id'] = 0;
         }
 
+        // Хэрэв Иргэн ААН гомдол гаргавал суваг нь Веб байна
         if (!$request->has('channel_id')) {
             $input['channel_id'] = 1;
         }
 
+        // ЭХЗХ эсвал ТЗЭ нар гомдол бүртгэхэд тухайн байгууллагын нэрээр бүртгэгдэнэ
         if (!isset($input['organization_id'])) {
             $input['organization_id'] = $user->org_id;
         }
@@ -523,6 +535,12 @@ class ComplaintController extends Controller
 
             $input['file_id'] = $filename->id;
         }
+
+        if ($request->second_org_id != null) {
+            $input['status_id'] = 1;
+            $input['second_status_id'] = 0;
+        }
+
 
         // $input['status_id'] = 0;
         $input['updated_user_id'] = $user->id;

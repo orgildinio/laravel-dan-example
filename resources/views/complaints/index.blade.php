@@ -149,37 +149,37 @@
                                     @if ($complaint->status_id !== null)
                                         @switch($complaint->status_id)
                                             @case('0')
-                                                <div class="bg-gray-300 p-1 text-center rounded text-xs">Шинээр ирсэн</div>
+                                                <div class="bg-gray-100 p-1 text-center rounded text-xs">Шинээр ирсэн</div>
                                             @break
 
                                             @case('1')
-                                                <div class="bg-orange-300 text-orange-900 p-1 text-center rounded text-xs">
+                                                <div class="bg-cyan-100 text-cyan-900 p-1 text-center rounded text-xs whitespace-nowrap">
                                                     Шилжүүлсэн</div>
                                             @break
 
                                             @case('2')
-                                                <div class="bg-orange-300 text-orange-900 p-1 text-center rounded text-xs">
+                                                <div class="bg-orange-100 text-orange-900 p-1 text-center rounded text-xs">
                                                     Хүлээн
                                                     авсан</div>
                                             @break
 
                                             @case('3')
-                                                <div class="bg-blue-300 text-blue-900 p-1 text-center rounded text-xs">Хянаж
+                                                <div class="bg-blue-100 text-blue-900 p-1 text-center rounded text-xs">Хянаж
                                                     байгаа</div>
                                             @break
 
                                             @case('4')
-                                                <div class="bg-gray-300 text-gray-900 p-1 text-center rounded text-xs">Цуцалсан
+                                                <div class="bg-red-100 text-red-900 p-1 text-center rounded text-xs">Цуцалсан
                                                 </div>
                                             @break
 
                                             @case('6')
-                                                <div class="bg-green-300 text-green-900 p-1 text-center rounded text-xs">
+                                                <div class="bg-green-100 text-green-900 p-1 text-center rounded text-xs">
                                                     Шийдвэрлэсэн</div>
                                             @break
 
                                             @default
-                                                <div class="bg-gray-300 p-1 text-center rounded text-xs">Шинээр ирсэн</div>
+                                                <div class="bg-gray-100 p-1 text-center rounded text-xs">Шинээр ирсэн</div>
                                         @endswitch
                                     @endif
                                     {{-- {{$complaint->status_id}} --}}
