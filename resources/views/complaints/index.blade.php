@@ -106,7 +106,7 @@
                             class="p-2 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
                             Төрөл</th>
                         <th
-                            class="p-2 w-[150px] text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
+                            class="p-2 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
                             Овог, нэр / ААН</th>
 
                         <th
@@ -153,13 +153,13 @@
                                             @break
 
                                             @case('1')
-                                                <div
-                                                    class="bg-orange-300 text-orange-900 p-1 text-center rounded text-xs">Шилжүүлсэн</div>
+                                                <div class="bg-orange-300 text-orange-900 p-1 text-center rounded text-xs">
+                                                    Шилжүүлсэн</div>
                                             @break
 
                                             @case('2')
-                                                <div
-                                                    class="bg-orange-300 text-orange-900 p-1 text-center rounded text-xs">Хүлээн
+                                                <div class="bg-orange-300 text-orange-900 p-1 text-center rounded text-xs">
+                                                    Хүлээн
                                                     авсан</div>
                                             @break
 
@@ -169,13 +169,13 @@
                                             @break
 
                                             @case('4')
-                                                <div
-                                                    class="bg-gray-300 text-gray-900 p-1 text-center rounded text-xs">Цуцалсан</div>
+                                                <div class="bg-gray-300 text-gray-900 p-1 text-center rounded text-xs">Цуцалсан
+                                                </div>
                                             @break
 
                                             @case('6')
-                                                <div
-                                                    class="bg-green-300 text-green-900 p-1 text-center rounded text-xs">Шийдвэрлэсэн</div>
+                                                <div class="bg-green-300 text-green-900 p-1 text-center rounded text-xs">
+                                                    Шийдвэрлэсэн</div>
                                             @break
 
                                             @default
@@ -192,7 +192,7 @@
                             </td>
 
                             <td class="p-2 whitespace-no-wrap border-b border-gray-200">
-                                <div class="text-sm leading-5 text-gray-900">{{$complaint->organization->name}}
+                                <div class="text-sm leading-5 text-gray-900">{{ $complaint->organization->name }}
                                 </div>
                             </td>
 
@@ -213,12 +213,13 @@
                             </td>
 
                             <td class="p-2 whitespace-no-wrap border-b border-gray-200 text-sm">
-                                <p>{{ strlen($complaint->complaint) > 150 ? substr($complaint->complaint, 0, 150) . " ..." : $complaint->complaint }}</p>
+                                <p>{{ strlen($complaint->complaint) > 150 ? substr($complaint->complaint, 0, 150) . ' ...' : $complaint->complaint }}
+                                </p>
                             </td>
 
                             <td
                                 class="p-2 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200">
-                                <span>{{  date('Y-m-d H:i', strtotime($complaint->complaint_date)) }}</span>
+                                <span>{{ date('Y-m-d H:i', strtotime($complaint->complaint_date)) }}</span>
                             </td>
                             @if ($complaint->status_id == 6)
                                 <td class="p-2 whitespace-no-wrap border-b border-gray-200"></td>

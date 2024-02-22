@@ -228,10 +228,10 @@
                                                 @endif
     
                                                 <td
-                                                    class="w-2 text-sm font-medium leading-5 text-center whitespace-no-wrap border-b border-gray-200 ">
+                                                    class="p-2 text-xs leading-5 whitespace-no-wrap border-b border-gray-200">
                                                     <a href="{{route('complaint.edit', $complaint->id)}}"
-                                                        class="text-indigo-600 hover:text-indigo-900">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none"
+                                                        class="text-gray-600 hover:text-gray-900">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none"
                                                             viewBox="0 0 24 24" stroke="currentColor">
                                                             <path stroke-linecap="round" stroke-linejoin="round"
                                                                 stroke-width="2"
@@ -242,8 +242,8 @@
                                                 {{-- <td
                                                     class="text-sm font-medium leading-5 text-center whitespace-no-wrap border-b border-gray-200">
                                                     <a href="{{route('complaint.show', $complaint->id)}}"
-                                                        class="text-indigo-600 hover:text-indigo-900">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none"
+                                                        class="text-gray-600 hover:text-gray-900">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none"
                                                             viewBox="0 0 24 24" stroke="currentColor">
                                                             <path stroke-linecap="round" stroke-linejoin="round"
                                                                 stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -254,14 +254,14 @@
                                                     </a>
                                                 </td> --}}
                                                 <td
-                                                    class="w-2 text-sm font-medium leading-5 whitespace-no-wrap border-b border-gray-200 ">
+                                                    class="p-2 text-xs leading-5 whitespace-no-wrap border-b border-gray-200">
                                                     <form action="{{ route('complaint.destroy',$complaint->id) }}"
                                                         method="Post">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit" class="btn btn-danger"><svg
                                                                 xmlns="http://www.w3.org/2000/svg"
-                                                                class="w-6 h-6 text-red-600 hover:text-red-800" fill="none"
+                                                                class="w-5 h-5 text-gray-600 hover:text-gray-800" fill="none"
                                                                 viewBox="0 0 24 24" stroke="currentColor">
                                                                 <path stroke-linecap="round" stroke-linejoin="round"
                                                                     stroke-width="2"

@@ -92,13 +92,16 @@ class ComplaintStep extends Component
         //     // $input['file_id'] = $filename->id;
         // }
 
-        $filename = $this->file->getClientOriginalName();
-        $randomName = time() . $filename;
-        $this->file->storeAs('files', $randomName, 'public');
+        if ($this->file) {
 
-        $filename = File::create([
-            'filename' => $randomName // Associate with the existing model
-        ]);
+            $filename = $this->file->getClientOriginalName();
+            $randomName = time() . $filename;
+            $this->file->storeAs('files', $randomName, 'public');
+
+            $filename = File::create([
+                'filename' => $randomName // Associate with the existing model
+            ]);
+        }
 
 
         $complaint = Complaint::findOrFail($this->complaint_id);
@@ -115,7 +118,7 @@ class ComplaintStep extends Component
                         'status_id' => 8,
                         'sent_date' => Carbon::now()->toDateTimeString(),
                         'desc' => $this->desc,
-                        'file_id' => $filename->id,
+                        'file_id' => isset($filename) ? $filename->id : null,
                     ]);
                 } else {
                     ModelsComplaintStep::create([
@@ -125,7 +128,7 @@ class ComplaintStep extends Component
                         'status_id' => 8,
                         'sent_date' => Carbon::now()->toDateTimeString(),
                         'desc' => $this->desc,
-                        'file_id' => $filename->id,
+                        'file_id' => isset($filename) ? $filename->id : null,
                     ]);
                 }
                 break;
@@ -170,7 +173,7 @@ class ComplaintStep extends Component
                         'status_id' => 3,
                         'sent_date' => Carbon::now()->toDateTimeString(),
                         'desc' => $this->desc,
-                        'file_id' => $filename->id,
+                        'file_id' => isset($filename) ? $filename->id : null,
                     ]);
                 } else {
                     $complaint->second_status_id = 3;
@@ -182,7 +185,7 @@ class ComplaintStep extends Component
                         'status_id' => 3,
                         'sent_date' => Carbon::now()->toDateTimeString(),
                         'desc' => $this->desc,
-                        'file_id' => $filename->id,
+                        'file_id' => isset($filename) ? $filename->id : null,
                     ]);
                 }
 
@@ -198,7 +201,7 @@ class ComplaintStep extends Component
                     'status_id' => 4,
                     'sent_date' => Carbon::now()->toDateTimeString(),
                     'desc' => $this->desc,
-                    'file_id' => $filename->id,
+                    'file_id' => isset($filename) ? $filename->id : null,
                 ]);
                 break;
                 // case 'Буцаах':
@@ -220,7 +223,7 @@ class ComplaintStep extends Component
                         'status_id' => 6,
                         'sent_date' => Carbon::now()->toDateTimeString(),
                         'desc' => $this->desc,
-                        'file_id' => $filename->id,
+                        'file_id' => isset($filename) ? $filename->id : null,
                     ]);
                 } else {
                     if (Auth::user()->org_id == 99) {
@@ -233,7 +236,7 @@ class ComplaintStep extends Component
                             'status_id' => 6,
                             'sent_date' => Carbon::now()->toDateTimeString(),
                             'desc' => $this->desc,
-                            'file_id' => $filename->id,
+                            'file_id' => isset($filename) ? $filename->id : null,
                         ]);
                     } else {
                         $complaint->second_status_id = 6;
@@ -245,7 +248,7 @@ class ComplaintStep extends Component
                             'status_id' => 6,
                             'sent_date' => Carbon::now()->toDateTimeString(),
                             'desc' => $this->desc,
-                            'file_id' => $filename->id,
+                            'file_id' => isset($filename) ? $filename->id : null,
                         ]);
                     }
                 }
