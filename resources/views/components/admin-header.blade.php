@@ -32,7 +32,7 @@
             </div>
             <div class="flex items-center">
                 <button id="toggleSidebarMobileSearch" type="button"
-                    class="lg:hidden text-gray-500 hover:text-gray-900 hover:bg-gray-100 p-2 rounded-lg">
+                    class="hidden text-gray-500 hover:text-gray-900 hover:bg-gray-100 p-2 rounded-lg">
                     <span class="sr-only">Search</span>
                     <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd"
@@ -53,7 +53,8 @@
                class="hidden sm:inline-flex ml-5 text-white bg-primary font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center mr-3">
                Нүүр хуудас
             </a> --}}
-                
+
+                {{-- fullscreen button --}}
                 <button id="fullscreen-button">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                         class="hover:bg-gray-100 rounded-full" viewBox="0 0 24 24"
@@ -61,11 +62,14 @@
                         <path d="M5 5h5V3H3v7h2zm5 14H5v-5H3v7h7zm11-5h-2v5h-5v2h7zm-2-4h2V3h-7v2h5z"></path>
                     </svg>
                 </button>
+                {{-- Profile photo --}}
                 <button type="button" class="flex mx-3 text-sm rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300"
                     id="user-menu-button" aria-expanded="false" data-dropdown-toggle="dropdown">
                     <span class="sr-only">Open user menu</span>
-                    <img class="w-8 h-8 rounded-full" src="{{ asset('/image/account-avatar.svg') }}"
-                        alt="user photo">
+                    {{-- <img class="w-8 h-8 rounded-full" src="{{ asset('/image/account-avatar.svg') }}"
+                        alt="user photo"> --}}
+                    <img class="h-10 w-10 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}"
+                        alt="{{ Auth::user()->name }}" />
                 </button>
                 <!-- Dropdown menu -->
                 <div class="hidden z-50 my-4 w-56 text-base list-none bg-white rounded divide-y divide-gray-100 shadow"
