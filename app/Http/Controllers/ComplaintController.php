@@ -6,6 +6,7 @@ use Exception;
 use Carbon\Carbon;
 use App\Models\File;
 use App\Models\Soum;
+use App\Models\User;
 use App\Models\Aimag;
 use App\Models\Status;
 use App\Models\Channel;
@@ -162,6 +163,8 @@ class ComplaintController extends Controller
         $status_id = $request->query('status_id');
         $org_id = $request->query('org_id');
         $energy_type_id = $request->query('energy_type_id');
+        $controlled_user_id = $request->query('controlled_user_id');
+        $channel_id = $request->query('channel_id');
 
         $query = Complaint::query();
         $query->orderBy('complaint_date', 'desc');
@@ -185,6 +188,14 @@ class ComplaintController extends Controller
             $query->where('organization_id', $org_id);
         }
 
+        if ($controlled_user_id !== null) {
+            $query->where('controlled_user_id', $controlled_user_id);
+        }
+
+        if ($channel_id !== null) {
+            $query->where('channel_id', $channel_id);
+        }
+
         // Нэвтэрсэн хэрэглэгч ЭХЗХ биш ТЗЭ бол зөвхөн тухайн байгууллагын мэдээллийг харуулна
         $logged_user_org_id = Auth::user()->org_id;
         if ($logged_user_org_id != 99) {
@@ -200,8 +211,10 @@ class ComplaintController extends Controller
         $statuses = Status::all();
         $orgs = Organization::orderBy('name', 'asc')->get();
         $energy_types = EnergyType::all();
+        $channels = Channel::all();
+        $controlled_users = User::where('org_id', Auth::user()->org_id)->get();
 
-        return view('complaints.index', compact('complaints', 'daterange', 'search_text', 'statuses', 'status_id', 'org_id', 'orgs', 'energy_type_id', 'energy_types'));
+        return view('complaints.index', compact('complaints', 'daterange', 'search_text', 'statuses', 'status_id', 'org_id', 'orgs', 'energy_type_id', 'energy_types', 'channel_id', 'channels', 'controlled_user_id', 'controlled_users'));
     }
 
     public function ExportReportExcel(Request $request)
