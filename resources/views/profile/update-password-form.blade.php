@@ -1,6 +1,6 @@
 <x-form-section submit="updatePassword">
     <x-slot name="title">
-        {{ __('Update Password') }}
+        {{ __('Нууц үг солих') }}
     </x-slot>
 
     <x-slot name="description">
@@ -29,11 +29,11 @@
 
     <x-slot name="actions">
         <x-action-message class="mr-3" on="saved">
-            {{ __('Saved.') }}
+            {{ __('Хадгалагдсан.') }}
         </x-action-message>
 
         <x-button>
-            {{ __('Save') }}
+            {{ __('Хадгалах') }}
         </x-button>
     </x-slot>
 </x-form-section>
