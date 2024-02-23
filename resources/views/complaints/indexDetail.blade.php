@@ -91,10 +91,10 @@
                                     <p>Бүртгэсэн огноо</p>
                             @endswitch
                         </th>
-                        @if ($status_id == 1)
                         <th
-                            class="p-2 w-[150px] text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
-                            Шилжүүлсэн ТЗЭ</th>
+                        class="p-2 w-[150px] text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
+                        Холбогдох ТЗЭ</th>
+                        @if ($status_id == 1)
                         <th class="p-2 w-[150px] text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
                             Шийдвэрлэлтийн төлөв
                         </th>
@@ -168,11 +168,11 @@
                                     class="p-2 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200">
                                     <span>{{$complaint->updated_at}}</span>
                                 </td>
-                                @if ($status_id == 1)
                                 <td class="p-2 whitespace-no-wrap border-b border-gray-200">
                                     <div class="text-sm leading-5 text-gray-900">{{$complaint->secondOrg?->name}}
                                     </div>
                                 </td>
+                                @if ($status_id == 1)
                                 <td class="p-2 whitespace-no-wrap border-b border-gray-200 text-sm">
                                     @if ($complaint->second_status_id !== null)
                                     @switch($complaint->second_status_id)

@@ -448,16 +448,17 @@ class ComplaintController extends Controller
         if ($user->org_id != null) {
             // Холбогдох ТЗЭ сонгосон тохиолдолд шилжүүлсэн төлөвт шилжинэ
             // Тухайн сонгосон ТЗЭ дээр шинээр ирсэн төлөвт очино
-            if ($request->second_org_id != null) {
-                $input['status_id'] = 1;
-                $input['second_status_id'] = 0;
-            } else {
-                $input['status_id'] = 2;
-            }
+            // if ($request->second_org_id != null) {
+            //     $input['status_id'] = 1;
+            //     $input['second_status_id'] = 0;
+            // } else {
+            //     $input['status_id'] = 2;
+            // }
             $input['controlled_user_id'] = $user->id;
+            $input['status_id'] = 2; // Хүлээн авсан төлөвт орно
         } else {
-            $input['complaint_maker_type_id'] = 1;
-            $input['status_id'] = 0;
+            $input['complaint_maker_type_i'] = 1;
+            $input['status_id'] = 0; // Шинээр ирсэн төлөвт орно
         }
 
         // Хэрэв Иргэн ААН гомдол гаргавал суваг нь Веб байна
@@ -536,10 +537,10 @@ class ComplaintController extends Controller
             $input['file_id'] = $filename->id;
         }
 
-        if ($request->second_org_id != null) {
-            $input['status_id'] = 1;
-            $input['second_status_id'] = 0;
-        }
+        // if ($request->second_org_id != null) {
+        //     $input['status_id'] = 1;
+        //     $input['second_status_id'] = 0;
+        // }
 
 
         // $input['status_id'] = 0;
