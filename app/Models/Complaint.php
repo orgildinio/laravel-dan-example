@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\File;
 use App\Models\User;
+use App\Models\Rating;
 use App\Models\Status;
 use App\Models\Channel;
 use App\Models\Category;
@@ -92,5 +93,9 @@ class Complaint extends Model
     public function soum()
     {
         return $this->belongsTo(Soum::class);
+    }
+    public function ratings()
+    {
+        return $this->hasMany(Rating::class);
     }
 }

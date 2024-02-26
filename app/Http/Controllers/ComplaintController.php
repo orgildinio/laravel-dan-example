@@ -212,7 +212,7 @@ class ComplaintController extends Controller
         $orgs = Organization::orderBy('name', 'asc')->get();
         $energy_types = EnergyType::all();
         $channels = Channel::all();
-        $controlled_users = User::where('org_id', Auth::user()->org_id)->get();
+        $controlled_users = User::where('org_id', Auth::user()->org_id)->orderBy('name', 'asc')->get();
 
         return view('complaints.index', compact('complaints', 'daterange', 'search_text', 'statuses', 'status_id', 'org_id', 'orgs', 'energy_type_id', 'energy_types', 'channel_id', 'channels', 'controlled_user_id', 'controlled_users'));
     }
