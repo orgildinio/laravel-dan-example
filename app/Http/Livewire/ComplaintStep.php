@@ -17,7 +17,7 @@ class ComplaintStep extends Component
 {
     use WithFileUploads;
 
-    public $complaint_steps, $org_id, $status_id, $complaint_id, $recieved_user_id, $sent_user_id, $recieved_date, $sent_date, $desc, $orgs, $all_status, $actions, $selectedAction, $controlled_user_id, $employees, $selected_user_id, $second_user_id, $file;
+    public $complaint_steps, $org_id, $status_id, $complaint_id, $recieved_user_id, $sent_user_id, $recieved_date, $sent_date, $desc, $orgs, $all_status, $actions, $selectedAction, $controlled_user_id, $employees, $selected_user_id, $second_user_id, $file, $step_id;
     public $isOpen = 0;
     public $showPermissionWarning = false;
 
@@ -28,7 +28,6 @@ class ComplaintStep extends Component
         $this->org_id = $complaint->organization_id;
         $this->controlled_user_id = $complaint->controlled_user_id;
         $this->second_user_id = $complaint->second_user_id;
-        $this->complaint_steps = ComplaintStep::all();
         $this->orgs = Organization::orderBy('name', 'asc')->get();
         $this->all_status = Status::all();
         if (Auth::user()->org_id == 99) {
@@ -37,10 +36,14 @@ class ComplaintStep extends Component
             $this->actions = ['Тайлбар', 'Шилжүүлэх', 'Хянаж байгаа', 'Шийдвэрлэх', 'Сунгах'];
         }
         $this->employees = User::where('org_id', $this->org_id)->where('id', '!=', Auth::user()->id)->orderBy('name', 'asc')->get();
+
+        // $this->complaint_steps = ModelsComplaintStep::where('complaint_id', $this->complaint_id)->get();
     }
 
     public function render()
     {
+        $this->complaint_steps = ModelsComplaintStep::where('complaint_id', $this->complaint_id)->get();
+
         return view('livewire.complaint-step');
     }
 
@@ -68,7 +71,7 @@ class ComplaintStep extends Component
     {
         $this->isOpen = false;
         // Dispatch a browser event to reload the page after the modal closes
-        $this->dispatchBrowserEvent('reloadPage');
+        // $this->dispatchBrowserEvent('reloadPage');
     }
 
     private function resetInputFields()
@@ -83,15 +86,6 @@ class ComplaintStep extends Component
             'file' => 'nullable|mimes:jpeg,png,jpg,zip,pdf|max:102400', // 100MB Max
         ]);
 
-        // if ($file = $this->file('file')) {
-        //     $name = time() . $file->getClientOriginalName();
-
-        //     $file->move('files', $name);
-        //     $filename = File::create(['filename' => $name]);
-
-        //     // $input['file_id'] = $filename->id;
-        // }
-
         if ($this->file) {
 
             $filename = $this->file->getClientOriginalName();
@@ -105,6 +99,16 @@ class ComplaintStep extends Component
 
 
         $complaint = Complaint::findOrFail($this->complaint_id);
+
+        // ModelsComplaintStep::create([
+        //     'org_id' => $complaint->organization_id,
+        //     'complaint_id' => $this->complaint_id,
+        //     'sent_user_id' => Auth::user()->id,
+        //     'status_id' => 8,
+        //     'sent_date' => Carbon::now()->toDateTimeString(),
+        //     'desc' => $this->desc,
+        //     'file_id' => isset($filename) ? $filename->id : null,
+        // ]);
 
         switch ($this->selectedAction) {
             case 'Тайлбар':
@@ -274,19 +278,9 @@ class ComplaintStep extends Component
                 break;
         }
 
-        // ModelsComplaintStep::create([
-        //     'org_id' => $this->org_id,
-        //     'complaint_id' => $this->complaint_id,
-        //     'sent_user_id' => Auth::user()->id,
-        //     // 'status_id' => $complaint->status_id == 0 ? 1 : $complaint->status_id,
-        //     'status_id' => $complaint->status_id == 0 ? 1 : $complaint->status_id,
-        //     'sent_date' => Carbon::now()->toDateTimeString(),
-        //     'desc' => $this->desc
-        // ]);
-
         session()->flash(
             'message',
-            $this->id ? 'ComplaintStep Updated Successfully.' : 'ComplaintStep Created Successfully.'
+            $this->step_id ? 'Амжилттай заслаа.' : 'Амжилттай хадгаллаа.'
         );
 
         $this->closeModal();
@@ -295,10 +289,10 @@ class ComplaintStep extends Component
 
     public function edit($id)
     {
-        $complaint_steps = ModelsComplaintStep::findOrFail($id);
-        $this->org_id = $complaint_steps->org_id;
-        $this->complaint_id = $complaint_steps->complaint_id;
-        $this->desc = $complaint_steps->desc;
+        $complaint_step = ModelsComplaintStep::findOrFail($id);
+        $this->org_id = $complaint_step->org_id;
+        $this->complaint_id = $complaint_step->complaint_id;
+        $this->desc = $complaint_step->desc;
 
         $this->openModal();
     }
