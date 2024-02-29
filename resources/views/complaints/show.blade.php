@@ -139,12 +139,11 @@
                     <div class="px-2">
                         <p tabindex="0" class="focus:outline-none text-sm leading-5 py-4 text-gray-700 text-justify">
                             {{ $complaint->complaint }}</p>
-
                     </div>
 
                     <div>
                         @if ($complaint->audio_file_id != null)
-                            <div class="text-sm px-2">
+                            <div class="text-sm px-2 mb-2">
                                 <p>Бичлэг</p>
                                 <audio controls class="w-full">
                                     <source src="/files/{{ $complaint->audioFile?->filename }}" type="audio/mpeg">
@@ -153,12 +152,10 @@
                             </div>
                         @endif
 
-                        <br>
-
                         @if ($complaint->file_id != null)
-                            <div class="py-5 px-2">
-                                <div class="my-5 w-2/3">
-                                    <div class="text-xs">Хавсралт файл</div>
+                            <div class="p-2">
+                                <div class="w-1/3">
+                                    <div class="text-xs font-semibold">Хавсралт файл</div>
                                     <dd class="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                                         <ul role="list"
                                             class="divide-y divide-gray-100 rounded-md border border-gray-200">
