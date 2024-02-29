@@ -137,7 +137,7 @@
                     </div>
 
                     <div class="px-2">
-                        <p tabindex="0" class="focus:outline-none text-sm leading-5 py-4 text-gray-600 text-justify">
+                        <p tabindex="0" class="focus:outline-none text-sm leading-5 py-4 text-gray-700 text-justify">
                             {{ $complaint->complaint }}</p>
 
                     </div>

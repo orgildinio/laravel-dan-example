@@ -84,7 +84,9 @@
                         </div>
                     </div>
                     <div class="bg-gray-50 p-2">
-                        {{ $step->desc }}
+                        <div class="text-sm text-gray-700">
+                            {{ $step->desc }}
+                        </div>
                         @if ($step->file_id != null)
                             <div class="my-5 w-2/3">
                                 <div class="text-xs">Хавсралт файл</div>
