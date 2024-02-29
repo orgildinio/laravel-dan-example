@@ -26,4 +26,9 @@ class ComplaintStep extends Model
     {
         return $this->belongsTo(File::class);
     }
+
+    public function sentUser()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

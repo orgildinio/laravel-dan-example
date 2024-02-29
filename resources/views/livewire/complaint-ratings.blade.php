@@ -1,4 +1,4 @@
-<div class="border rounded">
+<div class="">
     @if (count($comments) < 0)    
     <section class="w-full px-8 pt-4 pb-10 xl:px-8">
         <div class="max-w-5xl mx-auto">
@@ -76,28 +76,21 @@
         </div>
     </section>
     @endif
-    <section class="relative block py-10 overflow-hidden text-left bg-white">
-        <div class="w-full px-20 mx-auto text-left md:px-10 max-w-7xl xl:px-16">
-            <div class="box-border flex flex-col flex-wrap justify-center -mx-4 text-indigo-900">
-                <div class="relative w-full mb-4 leading-6 text-left xl:flex-grow-0 xl:flex-shrink-0">
-                    <h2 class="box-border mx-0 mt-0 font-sans text-lg uppercase font-bold text-center text-indigo-900">
-                        Үнэлгээ
-                    </h2>
-                </div>
-            </div>
-            <div class="box-border flex grid flex-wrap justify-center gap-10 -mx-4 text-md text-center text-indigo-900 lg:gap-16 lg:justify-start lg:text-left">
-                @forelse ($comments as $comment)
-                    <div class="flex col-span-1">
-                        <div class="relative flex-shrink-0 w-20 h-20 text-left">
+    <section class="relative block p-4 overflow-hidden text-left">
+        <div class="w-full mx-auto text-left">
+            {{-- <h2 class="text-gray-500 uppercase font-medium pb-4">Үнэлгээ</h2> --}}
+            <div class="text-indigo-900">
+                @foreach ($comments as $comment)
+                    <div class="">
+                        {{-- <div class="relative flex-shrink-0 w-20 h-20 text-left">
                             <a href="{{ '@' . $comment->user->name }}">
                             </a>
-                        </div>
-                        <div class="relative px-4 mb-16 leading-6 text-left">
+                        </div> --}}
+                        <div class="mb-16 leading-6 text-left">
                             <div class="box-border text-md font-medium text-gray-500">
                                 {{ $comment->comment }}
                             </div>
-                            <div class="box-border mt-5 text-lg font-semibold text-indigo-900 uppercase">
-                                Үнэлгээ: <strong>{{ $comment->rating }}</strong>
+                            <div class="box-border mt-5 text-lg font-semibold text-gray-500 uppercase">
                                 {{-- @auth
                                     @if(auth()->user()->id == $comment->user_id || auth()->user()->role->name == 'admin' ))
                                         - <a wire:click.prevent="delete({{ $comment->id }})" class="text-sm cursor-pointer">Delete</a>
@@ -126,22 +119,14 @@
                                     </label>
                                 </div>
                             </div>
-                            <div class="box-border text-left text-gray-700" style="quotes: auto;">
+                            {{-- <div class="box-border text-left text-gray-700" style="quotes: auto;">
                                 <a href="{{ '@' . $comment->user->username }}">
                                     {{  $comment->user->name }}
                                 </a>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
-                @empty
-                <div class="flex col-span-1">
-                    <div class="relative px-4 mb-16 leading-6 text-left">
-                        <div class="box-border text-sm font-medium text-gray-500">
-                            Үнэлгээ байхгүй байна.
-                        </div>
-                    </div>
-                </div>
-                @endforelse
+                @endforeach
 
             </div>
     </section>
