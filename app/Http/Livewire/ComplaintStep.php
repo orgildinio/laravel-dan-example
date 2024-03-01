@@ -17,7 +17,7 @@ class ComplaintStep extends Component
 {
     use WithFileUploads;
 
-    public $complaint_steps, $org_id, $status_id, $complaint_id, $recieved_user_id, $sent_user_id, $recieved_date, $sent_date, $desc, $orgs, $all_status, $actions, $selectedAction, $controlled_user_id, $employees, $selected_user_id, $second_user_id, $file, $step_id;
+    public $complaint_steps, $org_id, $status_id, $complaint_id, $recieved_user_id, $sent_user_id, $recieved_date, $sent_date, $desc, $orgs, $all_status, $actions, $selectedAction, $controlled_user_id, $employees, $selected_user_id, $second_user_id, $file, $step_id, $expire_date;
     public $isOpen = 0;
     public $showPermissionWarning = false;
 
@@ -28,12 +28,43 @@ class ComplaintStep extends Component
         $this->org_id = $complaint->organization_id;
         $this->controlled_user_id = $complaint->controlled_user_id;
         $this->second_user_id = $complaint->second_user_id;
+        $this->expire_date = $complaint->expire_date;
+        $this->status_id = $complaint->status_id;
         $this->orgs = Organization::orderBy('name', 'asc')->get();
         $this->all_status = Status::all();
+
         if (Auth::user()->org_id == 99) {
-            $this->actions = ['Тайлбар', 'Шилжүүлэх', 'Хянаж байгаа', 'Цуцлах', 'Шийдвэрлэх', 'Сунгах', 'ТЗЭ-рүү шилжүүлэх'];
+
+            // Use a switch case to set actions based on both status_id and organization_id
+            switch ($this->status_id) {
+                case 2: // Хүлээн авсан
+                    $this->actions = ['Тайлбар', 'Шилжүүлэх', 'Цуцлах', 'Хянаж байгаа', 'Шийдвэрлэх', 'Сунгах', 'ТЗЭ-рүү шилжүүлэх'];
+                    break;
+                case 3: // Хянаж байгаа
+                    $this->actions = ['Тайлбар', 'Шилжүүлэх', 'Цуцлах', 'Шийдвэрлэх', 'Сунгах', 'ТЗЭ-рүү шилжүүлэх'];
+                    break;
+                case 6: // Шийдвэрлэсэн
+                    $this->actions = ['Тайлбар'];
+                    break;
+                default: // Тайлбар
+                    $this->actions = ['Тайлбар', 'Шилжүүлэх', 'Цуцлах', 'Шийдвэрлэх', 'Сунгах', 'ТЗЭ-рүү шилжүүлэх'];
+            }
+            // $this->actions = ['Тайлбар', 'Шилжүүлэх', 'Хянаж байгаа', 'Цуцлах', 'Шийдвэрлэх', 'Сунгах', 'ТЗЭ-рүү шилжүүлэх'];
         } else {
-            $this->actions = ['Тайлбар', 'Шилжүүлэх', 'Хянаж байгаа', 'Шийдвэрлэх', 'Сунгах'];
+            // $this->actions = ['Тайлбар', 'Шилжүүлэх', 'Хянаж байгаа', 'Шийдвэрлэх', 'Сунгах'];
+            switch ($this->status_id) {
+                case 2: // Хүлээн авсан
+                    $this->actions = ['Тайлбар', 'Шилжүүлэх', 'Цуцлах', 'Хянаж байгаа', 'Шийдвэрлэх', 'Сунгах'];
+                    break;
+                case 3: // Хянаж байгаа
+                    $this->actions = ['Тайлбар', 'Шилжүүлэх', 'Цуцлах', 'Шийдвэрлэх', 'Сунгах'];
+                    break;
+                case 6: // Шийдвэрлэсэн
+                    $this->actions = ['Тайлбар'];
+                    break;
+                default: // Тайлбар
+                    $this->actions = ['Тайлбар', 'Шилжүүлэх', 'Цуцлах', 'Шийдвэрлэх', 'Сунгах'];
+            }
         }
         $this->employees = User::where('org_id', $this->org_id)->where('id', '!=', Auth::user()->id)->orderBy('name', 'asc')->get();
 
@@ -57,14 +88,29 @@ class ComplaintStep extends Component
     {
         // $this->isOpen = true;
         // Check user permissions before opening the modal
-        if (Auth::user()->id == $this->controlled_user_id || Auth::user()->id == $this->second_user_id) {
+        if ($this->expire_date < now()) {
+            $this->showPermissionWarning = true;
+            session()->flash('warning', 'Өргөдөл, гомдол шийдвэрлэх хугацаа дууссан байна.');
+        } elseif ($this->status_id == 6) {
+            $this->showPermissionWarning = true;
+            session()->flash('info', 'Шийдвэрлэгдсэн төлөвтэй өргөдөл, гомдлыг удирдах боломжгүй.');
+        } elseif ($this->controlled_user_id !== Auth::user()->id && $this->second_user_id !== Auth::user()->id) {
+            $this->showPermissionWarning = true;
+            session()->flash('warning', 'Таны хариуцсан өргөдөл, гомдол биш байна1.');
+        } else {
             $this->isOpen = true;
             $this->showPermissionWarning = false;
-        } else {
-            // Optionally, you can notify the user that they don't have the required permission
-            $this->showPermissionWarning = true;
-            session()->flash('message', 'You do not have permission to open the modal.');
         }
+
+
+        // if ($this->expire_date > now() && (Auth::user()->id == $this->controlled_user_id || Auth::user()->id == $this->second_user_id)) {
+        //     $this->isOpen = true;
+        //     $this->showPermissionWarning = false;
+        // } else {
+        //     // Optionally, you can notify the user that they don't have the required permission
+        //     $this->showPermissionWarning = true;
+        //     session()->flash('warning', 'Таны эрх хүрэхгүй байна.');
+        // }
     }
 
     public function closeModal()
@@ -83,7 +129,7 @@ class ComplaintStep extends Component
     {
         $this->validate([
             'desc' => 'required',
-            'file' => 'nullable|mimes:jpeg,png,jpg,zip,pdf|max:102400', // 100MB Max
+            'file' => 'nullable|mimes:jpeg,png,jpg,pdf|max:102400', // 100MB Max
         ]);
 
         if ($this->file) {
@@ -278,10 +324,7 @@ class ComplaintStep extends Component
                 break;
         }
 
-        session()->flash(
-            'message',
-            $this->step_id ? 'Амжилттай заслаа.' : 'Амжилттай хадгаллаа.'
-        );
+        session()->flash('success', 'Амжилттай хадгаллаа.');
 
         $this->closeModal();
         $this->resetInputFields();

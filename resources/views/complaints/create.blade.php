@@ -339,7 +339,7 @@
                             </select>
                         </div>
                     </div>
-                    
+                    @if (Auth::user()->org_id == 99)    
                     <div class="md:flex md:items-center mb-2">
                         <div class="md:w-1/3">
                             <label class="block text-gray-500 text-sm font-bold md:text-right mb-1 md:mb-0 pr-4"
@@ -357,6 +357,7 @@
                             </select>
                         </div>
                     </div>
+                    @endif
                     <div class="md:flex md:items-center mb-2">
                         <div class="md:w-1/3">
                             <label class="block text-gray-500 text-sm font-bold md:text-right mb-1 md:mb-0 pr-4"

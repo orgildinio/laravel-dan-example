@@ -469,6 +469,7 @@ class ComplaintController extends Controller
             // }
             $input['controlled_user_id'] = $user->id;
             $input['status_id'] = 2; // Хүлээн авсан төлөвт орно
+
         } else {
             $input['complaint_maker_type_i'] = 1;
             $input['status_id'] = 0; // Шинээр ирсэн төлөвт орно
@@ -485,6 +486,19 @@ class ComplaintController extends Controller
         }
 
         $complaint = Complaint::create($input);
+
+        if ($complaint->status_id == 2) {
+            ComplaintStep::create([
+                'org_id' => $user->org_id,
+                'complaint_id' => $complaint->id,
+                // 'recieved_user_id' => $user->id,
+                'sent_user_id' => $user->id,
+                'recieved_date' => now(),
+                'sent_date' => now(),
+                'desc' => 'Хүлээн авсан',
+                'status_id' => 2
+            ]);
+        }
 
         if (Auth::user()->org_id != null) {
             return redirect()->route('complaint.create')->with('success', 'Санал хүсэлт амжилттай бүртгэлээ.');
@@ -589,7 +603,6 @@ class ComplaintController extends Controller
                 'sent_date' => now(),
                 'desc' => 'Хүлээн авсан',
                 'status_id' => 2
-
             ]);
 
             return response()->json(['message' => 'Record updated successfully', 'record' => $record, 'complaint_step' => $complaint_step]);

@@ -9,10 +9,34 @@
                         <dt class="font-medium text-gray-900">#</dt>
                         <dd class="text-gray-700 text-right font-bold sm:col-span-2">{{$complaint->id}}</dd>
                       </div>
+
+                      <div class="grid grid-cols-1 gap-1 p-3 even:bg-gray-50 sm:grid-cols-3 sm:gap-4">
+                        <dt class="font-medium text-gray-900">Хүсэлт гаргагч</dt>
+                        <dd class="text-gray-700 text-right sm:col-span-2">
+                        @if ($complaint->complaint_maker_type_id == 1)
+                                {{ mb_substr($complaint->lastname, 0, 1) }}.{{ $complaint->firstname }}
+                        @else
+                            {{ $complaint->complaint_maker_org_name }}
+                        @endif    
+                        </dd>
+                      </div>
                   
                       <div class="grid grid-cols-1 gap-1 p-3 even:bg-gray-50 sm:grid-cols-3 sm:gap-4">
                         <dt class="font-medium text-gray-900">Бүртгэсэн огноо</dt>
                         <dd class="text-gray-700 text-right sm:col-span-2">{{ date('Y-m-d H:i', strtotime($complaint->complaint_date)) }}</dd>
+                      </div>
+
+                      <div class="grid grid-cols-1 gap-1 p-3 even:bg-gray-50 sm:grid-cols-3 sm:gap-4">
+                        <dt class="font-medium text-gray-900">Үлдсэн хугацаа</dt>
+                        <dd class="text-gray-700 text-right sm:col-span-2">
+                            @if (($complaint->expire_date) > now() )
+                                <span>{{ now()->diffInHours($complaint->expire_date) }} цаг</span>
+                            @else
+                                {{-- <img src="{{ asset('/image/circle-exclamation.svg')}}" class="fa-beat w-[16px] h-[16px] text-red-700 shrink-0 inline-block" alt="dashboard"> --}}
+                                <i class="fa-solid fa-circle fa-beat-fade text-red-500"></i>
+                                <span class="">Хугацаа хэтэрсэн</span>
+                            @endif
+                        </dd>
                       </div>
                   
                       <div class="grid grid-cols-1 gap-1 p-3 even:bg-gray-50 sm:grid-cols-3 sm:gap-4">

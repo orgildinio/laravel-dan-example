@@ -1,25 +1,30 @@
 <div>
     <div class="relative">
-        @if (session()->has('message'))
-            <div class="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md my-3"
-                role="alert">
-                <div class="flex">
-                    <div>
-                        <p class="text-sm">{{ session('message') }}</p>
-                    </div>
-                </div>
-            </div>
+        @if (session('success'))
+            <div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50" role="alert">
+                {{ session('success') }}
+              </div>
+        @endif
+        @if (session('info'))
+            <div class="p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50" role="alert">
+                {{ session('info') }}
+              </div>
+        @endif
+        @if (session('warning'))
+            <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50" role="alert">
+                {{ session('warning') }}
+              </div>
         @endif
         <div class="text-right">
             <button wire:click="create()" class="bg-black hover:bg-gray-700 text-white text-right text-sm py-2 px-4 rounded my-3"><i
                 class="fa-solid fa-gear"></i> Удирдах<p></button>
         </div>
-        @if ($showPermissionWarning)
+        {{-- @if ($showPermissionWarning)
             <div class="absolute top-5 right-0 mt-8 w-64 bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-2"
                 role="alert">
                 <p>Таны хариуцсан гомдол биш байна..</p>
             </div>
-        @endif
+        @endif --}}
         @if ($isOpen)
             @include('livewire.create')
         @endif
@@ -60,7 +65,7 @@
                             {{-- <img src="user-avatar.jpg" alt="User Avatar" class="w-20 h-20 rounded-full mx-auto mb-4"> --}}
                             <div class="flex items-start">
                                 <img class="w-12 h-12 rounded-full object-cover mr-4 shadow"
-                                src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
+                                src="{{ $step->sentUser?->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
                                 <div class="text-sm ">
                                     <div class="flex items-center justify-between">
                                         <h2 class="font-semibold text-gray-900">
