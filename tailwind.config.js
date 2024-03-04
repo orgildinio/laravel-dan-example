@@ -13,6 +13,7 @@ module.exports = {
         extend: {
             fontFamily: {
                 sans: ["Figtree", ...defaultTheme.fontFamily.sans],
+                roboto: ["Roboto", "sans-serif"],
             },
             colors: {
                 primary: "#3e4095",

@@ -28,7 +28,7 @@
 </head>
 
 <body>
-   <div class="font-sans text-gray-900 antialiased" x-data="{ sidebarOpen: true }">
+   <div class="font-roboto text-gray-900 antialiased" x-data="{ sidebarOpen: true }">
       <x-admin-header></x-admin-header>
       <div class="flex overflow-hidden bg-white pt-16" :class="{ '-ml-64': !sidebarOpen }">
          <x-sidebar-menu></x-sidebar-menu>
