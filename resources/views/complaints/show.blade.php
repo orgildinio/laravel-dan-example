@@ -109,40 +109,9 @@
 
                     </dl>
                   </div>
-                {{-- <div class="col-span-1 self-start sticky top-0 mr-4 p-6 bg-gray-50 shadow text-sm">
-                    <h1 class="text-black font-bold mb-4 text-lg">Гомдол гаргасан:</h1>
-                    <dl class="max-w-md text-gray-900 divide-y divide-gray-200">
-                        @if ($complaint->complaint_maker_type_id == 1)
-                            <div class="flex flex-col pb-3">
-                                <dt class="mb-1 text-gray-500">Овог нэр</dt>
-                                <dd class="font-semibold">
-                                    {{ mb_substr($complaint->lastname, 0, 1) }}.{{ $complaint->firstname }}
-                                </dd>
-                            </div>
-                        @endif
-                        @if ($complaint->complaint_maker_type_id == 2)
-                            <div class="flex flex-col pb-3">
-                                <dt class="mb-1 text-gray-500">ААН</dt>
-                                <dd class="font-semibold">{{ $complaint->complaint_maker_org_name }}</dd>
-                            </div>
-                        @endif
-                        <div class="flex flex-col pt-3">
-                            <dt class="mb-1 text-gray-500">Утас</dt>
-                            <dd class="font-semibold">{{ $complaint->phone }}</dd>
-                        </div>
-                        <div class="flex flex-col pt-3">
-                            <dt class="mb-1 text-gray-500">И-мэйл</dt>
-                            <dd class="font-semibold">{{ $complaint->email }}</dd>
-                        </div>
-                        <div class="flex flex-col pt-3">
-                            <dt class="mb-1 text-gray-500">Хаяг</dt>
-                            <dd class="font-semibold">{{ $complaint->addressDetail }}</dd>
-                        </div>
-                    </dl>
-                    @livewire('complaint-ratings', ['complaint' => $complaint], key($complaint->id))
-                </div> --}}
 
-                <div class="col-span-3 mb-7 bg-white p-6 rounded-lg border border-gray-100 shadow-sm">
+
+                <div class="col-span-3 py-3 mb-4 bg-white p-6 rounded-lg border border-gray-100 shadow-sm">
                     @if (session()->has('message'))
                         <div class="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md my-3"
                             role="alert">

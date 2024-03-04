@@ -13,20 +13,7 @@
                         <p>{{ $message }}</p>
                     </div>
                     @endif
-                    {{-- <div class="md:flex md:items-center mb-2">
-                        <div class="md:w-1/3">
-                        </div>
-                        <div class="md:w-2/3 flex">
-                            <div class="flex items-center px-8 border border-gray-200 rounded grow mr-5">
-                                <input checked id="bordered-radio-1" type="radio" value="1" name="complaint_maker_type_id" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2 ">
-                                <label for="bordered-radio-1" class="w-full py-4 ml-2 text-sm font-medium text-gray-900">Иргэн</label>
-                            </div>
-                            <div class="flex items-center px-8 border border-gray-200 rounded grow">
-                                <input id="bordered-radio-2" type="radio" value="2" name="complaint_maker_type_id" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500  focus:ring-2">
-                                <label for="bordered-radio-2" class="w-full py-4 ml-2 text-sm font-medium text-gray-900">ААН</label>
-                            </div>
-                        </div>
-                    </div> --}}
+                    
                     <div class="md:flex md:items-center mb-2">
                         <div class="md:w-1/3">
                             <label class="block text-gray-500 text-sm font-bold md:text-right mb-1 md:mb-0 pr-4"
@@ -56,8 +43,27 @@
                                     <path fill="currentColor" fill-rule="evenodd" d="M61,154.006845 C61,153.45078 61.4499488,153 62.0068455,153 L73.9931545,153 C74.5492199,153 75,153.449949 75,154.006845 L75,165.993155 C75,166.54922 74.5500512,167 73.9931545,167 L62.0068455,167 C61.4507801,167 61,166.550051 61,165.993155 L61,154.006845 Z M62,157 L74,157 L74,166 L62,166 L62,157 Z M64,152.5 C64,152.223858 64.214035,152 64.5046844,152 L65.4953156,152 C65.7740451,152 66,152.231934 66,152.5 L66,153 L64,153 L64,152.5 Z M70,152.5 C70,152.223858 70.214035,152 70.5046844,152 L71.4953156,152 C71.7740451,152 72,152.231934 72,152.5 L72,153 L70,153 L70,152.5 Z" transform="translate(-61 -152)"/>
                                   </svg>
                             </div>
-                            <input type="text" id="datetime" name="complaint_date" class="bg-gray-200 appearance-none  rounded w-full py-2 px-10 text-gray-700 text-sm leading-tight border-1 border-gray-200" />
+                            <input type="text" id="datetime" name="complaint_date" class="bg-gray-200 appearance-none  rounded w-full py-2 px-10 text-gray-700 text-sm leading-tight border-1 border-gray-200" value="{{ old('complaint_date') }}" />
                             @error('complaint_date')
+                            <div class="text-red-500 text-sm">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="md:flex md:items-center mb-2">
+                        <div class="md:w-1/3">
+                            <label class="block text-gray-500 text-sm font-bold md:text-right mb-1 md:mb-0 pr-4"
+                                for="inline-full-name">
+                                Шийдвэрлэх огноо
+                            </label>
+                        </div>
+                        <div class="relative md:w-2/3">
+                            <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                                <svg class="w-4 h-4 text-gray-500" viewBox="-0.5 0 15 15" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill="currentColor" fill-rule="evenodd" d="M61,154.006845 C61,153.45078 61.4499488,153 62.0068455,153 L73.9931545,153 C74.5492199,153 75,153.449949 75,154.006845 L75,165.993155 C75,166.54922 74.5500512,167 73.9931545,167 L62.0068455,167 C61.4507801,167 61,166.550051 61,165.993155 L61,154.006845 Z M62,157 L74,157 L74,166 L62,166 L62,157 Z M64,152.5 C64,152.223858 64.214035,152 64.5046844,152 L65.4953156,152 C65.7740451,152 66,152.231934 66,152.5 L66,153 L64,153 L64,152.5 Z M70,152.5 C70,152.223858 70.214035,152 70.5046844,152 L71.4953156,152 C71.7740451,152 72,152.231934 72,152.5 L72,153 L70,153 L70,152.5 Z" transform="translate(-61 -152)"/>
+                                  </svg>
+                            </div>
+                            <input type="text" id="expire_date" name="expire_date" class="bg-gray-200 appearance-none  rounded w-full py-2 px-10 text-gray-700 text-sm leading-tight border-1 border-gray-200" value="{{ old('expire_date') }}" />
+                            @error('expire_date')
                             <div class="text-red-500 text-sm">{{ $message }}</div>
                             @enderror
                         </div>
@@ -191,12 +197,6 @@
                             <input id="capitalProvince"
                                 class="bg-gray-200 appearance-none rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight @if($errors->has('country')) border border-red-500 @else border-1 border-gray-200 @endif"
                                 type="text" name="country" value="{{old('country')}}">
-                            {{-- <select name="aimag_id"
-                                class="bg-gray-200 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500">
-                                @foreach ($aimags as $aimag)
-                                <option value="{{ $aimag->id }}">{{ $aimag->name }}</option>
-                                @endforeach
-                            </select> --}}
                             @error('country')
                             <div class="text-red-500 text-sm mt-1 mb-1">{{ $message }}</div>
                             @enderror
@@ -213,12 +213,6 @@
                             <input id="districtsum"
                                 class="bg-gray-200 appearance-none rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight @if($errors->has('district')) border border-red-500 @else border-1 border-gray-200 @endif"
                                 type="text" name="district" value="{{old('district')}}">
-                            {{-- <select name="soum_id"
-                                class="bg-gray-200 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500">
-                                @foreach ($soums as $soum)
-                                <option value="{{ $soum->id }}">{{ $soum->name }}</option>
-                                @endforeach
-                            </select> --}}
                             @error('district')
                             <div class="text-red-500 text-sm mt-1 mb-1">{{ $message }}</div>
                             @enderror
@@ -412,8 +406,20 @@
             dateFormat: "Y-m-d H:i",
             time_24hr: true,
             // defaultDate: new Date(),
-            defaultHour: "9",
-            defaultMinute: "00",
+            // defaultHour: "9",
+            // defaultMinute: "00",
+            locale: {
+                firstDayOfWeek: 1
+            }
+        });
+
+        flatpickr("#expire_date", {
+            enableTime: true,
+            dateFormat: "Y-m-d H:i",
+            time_24hr: true,
+            // defaultDate: new Date(),
+            // defaultHour: "9",
+            // defaultMinute: "00",
             locale: {
                 firstDayOfWeek: 1
             }

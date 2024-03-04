@@ -15,28 +15,7 @@
                         <p>{{ $message }}</p>
                     </div>
                     @endif
-                    {{-- <div class="md:flex md:items-center mb-2">
-                        <div class="md:w-1/3">
-                        </div>
-                        <div class="md:w-2/3 flex">
-                            <div class="flex items-center px-8 border border-gray-200 rounded grow mr-5">
-                                <input checked id="bordered-radio-1" type="radio" value="1" {{
-                                    $complaint->complaint_maker_type_id == "1" ? 'checked' : '' }}
-                                name="complaint_maker_type_id" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300
-                                focus:ring-blue-500 focus:ring-2 ">
-                                <label for="bordered-radio-1"
-                                    class="w-full py-4 ml-2 text-sm font-medium text-gray-900">Иргэн</label>
-                            </div>
-                            <div class="flex items-center px-8 border border-gray-200 rounded grow">
-                                <input id="bordered-radio-2" type="radio" value="2" {{
-                                    $complaint->complaint_maker_type_id == "2" ? 'checked' : '' }}
-                                name="complaint_maker_type_id" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300
-                                focus:ring-blue-500 focus:ring-2">
-                                <label for="bordered-radio-2"
-                                    class="w-full py-4 ml-2 text-sm font-medium text-gray-900">ААН</label>
-                            </div>
-                        </div>
-                    </div> --}}
+                    
                     <div class="md:flex md:items-center mb-2">
                         <div class="md:w-1/3">
                             <label class="block text-gray-500 text-sm font-bold md:text-right mb-1 md:mb-0 pr-4"
@@ -71,6 +50,27 @@
                                 value="{{ $complaint->complaint_date }}"
                                 class="bg-gray-200 appearance-none  rounded w-full py-2 px-10 text-gray-700 text-sm leading-tight border-1 border-gray-200" />
                             @error('complaint_date')
+                            <div class="text-red-500 text-sm">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="md:flex md:items-center mb-2">
+                        <div class="md:w-1/3">
+                            <label class="block text-gray-500 text-sm font-bold md:text-right mb-1 md:mb-0 pr-4"
+                                for="inline-full-name">
+                                Шийдвэрлэх огноо
+                            </label>
+                        </div>
+                        <div class="relative md:w-2/3">
+                            <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                                <svg class="w-4 h-4 text-gray-500" viewBox="-0.5 0 15 15" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill="currentColor" fill-rule="evenodd" d="M61,154.006845 C61,153.45078 61.4499488,153 62.0068455,153 L73.9931545,153 C74.5492199,153 75,153.449949 75,154.006845 L75,165.993155 C75,166.54922 74.5500512,167 73.9931545,167 L62.0068455,167 C61.4507801,167 61,166.550051 61,165.993155 L61,154.006845 Z M62,157 L74,157 L74,166 L62,166 L62,157 Z M64,152.5 C64,152.223858 64.214035,152 64.5046844,152 L65.4953156,152 C65.7740451,152 66,152.231934 66,152.5 L66,153 L64,153 L64,152.5 Z M70,152.5 C70,152.223858 70.214035,152 70.5046844,152 L71.4953156,152 C71.7740451,152 72,152.231934 72,152.5 L72,153 L70,153 L70,152.5 Z" transform="translate(-61 -152)"/>
+                                  </svg>
+                            </div>
+                            <input type="text" id="expire_date" name="expire_date"
+                                value="{{ $complaint->expire_date }}"
+                                class="bg-gray-200 appearance-none  rounded w-full py-2 px-10 text-gray-700 text-sm leading-tight border-1 border-gray-200" />
+                            @error('expire_date')
                             <div class="text-red-500 text-sm">{{ $message }}</div>
                             @enderror
                         </div>
@@ -320,11 +320,12 @@
                         </div>
                     </div>
 
+                    @if (Auth::user()->org_id == 99)
                     <div class="md:flex md:items-center mb-2">
                         <div class="md:w-1/3">
                             <label class="block text-gray-500 text-sm font-bold md:text-right mb-1 md:mb-0 pr-4"
                                 for="inline-full-name">
-                                Байгууллага
+                                Холбогдох ТЗЭ
                             </label>
                         </div>
                         <div class="md:w-2/3">
@@ -338,6 +339,7 @@
                             </select>
                         </div>
                     </div>
+                    @endif
                     <div class="md:flex md:items-center mb-2">
                         <div class="md:w-1/3">
                             <label class="block text-gray-500 text-sm font-bold md:text-right mb-1 md:mb-0 pr-4"
@@ -391,8 +393,16 @@
             dateFormat: "Y-m-d H:i",
             time_24hr: true,
             // defaultDate: new Date(),
-            defaultHour: "9",
-            defaultMinute: "00",
+            // defaultHour: "9",
+            // defaultMinute: "00",
+        });
+        flatpickr("#expire_date", {
+            enableTime: true,
+            dateFormat: "Y-m-d H:i",
+            time_24hr: true,
+            // defaultDate: new Date(),
+            // defaultHour: "9",
+            // defaultMinute: "00",
         });
 
         // Өргөдөл гаргагчийг сонгох

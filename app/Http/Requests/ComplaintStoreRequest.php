@@ -33,6 +33,7 @@ class ComplaintStoreRequest extends FormRequest
             // 'district' => 'required',
             // 'khoroo' => 'required',
             // 'addressDetail' => 'required',
+            'expire_date' => 'required',
             'complaint' => 'required',
         ];
     }
@@ -44,6 +45,7 @@ class ComplaintStoreRequest extends FormRequest
             // 'lastname.required' => 'Заавал бөглөнө үү',
             // 'registerNumber.required' => 'Заавал бөглөнө үү!',
             'phone.required' => 'Заавал бөглөнө үү!',
+            'expire_date.required' => 'Заавал бөглөнө үү!',
             // 'email.required' => 'Заавал бөглөнө үү!',
             // 'country.required' => 'Заавал бөглөнө үү!',
             // 'district.required' => 'Заавал бөглөнө үү!',

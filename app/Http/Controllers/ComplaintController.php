@@ -453,8 +453,8 @@ class ComplaintController extends Controller
         $input['created_user_id'] = $user->id;
 
         // Дуусах хугацаа
-        $register_date = Carbon::parse($input['complaint_date']);
-        $input['expire_date'] = $register_date->addHours(48);
+        // $register_date = Carbon::parse($input['complaint_date']);
+        // $input['expire_date'] = $register_date->addHours(48);
 
         // Хэрэв Иргэн ААН гомдол гаргавал шинээр ирсэн төлөвтэй байна
         // ЭХЗХ эсвал ТЗЭ нар бүртгэсэн тохиолдолд хүлээн авсан төлөвтэй байна
@@ -471,7 +471,7 @@ class ComplaintController extends Controller
             $input['status_id'] = 2; // Хүлээн авсан төлөвт орно
 
         } else {
-            $input['complaint_maker_type_i'] = 1;
+            $input['complaint_maker_type_i'] = 1; // Иргэн
             $input['status_id'] = 0; // Шинээр ирсэн төлөвт орно
         }
 
