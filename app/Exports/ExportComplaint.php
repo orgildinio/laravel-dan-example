@@ -53,6 +53,9 @@ class ExportComplaint implements FromCollection, WithHeadings, ShouldAutoSize, W
     public function collection()
     {
         // return Complaint::all();
+        // $complaints = Complaint::with('complaintSteps')->get();
+
+        // dd(json_encode($complaints));
 
         $complaints = Complaint::join('categories', 'complaints.category_id', '=', 'categories.id')
             ->join('channels', 'complaints.channel_id', '=', 'channels.id')
@@ -111,7 +114,7 @@ class ExportComplaint implements FromCollection, WithHeadings, ShouldAutoSize, W
             })
             ->orderBy('complaints.complaint_date', 'desc')
             ->get();
-        // dd($complaints);
+
         return $complaints;
     }
 

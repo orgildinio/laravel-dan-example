@@ -1,6 +1,6 @@
 <x-admin-layout>
     <div class="bg-white shadow rounded-lg p-4 2xl:col-span-1">
-        <div class="mb-4">
+        <div class="">
             <h1 class="text-xl font-bold"> Нийт ирсэн санал, хүсэлт</h1>
         </div>
         <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 py-4">
@@ -98,7 +98,6 @@
                 </a>
             </div>
         </div>
-        <br>
         <div class="overflow-x-auto border-b border-gray-200 shadow sm:rounded-lg">
             <table class="min-w-full table-fixed" id="complaint-report">
                 <thead>
@@ -234,7 +233,7 @@
                             </td>
 
                             <td class="p-2 whitespace-no-wrap border-b border-gray-200 text-sm">
-                                <p>{{ strlen($complaint->complaint) > 150 ? substr($complaint->complaint, 0, 150) . ' ...' : $complaint->complaint }}
+                                <p>{{ Str::limit($complaint->complaint, 150) }}
                                 </p>
                             </td>
 
