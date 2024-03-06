@@ -17,7 +17,7 @@ class ComplaintStep extends Component
 {
     use WithFileUploads;
 
-    public $complaint_steps, $org_id, $status_id, $complaint_id, $recieved_user_id, $sent_user_id, $recieved_date, $sent_date, $desc, $orgs, $all_status, $actions, $selectedAction, $controlled_user_id, $employees, $selected_user_id, $second_user_id, $file, $step_id, $expire_date;
+    public $complaint_steps, $org_id, $status_id, $complaint_id, $recieved_user_id, $sent_user_id, $recieved_date, $sent_date, $desc, $orgs, $all_status, $actions, $selectedAction, $controlled_user_id, $employees, $selected_user_id, $second_user_id, $file, $step_id, $expire_date, $is_expired;
     public $isOpen = 0;
     public $showPermissionWarning = false;
 
@@ -30,6 +30,7 @@ class ComplaintStep extends Component
         $this->second_user_id = $complaint->second_user_id;
         $this->expire_date = $complaint->expire_date;
         $this->status_id = $complaint->status_id;
+        $this->is_expired = $complaint->hasExpired();
         $this->orgs = Organization::orderBy('name', 'asc')->get();
         $this->all_status = Status::all();
 
@@ -88,7 +89,7 @@ class ComplaintStep extends Component
     {
         // $this->isOpen = true;
         // Check user permissions before opening the modal
-        if (now()->diffInHours($this->expire_date) == 0) {
+        if ($this->is_expired) {
             $this->showPermissionWarning = true;
             session()->flash('warning', 'Өргөдөл, гомдол шийдвэрлэх хугацаа дууссан байна.');
         } elseif ($this->status_id == 6) {
@@ -101,23 +102,11 @@ class ComplaintStep extends Component
             $this->isOpen = true;
             $this->showPermissionWarning = false;
         }
-
-
-        // if ($this->expire_date > now() && (Auth::user()->id == $this->controlled_user_id || Auth::user()->id == $this->second_user_id)) {
-        //     $this->isOpen = true;
-        //     $this->showPermissionWarning = false;
-        // } else {
-        //     // Optionally, you can notify the user that they don't have the required permission
-        //     $this->showPermissionWarning = true;
-        //     session()->flash('warning', 'Таны эрх хүрэхгүй байна.');
-        // }
     }
 
     public function closeModal()
     {
         $this->isOpen = false;
-        // Dispatch a browser event to reload the page after the modal closes
-        // $this->dispatchBrowserEvent('reloadPage');
     }
 
     private function resetInputFields()
@@ -129,7 +118,7 @@ class ComplaintStep extends Component
     {
         $this->validate([
             'desc' => 'required',
-            'file' => 'nullable|mimes:jpeg,png,jpg,pdf|max:102400', // 100MB Max
+            'file' => 'nullable|mimes:jpeg,png,jpg,pdf|max:25600', // 100MB Max
         ]);
 
         if ($this->file) {

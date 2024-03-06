@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use App\Models\File;
 use App\Models\User;
 use App\Models\Rating;
@@ -50,6 +51,16 @@ class Complaint extends Model
         }
 
         return $currentDay . '-' . $counter;
+    }
+
+    // Өргөдөл гомдол шийдвэрлэх хугацаа дууссан эсэхийг шалгах функц
+    public function hasExpired()
+    {
+        // Parse the expire_date attribute as a Carbon instance
+        $expireDate = Carbon::parse($this->expire_date);
+
+        // Compare with the current date and time
+        return $expireDate->isPast();
     }
 
     public function file()
