@@ -21,7 +21,7 @@
                                 <div class="pl-3 w-full">
                                     <p tabindex="0"
                                         class="focus:outline-none text-xl font-medium leading-5 text-gray-800 ">
-                                        {{$complaint->category->name}} - №{{$complaint->id}}</p>
+                                        {{$complaint->category->name}} - №{{$complaint->serial_number}}</p>
                                     <p tabindex="0"
                                         class="focus:outline-none text-sm leading-normal pt-2 text-gray-500">
                                         {{$complaint->complaint_date}}</p>

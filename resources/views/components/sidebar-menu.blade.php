@@ -109,18 +109,7 @@
                         $canceled_complaints!==0 ? $canceled_complaints : '' }}</span>
                   </a>
                </li>
-               @auth
-               @if (Auth::user()->role?->name == 'admin')
-               <li>
-                  <a href="{{ route('user.index') }}"
-                     class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group {{ Request::routeIs('user.index') ? 'bg-gray-100' : '' }}">
-                     {{-- <i class="fa-regular fa-user"></i> --}}
-                     <img src="{{ asset('/image/group-security-svgrepo-com.svg')}}" class="w-[24px] h-[24px] shrink-0 inline-block" alt="users">
-                     <span class="ml-3 flex-1 whitespace-nowrap">Хэрэглэгчид</span>
-                  </a>
-               </li>
-               @endif
-               @endauth
+               
                <li>
                   <a href="{{ route('complaint.index') }}"
                      class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group {{ Request::routeIs('complaint.index') ? 'bg-gray-100' : '' }}">
@@ -137,7 +126,31 @@
                      </x-responsive-nav-link>
                   </form>
                </li> --}}
+               
             </ul>
+
+            {{-- Тохиргоо --}}
+            @auth
+            @if (Auth::user()->role?->name == 'admin')
+            <ul class="pt-4 mt-4 space-y-2 font-medium border-t border-gray-200 dark:border-gray-700">
+               <li>
+                  <a href="{{ route('user.index') }}"
+                     class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group {{ Request::routeIs('user.index') ? 'bg-gray-100' : '' }}">
+                     <img src="{{ asset('/image/group-security-svgrepo-com.svg')}}" class="w-[24px] h-[24px] shrink-0 inline-block" alt="users">
+                     <span class="ml-3 flex-1 whitespace-nowrap">Хэрэглэгчид</span>
+                  </a>
+               </li>
+               <li>
+                  <a href=""
+                     class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group">
+                     <img src="{{ asset('/image/org.svg')}}" class="w-[24px] h-[24px] shrink-0 inline-block" alt="organization">
+                     <span class="ml-3 flex-1 whitespace-nowrap">Байгууллага</span>
+                  </a>
+               </li>
+            </ul>
+            @endif
+            @endauth
+            
          </div>
       </div>
    </div>

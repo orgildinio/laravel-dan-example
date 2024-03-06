@@ -30,18 +30,17 @@
                             </select>
                         </div>
                         @if (Auth::user()->org_id == 99)
-                            <div class="mr-1">
-                                <select name="org_id" id="org_id"
-                                    class="w-32 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
-                                    <option value="">Байгууллага</option>
-                                    @foreach ($orgs as $org)
-                                        <option value="{{ $org->id }}"
-                                            {{ old('org_id', $org_id) == $org->id ? 'selected' : '' }}>
-                                            {{ $org->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        @endif
+                        <div class="mr-1">
+                            <select name="org_id" id="org_id"
+                                class="w-32 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
+                                <option value="">Байгууллага</option>
+                                @foreach ($orgs as $org)
+                                    <option value="{{ $org->id }}"
+                                        {{ old('org_id', $org_id) == $org->id ? 'selected' : '' }}>
+                                        {{ $org->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                         <div class="mr-1">
                             <select name="energy_type_id" id="energy_type_id"
                                 class="w-32 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
@@ -53,6 +52,7 @@
                                 @endforeach
                             </select>
                         </div>
+                        @endif
                         <div class="mr-1">
                             <select name="controlled_user_id" id="controlled_user_id"
                                 class="w-32 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
@@ -87,7 +87,7 @@
             <div
                 class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
                 <a class="flex items-center justify-center flex-shrink-0 px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200"
-                    href="{{ route('exportReportExcel', ['daterange' => Request::get('daterange'), 'energy_type_id' => Request::get('energy_type_id'), 'search_text' => Request::get('search_text'), 'status_id' => Request::get('status_id'), 'org_id' => Request::get('org_id'), 'energy_type_id' => Request('energy_type_id')]) }}">
+                    href="{{ route('exportReportExcel', ['daterange' => Request::get('daterange'), 'energy_type_id' => Request::get('energy_type_id'), 'search_text' => Request::get('search_text'), 'status_id' => Request::get('status_id'), 'org_id' => Request::get('org_id'), 'energy_type_id' => Request('energy_type_id'), 'controlled_user_id' => Request('controlled_user_id'), 'channel_id' => Request('channel_id')]) }}">
                     <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24"
                         stroke-width="2" stroke="currentColor" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -118,15 +118,17 @@
                         <th
                             class="p-2 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
                             Мэргэжилтэн</th>
+                        @if (Auth::user()->org_id == 99)
                         <th
                             class="p-2 w-[200px] text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
                             Байгууллага</th>
                         <th
                             class="p-2 w-[150px] text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
-                            Шилжүүлсэн ТЗЭ</th>
+                            Холбогдох ТЗЭ</th>
                         <th
                             class="p-2 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
                             Төрөл</th>
+                        @endif
                         <th
                             class="p-2 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
                             Овог, нэр / ААН</th>
@@ -140,11 +142,6 @@
                         <th
                             class="p-2 w-[100px] text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
                             Үлдсэн хугацаа</th>
-                        @if (Auth::user()->role?->name == 'admin')
-                            <th class="px-6 py-3 text-sm text-left text-gray-500 border-b border-gray-200 bg-gray-50"
-                                colspan="3">
-                                Үйлдэл</th>
-                        @endif
                     </tr>
                 </thead>
                 <tbody class="bg-white">
@@ -213,8 +210,9 @@
                                 </div>
                             </td>
 
+                            @if (Auth::user()->org_id == 99)
                             <td class="p-2 whitespace-no-wrap border-b border-gray-200">
-                                <div class="text-sm leading-5 text-gray-900">{{ $complaint->organization->name }}
+                                <div class="text-sm leading-5 text-gray-900">{{ $complaint->organization?->name }}
                                 </div>
                             </td>
 
@@ -227,6 +225,7 @@
                                 <div class="text-sm leading-5 text-gray-900">{{ $complaint->energyType?->name }}
                                 </div>
                             </td>
+                            @endif
 
                             <td class="p-2 whitespace-no-wrap border-b border-gray-200">
                                 <div class="text-sm leading-5 text-gray-900">
@@ -253,45 +252,6 @@
                                     @else
                                         <span class="text-red-500 text-xs">Хугацаа хэтэрсэн</span>
                                     @endif
-                                </td>
-                            @endif
-                            @if (Auth::user()->role?->name == 'admin')
-                                <td
-                                    class="text-sm font-medium leading-5 text-center whitespace-no-wrap border-b border-gray-200 ">
-                                    <a href="{{ route('complaint.edit', $complaint->id) }}"
-                                        class="text-indigo-600 hover:text-indigo-900">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none"
-                                            viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                        </svg>
-                                    </a>
-                                </td>
-                                <td
-                                    class="text-sm font-medium leading-5 text-center whitespace-no-wrap border-b border-gray-200 ">
-                                    <a href="{{ route('complaint.show', $complaint->id) }}"
-                                        class="text-gray-600 hover:text-gray-900">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none"
-                                            viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                        </svg>
-                                    </a>
-                                </td>
-                                <td class="text-sm font-medium leading-5 whitespace-no-wrap border-b border-gray-200 ">
-                                    <form action="{{ route('complaint.destroy', $complaint->id) }}" method="Post">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger"><svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                class="w-6 h-6 text-red-600 hover:text-red-800" fill="none"
-                                                viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                            </svg></button>
-                                    </form>
                                 </td>
                             @endif
                         </tr>

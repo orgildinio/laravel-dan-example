@@ -5,6 +5,7 @@ namespace App\Exports;
 use App\Models\Complaint;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Events\AfterSheet;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 use PhpOffice\PhpSpreadsheet\Style\Color;
 use PhpOffice\PhpSpreadsheet\Style\Style;
@@ -15,15 +16,18 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithColumnWidths;
 use Maatwebsite\Excel\Concerns\WithDefaultStyles;
+use Maatwebsite\Excel\Concerns\WithEvents;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use Maatwebsite\Excel\Concerns\WithMapping;
 
-class ExportComplaint implements FromCollection, WithHeadings, ShouldAutoSize, WithStyles, WithColumnWidths
+
+class ExportComplaint implements FromCollection, WithHeadings, ShouldAutoSize, WithStyles, WithColumnWidths, WithEvents, WithMapping
 {
     public function columnWidths(): array
     {
         return [
-            'L' => 55,
-            'J' => 20,
+            'M' => 55,
+            'K' => 20,
         ];
     }
 
@@ -54,15 +58,18 @@ class ExportComplaint implements FromCollection, WithHeadings, ShouldAutoSize, W
             ->join('channels', 'complaints.channel_id', '=', 'channels.id')
             ->join('statuses', 'complaints.status_id', '=', 'statuses.id')
             ->join('users', 'complaints.controlled_user_id', '=', 'users.id')
-            ->join('organizations', 'complaints.organization_id', '=', 'organizations.id')
+            ->join('organizations as org1', 'complaints.organization_id', '=', 'org1.id')
+            // ->join('organizations as org2', 'complaints.second_org_id', '=', 'org2.id')
             ->join('energy_types', 'complaints.energy_type_id', '=', 'energy_types.id')
             ->join('complaint_maker_types', 'complaints.complaint_maker_type_id', '=', 'complaint_maker_types.id')
             ->select(
+                'complaints.serial_number',
                 'categories.name as category',
                 'channels.name as channel',
                 'statuses.name as status',
                 'users.name as name',
-                'organizations.name as org',
+                'org1.name as org_name',
+                'complaints.second_org_id',
                 'energy_types.name as energytype',
                 'complaint_maker_types.name as orgtype',
                 'complaints.lastname',
@@ -70,7 +77,7 @@ class ExportComplaint implements FromCollection, WithHeadings, ShouldAutoSize, W
                 'complaints.complaint_maker_org_name',
                 'complaints.phone',
                 'complaints.complaint',
-                'complaints.complaint_date'
+                'complaints.complaint_date',
             )
             ->when(isset($_GET['daterange']), function ($query) {
                 $date_range = explode(' to ', $_GET['daterange']);
@@ -93,28 +100,115 @@ class ExportComplaint implements FromCollection, WithHeadings, ShouldAutoSize, W
             ->when(isset($_GET['energy_type_id']), function ($query) {
                 $query->where('energy_type_id', $_GET['energy_type_id']);
             })
+            ->when(isset($_GET['controlled_user_id']), function ($query) {
+                $query->where('controlled_user_id', $_GET['controlled_user_id']);
+            })
+            ->when(isset($_GET['channel_id']), function ($query) {
+                $query->where('channel_id', $_GET['channel_id']);
+            })
+            ->when(isset($_GET['second_org_id']), function ($query) {
+                $query->where('second_org_id', $_GET['second_org_id']);
+            })
             ->orderBy('complaints.complaint_date', 'desc')
             ->get();
         // dd($complaints);
         return $complaints;
     }
 
+    public function map($row): array
+    {
+        if (Auth::user()->org_id == 99) {
+            return [
+                $row->serial_number,
+                $row->category,
+                $row->channel,
+                $row->status,
+                $row->name,
+                $row->org_name,
+                $row->secondOrg?->name,
+                $row->energytype,
+                $row->orgtype,
+                $row->lastname,
+                $row->firstname,
+                $row->complaint_maker_org_name,
+                $row->phone,
+                $row->complaint,
+                $row->complaint_date,
+            ];
+        } else {
+            return [
+                $row->serial_number,
+                $row->category,
+                $row->channel,
+                $row->status,
+                $row->name,
+                // $row->org_name,
+                // $row->secondOrg?->name,
+                // $row->energytype,
+                $row->orgtype,
+                $row->lastname,
+                $row->firstname,
+                $row->complaint_maker_org_name,
+                $row->phone,
+                $row->complaint,
+                $row->complaint_date,
+            ];
+        }
+    }
+
     public function headings(): array
     {
+        if (Auth::user()->org_id == 99) {
+            return [
+                'Дугаар',
+                'Төрөл',
+                'Суваг',
+                'Төлөв',
+                'Хариуцсан мэргэжилтэн',
+                'Хариуцсан байгууллага',
+                'Холбогдох ТЗЭ',
+                'Энергийн төрөл',
+                'Өргөдөл гаргагчийн төрөл',
+                'Овог',
+                'Нэр',
+                'ААН-н нэр',
+                'Утас',
+                'Санал хүсэлт',
+                'Бүртгэсэн огноо'
+            ];
+        } else {
+            return [
+                'Төрөл',
+                'Суваг',
+                'Төлөв',
+                'Хариуцсан мэргэжилтэн',
+                // 'Хариуцсан байгууллага',
+                // 'Холбогдох ТЗЭ',
+                // 'Энергийн төрөл',
+                'Өргөдөл гаргагчийн төрөл',
+                'Овог',
+                'Нэр',
+                'ААН-н нэр',
+                'Утас',
+                'Санал хүсэлт',
+                'Бүртгэсэн огноо'
+            ];
+        }
+    }
+
+    public function registerEvents(): array
+    {
         return [
-            'Төрөл',
-            'Суваг',
-            'Төлөв',
-            'Хариуцсан мэргэжилтэн',
-            'Хариуцсан байгууллага',
-            'Энергийн төрөл',
-            'Өргөдөл гаргагчийн төрөл',
-            'Овог',
-            'Нэр',
-            'ААН-н нэр',
-            'Утас',
-            'Санал хүсэлт',
-            'Бүртгэсэн огноо'
+            AfterSheet::class => function (AfterSheet $event) {
+
+                $cellRange = 'A1:N1'; // All headers
+                $event->sheet->getDelegate()->getStyle($cellRange)->getFont()->setSize(12);
+                $event->sheet->getDelegate()->getStyle($cellRange)
+                    ->getFill()
+                    ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                    ->getStartColor()
+                    ->setARGB('FFFF00');
+            },
         ];
     }
 }
