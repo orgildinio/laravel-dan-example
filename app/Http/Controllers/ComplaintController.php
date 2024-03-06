@@ -516,10 +516,8 @@ class ComplaintController extends Controller
     public function show($id)
     {
         $complaint = Complaint::findOrFail($id);
-        $complaint_steps = ModelsComplaintStep::where('complaint_id', $id)->get();
 
-        // dd($complaint_steps);
-        return view('complaints.show', compact('complaint', 'complaint_steps'));
+        return view('complaints.show', compact('complaint'));
     }
 
     /**

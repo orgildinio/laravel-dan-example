@@ -73,7 +73,7 @@ class ComplaintStep extends Component
 
     public function render()
     {
-        $this->complaint_steps = ModelsComplaintStep::where('complaint_id', $this->complaint_id)->get();
+        $this->complaint_steps = ModelsComplaintStep::where('complaint_id', $this->complaint_id)->orderBy('created_at', 'asc')->get();
 
         return view('livewire.complaint-step');
     }
