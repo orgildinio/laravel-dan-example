@@ -30,8 +30,8 @@
                       <div class="grid grid-cols-1 gap-1 p-3 even:bg-gray-50 sm:grid-cols-3 sm:gap-4">
                         <dt class="font-medium text-gray-900">Үлдсэн хугацаа</dt>
                         <dd class="text-gray-700 text-right sm:col-span-2">
-                            @if (($complaint->expire_date) > now() )
-                                <span>{{ now()->diffInHours($complaint->expire_date) }} цаг</span>
+                            @if ( now()->diffInHours($complaint->expire_date) > 0)
+                                <span>{{ now()->diffInHours($complaint->expire_date) > 24 ? now()->diffInDays($complaint->expire_date) . ' өдөр' : now()->diffInHours($complaint->expire_date) . ' цаг' }}</span>
                             @else
                                 <i class="fa-solid fa-circle fa-beat-fade text-red-500"></i>
                                 <span class="">Хугацаа хэтэрсэн</span>
@@ -121,7 +121,7 @@
                             </div>
                         </div>
                     @endif
-                    <div class="flex items-center border-b border-gray-200 pb-3 mb-2">
+                    <div class="flex items-center border-b border-gray-200 pb-3">
 
                         <div class="flex items-start justify-between w-full">
                             <div class="pl-3">
@@ -131,7 +131,7 @@
                     </div>
 
                     <div class="px-2">
-                        <p tabindex="0" class="focus:outline-none text-sm leading-5 py-4 text-gray-700 text-justify">
+                        <p tabindex="0" class="focus:outline-none text-sm leading-5 py-2 text-gray-700 text-justify">
                             {{ $complaint->complaint }}</p>
                     </div>
 

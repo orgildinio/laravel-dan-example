@@ -88,7 +88,7 @@ class ComplaintStep extends Component
     {
         // $this->isOpen = true;
         // Check user permissions before opening the modal
-        if ($this->expire_date < now()) {
+        if (now()->diffInHours($this->expire_date) == 0) {
             $this->showPermissionWarning = true;
             session()->flash('warning', 'Өргөдөл, гомдол шийдвэрлэх хугацаа дууссан байна.');
         } elseif ($this->status_id == 6) {

@@ -246,8 +246,8 @@
                             @else
                                 <td
                                     class="p-2 text-xs text-center leading-5 whitespace-no-wrap border-b border-gray-200">
-                                    @if ($complaint->expire_date > now())
-                                        <span>{{ now()->diffInHours($complaint->expire_date) }} цаг үлдсэн</span>
+                                    @if (now()->diffInHours($complaint->expire_date) > 0)
+                                        <span>{{ now()->diffInHours($complaint->expire_date) > 24 ? now()->diffInDays($complaint->expire_date) . ' өдөр' : now()->diffInHours($complaint->expire_date) . ' цаг' }}</span>
                                     @else
                                         <span class="text-red-500 text-xs">Хугацаа хэтэрсэн</span>
                                     @endif

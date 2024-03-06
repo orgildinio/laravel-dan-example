@@ -208,10 +208,9 @@
                                 @if ($status_id != 6)
                                 <td
                                     class="p-2 text-xs leading-5 whitespace-no-wrap border-b border-gray-200">
-                                    @if (($complaint->expire_date) > now() )
-                                        <span>{{ now()->diffInHours($complaint->expire_date) }} цаг үлдсэн</span>
+                                    @if (now()->diffInHours($complaint->expire_date) > 0)
+                                        <span>{{ now()->diffInHours($complaint->expire_date) > 24 ? now()->diffInDays($complaint->expire_date) . ' өдөр' : now()->diffInHours($complaint->expire_date) . ' цаг' }}</span>
                                     @else
-                                        {{-- <img src="{{ asset('/image/fire-svgrepo-com.svg')}}" class="fa-beat w-[24px] h-[24px] shrink-0 inline-block" alt="dashboard"> --}}
                                         <span class="text-red-500 text-xs">Хугацаа хэтэрсэн</span>
                                     @endif
                                 </td>
