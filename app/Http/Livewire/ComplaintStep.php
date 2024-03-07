@@ -91,13 +91,13 @@ class ComplaintStep extends Component
         // Check user permissions before opening the modal
         if ($this->is_expired) {
             $this->showPermissionWarning = true;
-            session()->flash('warning', 'Өргөдөл, гомдол шийдвэрлэх хугацаа дууссан байна.');
+            session()->flash('warning', 'Өргөдөл, гомдол шийдвэрлэх хугацаа дууссан байна!');
         } elseif ($this->status_id == 6) {
             $this->showPermissionWarning = true;
-            session()->flash('info', 'Шийдвэрлэгдсэн төлөвтэй өргөдөл, гомдлыг удирдах боломжгүй.');
+            session()->flash('info', 'Шийдвэрлэгдсэн төлөвтэй өргөдөл, гомдлыг удирдах боломжгүй!');
         } elseif ($this->controlled_user_id !== Auth::user()->id && $this->second_user_id !== Auth::user()->id) {
             $this->showPermissionWarning = true;
-            session()->flash('warning', 'Таны хариуцсан өргөдөл, гомдол биш байна1.');
+            session()->flash('warning', 'Таны хариуцсан өргөдөл, гомдол биш байна!');
         } else {
             $this->isOpen = true;
             $this->showPermissionWarning = false;
