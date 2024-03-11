@@ -85,7 +85,7 @@ function getBgColor($category){
                    <div class="text-sm leading-4 font-normal">{{Str::limit($complaint->complaint, 200)}}</div>
                 </div>
              </div>
-             <div class="border-r-2 w-48">
+             <div class="border-r-2 w-60">
                 <div >
                    <div class="p-1">
                       <div class="text-xs leading-4 font-medium text-gray-500">Холбогдох ТЗЭ</div>
