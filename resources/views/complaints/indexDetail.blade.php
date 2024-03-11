@@ -63,8 +63,8 @@ function getBgColor($category){
         </div>
         @if (count($complaints) > 0)
        @foreach ($complaints as $complaint)
-       <div class="bg-gray-50 mx-auto border border-gray-200 rounded-lg text-gray-700 mb-0.5 h-30 complaint-show hover:bg-gray-100 cursor-pointer" data-id="{{ $complaint->id }}">
-          <div class="flex p-3">
+       <div class="bg-gray-50 mx-auto border border-gray-200 rounded-sm text-gray-700 mb-0.5 h-30 complaint-show hover:bg-gray-100 cursor-pointer" data-id="{{ $complaint->id }}">
+          <div class="flex p-3 border-l-4 {{getBorderColor($complaint->category_id)}}">
              <div class="space-y-1 border-r-2 pr-3">
                 <div class="text-sm leading-5 font-semibold"><span class="text-xs leading-4 font-normal text-gray-500"> №</span> {{$complaint->serial_number}}</div>
                 <div class="text-sm leading-5"><span class="text-xs leading-4 font-normal text-gray-500 pr"> Төрөл #</span> {{$complaint->energyType?->name}}</div>
