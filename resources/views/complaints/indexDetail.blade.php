@@ -128,7 +128,7 @@ function getBgColor($category){
              </div>
              <div>
                 <div class="ml-3 my-5 {{getBgColor($complaint->category_id)}} p-1 w-20">
-                   <div class="uppercase text-xs leading-4 font-semibold text-center text-yellow-100">{{$complaint->category?->name}}</div>
+                   <div class="uppercase text-xs leading-4 font-semibold text-center text-white">{{$complaint->category?->name}}</div>
                 </div>
              </div>
              <div>
