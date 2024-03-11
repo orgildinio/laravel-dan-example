@@ -67,10 +67,10 @@ function getBgColor($category){
           <div class="flex p-3 border-l-4 {{getBorderColor($complaint->category_id)}}">
              <div class="space-y-1 border-r-2 pr-3">
                 <div class="text-sm leading-5 font-semibold"><span class="text-xs leading-4 font-normal text-gray-500"> №</span> {{$complaint->serial_number}}</div>
-                <div class="text-sm leading-5"><span class="text-xs leading-4 font-normal text-gray-500 pr"> Төрөл #</span> {{$complaint->energyType?->name}}</div>
-                <div class="text-sm leading-5"><span class="text-xs leading-4 font-normal text-gray-500"> Хүлээн авсан </span>{{$complaint->complaint_date}}</div>
+                <div class="text-sm leading-5"><span class="text-xs leading-4 font-normal text-gray-500 pr"> Төрөл: </span> {{$complaint->energyType?->name}}</div>
+                <div class="text-sm leading-5"><span class="text-xs leading-4 font-normal text-gray-500"> Хүлээн авсан: </span>{{$complaint->complaint_date}}</div>
                 @if ($status_id != 6)
-                <div class="text-sm leading-5"><span class="text-xs leading-4 font-normal text-gray-500"> Үлдсэн хугацаа </span>
+                <div class="text-sm leading-5"><span class="text-xs leading-4 font-normal text-gray-500"> Үлдсэн хугацаа: </span>
                     @if ($complaint->hasExpired())
                     <span class="text-red-500 text-xs">Хугацаа хэтэрсэн</span>
                     @else
@@ -81,14 +81,14 @@ function getBgColor($category){
              </div>
              <div class="flex-1">
                 <div class="ml-3 space-y-1 border-r-2 pr-3">
-                   <div class="text-base leading-6 font-bold">{{$complaint->complaint_maker_type_id == 1 ? $complaint->lastname . ' ' . $complaint->firstname : $complaint->complaint_maker_org_name}} <span class="text-xs leading-4 font-normal text-gray-500">({{$complaint->complaintMakerType?->name}})</span></div>
+                   <div class="text-sm leading-4 font-semibold">{{$complaint->complaint_maker_type_id == 1 ? $complaint->lastname . ' ' . $complaint->firstname : $complaint->complaint_maker_org_name}} <span class="text-xs leading-4 font-normal text-gray-500">({{$complaint->complaintMakerType?->name}})</span></div>
                    <div class="text-sm leading-4 font-normal">{{Str::limit($complaint->complaint, 200)}}</div>
                 </div>
              </div>
              <div class="border-r-2 w-48">
                 <div >
                    <div class="p-1">
-                      <div class="uppercase text-xs leading-4 font-medium text-gray-500">Холбогдох ТЗЭ</div>
+                      <div class="text-xs leading-4 font-medium text-gray-500">Холбогдох ТЗЭ</div>
                       <div class="text-sm leading-4 font-semibold text-gray-800">
                         {{$complaint->secondOrg?->name}}
                       </div>
