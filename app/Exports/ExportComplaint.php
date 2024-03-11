@@ -181,6 +181,7 @@ class ExportComplaint implements FromCollection, WithHeadings, ShouldAutoSize, W
             ];
         } else {
             return [
+                'Дугаар',
                 'Төрөл',
                 'Суваг',
                 'Төлөв',
