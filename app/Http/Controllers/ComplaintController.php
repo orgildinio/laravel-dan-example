@@ -455,33 +455,27 @@ class ComplaintController extends Controller
         // $input['channel_id'] = 1;
         $input['created_user_id'] = $user->id;
 
-        // Дуусах хугацаа
-        // $register_date = Carbon::parse($input['complaint_date']);
-        // $input['expire_date'] = $register_date->addHours(48);
+        
 
         // Хэрэв Иргэн ААН гомдол гаргавал шинээр ирсэн төлөвтэй байна
         // ЭХЗХ эсвал ТЗЭ нар бүртгэсэн тохиолдолд хүлээн авсан төлөвтэй байна
         if ($user->org_id != null) {
-            // Холбогдох ТЗЭ сонгосон тохиолдолд шилжүүлсэн төлөвт шилжинэ
-            // Тухайн сонгосон ТЗЭ дээр шинээр ирсэн төлөвт очино
-            // if ($request->second_org_id != null) {
-            //     $input['status_id'] = 1;
-            //     $input['second_status_id'] = 0;
-            // } else {
-            //     $input['status_id'] = 2;
-            // }
             $input['controlled_user_id'] = $user->id;
             $input['status_id'] = 2; // Хүлээн авсан төлөвт орно
 
         } else {
             $input['complaint_maker_type_i'] = 1; // Иргэн
             $input['status_id'] = 0; // Шинээр ирсэн төлөвт орно
+            // Дуусах хугацаа
+            $register_date = Carbon::parse($input['complaint_date']);
+            $input['expire_date'] = $register_date->addHours(48);
+            $input['channel_id'] = 1;
         }
 
         // Хэрэв Иргэн ААН гомдол гаргавал суваг нь Веб байна
-        if (empty($input['channel_id'])) {
-            $input['channel_id'] = 1;
-        }
+        // if (empty($input['channel_id'])) {
+        //     $input['channel_id'] = 1;
+        // }
 
         // ЭХЗХ эсвал ТЗЭ нар гомдол бүртгэхэд тухайн байгууллагын нэрээр бүртгэгдэнэ
         if (!isset($input['organization_id'])) {

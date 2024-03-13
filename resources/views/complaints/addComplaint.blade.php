@@ -27,7 +27,7 @@
                         <div class="md:w-2/3">
                             <input
                                 class="bg-gray-50 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
-                                id="inline-full-name" type="text" name="lastname" value="{{isset($danUser->danLastname) ? $danUser->danLastname : ''}}" required>
+                                id="inline-full-name" type="text" name="lastname" value="{{isset($danUser->danLastname) ? $danUser->danLastname : ''}}" disabled>
                         </div>
                     </div>
                     <div class="md:flex md:items-center mb-2">
@@ -40,7 +40,7 @@
                         <div class="md:w-2/3">
                             <input
                                 class="bg-gray-50 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
-                                id="inline-first-name" type="text" name="firstname" value="{{isset($danUser->danFirstname) ? $danUser->danFirstname : ''}}" required>
+                                id="inline-first-name" type="text" name="firstname" value="{{isset($danUser->danFirstname) ? $danUser->danFirstname : ''}}" disabled>
                         </div>
                     </div>
                     <div class="md:flex md:items-center mb-2">
@@ -53,7 +53,7 @@
                         <div class="md:w-2/3">
                             <input
                                 class="bg-gray-50 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
-                                id="inline-register-name" type="text" name="registerNumber" value="{{isset($danUser->danRegnum) ? $danUser->danRegnum : ''}}" required>
+                                id="inline-register-name" type="text" name="registerNumber" value="{{isset($danUser->danRegnum) ? $danUser->danRegnum : ''}}" disabled>
                         </div>
                     </div>
                     <div class="md:flex md:items-center mb-2">
@@ -66,7 +66,10 @@
                         <div class="md:w-2/3">
                             <input
                                 class="bg-gray-50 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
-                                id="inline-phone" type="text" name="phone" value="" required>
+                                id="inline-phone" type="text" name="phone" value="">
+                                @error('phone')
+                                <div class="text-red-500 text-sm mt-1 mb-1">{{ $message }}</div>
+                                @enderror
                         </div>
                     </div>
                     <div class="md:flex md:items-center mb-2">
@@ -79,7 +82,7 @@
                         <div class="md:w-2/3">
                             <input
                                 class="bg-gray-50 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
-                                id="inline-email" type="email" name="email" value="" required>
+                                id="inline-email" type="email" name="email" value="">
                         </div>
                     </div>
                     <div class="md:flex md:items-center mb-2">
@@ -92,7 +95,7 @@
                         <div class="md:w-2/3">
                             <input
                                 class="bg-gray-50 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
-                                id="inline-country" type="text" name="country" value="{{isset($danUser->danAimagCityName) ? $danUser->danAimagCityName : ''}}" required>
+                                id="inline-country" type="text" name="country" value="{{isset($danUser->danAimagCityName) ? $danUser->danAimagCityName : ''}}" disabled>
                         </div>
                     </div>
                     <div class="md:flex md:items-center mb-2">
@@ -105,7 +108,7 @@
                         <div class="md:w-2/3">
                             <input
                                 class="bg-gray-50 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
-                                id="inline-discrict-name" type="text" name="district" value="{{isset($danUser->danSoumDistrictName) ? $danUser->danSoumDistrictName : ''}}" required>
+                                id="inline-discrict-name" type="text" name="district" value="{{isset($danUser->danSoumDistrictName) ? $danUser->danSoumDistrictName : ''}}" disabled>
                         </div>
                     </div>
                     <div class="md:flex md:items-center mb-2">
@@ -118,7 +121,7 @@
                         <div class="md:w-2/3">
                             <input
                                 class="bg-gray-50 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
-                                id="inline-khoroo-name" type="text" name="khoroo" value="{{isset($danUser->danBagKhorooName) ? $danUser->danBagKhorooName : ''}}" required>
+                                id="inline-khoroo-name" type="text" name="khoroo" value="{{isset($danUser->danBagKhorooName) ? $danUser->danBagKhorooName : ''}}" disabled>
                         </div>
                     </div>
                     <div class="md:flex md:items-center mb-2">
@@ -131,7 +134,7 @@
                         <div class="md:w-2/3">
                             <textarea
                                 class="bg-gray-50 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
-                                name="addressDetail" rows="3" required>{{isset($danUser->danPassportAddress) ? $danUser->danPassportAddress : ''}}</textarea>
+                                name="addressDetail" rows="3">{{isset($danUser->danPassportAddress) ? $danUser->danPassportAddress : ''}}</textarea>
                         </div>
                     </div>
                     <hr />
@@ -166,6 +169,15 @@
                             </div>
                         </div>
                     </div>
+                    @error('energy_type_id')
+                    <div class="md:flex md:items-center mb-2">
+                        <div class="md:w-1/3">
+                        </div>
+                        <div class="md:w-2/3 flex">
+                            <div class="text-red-500 text-sm mt-1 mb-1">{{ $message }}</div>
+                        </div>
+                    </div>
+                    @enderror
                     
                     <div class="md:flex md:items-center mb-2">
                         <div class="md:w-1/3">
@@ -181,6 +193,9 @@
                                 <option value="{{ $type->id }}">{{ $type->name }}</option>
                                 @endforeach
                             </select>
+                            @error('complaint_type_id')
+                                <div class="text-red-500 text-sm mt-1 mb-1">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
 
@@ -193,8 +208,11 @@
                         </div>
                         <div class="md:w-2/3">
                             <select name="complaint_type_summary_id" id="complaint_type_summary_id"
-                                class="bg-gray-50 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500" required>
+                                class="bg-gray-50 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500">
                             </select>
+                            @error('complaint_type_summary_id')
+                                <div class="text-red-500 text-sm mt-1 mb-1">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
 
@@ -221,12 +239,15 @@
                         </div>
                         <div class="md:w-2/3">
                             <select name="organization_id" id="sel_org"
-                                class="bg-gray-50 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500" required>
+                                class="bg-gray-50 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500">
                                 {{-- <option value='0'>-- Холбогдох ТЗЭ сонгох --</option>
                                 @foreach ($orgs as $org)
                                 <option value="{{ $org->id }}">{{ $org->name }}</option>
                                 @endforeach --}}
                             </select>
+                            @error('organization_id')
+                                <div class="text-red-500 text-sm mt-1 mb-1">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                     <div class="md:flex md:items-center mb-2">
@@ -239,7 +260,10 @@
                         <div class="md:w-2/3">
                             <textarea
                                 class="bg-gray-50 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
-                                name="complaint" rows="3" required></textarea>
+                                name="complaint" rows="3"></textarea>
+                                @error('complaint')
+                                <div class="text-red-500 text-sm mt-1 mb-1">{{ $message }}</div>
+                                @enderror
                         </div>
                     </div>
 
