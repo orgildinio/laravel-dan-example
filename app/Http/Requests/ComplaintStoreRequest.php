@@ -25,7 +25,6 @@ class ComplaintStoreRequest extends FormRequest
     {
         return [
             'phone' => 'required',
-            'expire_date' => 'required',
             'energy_type_id' => 'required',
             'complaint_type_id' => 'required',
             'complaint_type_summary_id' => 'required',
@@ -38,7 +37,6 @@ class ComplaintStoreRequest extends FormRequest
     {
         return [
             'phone.required' => 'Заавал бөглөнө үү!',
-            'expire_date.required' => 'Заавал бөглөнө үү!',
             'energy_type_id.required' => 'Заавал бөглөнө үү!',
             'complaint_type_id.required' => 'Заавал бөглөнө үү!',
             'complaint_type_summary_id.required' => 'Заавал бөглөнө үү!',

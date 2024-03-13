@@ -425,7 +425,7 @@ class ComplaintController extends Controller
     public function store(ComplaintStoreRequest $request)
     {
         $input = $request->all();
-        // dd($input);
+
         $user = Auth::user();
 
         if ($file = $request->file('file')) {
@@ -445,40 +445,37 @@ class ComplaintController extends Controller
             $input['audio_file_id'] = $filename->id;
         }
 
-        if ($request->complaint_date == null) {
+        if (empty($input['complaint_date']) && empty($input['expire_date'])) {
             $input['complaint_date'] = now();
+            $register_date = Carbon::parse($input['complaint_date']);
+            $input['expire_date'] = $register_date->addHours(48);
         }
 
-        // if ($input['channel_id'] == null) {
-        //     $input['channel_id'] = 1;
-        // }
-        // $input['channel_id'] = 1;
         $input['created_user_id'] = $user->id;
-
-        
 
         // Хэрэв Иргэн ААН гомдол гаргавал шинээр ирсэн төлөвтэй байна
         // ЭХЗХ эсвал ТЗЭ нар бүртгэсэн тохиолдолд хүлээн авсан төлөвтэй байна
         if ($user->org_id != null) {
             $input['controlled_user_id'] = $user->id;
             $input['status_id'] = 2; // Хүлээн авсан төлөвт орно
-
         } else {
             $input['complaint_maker_type_i'] = 1; // Иргэн
             $input['status_id'] = 0; // Шинээр ирсэн төлөвт орно
-            // Дуусах хугацаа
-            $register_date = Carbon::parse($input['complaint_date']);
-            $input['expire_date'] = $register_date->addHours(48);
+        }
+
+        // Дуусах хугацаа
+        // if (empty($input['channel_id'])) {
+        //     $register_date = Carbon::parse($input['complaint_date']);
+        //     $input['expire_date'] = $register_date->addHours(48);
+        // }
+
+        // Хэрэв Иргэн ААН гомдол гаргавал суваг нь Веб байна
+        if (empty($input['channel_id'])) {
             $input['channel_id'] = 1;
         }
 
-        // Хэрэв Иргэн ААН гомдол гаргавал суваг нь Веб байна
-        // if (empty($input['channel_id'])) {
-        //     $input['channel_id'] = 1;
-        // }
-
         // ЭХЗХ эсвал ТЗЭ нар гомдол бүртгэхэд тухайн байгууллагын нэрээр бүртгэгдэнэ
-        if (!isset($input['organization_id'])) {
+        if (empty($input['organization_id'])) {
             $input['organization_id'] = $user->org_id;
         }
 
@@ -496,6 +493,7 @@ class ComplaintController extends Controller
                 'status_id' => 2
             ]);
         }
+
 
         if (Auth::user()->org_id != null) {
             return redirect()->route('complaint.create')->with('success', 'Санал хүсэлт амжилттай бүртгэлээ.');
