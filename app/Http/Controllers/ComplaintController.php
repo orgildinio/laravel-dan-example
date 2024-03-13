@@ -390,7 +390,10 @@ class ComplaintController extends Controller
 
         // $complaints = Complaint::where('status_id', $status_id)->where('organization_id', $org_id)->latest()->paginate(5);
 
-        return view('complaints.indexDetail', compact('complaints', 'daterange', 'search_text', 'status_id'))->with('i', (request()->input('page', 1) - 1) * 5);
+        $currentYear = date('Y');
+        $years = range($currentYear, $currentYear - 5, -1); // Generate a range of years from the current year to 10 years ahead
+
+        return view('complaints.indexDetail', compact('complaints', 'daterange', 'search_text', 'status_id', 'years'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**
@@ -476,7 +479,7 @@ class ComplaintController extends Controller
         }
 
         // Хэрэв Иргэн ААН гомдол гаргавал суваг нь Веб байна
-        if (!$request->has('channel_id')) {
+        if (empty($input['channel_id'])) {
             $input['channel_id'] = 1;
         }
 
