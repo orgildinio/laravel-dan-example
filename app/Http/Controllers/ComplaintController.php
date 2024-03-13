@@ -425,7 +425,7 @@ class ComplaintController extends Controller
     public function store(ComplaintStoreRequest $request)
     {
         $input = $request->all();
-        dd($input);
+        // dd($input);
 
         $user = Auth::user();
 
