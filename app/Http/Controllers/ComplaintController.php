@@ -446,12 +446,6 @@ class ComplaintController extends Controller
             $input['audio_file_id'] = $filename->id;
         }
 
-        if (empty($input['complaint_date']) && empty($input['expire_date'])) {
-            $input['complaint_date'] = now();
-            $register_date = Carbon::parse($input['complaint_date']);
-            $input['expire_date'] = $register_date->addHours(48);
-        }
-
         $input['created_user_id'] = $user->id;
 
         // Хэрэв Иргэн ААН гомдол гаргавал шинээр ирсэн төлөвтэй байна
@@ -460,15 +454,25 @@ class ComplaintController extends Controller
             $input['controlled_user_id'] = $user->id;
             $input['status_id'] = 2; // Хүлээн авсан төлөвт орно
         } else {
-            $input['complaint_maker_type_i'] = 1; // Иргэн
+            // Хэрэглэгчийн мэдээлэл хадгалах
+            $input['lastname'] = $user->danLastname ? $user->danLastname : '';
+            $input['firstname'] = $user->danFirstname ? $user->danFirstname : '';
+            $input['lastname'] = $user->danLastname ? $user->danLastname : '';
+            $input['registerNumber'] = $user->danRegnum ? $user->danRegnum : '';
+            $input['country'] = $user->danAimagCityName ? $user->danAimagCityName : '';
+            $input['district'] = $user->danSoumDistrictName ? $user->danSoumDistrictName : '';
+            $input['khoroo'] = $user->danBagKhorooName ? $user->danBagKhorooName : '';
+
+            // Өргөдлийн мэдээлэл хадгалах
+            $input['complaint_maker_type_id'] = 1; // Иргэн
             $input['status_id'] = 0; // Шинээр ирсэн төлөвт орно
         }
-
-        // Дуусах хугацаа
-        // if (empty($input['channel_id'])) {
-        //     $register_date = Carbon::parse($input['complaint_date']);
-        //     $input['expire_date'] = $register_date->addHours(48);
-        // }
+        // Бүртгэсэн болон Дуусах хугацаа
+        if (empty($input['complaint_date']) && empty($input['expire_date'])) {
+            $input['complaint_date'] = now();
+            $register_date = Carbon::parse($input['complaint_date']);
+            $input['expire_date'] = $register_date->addHours(48);
+        }
 
         // Хэрэв Иргэн ААН гомдол гаргавал суваг нь Веб байна
         if (empty($input['channel_id'])) {
