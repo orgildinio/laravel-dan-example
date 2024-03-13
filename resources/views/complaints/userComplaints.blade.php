@@ -51,7 +51,7 @@
                               
                                 <div class="after:mt-4 after:block after:h-1 after:w-full after:rounded-lg after:bg-gray-200">
                                   <ol class="grid grid-cols-3 text-sm font-medium text-gray-500">
-                                    <li class="relative flex justify-start text-{{$complaint->status_id == 2 || $complaint->status_id==3 ? 'blue' : 'gray'}}-600">
+                                    <li class="relative flex justify-start text-{{$complaint->status_id == 2 ? 'blue' : 'gray'}}-600">
                                       <span class="absolute -bottom-[1.75rem] start-0 rounded-full bg-{{$complaint->status_id == 2 || $complaint->status_id==3 ? 'blue' : 'gray'}}-600">
                                         <svg
                                           class="h-5 w-5"
