@@ -28,7 +28,7 @@ class ComplaintStoreRequest extends FormRequest
             'energy_type_id' => 'required',
             'complaint_type_id' => 'required',
             'complaint_type_summary_id' => 'required',
-            'organization_id' => 'required',
+            // 'organization_id' => 'required',
             'complaint' => 'required',
         ];
     }
@@ -40,7 +40,7 @@ class ComplaintStoreRequest extends FormRequest
             'energy_type_id.required' => 'Заавал бөглөнө үү!',
             'complaint_type_id.required' => 'Заавал бөглөнө үү!',
             'complaint_type_summary_id.required' => 'Заавал бөглөнө үү!',
-            'organization_id.required' => 'Заавал бөглөнө үү!',
+            // 'organization_id.required' => 'Заавал бөглөнө үү!',
             'complaint.required' => 'Заавал бөглөнө үү!',
         ];
     }
