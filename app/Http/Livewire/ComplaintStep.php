@@ -17,7 +17,7 @@ class ComplaintStep extends Component
 {
     use WithFileUploads;
 
-    public $complaint_steps, $org_id, $status_id, $complaint_id, $recieved_user_id, $sent_user_id, $recieved_date, $sent_date, $desc, $orgs, $all_status, $actions, $selectedAction, $controlled_user_id, $employees, $selected_user_id, $second_user_id, $file, $step_id, $expire_date, $is_expired;
+    public $complaint_steps, $org_id, $status_id, $complaint_id, $recieved_user_id, $sent_user_id, $recieved_date, $sent_date, $desc, $orgs, $all_status, $actions, $selectedAction, $controlled_user_id, $employees, $selected_user_id, $second_user_id, $file, $step_id, $expire_date, $is_expired, $complaint_type_id, $complaint_type_summary_id, $amount;
     public $isOpen = 0;
     public $showPermissionWarning = false;
 
@@ -31,6 +31,8 @@ class ComplaintStep extends Component
         $this->expire_date = $complaint->expire_date;
         $this->status_id = $complaint->status_id;
         $this->is_expired = $complaint->hasExpired();
+        $this->complaint_type_id = $complaint->complaint_type_id;
+        $this->complaint_type_summary_id = $complaint->complaint_type_summary_id;
         $this->orgs = Organization::orderBy('name', 'asc')->get();
         $this->all_status = Status::all();
 
@@ -134,16 +136,6 @@ class ComplaintStep extends Component
 
 
         $complaint = Complaint::findOrFail($this->complaint_id);
-
-        // ModelsComplaintStep::create([
-        //     'org_id' => $complaint->organization_id,
-        //     'complaint_id' => $this->complaint_id,
-        //     'sent_user_id' => Auth::user()->id,
-        //     'status_id' => 8,
-        //     'sent_date' => Carbon::now()->toDateTimeString(),
-        //     'desc' => $this->desc,
-        //     'file_id' => isset($filename) ? $filename->id : null,
-        // ]);
 
         switch ($this->selectedAction) {
             case 'Тайлбар':
@@ -262,6 +254,7 @@ class ComplaintStep extends Component
                         'status_id' => 6,
                         'sent_date' => Carbon::now()->toDateTimeString(),
                         'desc' => $this->desc,
+                        'amount' => $this->amount,
                         'file_id' => isset($filename) ? $filename->id : null,
                     ]);
                 } else {
@@ -275,6 +268,7 @@ class ComplaintStep extends Component
                             'status_id' => 6,
                             'sent_date' => Carbon::now()->toDateTimeString(),
                             'desc' => $this->desc,
+                            'amount' => $this->amount,
                             'file_id' => isset($filename) ? $filename->id : null,
                         ]);
                     } else {
@@ -287,6 +281,7 @@ class ComplaintStep extends Component
                             'status_id' => 6,
                             'sent_date' => Carbon::now()->toDateTimeString(),
                             'desc' => $this->desc,
+                            'amount' => $this->amount,
                             'file_id' => isset($filename) ? $filename->id : null,
                         ]);
                     }

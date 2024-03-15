@@ -85,6 +85,12 @@
                         <div class="text-sm text-gray-700">
                             {{ $step->desc }}
                         </div> 
+                        @if (isset($step->amount))
+                            
+                        <div class="text-sm text-gray-700 mt-2 font-bold">
+                            Үнийн дүн: {{ number_format($step->amount) }}₮
+                        </div>
+                        @endif
                     </div>
                     @if ($step->file_id != null)
                         <div class="mt-2 w-1/3">
