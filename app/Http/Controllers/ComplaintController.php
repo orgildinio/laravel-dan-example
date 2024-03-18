@@ -270,178 +270,87 @@ class ComplaintController extends Controller
             $query->whereBetween('complaint_date', [$start_date, $end_date]);
         }
 
-        $query->where(function ($query) use ($org_id, $status_id, $logged_user_id) {
-            if (Auth::user()->org_id == 99) {
-                $query->where('organization_id', $org_id);
-            } else {
-                $query->where(function ($query) use ($org_id) {
-                    $query->where('organization_id', $org_id)
-                        ->orWhere('second_org_id', $org_id);
-                });
-            }
+        switch ($status_id) {
+            case '0':
+                // Шинээр ирсэн эсвэл шинээр шилжиж ирсэн
+                if (Auth::user()->org_id == 99) {
+                    $query->where('status_id', 0)->where('organization_id', $org_id);
+                } else {
+                    $query->where(function ($query) {
+                        $query->where('status_id', 0)
+                            ->orWhere('second_status_id', 0);
+                    })->where(function ($query) {
+                        $query->where('organization_id', Auth::user()->org_id)
+                            ->orWhere('second_org_id', Auth::user()->org_id);
+                    });
+                }
+                break;
+            case '1':
+                // Шинээр шилжиж ирсэн
+                $query->where('organization_id', $org_id)->where('status_id', 1)->where('controlled_user_id', Auth::user()->id);
+                break;
+            case '2':
+                // Хүлээн авсан
+                if (Auth::user()->org_id == 99) {
+                    $query->where('status_id', 2)->where('organization_id', $org_id)->where('controlled_user_id', Auth::user()->id);
+                } else {
+                    $query->where(function ($query) {
+                        $query->where('status_id', 2)
+                            ->orWhere('second_status_id', 2);
+                    })->where(function ($query) {
+                        $query->where('organization_id', Auth::user()->org_id)
+                            ->orWhere('second_org_id', Auth::user()->org_id);
+                    })->where(function ($query) {
+                        $query->where('controlled_user_id', Auth::user()->id)
+                            ->orWhere('second_user_id', Auth::user()->id);
+                    });
+                }
+                break;
+            case '3':
+                // Хянаж байгаа
+                if (Auth::user()->org_id == 99) {
+                    $query->where('status_id', 3)->where('organization_id', $org_id)->where('controlled_user_id', Auth::user()->id);
+                } else {
+                    $query->where(function ($query) {
+                        $query->where('status_id', 3)
+                            ->orWhere('second_status_id', 3);
+                    })->where(function ($query) {
+                        $query->where('organization_id', Auth::user()->org_id)
+                            ->orWhere('second_org_id', Auth::user()->org_id);
+                    })->where(function ($query) {
+                        $query->where('controlled_user_id', Auth::user()->id)
+                            ->orWhere('second_user_id', Auth::user()->id);
+                    });
+                }
+                break;
+            case '4':
+                // Цуцалсан
+                $query->where('status_id', 4)->where('organization_id', $org_id)->where('controlled_user_id', Auth::user()->id);
+                break;
+            case '6':
+                // Шийдвэрлэсэн
+                if (Auth::user()->org_id == 99) {
+                    $query->where('status_id', 6)->where('organization_id', $org_id)->where('controlled_user_id', Auth::user()->id);
+                } else {
+                    $query->where(function ($query) {
+                        $query->where('status_id', 6)
+                            ->orWhere('second_status_id', 6);
+                    })->where(function ($query) {
+                        $query->where('organization_id', Auth::user()->org_id)
+                            ->orWhere('second_org_id', Auth::user()->org_id);
+                    })->where(function ($query) {
+                        $query->where('controlled_user_id', Auth::user()->id)
+                            ->orWhere('second_user_id', Auth::user()->id);
+                    });
+                }
+                break;
 
-            if ($status_id != 0) {
-                $query->where(function ($query) use ($status_id, $logged_user_id) {
-                    $query->where('status_id', $status_id);
-
-                    if (Auth::user()->org_id == 99) {
-                        $query->where('controlled_user_id', $logged_user_id);
-                    } else {
-                        $query->where(function ($query) use ($logged_user_id) {
-                            $query->where('controlled_user_id', $logged_user_id)
-                                ->orWhere('second_user_id', $logged_user_id);
-                        });
-                    }
-                });
-            }
-        });
+            default:
+                // Handle the default case or show an error
+                break;
+        }
 
         $complaints = $query->orderBy('complaints.created_at', 'desc')->paginate(10);
-
-        // switch ($status_id) {
-        //     case '0':
-        //         // Шинээр ирсэн эсвэл шинээр шилжиж ирсэн
-        //         if (Auth::user()->org_id == 99) {
-        //             $complaints = Complaint::where('complaint', 'LIKE', '%' . $search_text . '%')
-        //                 ->whereBetween('complaint_date', [$start_date, $end_date])
-        //                 ->where('organization_id', Auth::user()->org_id)
-        //                 ->where('status_id', 0)
-        //                 ->orderBy('complaints.created_at', 'desc')
-        //                 ->paginate(15);
-        //         } else {
-        //             $complaints = Complaint::where('complaint', 'LIKE', '%' . $search_text . '%')
-        //                 ->whereBetween('complaint_date', [$start_date, $end_date])
-        //                 ->where(function ($query) {
-        //                     $query->where('organization_id', Auth::user()->org_id)
-        //                         ->orWhere('second_org_id', Auth::user()->org_id);
-        //                 })
-        //                 ->where(function ($query) {
-        //                     $query->where('status_id', 0)
-        //                         ->orWhere('second_status_id', 0);
-        //                 })
-        //                 ->orderBy('complaints.created_at', 'desc')
-        //                 ->paginate(15);
-        //         }
-        //         break;
-        //     case '1':
-        //         // Шинээр ирсэн эсвэл шинээр шилжиж ирсэн
-        //         $complaints = Complaint::where('complaint', 'LIKE', '%' . $search_text . '%')
-        //             ->whereBetween('complaint_date', [$start_date, $end_date])
-        //             ->where('organization_id', Auth::user()->org_id)
-        //             ->where('status_id', 1)
-        //             ->where('controlled_user_id', Auth::user()->id)
-        //             ->orderBy('complaints.created_at', 'desc')
-        //             ->paginate(15);
-        //         break;
-        //     case '2':
-        //         // Хүлээн авсан
-        //         if (Auth::user()->org_id == 99) {
-
-        //             $complaints = Complaint::where('complaint', 'LIKE', '%' . $search_text . '%')
-        //                 ->whereBetween('complaint_date', [$start_date, $end_date])
-        //                 ->where('organization_id', Auth::user()->org_id)
-        //                 ->where('status_id', 2)
-        //                 ->where('controlled_user_id', Auth::user()->id)
-        //                 ->orderBy('complaints.created_at', 'desc')
-        //                 ->paginate(15);
-        //         } else {
-        //             // $complaints = Complaint::where('complaint', 'LIKE', '%' . $search_text . '%')
-        //             //     ->whereBetween('complaint_date', [$start_date, $end_date])
-        //             //     ->where(function ($query) {
-        //             //         $query->where('organization_id', Auth::user()->org_id)
-        //             //             ->orWhere('second_org_id', Auth::user()->org_id);
-        //             //     })
-        //             //     ->where(function ($query) {
-        //             //         $query->where('status_id', 2)
-        //             //             ->orWhere('second_status_id', 2);
-        //             //     })
-        //             //     ->where(function ($query) {
-        //             //         $query->where('controlled_user_id', Auth::user()->id)
-        //             //             ->orWhere('second_user_id', Auth::user()->id);
-        //             //     })
-        //             //     ->orderBy('complaints.created_at', 'desc')
-        //             //     ->paginate(15);
-        //             $complaints = $query->orderBy('complaints.created_at', 'desc')
-        //                 ->paginate(15);
-        //         }
-        //         break;
-        //     case '3':
-        //         // Хянаж байгаа
-        //         if (Auth::user()->org_id == 99) {
-        //             $complaints = Complaint::where('complaint', 'LIKE', '%' . $search_text . '%')
-        //                 ->whereBetween('complaint_date', [$start_date, $end_date])
-        //                 ->where('organization_id', Auth::user()->org_id)
-        //                 ->where('status_id', 3)
-        //                 ->where('controlled_user_id', Auth::user()->id)
-        //                 ->orderBy('complaints.created_at', 'desc')
-        //                 ->paginate(15);
-        //         } else {
-
-        //             $complaints = Complaint::where('complaint', 'LIKE', '%' . $search_text . '%')
-        //                 ->whereBetween('complaint_date', [$start_date, $end_date])
-        //                 ->where(function ($query) {
-        //                     $query->where('organization_id', Auth::user()->org_id)
-        //                         ->orWhere('second_org_id', Auth::user()->org_id);
-        //                 })
-        //                 // ->where('status_id', 3)
-        //                 ->where(function ($query) {
-        //                     $query->where('status_id', 3)
-        //                         ->orWhere('second_status_id', 3);
-        //                 })
-        //                 // ->whereNull('second_status_id')
-        //                 ->where(function ($query) {
-        //                     $query->where('controlled_user_id', Auth::user()->id)
-        //                         ->orWhere('second_user_id', Auth::user()->id);
-        //                 })
-        //                 ->orderBy('complaints.created_at', 'desc')
-        //                 ->paginate(15);
-        //         }
-        //         break;
-        //     case '4':
-        //         // Цуцалсан
-        //         $complaints = Complaint::where('complaint', 'LIKE', '%' . $search_text . '%')
-        //             ->whereBetween('complaint_date', [$start_date, $end_date])
-        //             ->where('status_id', $status_id)
-        //             ->where('organization_id', $org_id)
-        //             ->where('controlled_user_id', $logged_user_id)
-        //             ->latest()
-        //             ->paginate(15);
-        //         break;
-        //     case '6':
-        //         // Шийдвэрлэсэн
-        //         if (Auth::user()->org_id == 99) {
-        //             $complaints = Complaint::where('complaint', 'LIKE', '%' . $search_text . '%')
-        //                 ->whereBetween('complaint_date', [$start_date, $end_date])
-        //                 ->where('organization_id', Auth::user()->org_id)
-        //                 ->where('status_id', 6)
-        //                 ->where('controlled_user_id', Auth::user()->id)
-        //                 ->orderBy('complaints.created_at', 'desc')
-        //                 ->paginate(15);
-        //         } else {
-
-        //             $complaints = Complaint::where('complaint', 'LIKE', '%' . $search_text . '%')
-        //                 ->whereBetween('complaint_date', [$start_date, $end_date])
-        //                 ->where(function ($query) {
-        //                     $query->where('organization_id', Auth::user()->org_id)
-        //                         ->orWhere('second_org_id', Auth::user()->org_id);
-        //                 })
-        //                 ->where(function ($query) {
-        //                     $query->where('status_id', 6)
-        //                         ->orWhere('second_status_id', 6);
-        //                 })
-        //                 ->where(function ($query) {
-        //                     $query->where('controlled_user_id', Auth::user()->id)
-        //                         ->orWhere('second_user_id', Auth::user()->id);
-        //                 })
-        //                 ->orderBy('complaints.created_at', 'desc')
-        //                 ->paginate(15);
-        //         }
-        //         break;
-
-        //     default:
-        //         // Handle the default case or show an error
-        //         break;
-        // }
 
         $currentYear = date('Y');
         $years = range($currentYear, $currentYear - 5, -1);
