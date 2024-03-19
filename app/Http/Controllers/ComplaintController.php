@@ -257,86 +257,87 @@ class ComplaintController extends Controller
             $query->whereBetween('complaint_date', [$start_date, $end_date]);
         }
 
-        switch ($status_id) {
-            case '0':
-                // Шинээр ирсэн эсвэл шинээр шилжиж ирсэн
-                if (Auth::user()->org_id == 99) {
-                    $query->where('status_id', 0)->where('organization_id', $org_id);
-                } else {
-                    $query->where(function ($query) {
-                        $query->where('status_id', 0)
-                            ->orWhere('second_status_id', 0);
-                    })->where(function ($query) {
-                        $query->where('organization_id', Auth::user()->org_id)
-                            ->orWhere('second_org_id', Auth::user()->org_id);
-                    });
-                }
-                break;
-            case '1':
-                // Шинээр шилжиж ирсэн
-                $query->where('organization_id', $org_id)->where('status_id', 1)->where('controlled_user_id', Auth::user()->id);
-                break;
-            case '2':
-                // Хүлээн авсан
-                if (Auth::user()->org_id == 99) {
-                    $query->where('status_id', 2)->where('organization_id', $org_id)->where('controlled_user_id', Auth::user()->id);
-                } else {
-                    $query->where(function ($query) {
-                        $query->where('status_id', 2)
-                            ->orWhere('second_status_id', 2);
-                    })->where(function ($query) {
-                        $query->where('organization_id', Auth::user()->org_id)
-                            ->orWhere('second_org_id', Auth::user()->org_id);
-                    })->where(function ($query) {
-                        $query->where('controlled_user_id', Auth::user()->id)
-                            ->orWhere('second_user_id', Auth::user()->id);
-                    });
-                }
-                break;
-            case '3':
-                // Хянаж байгаа
-                if (Auth::user()->org_id == 99) {
-                    $query->where('status_id', 3)->where('organization_id', $org_id)->where('controlled_user_id', Auth::user()->id);
-                } else {
-                    $query->where(function ($query) {
-                        $query->where('status_id', 3)
-                            ->orWhere('second_status_id', 3);
-                    })->where(function ($query) {
-                        $query->where('organization_id', Auth::user()->org_id)
-                            ->orWhere('second_org_id', Auth::user()->org_id);
-                    })->where(function ($query) {
-                        $query->where('controlled_user_id', Auth::user()->id)
-                            ->orWhere('second_user_id', Auth::user()->id);
-                    });
-                }
-                break;
-            case '4':
-                // Цуцалсан
-                $query->where('status_id', 4)->where('organization_id', $org_id)->where('controlled_user_id', Auth::user()->id);
-                break;
-            case '6':
-                // Шийдвэрлэсэн
-                if (Auth::user()->org_id == 99) {
-                    $query->where('status_id', 6)->where('organization_id', $org_id)->where('controlled_user_id', Auth::user()->id);
-                } else {
-                    $query->where(function ($query) {
-                        $query->where('status_id', 6)
-                            ->orWhere('second_status_id', 6);
-                    })->where(function ($query) {
-                        $query->where('organization_id', Auth::user()->org_id)
-                            ->orWhere('second_org_id', Auth::user()->org_id);
-                    })->where(function ($query) {
-                        $query->where('controlled_user_id', Auth::user()->id)
-                            ->orWhere('second_user_id', Auth::user()->id);
-                    });
-                }
-                break;
+        // switch ($status_id) {
+        //     case '0':
+        //         // Шинээр ирсэн эсвэл шинээр шилжиж ирсэн
+        //         if (Auth::user()->org_id == 99) {
+        //             $query->where('status_id', 0)->where('organization_id', $org_id);
+        //         } else {
+        //             $query->where(function ($query) {
+        //                 $query->where('status_id', 0)
+        //                     ->orWhere('second_status_id', 0);
+        //             })->where(function ($query) {
+        //                 $query->where('organization_id', Auth::user()->org_id)
+        //                     ->orWhere('second_org_id', Auth::user()->org_id);
+        //             });
+        //         }
+        //         break;
+        //     case '1':
+        //         // Шинээр шилжиж ирсэн
+        //         $query->where('organization_id', $org_id)->where('status_id', 1)->where('controlled_user_id', Auth::user()->id);
+        //         break;
+        //     case '2':
+        //         // Хүлээн авсан
+        //         if (Auth::user()->org_id == 99) {
+        //             $query->where('status_id', 2)->where('organization_id', $org_id)->where('controlled_user_id', Auth::user()->id);
+        //         } else {
+        //             $query->where(function ($query) {
+        //                 $query->where('status_id', 2)
+        //                     ->orWhere('second_status_id', 2);
+        //             })->where(function ($query) {
+        //                 $query->where('organization_id', Auth::user()->org_id)
+        //                     ->orWhere('second_org_id', Auth::user()->org_id);
+        //             })->where(function ($query) {
+        //                 $query->where('controlled_user_id', Auth::user()->id)
+        //                     ->orWhere('second_user_id', Auth::user()->id);
+        //             });
+        //         }
+        //         break;
+        //     case '3':
+        //         // Хянаж байгаа
+        //         if (Auth::user()->org_id == 99) {
+        //             $query->where('status_id', 3)->where('organization_id', $org_id)->where('controlled_user_id', Auth::user()->id);
+        //         } else {
+        //             $query->where(function ($query) {
+        //                 $query->where('status_id', 3)
+        //                     ->orWhere('second_status_id', 3);
+        //             })->where(function ($query) {
+        //                 $query->where('organization_id', Auth::user()->org_id)
+        //                     ->orWhere('second_org_id', Auth::user()->org_id);
+        //             })->where(function ($query) {
+        //                 $query->where('controlled_user_id', Auth::user()->id)
+        //                     ->orWhere('second_user_id', Auth::user()->id);
+        //             });
+        //         }
+        //         break;
+        //     case '4':
+        //         // Цуцалсан
+        //         $query->where('status_id', 4)->where('organization_id', $org_id)->where('controlled_user_id', Auth::user()->id);
+        //         break;
+        //     case '6':
+        //         // Шийдвэрлэсэн
+        //         if (Auth::user()->org_id == 99) {
+        //             $query->where('status_id', 6)->where('organization_id', $org_id)->where('controlled_user_id', Auth::user()->id);
+        //         } else {
+        //             $query->where(function ($query) {
+        //                 $query->where('status_id', 6)
+        //                     ->orWhere('second_status_id', 6);
+        //             })->where(function ($query) {
+        //                 $query->where('organization_id', Auth::user()->org_id)
+        //                     ->orWhere('second_org_id', Auth::user()->org_id);
+        //             })->where(function ($query) {
+        //                 $query->where('controlled_user_id', Auth::user()->id)
+        //                     ->orWhere('second_user_id', Auth::user()->id);
+        //             });
+        //         }
+        //         break;
 
-            default:
-                // Handle the default case or show an error
-                break;
-        }
+        //     default:
+        //         // Handle the default case or show an error
+        //         break;
+        // }
 
+        $query->where('status_id', $status_id)->where('organization_id', $org_id);
         $complaints = $query->orderBy('complaints.created_at', 'desc')->paginate(10);
         // dd($complaints);
 
