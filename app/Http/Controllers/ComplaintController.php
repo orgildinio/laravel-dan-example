@@ -351,6 +351,7 @@ class ComplaintController extends Controller
         }
 
         $complaints = $query->orderBy('complaints.created_at', 'desc')->paginate(10);
+        dd($complaints);
 
         $currentYear = date('Y');
         $years = range($currentYear, $currentYear - 5, -1);

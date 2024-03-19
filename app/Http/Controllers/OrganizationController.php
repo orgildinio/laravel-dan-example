@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Organization;
 use Illuminate\Http\Request;
 
 class OrganizationController extends Controller
@@ -13,7 +14,10 @@ class OrganizationController extends Controller
      */
     public function index()
     {
-        //
+        $orgs = Organization::latest()->paginate(15);
+
+        return view('organizations.index', compact('orgs'))
+            ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**

@@ -116,8 +116,8 @@
                   </a>
                </li>
                <li>
-                  <a href=""
-                     class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group">
+                  <a href="{{ route('organization.index') }}"
+                     class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group {{ Request::routeIs('organization.index') ? 'bg-gray-100' : '' }}">
                      <img src="{{ asset('/image/org.svg')}}" class="w-[24px] h-[24px] shrink-0 inline-block" alt="organization">
                      <span class="ml-3 flex-1 whitespace-nowrap">Байгууллага</span>
                   </a>
