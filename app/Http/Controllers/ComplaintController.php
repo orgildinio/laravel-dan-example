@@ -337,7 +337,7 @@ class ComplaintController extends Controller
         //         break;
         // }
 
-        $query->where('status_id', $status_id)->where('organization_id', $org_id);
+        // $query->where('status_id', $status_id)->where('organization_id', $org_id);
         $complaints = $query->orderBy('complaints.created_at', 'desc')->paginate(10);
         // dd($complaints);
 
