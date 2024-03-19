@@ -131,7 +131,7 @@
 
         {{-- List of complaints --}}
         @if (count($complaints) > 0)
-            <p class="text-gray-500 px-2">Нийт: {{ $complaints->count() }}</p>
+            {{-- <p class="text-gray-500 px-2">Нийт: {{ $complaints->count() }}</p> --}}
             @foreach ($complaints as $complaint)
                 <div class="mx-auto border border-gray-200 rounded-lg text-gray-700 mb-0.5 h-30 complaint-show cursor-pointer hover:bg-gray-100"
                     data-id="{{ $complaint->id }}">
@@ -155,7 +155,7 @@
                                 </div>
                             @endif
                         </div>
-                        <div class="flex-1">
+                        {{-- <div class="flex-1">
                             <div class="ml-3 space-y-1 border-r-2 pr-3">
                                 <div class="text-sm leading-4 font-semibold">
                                     {{ $complaint->complaint_maker_type_id == 1 ? $complaint->lastname . ' ' . $complaint->firstname : $complaint->complaint_maker_org_name }}
@@ -215,7 +215,7 @@
                                     {{ $complaint->category?->name }}</div>
                             </div>
                         </div>
-                        @if (Auth::user()->role->name == 'admin')    
+                        @if (Auth::user()->role?->name == 'admin')    
                         <div>
                             <div x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false"
                                 id="action" class="inline-flex relative">
@@ -245,7 +245,7 @@
                                     </div>
                             </div>
                         </div>
-                        @endif
+                        @endif --}}
                     </div>
                 </div>
             @endforeach
