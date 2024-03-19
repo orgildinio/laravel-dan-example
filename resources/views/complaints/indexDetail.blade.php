@@ -215,7 +215,7 @@
                                     {{ $complaint->category?->name }}</div>
                             </div>
                         </div>
-                        {{-- @if (Auth::user()->role?->name == 'admin')    
+                        @if (Auth::user()->role->name == 'admin')    
                         <div>
                             <div x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false"
                                 id="action" class="inline-flex relative">
@@ -245,7 +245,7 @@
                                     </div>
                             </div>
                         </div>
-                        @endif --}}
+                        @endif
                     </div>
                 </div>
             @endforeach
