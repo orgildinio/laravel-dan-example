@@ -233,19 +233,6 @@ class ComplaintController extends Controller
         $selected_year = $request->query('year');
         $serial_number = $request->query('serial_number');
 
-        // if (isset($daterange)) {
-        //     $dates = explode(' to ', $daterange);
-        //     $start_date = $dates[0];
-        //     $end_date = $dates[1];
-        // } else {
-        //     $start_date = now()->subDay(360);
-        //     $end_date = now();
-        // }
-
-        // if (empty($search_text)) {
-        //     $search_text = "";
-        // }
-
         $query = Complaint::query();
 
         if (!empty($selected_year)) {
@@ -351,7 +338,7 @@ class ComplaintController extends Controller
         }
 
         $complaints = $query->orderBy('complaints.created_at', 'desc')->paginate(10);
-        dd($complaints);
+        // dd($complaints);
 
         $currentYear = date('Y');
         $years = range($currentYear, $currentYear - 5, -1);
