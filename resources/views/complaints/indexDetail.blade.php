@@ -133,8 +133,7 @@
         @if (count($complaints) > 0)
             <p class="text-gray-500 px-2">Нийт: {{ $complaints->count() }}</p>
             @foreach ($complaints as $complaint)
-            <div>dddd</div>
-                {{-- <div class="mx-auto border border-gray-200 rounded-lg text-gray-700 mb-0.5 h-30 complaint-show cursor-pointer hover:bg-gray-100"
+                <div class="mx-auto border border-gray-200 rounded-lg text-gray-700 mb-0.5 h-30 complaint-show cursor-pointer hover:bg-gray-100"
                     data-id="{{ $complaint->id }}">
                     <div class="flex p-3 border-l-4 {{ getBorderColor($complaint->category_id) }} rounded-lg">
                         <div class="space-y-1 border-r-2 pr-3">
@@ -248,7 +247,7 @@
                         </div>
                         @endif
                     </div>
-                </div> --}}
+                </div>
             @endforeach
             {!! $complaints->links() !!}
         @else
