@@ -8,7 +8,6 @@
                 <thead>
                     <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
                         <th class="py-3 px-6 text-left">Calldate</th>
-                        <th class="py-3 px-6 text-left">Clid</th>
                         <th class="py-3 px-6 text-left">Src</th>
                         <th class="py-3 px-6 text-left">Dst</th>
                         <th class="py-3 px-6 text-left">Duration</th>
@@ -22,7 +21,6 @@
                     @foreach ($cdrRecords as $record)
                         <tr class="border-b border-gray-200 hover:bg-gray-100">
                             <td class="py-3 px-6 text-left">{{ $record->calldate }}</td>
-                            <td class="py-3 px-6 text-left">{{ $record->clid }}</td>
                             <td class="py-3 px-6 text-left">{{ $record->src }}</td>
                             <td class="py-3 px-6 text-left">{{ $record->dst }}</td>
                             <td class="py-3 px-6 text-left">{{ $record->duration }}</td>
