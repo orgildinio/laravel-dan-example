@@ -31,7 +31,7 @@
                             <td class="py-3 px-6 text-left">{{ $record->linkedid }}</td>
                             <td class="py-3 px-6 text-left">
                                 <audio controls>
-                                    <source src="{{ asset('records/' . $record->linkedid) }}" type="audio/mpeg">
+                                    <source src="{{ asset('records/' . $record->linkedid) }}.wav" type="audio/mpeg">
                                     Your browser does not support the audio element.
                                 </audio>
                             </td>
