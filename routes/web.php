@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CdrController;
 use App\Models\Complaint;
 use App\Http\Livewire\ComplaintStep;
 use Illuminate\Foundation\Auth\User;
@@ -42,6 +43,7 @@ Route::middleware([
     Route::get('/addComplaint', [ComplaintController::class, 'addComplaint'])->name('addComplaint');
     Route::get('/getOrgByEnergyTypeId', [ComplaintController::class, 'getOrgByEnergyTypeId']);
     Route::get('/exportReportExcel', [ComplaintController::class, 'exportReportExcel'])->name('exportReportExcel');
+    Route::resource('cdr', CdrController::class);
 });
 Route::get('/complaints', [ComplaintController::class, 'complaints'])->name('complaints');
 Route::get('/userComplaints', [ComplaintController::class, 'userComplaints'])->name('userComplaints');

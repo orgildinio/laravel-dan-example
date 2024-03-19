@@ -14,6 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('cdr', function (Blueprint $table) {
+            $table->id();
             $table->timestamp('calldate');
             $table->string('clid', 80);
             $table->string('src', 80);
@@ -44,6 +45,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cdrs');
+        Schema::dropIfExists('cdr');
     }
 };
