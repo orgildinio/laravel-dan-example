@@ -40,10 +40,10 @@
     <div class="bg-white shadow rounded-lg p-4 2xl:col-span-1">
 
         {{-- Filter --}}
-        <form method="GET" autocomplete="off">
+        <form id="searchForm" method="GET" autocomplete="off">
             <div class="w-full flex flex-col md:flex-row items-center justify-start pb-2">
                 @csrf
-                <div class="md:w-32 w-full md:mr-2 mr-0 md:mb-0 mb-2">
+                <div class="md:w-32 w-full md:mr-2 mr-0 mb-2">
                     <select name="year" id="year"
                         class="text-sm text-gray-600 rounded-lg block w-full appearance-none bg-gray-50 border border-gray-300">
                         @foreach ($years as $year)
@@ -53,7 +53,7 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="w-1/4 flex items-center mr-2">
+                <div class="md:w-1/4 w-full md:mr-2 flex items-center mr-0 mb-2">
                     <div class="relative w-full">
                         <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                             <svg class="w-5 h-5 text-gray-400" viewBox="0 0 24 24" version="1.1"
@@ -79,7 +79,7 @@
                             placeholder="Дугаар" name="serial_number" value="{{ $serial_number }}">
                     </div>
                 </div>
-                <div class="relative flex items-center md:w-1/4 w-full md:mr-2 mr-0 md:mb-0 mb-2">
+                <div class="relative flex items-center md:w-1/4 w-full md:mr-2 mr-0 mb-2">
                     <div class="absolute inset-y-0 left-2 flex items-center pointer-events-none">
                         <svg class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="w-6 h-6">
@@ -91,7 +91,7 @@
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2"
                         placeholder="Огноо" name="daterange" value="{{ $daterange }}">
                 </div>
-                <div class="w-2/4 flex items-center mr-2">
+                <div class="md:w-2/4 w-full md:mr-2 flex items-center mr-0 mb-2">
                     <label for="simple-search" class="sr-only">Search</label>
                     <div class="relative w-full">
                         <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -106,23 +106,26 @@
                             placeholder="Хайх утгаа оруулна уу" name="search_text" value="{{ $search_text }}">
                     </div>
                 </div>
-                <button id="resetFilters" class="mr-2 text-gray-500">
-                    <svg id="resetIcon" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                        <g id="SVGRepo_iconCarrier">
-                            <path
-                                d="M21 12C21 16.9706 16.9706 21 12 21C9.69494 21 7.59227 20.1334 6 18.7083L3 16M3 12C3 7.02944 7.02944 3 12 3C14.3051 3 16.4077 3.86656 18 5.29168L21 8M3 21V16M3 16H8M21 3V8M21 8H16"
-                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                        </g>
-                    </svg>
-                </button>
 
-                <button type="submit"
-                    class="flex items-center justify-center text-white bg-primary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2">
-                    Хайх
-                </button>
+                <div class="flex flex-row mt-2 md:mt-0">
+                    <button id="resetFilters" class="mr-2 mb-2 text-gray-500">
+                        <svg id="resetIcon" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                            <g id="SVGRepo_iconCarrier">
+                                <path
+                                    d="M21 12C21 16.9706 16.9706 21 12 21C9.69494 21 7.59227 20.1334 6 18.7083L3 16M3 12C3 7.02944 7.02944 3 12 3C14.3051 3 16.4077 3.86656 18 5.29168L21 8M3 21V16M3 16H8M21 3V8M21 8H16"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                            </g>
+                        </svg>
+                    </button>
+    
+                    <button type="submit"
+                        class="text-white bg-primary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 mb-2">
+                        Хайх
+                    </button>
+                </div>
 
             </div>
             {{-- <div
@@ -143,6 +146,7 @@
 
         {{-- List of complaints --}}
         @if (count($complaints) > 0)
+            <p class="text-gray-500 px-2">Нийт: {{ $complaints->count() }}</p>
             @foreach ($complaints as $complaint)
                 <div class="mx-auto border border-gray-200 rounded-lg text-gray-700 mb-0.5 h-30 complaint-show cursor-pointer hover:bg-gray-100"
                     data-id="{{ $complaint->id }}">
@@ -226,7 +230,7 @@
                                     {{ $complaint->category?->name }}</div>
                             </div>
                         </div>
-                        @if (Auth::user()->role == 'admin')    
+                        @if (Auth::user()->role->name == 'admin')    
                         <div>
                             <div x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false"
                                 id="action" class="inline-flex relative">
@@ -244,13 +248,13 @@
                                         <form action="{{ route('complaint.destroy', $complaint->id) }}" method="POST">
    
                                             <div class="px-2 py-1 cursor-pointer hover:bg-sky-100 rounded-lg">
-                                                <a class="btn btn-primary" href="{{ route('complaint.edit',$complaint->id) }}">Засах</a>
+                                                <a class="" href="{{ route('complaint.edit',$complaint->id) }}">Засах</a>
                                             </div>
                                             <div class="px-2 py-1 cursor-pointer hover:bg-sky-100 rounded-lg">
                                                 @csrf
                                                 @method('DELETE')
                                   
-                                                <button type="submit" class="btn btn-danger">Устгах</button>
+                                                <button type="submit" class="">Устгах</button>
                                             </div>
                                         </form>
                                     </div>
@@ -282,6 +286,7 @@
                     firstDayOfWeek: 1
                 }
             });
+
             $('#resetFilters').on('click', function() {
 
                 $('#resetIcon').addClass('animate-spin');
@@ -297,6 +302,13 @@
                 $('#daterange').change();
                 $('#simple-search').change();
                 $('#year').change();
+            });
+
+            $('#searchForm input, #searchForm select').keypress(function (event) {
+                if (event.keyCode === 13) { // Check if Enter key is pressed
+                    event.preventDefault(); // Prevent form submission
+                    $('#searchForm').submit(); // Submit the form
+                }
             });
 
             // Add click event handler to table rows with class 'table-row'
