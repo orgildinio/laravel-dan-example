@@ -10,6 +10,8 @@ use Laravel\Socialite\Facades\Socialite;
 use App\Http\Controllers\DanAuthController;
 use App\Http\Controllers\ComplaintController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\OrganizationController;
+use App\Http\Controllers\OrgNumberController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,7 +45,9 @@ Route::middleware([
     Route::get('/addComplaint', [ComplaintController::class, 'addComplaint'])->name('addComplaint');
     Route::get('/getOrgByEnergyTypeId', [ComplaintController::class, 'getOrgByEnergyTypeId']);
     Route::get('/exportReportExcel', [ComplaintController::class, 'exportReportExcel'])->name('exportReportExcel');
-    Route::resource('cdr', CdrController::class);
+    Route::resource('/cdr', CdrController::class);
+    Route::resource('/orgNumber', OrgNumberController::class);
+    Route::resource('/organization', OrganizationController::class);
 });
 Route::get('/complaints', [ComplaintController::class, 'complaints'])->name('complaints');
 Route::get('/userComplaints', [ComplaintController::class, 'userComplaints'])->name('userComplaints');

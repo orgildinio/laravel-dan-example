@@ -26,8 +26,7 @@
                <li>
                   <a href="{{ route('dashboard') }}"
                      class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group {{ Request::routeIs('dashboard') ? 'bg-gray-100' : '' }}">
-                     {{-- <i class="fa-solid fa-chart-pie"></i> --}}
-                     <img src="{{ asset('/image/dashboard-svgrepo-com.svg')}}" class="w-[24px] h-[24px] shrink-0 inline-block" alt="dashboard">
+                     <img src="{{ asset('/image/dashboard-layout.svg')}}" class="w-[24px] h-[24px] shrink-0 inline-block" alt="dashboard">
                      <span class="ml-3">Хянах самбар</span>
                   </a>
                </li>
@@ -44,7 +43,6 @@
                <li>
                   <a href="{{ route('complaintStatus', ['id' => 2]) }}"
                      class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group {{ request()->is('complaintStatus/2') ? 'bg-gray-100' : '' }}">
-                     {{-- <i class="fa-solid fa-inbox"></i> --}}
                      <img src="{{ asset('/image/rule-draft-svgrepo-com.svg')}}" class="w-[24px] h-[24px] shrink-0 inline-block" alt="recieved">
                       
                      <span class="ml-3 flex-1 whitespace-nowrap">Хүлээн авсан</span>
@@ -56,7 +54,6 @@
                <li>
                   <a href="{{ route('complaintStatus', ['id' => 3]) }}"
                      class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group {{ request()->is('complaintStatus/3') ? 'bg-gray-100' : '' }}">
-                     {{-- <i class="fa-solid fa-inbox"></i> --}}
                      <img src="{{ asset('/image/rule-test-svgrepo-com.svg')}}" class="w-[24px] h-[24px] shrink-0 inline-block" alt="recieved">
                      <span class="ml-3 flex-1 whitespace-nowrap">Хянаж байгаа</span>
                      <span
@@ -68,7 +65,6 @@
                <li>
                   <a href="{{ route('complaintStatus', ['id' => 1]) }}"
                      class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group {{ request()->is('complaintStatus/1') ? 'bg-gray-100' : '' }}">
-                     {{-- <i class="fa-solid fa-inbox"></i> --}}
                      <img src="{{ asset('/image/document-export-svgrepo-com.svg')}}" class="w-[24px] h-[24px] shrink-0 inline-block" alt="sent">
                      <span class="ml-3 flex-1 whitespace-nowrap">Шилжүүлсэн</span>
                      <span
@@ -80,7 +76,6 @@
                <li>
                   <a href="{{ route('complaintStatus', ['id' => 6]) }}"
                      class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group {{ request()->is('complaintStatus/6') ? 'bg-gray-100' : '' }}">
-                     {{-- <i class="fa-solid fa-inbox"></i> --}}
                      <img src="{{ asset('/image/approve-invoice-svgrepo-com.svg')}}" class="w-[24px] h-[24px] shrink-0 inline-block" alt="report">
                      <span class="ml-3 flex-1 whitespace-nowrap">Шийдвэрлэсэн</span>
                      <span
@@ -88,20 +83,9 @@
                         $solved_complaints!==0 ? $solved_complaints : '' }}</span>
                   </a>
                </li>
-               {{-- <li>
-                  <a href="{{ route('complaintStatus', ['id' => 6]) }}"
-                     class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group {{ request()->is('complaintStatus/6') ? 'bg-gray-100' : '' }}">
-                     <img src="{{ asset('/image/expire-solid.svg')}}" class="w-[24px] h-[24px] shrink-0 inline-block" alt="report">
-                     <span class="ml-3 flex-1 whitespace-nowrap">Хугацаа хэтэрсэн</span>
-                     <span
-                        class="bg-green-100 text-gray-800 ml-3 text-sm font-medium inline-flex items-center justify-center px-2 rounded-full">{{
-                        $solved_complaints!==0 ? $solved_complaints : '' }}</span>
-                  </a>
-               </li> --}}
                <li>
                   <a href="{{ route('complaintStatus', ['id' => 4]) }}"
                      class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group {{ request()->is('complaintStatus/4') ? 'bg-gray-100' : '' }}">
-                     {{-- <i class="fa-solid fa-inbox"></i> --}}
                      <img src="{{ asset('/image/rule-cancelled-svgrepo-com.svg')}}" class="w-[24px] h-[24px] shrink-0 inline-block" alt="cancelled">
                      <span class="ml-3 flex-1 whitespace-nowrap">Цуцлагдсан</span>
                      <span
@@ -113,19 +97,10 @@
                <li>
                   <a href="{{ route('complaint.index') }}"
                      class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group {{ Request::routeIs('complaint.index') ? 'bg-gray-100' : '' }}">
-                     {{-- <i class="fa-solid fa-file-lines"></i> --}}
                      <img src="{{ asset('/image/documents-symbol-svgrepo-com.svg')}}" class="w-[24px] h-[24px] shrink-0 inline-block" alt="report">
                      <span class="ml-3 flex-1 whitespace-nowrap">Тайлан</span>
                   </a>
                </li>
-               {{-- <li>
-                  <form method="POST" action="{{ route('logout') }}" x-data>
-                     @csrf
-                     <x-responsive-nav-link href="{{ route('logout') }}" @click.prevent="$root.submit();">
-                        {{ __('Гарах') }}
-                     </x-responsive-nav-link>
-                  </form>
-               </li> --}}
                
             </ul>
 
@@ -150,7 +125,7 @@
                <li>
                   <a href="{{ route('cdr.index') }}"
                      class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group {{ Request::routeIs('cdr.index') ? 'bg-gray-100' : '' }}">
-                     <img src="{{ asset('/image/group-security-svgrepo-com.svg')}}" class="w-[24px] h-[24px] shrink-0 inline-block" alt="users">
+                     <img src="{{ asset('/image/turntable-music-note.svg')}}" class="w-[24px] h-[24px] shrink-0 inline-block" alt="users">
                      <span class="ml-3 flex-1 whitespace-nowrap">Яриа бичлэг</span>
                   </a>
                </li>
