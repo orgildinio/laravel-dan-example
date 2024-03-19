@@ -40,7 +40,7 @@
     <div class="bg-white shadow rounded-lg p-4 2xl:col-span-1">
 
         {{-- Filter --}}
-        <form id="searchForm" method="GET" autocomplete="off">
+        {{-- <form id="searchForm" method="GET" autocomplete="off">
             <div class="w-full flex flex-col md:flex-row items-center justify-start pb-2">
                 @csrf
                 <div class="md:w-32 w-full md:mr-2 mr-0 mb-2">
@@ -126,29 +126,15 @@
                         Хайх
                     </button>
                 </div>
-
             </div>
-            {{-- <div
-                class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
-
-                <button type="button" id="export-btn"
-                    class="flex items-center justify-center flex-shrink-0 px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200">
-                    <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24"
-                        stroke-width="2" stroke="currentColor" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
-                    </svg>
-                    Export
-                </button>
-            </div> --}}
-
-        </form>
+        </form> --}}
 
         {{-- List of complaints --}}
         @if (count($complaints) > 0)
             <p class="text-gray-500 px-2">Нийт: {{ $complaints->count() }}</p>
             @foreach ($complaints as $complaint)
-                <div class="mx-auto border border-gray-200 rounded-lg text-gray-700 mb-0.5 h-30 complaint-show cursor-pointer hover:bg-gray-100"
+            <div>dddd</div>
+                {{-- <div class="mx-auto border border-gray-200 rounded-lg text-gray-700 mb-0.5 h-30 complaint-show cursor-pointer hover:bg-gray-100"
                     data-id="{{ $complaint->id }}">
                     <div class="flex p-3 border-l-4 {{ getBorderColor($complaint->category_id) }} rounded-lg">
                         <div class="space-y-1 border-r-2 pr-3">
@@ -262,7 +248,7 @@
                         </div>
                         @endif
                     </div>
-                </div>
+                </div> --}}
             @endforeach
             {!! $complaints->links() !!}
         @else
