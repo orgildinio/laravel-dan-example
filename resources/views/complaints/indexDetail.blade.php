@@ -40,7 +40,7 @@
     <div class="bg-white shadow rounded-lg p-4 2xl:col-span-1">
 
         {{-- Filter --}}
-        {{-- <form id="searchForm" method="GET" autocomplete="off">
+        <form id="searchForm" method="GET" autocomplete="off">
             <div class="w-full flex flex-col md:flex-row items-center justify-start pb-2">
                 @csrf
                 <div class="md:w-32 w-full md:mr-2 mr-0 mb-2">
@@ -127,7 +127,7 @@
                     </button>
                 </div>
             </div>
-        </form> --}}
+        </form>
 
         {{-- List of complaints --}}
         @if (count($complaints) > 0)
