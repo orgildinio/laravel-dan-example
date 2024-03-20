@@ -459,12 +459,12 @@
     $(document).ready(function() {
 
         // Өргөдлийн товч утга ajax аар татах
-        $("input[name='energy_type_id'], #complaint_type_id").change(function() {
+        $("input[type=radio][name=energy_type_id], #complaint_type_id").change(function() {
             // Get the selected values
-            var energy_type_id = $(this).val();
-            console.log("energy: ", energy_type_id);
+            var energy_type_id = $('input[type=radio][name=energy_type_id]:checked').val();
+            // console.log("energy type: ", energy_type_id);
             var complaint_type_id=$("#complaint_type_id").val();
-            console.log("type: ", complaint_type_id);
+            // console.log("complainttype: ", complaint_type_id);
 
             // Perform Ajax request based on the selected values
             $.ajax({
@@ -486,7 +486,7 @@
                     console.error('Error getting summary data...');
                 }
             });
-            // get Org by EnergyTypeID
+
             $.ajax({
                 url: '/getOrgByEnergyTypeId',
                 method: 'GET',

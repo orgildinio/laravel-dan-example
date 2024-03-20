@@ -438,9 +438,9 @@
         $("input[type=radio][name=energy_type_id], #complaint_type_id").change(function() {
             // Get the selected values
             var energy_type_id = $('input[type=radio][name=energy_type_id]:checked').val();
-            console.log("energy type: ", energy_type_id);
+            // console.log("energy type: ", energy_type_id);
             var complaint_type_id=$("#complaint_type_id").val();
-            console.log("complainttype: ", complaint_type_id);
+            // console.log("complainttype: ", complaint_type_id);
 
             // Perform Ajax request based on the selected values
             $.ajax({
