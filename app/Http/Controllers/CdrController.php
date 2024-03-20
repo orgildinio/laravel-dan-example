@@ -14,7 +14,7 @@ class CdrController extends Controller
      */
     public function index()
     {
-        $cdrRecords = Cdr::all(); // Fetch all records from the Cdr model
+        $cdrRecords = Cdr::orderBy('calldate', 'desc')->paginate(15);
 
         return view('cdr.index', compact('cdrRecords'));
     }

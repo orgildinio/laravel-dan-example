@@ -14,7 +14,7 @@ class OrganizationController extends Controller
      */
     public function index()
     {
-        $orgs = Organization::latest()->paginate(15);
+        $orgs = Organization::orderBy('name', 'asc')->paginate(15);
 
         return view('organizations.index', compact('orgs'))
             ->with('i', (request()->input('page', 1) - 1) * 5);

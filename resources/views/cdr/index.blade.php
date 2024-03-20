@@ -37,6 +37,9 @@
                     @endforeach
                 </tbody>
             </table>
+            <div class="p-2">
+                {!! $cdrRecords->links() !!}
+            </div>
         </div>
     </div>
 </x-admin-layout>
