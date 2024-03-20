@@ -169,11 +169,11 @@
                                                     </div>
                                                 </div>
                                                 <div class="ml-4 flex-shrink-0">
-                                                    <a href="/files/{{ $complaint->file?->filename }}"
+                                                    <a href="/files/{{ $complaint->file?->filename }}" target="_blank"
                                                         class="font-medium text-primary hover:text-primaryHover">Харах</a>
                                                 </div>
                                                 <div class="ml-4 flex-shrink-0">
-                                                    <a href="/files/{{ $complaint->file?->filename }}" target="_blank"
+                                                    <a href="/files/{{ $complaint->file?->filename }}" download
                                                         class="font-medium text-primary hover:text-primaryHover">Татах</a>
                                                 </div>
                                             </li>
