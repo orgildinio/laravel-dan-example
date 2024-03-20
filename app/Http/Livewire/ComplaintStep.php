@@ -11,6 +11,7 @@ use App\Models\Complaint;
 use App\Models\Organization;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Response;
 use App\Models\ComplaintStep as ModelsComplaintStep;
 
 class ComplaintStep extends Component
@@ -119,6 +120,12 @@ class ComplaintStep extends Component
     private function resetInputFields()
     {
         $this->desc = '';
+    }
+
+    public function download($path)
+    {
+        $file = public_path('files/' . $path); // Path to the file to download
+        return Response::download($file);
     }
 
     public function store()

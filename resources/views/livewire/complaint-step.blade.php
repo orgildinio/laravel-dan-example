@@ -93,7 +93,7 @@
                         @endif
                     </div>
                     @if ($step->file_id != null)
-                        <div class="mt-2 w-1/3">
+                        <div class="mt-2 w-1/2">
                             <div class="text-xs font-semibold">Хавсралт файл</div>
                             <dd class="mt-2 text-sm bg-white text-gray-900 sm:col-span-2 sm:mt-0">
                                 <ul role="list"
@@ -113,8 +113,10 @@
                                             </div>
                                         </div>
                                         <div class="ml-4 flex-shrink-0">
-                                            <a href="/files/{{ $step->file?->filename }}"
-                                                class="font-medium text-primary hover:text-primaryHover">Татах</a>
+                                            <a href="{{ asset('files/'. $step->file?->filename) }}"
+                                                class="font-medium text-primary hover:text-primaryHover" target=”_blank”>Харах</a>
+                                            <button wire:click="download('{{$step->file?->filename}}')" class="font-medium text-primary hover:text-primaryHover pl-4" download>Татах</button>
+                                            </button>
                                         </div>
                                     </li>
                                 </ul>
