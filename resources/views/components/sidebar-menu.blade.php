@@ -106,8 +106,8 @@
 
             {{-- Тохиргоо --}}
             @auth
-            @if (Auth::user()->role?->name == 'admin')
             <ul class="pt-4 mt-4 space-y-2 font-medium border-t border-gray-200 dark:border-gray-700">
+               @if (Auth::user()->role?->name == 'admin')
                <li>
                   <a href="{{ route('user.index') }}"
                      class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group {{ Request::routeIs('user.index') ? 'bg-gray-100' : '' }}">
@@ -122,6 +122,7 @@
                      <span class="ml-3 flex-1 whitespace-nowrap">Байгууллага</span>
                   </a>
                </li>
+               @endif
                <li>
                   <a href="{{ route('cdr.index') }}"
                      class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group {{ Request::routeIs('cdr.index') ? 'bg-gray-100' : '' }}">
@@ -130,7 +131,6 @@
                   </a>
                </li>
             </ul>
-            @endif
             @endauth
             
          </div>

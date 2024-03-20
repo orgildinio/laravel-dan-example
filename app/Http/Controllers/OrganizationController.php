@@ -27,7 +27,7 @@ class OrganizationController extends Controller
      */
     public function create()
     {
-        //
+        return view('organizations.create');
     }
 
     /**
@@ -38,7 +38,15 @@ class OrganizationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'plant_id' => 'required',
+        ]);
+
+        Organization::create($request->all());
+
+        return redirect()->route('organization.index')
+            ->with('success', 'Байгууллага амжилттай бүртгэгдлээ.');
     }
 
     /**
@@ -58,9 +66,9 @@ class OrganizationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Organization $organization)
     {
-        //
+        return view('organizations.edit', compact('organization'));
     }
 
     /**
@@ -70,9 +78,17 @@ class OrganizationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Organization $organization)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'plant_id' => 'required',
+        ]);
+
+        $organization->update($request->all());
+
+        return redirect()->route('organization.index')
+            ->with('success', 'Мэдээлэл амжилттай засагдлаа.');
     }
 
     /**
@@ -81,8 +97,11 @@ class OrganizationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Organization $organization)
     {
-        //
+        $organization->delete();
+
+        return redirect()->route('organization.index')
+            ->with('success', 'Байгууллага амжилттай устгагдлаа');
     }
 }
