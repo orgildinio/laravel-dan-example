@@ -17,6 +17,7 @@
                         <th class="p-3 text-left">Audio</th>
                     </tr>
                 </thead>
+                @if (count($cdrRecords) > 0)
                 <tbody class="text-gray-600 text-sm font-light">
                     @foreach ($cdrRecords as $record)
                         <tr class="border-b border-gray-200 hover:bg-gray-100">
@@ -36,10 +37,11 @@
                         </tr>
                     @endforeach
                 </tbody>
+                @endif
+                <div class="p-2">
+                    {!! $cdrRecords->links() !!}
+                </div>
             </table>
-            <div class="p-2">
-                {!! $cdrRecords->links() !!}
-            </div>
         </div>
     </div>
 </x-admin-layout>
