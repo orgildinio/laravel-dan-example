@@ -19,7 +19,7 @@ class CdrController extends Controller
         $org_id = Auth::user()->org_id;
         $org_numbers = OrganizationNumbers::where('organization_id', $org_id)->get();
 
-        $cdrRecords = Cdr::whereIn('src', $org_numbers)->orderBy('calldate', 'desc')->paginate(15);
+        $cdrRecords = Cdr::whereIn('src', [$org_numbers])->orderBy('calldate', 'desc')->paginate(15);
         dd($cdrRecords);
 
         return view('cdr.index', compact('cdrRecords'));
