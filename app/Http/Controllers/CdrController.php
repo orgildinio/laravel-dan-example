@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cdr;
+use App\Models\OrganizationNumbers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CdrController extends Controller
 {
@@ -14,7 +16,10 @@ class CdrController extends Controller
      */
     public function index()
     {
-        $cdrRecords = Cdr::orderBy('calldate', 'desc')->paginate(15);
+        $org_id = Auth::user()->org_id;
+        $org_numbers = OrganizationNumbers::where('organization_id', $org_id)->get();
+
+        $cdrRecords = Cdr::orderBy('calldate', 'desc')->whereIn('src', $org_numbers)->paginate(15);
 
         return view('cdr.index', compact('cdrRecords'));
     }

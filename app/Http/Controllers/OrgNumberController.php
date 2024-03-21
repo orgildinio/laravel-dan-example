@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\OrganizationNumbers;
 use Illuminate\Http\Request;
 
 class OrgNumberController extends Controller
@@ -34,7 +35,24 @@ class OrgNumberController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
+        //
+    }
+
+    public function save(Request $request, $org_id)
+    {
+        $input = $request->all();
+        // dd($input['phone_number']);
+
+        $request->validate([
+            'phone_number' => 'required'
+        ]);
+
+        OrganizationNumbers::create([
+            'phone_number' => $input['phone_number'],
+            'organization_id' => $org_id,
+        ]);
+        return redirect()->route('organization.index')
+            ->with('success', 'Амжилттай хадгаллаа.');
     }
 
     /**

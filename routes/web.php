@@ -47,6 +47,7 @@ Route::middleware([
     Route::get('/exportReportExcel', [ComplaintController::class, 'exportReportExcel'])->name('exportReportExcel');
     Route::resource('/cdr', CdrController::class);
     Route::resource('/orgNumber', OrgNumberController::class);
+    Route::post('/orgNumber/{id}', [OrgNumberController::class, 'save'])->name('orgNumber.save');
     Route::resource('/organization', OrganizationController::class);
 });
 Route::get('/complaints', [ComplaintController::class, 'complaints'])->name('complaints');

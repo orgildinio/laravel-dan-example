@@ -2,16 +2,18 @@
 <x-admin-layout>
     <div class="container mx-auto px-2 py-4">
         <h1 class="text-2xl font-bold mb-4">Байгууллага</h1>
-        <div class="flex justify-end">
-            <a href="{{ route('organization.create') }}"
-                class="px-4 py-2 rounded-md bg-black text-sky-100 hover:bg-gray-600">Нэмэх</a>
-        </div>
+        
 
         @if ($message = Session::get('success'))
             <div class="bg-green-100 border-l-4 border-green-500 text-green-700 text-sm p-2 mb-4" role="alert">
                 <p>{{ $message }}</p>
             </div>
         @endif
+
+        <div class="flex justify-end">
+            <a href="{{ route('organization.create') }}"
+                class="px-4 py-2 rounded-md bg-black text-sky-100 hover:bg-gray-600">Нэмэх</a>
+        </div>
 
         <div class="bg-white shadow-md rounded my-2">
             <table class="w-full table-auto">
@@ -22,7 +24,6 @@
                         <th class="p-3 text-left">Төрөл</th>
                         <th class="p-3 text-left">Дугаар</th>
                         <th class="py-3 px-6 text-center">Үйлдэл</th>
-                        <th class="py-3 px-6 text-center">Үйлдэл</th>
                     </tr>
                 </thead>
                 <tbody class="text-gray-600 text-sm font-light">
@@ -31,21 +32,15 @@
                             <td class="p-3 text-left">{{ $org->id }}</td>
                             <td class="p-3 text-left">{{ $org->name }}</td>
                             <td class="p-3 text-left">{{ $org->plant_id }}</td>
-                            <td class="p-3 text-left">{{ $org->org_number_id }}</td>
-                            <td class="py-3 px-6 text-center">
-                                <a href="{{ route('organization.edit', $org->id) }}"
-                                    class="text-blue-500 hover:text-blue-800">Засах</a>
-                                <form action="{{ route('organization.destroy', $org->id) }}" method="POST"
-                                    class="inline-block">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="text-red-500 hover:text-red-800">Устгах</button>
-                                </form>
+                            <td class="p-3 text-left">
+                                @foreach ($org->orgNumber as $item)
+                                    <p>{{$item->phone_number}}</p>    
+                                @endforeach
                             </td>
-                            <td>
-                                {{-- <div x-data="{ open: false }">
+                            <td class="py-3 px-6 text-center">
+                                <div x-data="{ open: false }">
                                     <button @click="open = true"
-                                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Contact</button>
+                                        class="text-blue-500 hover:text-blue-800"><i class="fa-solid fa-square-phone-flip fa-2x"></i></button>
 
                                     <div x-show="open" @click.away="open = false"
                                         class="fixed z-10 inset-0 overflow-y-auto">
@@ -57,27 +52,36 @@
                                                 class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all">
                                                 <!-- Modal Content -->
                                                 <div class="px-4 py-5 sm:p-6">
-                                                    <form method="POST" action="{{ route('orgNumber.store') }}"
-                                                        enctype="multipart/form-data">
+                                                    <form method="POST" action="{{ route('orgNumber.save', $org->id) }}">
                                                         @csrf
                                                         <div class="mb-4">
-                                                            <label for="name"
+                                                            <label for="phone_number"
                                                                 class="block text-gray-700 font-bold mb-2">Дугаар</label>
-                                                            <input type="number" name="number"
+                                                            <input type="number" name="phone_number"
                                                                 class="w-full border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                                         </div>
                                                         <div class="text-right">
                                                             <button type="submit"
-                                                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Save</button>
+                                                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Хадгалах</button>
                                                             <button @click="open = false"
-                                                                class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">Close</button>
+                                                                class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">Хаах</button>
                                                         </div>
                                                     </form>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div> --}}
+                                </div>
+                                @if (Auth::user()->role->name == 'admin')
+                                <a href="{{ route('organization.edit', $org->id) }}"
+                                    class="text-gray-500 hover:text-gray-800"><i class="fa-solid fa-pen-to-square fa-lg"></i></a>
+                                <form action="{{ route('organization.destroy', $org->id) }}" method="POST"
+                                    class="inline-block">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="text-red-500 hover:text-red-800"><i class="fa-regular fa-trash-can fa-lg"></i></button>
+                                </form>
+                                @endif
                             </td>
                         </tr>
                     @endforeach
