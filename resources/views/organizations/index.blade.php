@@ -8,9 +8,9 @@
         </div>
 
         @if ($message = Session::get('success'))
-        <div class="bg-green-100 border-l-4 border-green-500 text-green-700 text-sm p-2 mb-4" role="alert">
-            <p>{{ $message }}</p>
-        </div>
+            <div class="bg-green-100 border-l-4 border-green-500 text-green-700 text-sm p-2 mb-4" role="alert">
+                <p>{{ $message }}</p>
+            </div>
         @endif
 
         <div class="bg-white shadow-md rounded my-2">
@@ -22,6 +22,7 @@
                         <th class="p-3 text-left">Төрөл</th>
                         <th class="p-3 text-left">Дугаар</th>
                         <th class="py-3 px-6 text-center">Үйлдэл</th>
+                        <th class="py-3 px-6 text-center">Үйлдэл</th>
                     </tr>
                 </thead>
                 <tbody class="text-gray-600 text-sm font-light">
@@ -32,12 +33,51 @@
                             <td class="p-3 text-left">{{ $org->plant_id }}</td>
                             <td class="p-3 text-left">{{ $org->org_number_id }}</td>
                             <td class="py-3 px-6 text-center">
-                                <a href="{{ route('organization.edit', $org->id) }}" class="text-blue-500 hover:text-blue-800">Засах</a>
-                                <form action="{{ route('organization.destroy', $org->id) }}" method="POST" class="inline-block">
+                                <a href="{{ route('organization.edit', $org->id) }}"
+                                    class="text-blue-500 hover:text-blue-800">Засах</a>
+                                <form action="{{ route('organization.destroy', $org->id) }}" method="POST"
+                                    class="inline-block">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="text-red-500 hover:text-red-800">Устгах</button>
                                 </form>
+                            </td>
+                            <td>
+                                {{-- <div x-data="{ open: false }">
+                                    <button @click="open = true"
+                                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Contact</button>
+
+                                    <div x-show="open" @click.away="open = false"
+                                        class="fixed z-10 inset-0 overflow-y-auto">
+                                        <div class="flex items-center justify-center min-h-screen">
+                                            <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+                                                <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+                                            </div>
+                                            <div
+                                                class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all">
+                                                <!-- Modal Content -->
+                                                <div class="px-4 py-5 sm:p-6">
+                                                    <form method="POST" action="{{ route('orgNumber.store') }}"
+                                                        enctype="multipart/form-data">
+                                                        @csrf
+                                                        <div class="mb-4">
+                                                            <label for="name"
+                                                                class="block text-gray-700 font-bold mb-2">Дугаар</label>
+                                                            <input type="number" name="number"
+                                                                class="w-full border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                                        </div>
+                                                        <div class="text-right">
+                                                            <button type="submit"
+                                                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Save</button>
+                                                            <button @click="open = false"
+                                                                class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">Close</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> --}}
                             </td>
                         </tr>
                     @endforeach
