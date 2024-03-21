@@ -20,7 +20,7 @@ class CdrController extends Controller
         $org_numbers = OrganizationNumbers::where('organization_id', $org_id)->get();
 
         $cdrRecords = Cdr::whereIn('src', [$org_numbers])->orderBy('calldate', 'desc')->paginate(15);
-        dd($cdrRecords);
+        // dd($cdrRecords);
 
         return view('cdr.index', compact('cdrRecords'));
     }
