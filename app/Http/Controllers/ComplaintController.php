@@ -8,6 +8,7 @@ use App\Models\File;
 use App\Models\Soum;
 use App\Models\User;
 use App\Models\Aimag;
+use App\Models\Rating;
 use App\Models\Status;
 use App\Models\Channel;
 use App\Models\DanUser;
@@ -465,8 +466,10 @@ class ComplaintController extends Controller
     public function show($id)
     {
         $complaint = Complaint::findOrFail($id);
+        $rating = Rating::where('user_id', auth()->user()->id)->where('complaint_id', $id)->first();
+        // dd($rating);
 
-        return view('complaints.show', compact('complaint'));
+        return view('complaints.show', compact('complaint', 'rating'));
     }
 
     /**

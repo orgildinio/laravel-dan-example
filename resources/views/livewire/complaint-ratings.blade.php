@@ -1,10 +1,11 @@
 <div class="">
-    @if (count($comments) < 0)    
-    <section class="w-full px-8 pt-4 pb-10 xl:px-8">
+    {{-- {{$comments}} --}}
+    @if (count($comments) == 0)    
+    <section class="w-full p-6">
         <div class="max-w-5xl mx-auto">
             <div class="flex flex-col items-center md:flex-row">
 
-                <div class="w-full mt-16 md:mt-0">
+                <div class="w-full mt-4">
                     <div class="relative z-10 h-auto p-4 py-10 overflow-hidden bg-white px-7">
                         @auth
                             <div class="w-full space-y-5">
@@ -75,27 +76,18 @@
             </div>
         </div>
     </section>
-    @endif
+    @else
     <section class="relative block p-4 overflow-hidden text-left">
         <div class="w-full mx-auto text-left">
-            {{-- <h2 class="text-gray-500 uppercase font-medium pb-4">Үнэлгээ</h2> --}}
+            <h2 class="text-gray-700 uppercase font-bold mb-4">Үнэлгээ</h2>
             <div class="text-indigo-900">
                 @foreach ($comments as $comment)
-                    <div class="">
-                        {{-- <div class="relative flex-shrink-0 w-20 h-20 text-left">
-                            <a href="{{ '@' . $comment->user->name }}">
-                            </a>
-                        </div> --}}
+                    <div class="italic">
                         <div class="mb-16 leading-6 text-left">
-                            <div class="box-border text-md font-medium text-gray-500">
-                                {{ $comment->comment }}
+                            <div class="box-border text-left text-gray-700" style="quotes: auto;">
+                                {{  $comment->user?->name }} ({{$comment->created_at->diffForHumans()}})
                             </div>
-                            <div class="box-border mt-5 text-lg font-semibold text-gray-500 uppercase">
-                                {{-- @auth
-                                    @if(auth()->user()->id == $comment->user_id || auth()->user()->role->name == 'admin' ))
-                                        - <a wire:click.prevent="delete({{ $comment->id }})" class="text-sm cursor-pointer">Delete</a>
-                                    @endif
-                                @endauth --}}
+                            <div class="box-border mb-8 text-lg font-semibold text-gray-500 uppercase">
                                 <div class="flex space-x-1 rating">
                                     <label for="star1">
                                         <input class="hidden" wire:model="rating" type="radio" id="star1" name="rating" value="1" />
@@ -119,15 +111,15 @@
                                     </label>
                                 </div>
                             </div>
-                            {{-- <div class="box-border text-left text-gray-700" style="quotes: auto;">
-                                <a href="{{ '@' . $comment->user->username }}">
-                                    {{  $comment->user->name }}
-                                </a>
-                            </div> --}}
+                            
+                            <div class="box-border text-md font-medium text-gray-500 bg-gray-100 p-2 rounded-lg">
+                                {{ $comment->comment }}
+                            </div>
                         </div>
                     </div>
                 @endforeach
 
             </div>
     </section>
+    @endif
 </div>

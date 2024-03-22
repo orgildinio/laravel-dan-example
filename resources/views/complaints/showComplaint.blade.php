@@ -143,13 +143,15 @@
                             </ol>
                         </div>
 
+                        {{-- Шийдвэрлэлтэд үнэлгээ өгөх --}}
+                        @if ($complaint->status_id == 6)
+                        @livewire('complaint-ratings', ['complaint' => $complaint], key($complaint->id))
+                        @endif
+
                     </div>
                 </div>
             </div>
-            {{-- Шийдвэрлэлтэд үнэлгээ өгөх --}}
-            @if ($complaint->status_id == 6)
-            @livewire('complaint-ratings', ['complaint' => $complaint], key($complaint->id))
-            @endif
+            
         </div>
     </div>
 

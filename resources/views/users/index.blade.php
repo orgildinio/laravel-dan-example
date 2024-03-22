@@ -128,7 +128,8 @@
                     </tbody>
                 </table>
                 <br>
-                {!! $users->links() !!}
+                {{-- {!! $users->links() !!} --}}
+                {!! $users->withQueryString()->links() !!} 
             </div>
         </div>
     </div>

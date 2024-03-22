@@ -101,7 +101,7 @@ class ComplaintStep extends Component
                 session()->flash('info', 'Шийдвэрлэгдсэн төлөвтэй өргөдөл, гомдлыг удирдах боломжгүй!');
             } elseif ($this->status_id == 4) {
                 $this->showPermissionWarning = true;
-                session()->flash('info', 'Цуцлагдсан төлөвтэй өргөдөл, гомдлыг удирдах боломжгүй!');
+                session()->flash('warning', 'Цуцлагдсан төлөвтэй өргөдөл, гомдлыг удирдах боломжгүй!');
             } elseif ($this->is_expired) {
                 $this->showPermissionWarning = true;
                 session()->flash('warning', 'Өргөдөл, гомдол шийдвэрлэх хугацаа дууссан байна!');
