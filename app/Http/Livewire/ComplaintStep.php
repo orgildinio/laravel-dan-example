@@ -92,23 +92,26 @@ class ComplaintStep extends Component
     {
         // $this->isOpen = true;
         // Check user permissions before opening the modal
-        if ($this->is_expired) {
-            if (Auth::user()->role->name == 'admin') {
-                $this->isOpen = true;
-                $this->showPermissionWarning = false;
-            } else {
-                $this->showPermissionWarning = true;
-                session()->flash('warning', 'Өргөдөл, гомдол шийдвэрлэх хугацаа дууссан байна!');
-            }
-        } elseif ($this->status_id == 6) {
-            $this->showPermissionWarning = true;
-            session()->flash('info', 'Шийдвэрлэгдсэн төлөвтэй өргөдөл, гомдлыг удирдах боломжгүй!');
-        } elseif ($this->controlled_user_id !== Auth::user()->id && $this->second_user_id !== Auth::user()->id) {
-            $this->showPermissionWarning = true;
-            session()->flash('warning', 'Таны хариуцсан өргөдөл, гомдол биш байна!');
-        } else {
+        if (Auth::user()->role->name == 'admin') {
             $this->isOpen = true;
             $this->showPermissionWarning = false;
+        } else {
+            if ($this->status_id == 6) {
+                $this->showPermissionWarning = true;
+                session()->flash('info', 'Шийдвэрлэгдсэн төлөвтэй өргөдөл, гомдлыг удирдах боломжгүй!');
+            } elseif ($this->status_id == 4) {
+                $this->showPermissionWarning = true;
+                session()->flash('info', 'Цуцлагдсан төлөвтэй өргөдөл, гомдлыг удирдах боломжгүй!');
+            } elseif ($this->is_expired) {
+                $this->showPermissionWarning = true;
+                session()->flash('warning', 'Өргөдөл, гомдол шийдвэрлэх хугацаа дууссан байна!');
+            } elseif ($this->controlled_user_id !== Auth::user()->id && $this->second_user_id !== Auth::user()->id) {
+                $this->showPermissionWarning = true;
+                session()->flash('warning', 'Таны хариуцсан өргөдөл, гомдол биш байна!');
+            } else {
+                $this->isOpen = true;
+                $this->showPermissionWarning = false;
+            }
         }
     }
 
