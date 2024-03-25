@@ -107,6 +107,8 @@
                         <div class="grid grid-cols-1 gap-1 p-3 even:bg-gray-50 sm:grid-cols-3 sm:gap-4">
                             <dt class="font-medium text-gray-900">Үнэлгээ</dt>
                             <dd class="text-gray-700 text-right sm:col-span-2">
+                                @if (isset($rating->rating))
+                                    
                                 <div class="flex justify-end rating">
                                     <label for="star1">
                                         <input class="hidden" type="radio" id="star1" name="rating"
@@ -154,6 +156,7 @@
                                         </svg>
                                     </label>
                                 </div>
+                                @endif
                             </dd>
                         </div>
                         <div class="p-3 even:bg-gray-50 sm:grid-cols-3 sm:gap-4">
