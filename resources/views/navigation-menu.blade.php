@@ -53,22 +53,23 @@
                     @auth
                         <x-dropdown align="right" width="48">
                             <x-slot name="trigger">
-                                @if (isset(Auth::user()->danImage))
-                                    <span class="inline-flex rounded-md">
-                                        <button type="button"
-                                            class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150">
-                                            <span class="mr-3">{{ Auth::user()->name }}</span>
-                                            <img class="h-8 w-8 rounded-full object-cover"
-                                                src="data:image/png;base64,{{ Auth::user()->danImage }}" alt="profile">
-                                        </button>
-                                    </span>
-                                @else
+                                @if (Auth::user()->profile_photo_path != null)
                                     <button
                                         class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150">
                                         <span class="mr-3">{{ Auth::user()->name }}</span>
                                         <img class="h-10 w-10 rounded-full object-cover"
-                                            src="{{ asset(Auth::user()->profile_photo_url) }}" alt="{{ Auth::user()->name }}" />
+                                            src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
                                     </button>
+                                    
+                                @else
+                                <span class="inline-flex rounded-md">
+                                    <button type="button"
+                                        class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150">
+                                        <span class="mr-3">{{ Auth::user()->name }}</span>
+                                        <img class="h-8 w-8 rounded-full object-cover"
+                                            src="data:image/png;base64,{{ Auth::user()->danImage }}" alt="profile">
+                                    </button>
+                                </span>
                                 @endif
                             </x-slot>
 
