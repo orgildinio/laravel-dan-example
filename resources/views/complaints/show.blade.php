@@ -160,7 +160,10 @@
                             </dd>
                         </div>
                         <div class="p-3 even:bg-gray-50 sm:grid-cols-3 sm:gap-4">
+                            @if (isset($rating->comment))
+                                
                             {{ $rating->comment }}
+                            @endif
                         </div>
                     </dl>
                 </div>
