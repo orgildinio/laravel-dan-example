@@ -54,6 +54,6 @@ class SourceComplaintController extends Controller
             ];
         }
 
-        return view('source.sourceComplaints', compact('complaints'));
+        return view('source.index', compact('complaints'));
     }
 }
