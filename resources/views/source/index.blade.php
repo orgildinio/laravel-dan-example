@@ -131,9 +131,9 @@
 
         {{-- List of complaints --}}
         @if (count($complaints) > 0)
-            {{-- <p class="text-gray-500 px-2">Нийт: {{ $complaints->count() }}</p> --}}
             @foreach ($complaints as $complaint)
-                <div class="mx-auto border border-gray-200 rounded-lg text-gray-700 mb-0.5 h-30 complaint-show cursor-pointer hover:bg-gray-100"
+                <div>ddddd</div>
+                {{-- <div class="mx-auto border border-gray-200 rounded-lg text-gray-700 mb-0.5 h-30 complaint-show cursor-pointer hover:bg-gray-100"
                     data-id="">
                     <div class="flex p-3 border-l-4 border-red-500 rounded-lg">
                         <div class="space-y-1 border-r-2 pr-3">
@@ -144,16 +144,6 @@
                                     Төрөл: </span> {{ $complaint->type }}</div>
                             <div class="text-xs leading-5"><span class="text-xs leading-4 font-normal text-gray-500">
                                     Шинээр ирсэн: </span>{{ $complaint->created_at }}</div>
-                            {{-- @if ($status_id != 6)
-                                <div class="text-sm leading-5"><span
-                                        class="text-xs leading-4 font-normal text-gray-500"> Үлдсэн хугацаа: </span>
-                                    @if ($complaint->hasExpired())
-                                        <span class="text-red-500 text-xs">Хугацаа хэтэрсэн</span>
-                                    @else
-                                        <span>{{ now()->diffInHours($complaint->expire_date) > 24 ? now()->diffInDays($complaint->expire_date) . ' өдөр' : now()->diffInHours($complaint->expire_date) . ' цаг' }}</span>
-                                    @endif
-                                </div>
-                            @endif --}}
                         </div>
                         <div class="flex-1">
                             <div class="ml-3 space-y-1 border-r-2 pr-3">
@@ -174,7 +164,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             @endforeach
             {{-- {!! $complaints->links() !!} --}}
         @else
