@@ -6,22 +6,7 @@
          <div class="flex-1 px-3 bg-white divide-y space-y-1">
             <ul class="space-y-2 pb-2">
                <li class="bg-purple-50">
-                  {{-- <div class="flex items-start justify-start p-2">
-                     <div class="flex items-center mr-5">
-                        <div class="mr-3">
-                           <div class="inline-block relative shrink-0 cursor-pointer rounded-[.95rem]">
-                              <img class="w-[40px] h-[40px] shrink-0 inline-block rounded-[.95rem]"
-                                 src="{{ asset('/image/user-profile-icon.svg')}}" alt="avatar image">
-                           </div>
-                        </div>
-                        <div>
-                           <p class="text-secondary-dark font-medium text-sm">{{ Auth::user()->name }}</p>
-                           <p class="text-secondary-dark font-medium text-sm">{{ Auth::user()->division }}</p>
-                        </div>
-                     </div>
-                  </div> --}}
                   <div class="rounded-lg font-bold text-sm p-2 text-primary">{{ Auth::user()->org?->name }}</div>
-                  {{-- <div class="hidden border-b border-solid lg:block border-neutral-200"></div> --}}
                </li>
                <li>
                   <a href="{{ route('dashboard') }}"
@@ -30,7 +15,7 @@
                      <span class="ml-3">Хянах самбар</span>
                   </a>
                </li>
-               <li>
+               {{-- <li>
                   <a href="{{ route('sourceComplaints') }}"
                      class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group {{ request()->is('sourceComplaints') ? 'bg-gray-100' : '' }}">
                      <img src="{{ asset('/image/source-control.svg')}}" class="w-[24px] h-[24px] shrink-0 inline-block" alt="new">
@@ -38,7 +23,7 @@
                      <span
                         class="bg-blue-200 text-gray-800 ml-3 text-sm font-medium inline-flex items-center justify-center px-2 rounded-full"></span>
                   </a>
-               </li>
+               </li> --}}
                <li>
                   <a href="{{ route('complaintStatus', ['id' => 0]) }}"
                      class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group {{ request()->is('complaintStatus/0') ? 'bg-gray-100' : '' }}">
