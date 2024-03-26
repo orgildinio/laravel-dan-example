@@ -50,9 +50,10 @@ class SourceComplaintController extends Controller
                 "address" => $data['smart']['address'][$key],
                 "district" => $data['smart']['district'][$key],
                 "fullname" => $data['smart']['fullname'][$key],
-                "path" => $data['smart']['path'][$key]
+                "path" => $data['smart']['path'][$key],
             ];
         }
+        dd($convertedData);
 
         // Encode the converted data back to JSON format if needed
         $convertedJson = json_encode($convertedData, JSON_PRETTY_PRINT);
