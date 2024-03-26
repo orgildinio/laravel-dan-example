@@ -11,12 +11,12 @@ class SourceComplaintController extends Controller
     {
         $params = [
             'action' => 'get-tickets',
-            'count' => 100,
-            'u' => 'smart_39',
-            'p' => 'SmartUser2023*',
+            'count' => 30,
+            'u' => 'smart_42',
+            'p' => 'OYGNvAnwZ',
             'api_key' => 0
         ];
-        $response = Http::get('http://103.87.69.87:80/GS/ServiceE', $params);
-        dd($response);
+        $response = Http::get('https://www.11-11.mn/GStest/APIa', $params);
+        dd($response->json());
     }
 }
