@@ -12,6 +12,7 @@ use App\Http\Controllers\ComplaintController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\OrgNumberController;
+use App\Http\Controllers\SourceComplaintController;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,3 +58,6 @@ Route::get('/showComplaint/{id}', [ComplaintController::class, 'showComplaint'])
 // Дан системээр нэвтрэх
 Route::get('auth/redirect', [DanAuthController::class, 'redirectToDan']);
 Route::get('auth/callback', [DanAuthController::class, 'handleDanCallback']);
+
+// 1111 ээс санал хүсэлт авах
+Route::get('/sourceComplaints', [SourceComplaintController::class, 'sourceComplaints'])->name('sourceComplaints');
