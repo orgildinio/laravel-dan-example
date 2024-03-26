@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
@@ -30,7 +31,7 @@ class SourceComplaintController extends Controller
         // Iterate through the 'smart' array to create the desired format
         foreach ($data['smart']['created_at'] as $key => $value) {
             $complaints[] = [
-                "created_at" => $data['smart']['created_at'][$key],
+                "created_at" => Carbon::createFromFormat('M d, Y h:i:s A', $data['smart']['created_at'][$key]),
                 "source" => $data['smart']['source'][$key],
                 "quarter" => $data['smart']['quarter'][$key],
                 "assigned_at" => $data['smart']['assigned_at'][$key],
