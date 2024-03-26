@@ -50,6 +50,9 @@ Route::middleware([
     Route::resource('/orgNumber', OrgNumberController::class);
     Route::post('/orgNumber/{id}', [OrgNumberController::class, 'save'])->name('orgNumber.save');
     Route::resource('/organization', OrganizationController::class);
+
+    // 1111 ээс санал хүсэлт авах
+    Route::get('/sourceComplaints', [SourceComplaintController::class, 'sourceComplaints'])->name('sourceComplaints');
 });
 Route::get('/complaints', [ComplaintController::class, 'complaints'])->name('complaints');
 Route::get('/userComplaints', [ComplaintController::class, 'userComplaints'])->name('userComplaints');
@@ -58,6 +61,3 @@ Route::get('/showComplaint/{id}', [ComplaintController::class, 'showComplaint'])
 // Дан системээр нэвтрэх
 Route::get('auth/redirect', [DanAuthController::class, 'redirectToDan']);
 Route::get('auth/callback', [DanAuthController::class, 'handleDanCallback']);
-
-// 1111 ээс санал хүсэлт авах
-Route::get('/sourceComplaints', [SourceComplaintController::class, 'sourceComplaints'])->name('sourceComplaints');
