@@ -49,6 +49,9 @@ class SourceComplaintController extends Controller
             ];
         }
 
+        $complaints = array_multisort(array_column($complaints, 'created_at'), SORT_DESC, $complaints);
+
+
         return view('source.index', compact('complaints'));
     }
 }
