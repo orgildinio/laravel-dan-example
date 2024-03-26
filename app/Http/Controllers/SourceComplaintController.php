@@ -21,9 +21,10 @@ class SourceComplaintController extends Controller
         // $response = Http::get('http://103.87.69.87/GStest/APIa?action=get-tickets&count=30&u=smart_42&p=OYGNvAnwZ&api_key=0');
         // dd($response);
         $responseData = $response->getBody()->getContents();
+        $data = $responseData['smart'];
 
         // Convert the JSON response to an array
-        $dataArray = json_decode($responseData['smart'], true);
+        $dataArray = json_decode($data, true);
         // dd($dataArray['smart']['smart']);
 
         // // Convert JSON string to PHP array
