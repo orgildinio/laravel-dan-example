@@ -39,7 +39,18 @@ class SourceComplaintController extends Controller
                 "created_at" => $data['smart']['created_at'][$key],
                 "source" => $data['smart']['source'][$key],
                 "quarter" => $data['smart']['quarter'][$key],
-                // Add other fields here
+                "assigned_at" => $data['smart']['assigned_at'][$key],
+                "number" => $data['smart']['number'][$key],
+                "city" => $data['smart']['city'][$key],
+                "register_no" => $data['smart']['register_no'][$key],
+                "phone" => $data['smart']['phone'][$key],
+                "content" => $data['smart']['content'][$key],
+                "email" => $data['smart']['email'][$key],
+                "type" => $data['smart']['type'][$key],
+                "address" => $data['smart']['address'][$key],
+                "district" => $data['smart']['district'][$key],
+                "fullname" => $data['smart']['fullname'][$key],
+                "path" => $data['smart']['path'][$key]
             ];
         }
 
