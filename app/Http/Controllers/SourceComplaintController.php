@@ -49,9 +49,16 @@ class SourceComplaintController extends Controller
             ];
         }
 
-        $complaints = array_multisort(array_column($complaints, 'created_at'), SORT_DESC, $complaints);
+        // Convert the array to a Laravel Collection
+        $collection = collect($complaints);
+
+        // Sort the collection by created_at in descending order
+        $sortedCollection = $collection->sortByDesc('created_at');
+
+        // Convert the sorted collection back to an array
+        $sortedData = $sortedCollection->values()->all();
 
 
-        return view('source.index', compact('complaints'));
+        return view('source.index', compact('sortedData'));
     }
 }
