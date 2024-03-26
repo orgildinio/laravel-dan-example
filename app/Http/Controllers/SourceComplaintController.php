@@ -23,7 +23,7 @@ class SourceComplaintController extends Controller
         $responseData = $response->getBody()->getContents();
 
         // Convert the JSON response to an array
-        $dataArray = json_decode($responseData, true);
+        $dataArray = json_decode($responseData['smart'], true);
         // dd($dataArray['smart']['smart']);
 
         // // Convert JSON string to PHP array
@@ -33,7 +33,7 @@ class SourceComplaintController extends Controller
         $convertedData = [];
 
         // Iterate through the 'smart' array to create the desired format
-        foreach ($dataArray['smart']['smart'] as $key => $value) {
+        foreach ($dataArray['smart']['created_at'] as $key => $value) {
             $convertedData[] = [
                 "created_at" => $dataArray['smart']['created_at'][$key],
                 "source" => $dataArray['smart']['source'][$key],
