@@ -140,26 +140,26 @@
                                     class="text-xs leading-4 font-normal text-gray-500"> №</span>
                                 {{ $complaint['number'] }}</div>
                             <div class="text-xs leading-5"><span class="text-xs leading-4 font-normal text-gray-500 pr">
-                                    Төрөл: </span> {{ $complaint->type }}</div>
+                                    Төрөл: </span> {{ $complaint['type'] }}</div>
                             <div class="text-xs leading-5"><span class="text-xs leading-4 font-normal text-gray-500">
-                                    Шинээр ирсэн: </span>{{ $complaint->created_at }}</div>
+                                    Шинээр ирсэн: </span>{{ $complaint['created_at'] }}</div>
                         </div>
                         <div class="flex-1">
                             <div class="ml-3 space-y-1 border-r-2 pr-3">
                                 <div class="text-sm leading-4 font-semibold">
-                                    {{ $complaint->fullname }}
+                                    {{ $complaint['fullname'] }}
                                     <span
                                         class="text-xs leading-4 font-normal text-gray-500">Иргэн</span>
                                 </div>
                                 <div class="text-sm leading-4 font-normal">
-                                    {{ Str::limit($complaint->content, 200) }}
+                                    {{ Str::limit($complaint['content'], 200) }}
                                 </div>
                             </div>
                         </div>
                         <div>
                             <div class="ml-3 my-5 bg-red-500 p-1 w-20">
                                 <div class="uppercase text-xs leading-4 font-semibold text-center text-white">
-                                    {{ $complaint->type}}</div>
+                                    {{ $complaint['type']}}</div>
                             </div>
                         </div>
                     </div>
