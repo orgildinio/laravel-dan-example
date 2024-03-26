@@ -24,7 +24,7 @@ class SourceComplaintController extends Controller
 
         // Convert the JSON response to an array
         $dataArray = json_decode($responseData, true);
-        dd($dataArray['smart']);
+        dd($dataArray['smart']['smart']);
 
         // // Convert JSON string to PHP array
         // $data = json_decode($results, true);
