@@ -132,14 +132,13 @@
         {{-- List of complaints --}}
         @if (count($complaints) > 0)
             @foreach ($complaints as $complaint)
-                <div>ddddd</div>
-                {{-- <div class="mx-auto border border-gray-200 rounded-lg text-gray-700 mb-0.5 h-30 complaint-show cursor-pointer hover:bg-gray-100"
+                <div class="mx-auto border border-gray-200 rounded-lg text-gray-700 mb-0.5 h-30 complaint-show cursor-pointer hover:bg-gray-100"
                     data-id="">
                     <div class="flex p-3 border-l-4 border-red-500 rounded-lg">
                         <div class="space-y-1 border-r-2 pr-3">
-                            <div class="text-xs leading-5 font-semibold"><span
+                            {{-- <div class="text-xs leading-5 font-semibold"><span
                                     class="text-xs leading-4 font-normal text-gray-500"> №</span>
-                                {{ $complaint->number }}</div>
+                                {{ $complaint->number }}</div> --}}
                             <div class="text-xs leading-5"><span class="text-xs leading-4 font-normal text-gray-500 pr">
                                     Төрөл: </span> {{ $complaint->type }}</div>
                             <div class="text-xs leading-5"><span class="text-xs leading-4 font-normal text-gray-500">
@@ -164,7 +163,7 @@
                             </div>
                         </div>
                     </div>
-                </div> --}}
+                </div>
             @endforeach
             {{-- {!! $complaints->links() !!} --}}
         @else
