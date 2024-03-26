@@ -136,9 +136,9 @@
                     data-id="">
                     <div class="flex p-3 border-l-4 border-red-500 rounded-lg">
                         <div class="space-y-1 border-r-2 pr-3">
-                            {{-- <div class="text-xs leading-5 font-semibold"><span
+                            <div class="text-xs leading-5 font-semibold"><span
                                     class="text-xs leading-4 font-normal text-gray-500"> №</span>
-                                {{ $complaint->number }}</div> --}}
+                                {{ $complaint['number'] }}</div>
                             <div class="text-xs leading-5"><span class="text-xs leading-4 font-normal text-gray-500 pr">
                                     Төрөл: </span> {{ $complaint->type }}</div>
                             <div class="text-xs leading-5"><span class="text-xs leading-4 font-normal text-gray-500">
