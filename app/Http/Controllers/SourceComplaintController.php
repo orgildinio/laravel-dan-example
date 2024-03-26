@@ -31,11 +31,11 @@ class SourceComplaintController extends Controller
         // $data = json_decode($results, true);
 
         // Initialize an empty array for the converted data
-        $convertedData = [];
+        $complaints = [];
 
         // Iterate through the 'smart' array to create the desired format
         foreach ($data['smart']['created_at'] as $key => $value) {
-            $convertedData[] = [
+            $complaints[] = [
                 "created_at" => $data['smart']['created_at'][$key],
                 "source" => $data['smart']['source'][$key],
                 "quarter" => $data['smart']['quarter'][$key],
@@ -53,12 +53,7 @@ class SourceComplaintController extends Controller
                 "path" => $data['smart']['path'][$key],
             ];
         }
-        dd($convertedData);
 
-        // Encode the converted data back to JSON format if needed
-        $convertedJson = json_encode($convertedData, JSON_PRETTY_PRINT);
-
-        // Print or return the converted JSON data
-        return $convertedJson;
+        return view('source.sourceComplaints', compact('complaints'));
     }
 }
