@@ -31,8 +31,8 @@
                   </a>
                </li>
                <li>
-                  <a href="{{ route('sourceComplaint') }}"
-                     class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group {{ request()->is('sourceComplaint') ? 'bg-gray-100' : '' }}">
+                  <a href="{{ route('sourceComplaints') }}"
+                     class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group {{ request()->is('sourceComplaints') ? 'bg-gray-100' : '' }}">
                      <img src="{{ asset('/image/soyombo.svg')}}" class="w-[24px] h-[24px] shrink-0 inline-block" alt="new">
                      <span class="ml-3 flex-1 whitespace-nowrap">1111-н хүсэлт</span>
                      <span
