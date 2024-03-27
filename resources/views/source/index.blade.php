@@ -67,7 +67,7 @@
             const firstname = nameParts.slice(1).join(' ');
             
             // Redirect to create page with data
-            window.location.href = url + '?firstname=' + firstname + '&lastname=' + lastname + '&email=' + email + '&created=' + created + '&phone=' + phone + '&city=' + city + '&district=' + district + '&address=' + address;
+            window.location.href = url + '?firstname=' + firstname + '&lastname=' + lastname + '&email=' + email + '&created=' + created + '&phone=' + phone + '&city=' + city + '&district=' + district + '&address=' + address + '&content=' + content;
         });
     });
 </script>
