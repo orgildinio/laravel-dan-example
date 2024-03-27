@@ -3,7 +3,7 @@
         @if (count($complaints) > 0)
             @foreach ($complaints as $complaint)
                 <div class="mx-auto border border-gray-200 rounded-lg text-gray-700 mb-0.5 h-30 clickable-row cursor-pointer hover:bg-gray-100"
-                data-url="{{ route('complaint.create') }}" data-fullname="{{ $complaint->fullname }}" data-email="{{ $complaint->email }}">
+                data-url="{{ route('complaint.create') }}" data-created="{{ $complaint->created_date }}" data-fullname="{{ $complaint->fullname }}" data-phone="{{ $complaint->phone }}" data-email="{{ $complaint->email }}" data-city="{{ $complaint->city }}" data-district="{{ $complaint->district }}" data-address="{{ $complaint->address }}">
                     <div class="flex p-3 border-l-4 border-red-500 rounded-lg">
                         <div class="space-y-1 border-r-2 pr-3">
                             <div class="text-xs leading-5 font-semibold"><span
@@ -50,28 +50,23 @@
 @push('scripts')
 
 <script>
-    // document.addEventListener('DOMContentLoaded', function () {
-    //     // Add click event listener to all table rows with class 'clickable-row'
-    //     document.querySelectorAll('.clickable-row').forEach(function (row) {
-    //         row.addEventListener('click', function () {
-    //             // Get the data-url attribute value from the clicked row
-    //             var url = this.getAttribute('data-url');
-    //             // Redirect to the create page
-    //             window.location.href = url + '?name=' + name
-
-    //             // Prefill form inputs with parameters
-    //             var name = $(this).data('name');
-    //         });
-    //     });
-    // });
     $(document).ready(function () {
         $('.clickable-row').click(function () {
-            var url = $(this).data('url');
-            var fullname = $(this).data('fullname');
-            var email = $(this).data('email');
+            const url = $(this).data('url');
+            const created = $(this).data('created');
+            const fullname = $(this).data('fullname');
+            const phone = $(this).data('phone');
+            const email = $(this).data('email');
+            const city = $(this).data('city');
+            const district = $(this).data('district');
+            const address = $(this).data('address');
+
+            const nameParts = fullname.split(' ');
+            const lastname = nameParts[0];
+            const firstname = nameParts.slice(1).join(' ');
             
             // Redirect to create page with data
-            window.location.href = url + '?fullname=' + fullname + '&email=' + email;
+            window.location.href = url + '?firstname=' + firstname + '&lastname=' + lastname + '&email=' + email + '&created=' + created + '&phone=' + phone + '&city=' + city + '&district=' + district + '&address=' + address;
         });
     });
 </script>

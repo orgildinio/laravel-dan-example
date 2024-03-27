@@ -43,7 +43,7 @@
                                     <path fill="currentColor" fill-rule="evenodd" d="M61,154.006845 C61,153.45078 61.4499488,153 62.0068455,153 L73.9931545,153 C74.5492199,153 75,153.449949 75,154.006845 L75,165.993155 C75,166.54922 74.5500512,167 73.9931545,167 L62.0068455,167 C61.4507801,167 61,166.550051 61,165.993155 L61,154.006845 Z M62,157 L74,157 L74,166 L62,166 L62,157 Z M64,152.5 C64,152.223858 64.214035,152 64.5046844,152 L65.4953156,152 C65.7740451,152 66,152.231934 66,152.5 L66,153 L64,153 L64,152.5 Z M70,152.5 C70,152.223858 70.214035,152 70.5046844,152 L71.4953156,152 C71.7740451,152 72,152.231934 72,152.5 L72,153 L70,153 L70,152.5 Z" transform="translate(-61 -152)"/>
                                   </svg>
                             </div>
-                            <input type="text" id="datetime" name="complaint_date" class="bg-gray-200 appearance-none  rounded w-full py-2 px-10 text-gray-700 text-sm leading-tight border-1 border-gray-200" value="{{ old('complaint_date') }}" />
+                            <input type="text" id="datetime" name="complaint_date" class="bg-gray-200 appearance-none  rounded w-full py-2 px-10 text-gray-700 text-sm leading-tight border-1 border-gray-200" value="{{ request('created') }}" />
                             @error('complaint_date')
                             <div class="text-red-500 text-sm">{{ $message }}</div>
                             @enderror
@@ -95,7 +95,7 @@
                             <div class="md:w-2/3">
                                 <input id="lastname"
                                     class="bg-gray-200 appearance-none  rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight @if($errors->has('lastname')) border border-red-500 @else border-1 border-gray-200 @endif"
-                                    type="text" name="lastname" value="{{old('lastname')}}">
+                                    type="text" name="lastname" value="{{request('lastname')}}">
                                 @error('lastname')
                                 <div class="text-red-500 text-sm">{{ $message }}</div>
                                 @enderror
@@ -113,7 +113,7 @@
                             <div class="md:w-2/3">
                                 <input id="firstname"
                                     class="bg-gray-200 appearance-none rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight @if($errors->has('firstname')) border border-red-500 @else border-1 border-gray-200 @endif"
-                                    type="text" name="firstname" value="{{ request('fullname') }}">
+                                    type="text" name="firstname" value="{{ request('firstname') }}">
                                 @error('firstname')
                                 <div class="text-red-500 text-sm mt-1 mb-1">{{ $message }}</div>
                                 @enderror
@@ -164,7 +164,7 @@
                         <div class="md:w-2/3">
                             <input id="phoneNumber"
                                 class="bg-gray-200 appearance-none rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight @if($errors->has('phone')) border border-red-500 @else border-1 border-gray-200 @endif"
-                                type="text" name="phone" value="{{old('phone')}}">
+                                type="text" name="phone" value="{{request('phone')}}">
                             @error('phone')
                             <div class="text-red-500 text-sm mt-1 mb-1">{{ $message }}</div>
                             @enderror
@@ -196,7 +196,7 @@
                         <div class="md:w-2/3">
                             <input id="capitalProvince"
                                 class="bg-gray-200 appearance-none rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight @if($errors->has('country')) border border-red-500 @else border-1 border-gray-200 @endif"
-                                type="text" name="country" value="{{old('country')}}">
+                                type="text" name="country" value="{{request('city')}}">
                             @error('country')
                             <div class="text-red-500 text-sm mt-1 mb-1">{{ $message }}</div>
                             @enderror
@@ -212,7 +212,7 @@
                         <div class="md:w-2/3">
                             <input id="districtsum"
                                 class="bg-gray-200 appearance-none rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight @if($errors->has('district')) border border-red-500 @else border-1 border-gray-200 @endif"
-                                type="text" name="district" value="{{old('district')}}">
+                                type="text" name="district" value="{{request('district')}}">
                             @error('district')
                             <div class="text-red-500 text-sm mt-1 mb-1">{{ $message }}</div>
                             @enderror
@@ -228,7 +228,7 @@
                         <div class="md:w-2/3">
                             <input id="khorooBag"
                                 class="bg-gray-200 appearance-none rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight @if($errors->has('khoroo')) border border-red-500 @else border-1 border-gray-200 @endif"
-                                type="text" name="khoroo" value="{{old('khoroo')}}">
+                                type="text" name="khoroo" value="{{request('address')}}">
                             @error('khoroo')
                             <div class="text-red-500 text-sm mt-1 mb-1">{{ $message }}</div>
                             @enderror
