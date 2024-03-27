@@ -23,7 +23,7 @@
                                 </div>
                                 <div class="text-sm leading-4 font-normal">
                                     {{-- {{ Str::limit($complaint['content'], 200) }} --}}
-                                    {{ htmlspecialchars_decode($complaint['content']) }}
+                                    {{ html_entity_decode($complaint['content']) }}
                                 </div>
                             </div>
                         </div>
