@@ -18,7 +18,7 @@
                @if (Auth::user()->org_id == 99)   
                <li>
                   <a href="{{ route('sourceComplaint.index') }}"
-                     class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group {{ request()->is('sourceComplaint.index') ? 'bg-gray-100' : '' }}">
+                     class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group {{ Request::routeIs('sourceComplaint.index') ? 'bg-gray-100' : '' }}">
                      <img src="{{ asset('/image/source-control.svg')}}" class="w-[24px] h-[24px] shrink-0 inline-block" alt="new">
                      <span class="ml-3 flex-1 whitespace-nowrap">1111-н хүсэлт</span>
                      <span
