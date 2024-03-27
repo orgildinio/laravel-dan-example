@@ -3,7 +3,7 @@
         @if (count($complaints) > 0)
             @foreach ($complaints as $complaint)
                 <div class="mx-auto border border-gray-200 rounded-lg text-gray-700 mb-0.5 h-30 clickable-row cursor-pointer hover:bg-gray-100"
-                data-url="{{ route('complaint.create', ['complaint' => $complaint]) }}">
+                data-url="{{ route('complaint.create', ['fullname' => $complaint['fullname']]) }}">
                     <div class="flex p-3 border-l-4 border-red-500 rounded-lg">
                         <div class="space-y-1 border-r-2 pr-3">
                             <div class="text-xs leading-5 font-semibold"><span
@@ -58,6 +58,10 @@
                 var url = this.getAttribute('data-url');
                 // Redirect to the create page
                 window.location.href = url;
+
+                // Prefill form inputs with parameters
+                var fullname = this.getAttribute('fullname');
+                document.getElementById('fullname').value = fullname;
             });
         });
     });
