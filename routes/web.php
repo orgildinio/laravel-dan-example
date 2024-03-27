@@ -52,6 +52,7 @@ Route::middleware([
     Route::resource('/organization', OrganizationController::class);
 
     // 1111 ээс санал хүсэлт авах
+    Route::resource('/sourceComplaint', SourceComplaintController::class);
     Route::get('/fetchComplaints', [SourceComplaintController::class, 'fetchComplaints'])->name('fetchComplaints');
 });
 Route::get('/complaints', [ComplaintController::class, 'complaints'])->name('complaints');

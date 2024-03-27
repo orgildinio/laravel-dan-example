@@ -15,15 +15,17 @@
                      <span class="ml-3">Хянах самбар</span>
                   </a>
                </li>
-               {{-- <li>
-                  <a href="{{ route('sourceComplaints') }}"
-                     class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group {{ request()->is('sourceComplaints') ? 'bg-gray-100' : '' }}">
+               @if (Auth::user()->org_id == 99)   
+               <li>
+                  <a href="{{ route('sourceComplaint.index') }}"
+                     class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group {{ request()->is('sourceComplaint.index') ? 'bg-gray-100' : '' }}">
                      <img src="{{ asset('/image/source-control.svg')}}" class="w-[24px] h-[24px] shrink-0 inline-block" alt="new">
                      <span class="ml-3 flex-1 whitespace-nowrap">1111-н хүсэлт</span>
                      <span
                         class="bg-blue-200 text-gray-800 ml-3 text-sm font-medium inline-flex items-center justify-center px-2 rounded-full"></span>
                   </a>
-               </li> --}}
+               </li>
+               @endif
                <li>
                   <a href="{{ route('complaintStatus', ['id' => 0]) }}"
                      class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group {{ request()->is('complaintStatus/0') ? 'bg-gray-100' : '' }}">

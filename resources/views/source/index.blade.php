@@ -1,7 +1,7 @@
-{{-- <x-admin-layout>
+<x-admin-layout>
     <div class="bg-white shadow rounded-lg p-4 2xl:col-span-1">
-        @if (count($sortedData) > 0)
-            @foreach ($sortedData as $complaint)
+        @if (count($complaints) > 0)
+            @foreach ($complaints as $complaint)
                 <div class="mx-auto border border-gray-200 rounded-lg text-gray-700 mb-0.5 h-30 complaint-show cursor-pointer hover:bg-gray-100"
                     data-id="">
                     <div class="flex p-3 border-l-4 border-red-500 rounded-lg">
@@ -43,4 +43,4 @@
         @endif
         <br>
     </div>
-</x-admin-layout> --}}
+</x-admin-layout>
