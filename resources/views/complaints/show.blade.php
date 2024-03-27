@@ -190,7 +190,7 @@
                         </div>
                     </div>
 
-                    <div class="px-2">
+                    <div class="">
                         <p tabindex="0"
                             class="bg-gray-50 rounded focus:outline-none text-sm leading-5 p-2 my-2 text-gray-700 text-justify">
                             {{ $complaint->complaint }}</p>
