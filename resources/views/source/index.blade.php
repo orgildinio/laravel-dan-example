@@ -22,7 +22,8 @@
                                         class="text-xs leading-4 font-normal text-gray-500">Иргэн</span>
                                 </div>
                                 <div class="text-sm leading-4 font-normal">
-                                    {{ Str::limit($complaint['content'], 200) }}
+                                    {{-- {{ Str::limit($complaint['content'], 200) }} --}}
+                                    {{ html_entity_decode($complaint['content'], ENT_QUOTES, 'UTF-8'); }}
                                 </div>
                             </div>
                         </div>
