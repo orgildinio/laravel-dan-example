@@ -113,7 +113,7 @@
                             <div class="md:w-2/3">
                                 <input id="firstname"
                                     class="bg-gray-200 appearance-none rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight @if($errors->has('firstname')) border border-red-500 @else border-1 border-gray-200 @endif"
-                                    type="text" name="firstname" value="">
+                                    type="text" name="firstname" value="{{ request('fullname') }}">
                                 @error('firstname')
                                 <div class="text-red-500 text-sm mt-1 mb-1">{{ $message }}</div>
                                 @enderror
@@ -180,7 +180,7 @@
                         <div class="md:w-2/3">
                             <input id="mail"
                                 class="bg-gray-200 appearance-none rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight @if($errors->has('email')) border border-red-500 @else border-1 border-gray-200 @endif"
-                                type="email" name="email" value="{{old('email')}}">
+                                type="email" name="email" value="{{request('email')}}">
                             @error('email')
                             <div class="text-red-500 text-sm mt-1 mb-1">{{ $message }}</div>
                             @enderror
