@@ -362,7 +362,7 @@
                         <div class="md:w-2/3">
                             <textarea
                                 class="bg-gray-200 appearance-none rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight @if($errors->has('complaint')) border border-red-500 @else border-1 border-gray-200 @endif"
-                                name="complaint" rows="3">{{old('complaint')}}</textarea>
+                                name="complaint" rows="3">{{request('content')}}</textarea>
                             @error('complaint')
                             <div class="text-red-500 text-sm mt-1 mb-1">{{ $message }}</div>
                             @enderror

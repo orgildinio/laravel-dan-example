@@ -3,7 +3,7 @@
         @if (count($complaints) > 0)
             @foreach ($complaints as $complaint)
                 <div class="mx-auto border border-gray-200 rounded-lg text-gray-700 mb-0.5 h-30 clickable-row cursor-pointer hover:bg-gray-100"
-                data-url="{{ route('complaint.create') }}" data-created="{{ $complaint->created_date }}" data-fullname="{{ $complaint->fullname }}" data-phone="{{ $complaint->phone }}" data-email="{{ $complaint->email }}" data-city="{{ $complaint->city }}" data-district="{{ $complaint->district }}" data-address="{{ $complaint->address }}">
+                data-url="{{ route('complaint.create') }}" data-created="{{ $complaint->created_date }}" data-fullname="{{ $complaint->fullname }}" data-phone="{{ $complaint->phone }}" data-email="{{ $complaint->email }}" data-city="{{ $complaint->city }}" data-district="{{ $complaint->district }}" data-address="{{ $complaint->address }}" data-content="{{ $complaint->content }}">
                     <div class="flex p-3 border-l-4 border-red-500 rounded-lg">
                         <div class="space-y-1 border-r-2 pr-3">
                             <div class="text-xs leading-5 font-semibold"><span
@@ -60,6 +60,7 @@
             const city = $(this).data('city');
             const district = $(this).data('district');
             const address = $(this).data('address');
+            const content = $(this).data('content');
 
             const nameParts = fullname.split(' ');
             const lastname = nameParts[0];
