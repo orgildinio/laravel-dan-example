@@ -12,7 +12,7 @@
                             <div class="text-xs leading-5"><span class="text-xs leading-4 font-normal text-gray-500 pr">
                                     Төрөл: </span> {{ $complaint['type'] }}</div>
                             <div class="text-xs leading-5"><span class="text-xs leading-4 font-normal text-gray-500">
-                                    Шинээр ирсэн: </span>{{ $complaint['created_at'] }}</div>
+                                    Шинээр ирсэн: </span>{{ $complaint['created_date'] }}</div>
                         </div>
                         <div class="flex-1">
                             <div class="ml-3 space-y-1 border-r-2 pr-3">

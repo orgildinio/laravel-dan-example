@@ -119,7 +119,6 @@ class SourceComplaintController extends Controller
     {
         $complaints = SourceComplaint::orderBy('created_date', 'desc')->paginate(25);
 
-        return view('source.index', compact('complaints'))
-            ->with('i', (request()->input('page', 1) - 1) * 5);
+        return view('source.index', compact('complaints'));
     }
 }
