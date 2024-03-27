@@ -192,7 +192,7 @@
 
                     <div class="px-2">
                         <p tabindex="0"
-                            class="focus:outline-none text-sm leading-5 py-2 text-gray-700 text-justify">
+                            class="bg-gray-50 rounded focus:outline-none text-sm leading-5 p-2 my-2 text-gray-700 text-justify">
                             {{ $complaint->complaint }}</p>
                     </div>
 
