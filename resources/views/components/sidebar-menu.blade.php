@@ -15,7 +15,7 @@
                      <span class="ml-3">Хянах самбар</span>
                   </a>
                </li>
-               @if (Auth::user()->org_id == 99)   
+               {{-- @if (Auth::user()->org_id == 99)    --}}
                <li>
                   <a href="{{ route('sourceComplaint.index') }}"
                      class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group {{ Request::routeIs('sourceComplaint.index') ? 'bg-gray-100' : '' }}">
@@ -25,7 +25,7 @@
                         class="bg-blue-200 text-gray-800 ml-3 text-sm font-medium inline-flex items-center justify-center px-2 rounded-full"></span>
                   </a>
                </li>
-               @endif
+               {{-- @endif --}}
                <li>
                   <a href="{{ route('complaintStatus', ['id' => 0]) }}"
                      class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group {{ request()->is('complaintStatus/0') ? 'bg-gray-100' : '' }}">
