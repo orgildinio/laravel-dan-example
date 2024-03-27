@@ -35,6 +35,7 @@
                     </div>
                 </div>
             @endforeach
+            {!! $complaints->links() !!}
         @else
             <div class="text-gray-500">
                 <img class="w-32 h-32 mx-auto" src="{{ asset('/image/empty.svg') }}" alt="image empty states">
