@@ -29,6 +29,6 @@ class LogSuccessfulLogin
         $user = $event->user;
         // Log::info('User logged in: ' . $user->email);
         $ipAddress = request()->ip(); // Get the user's IP address
-        Log::channel('auth_log')->info('User logged in successfully: ' . $user->email . ' from IP: ' . $ipAddress);
+        Log::channel('auth_log')->info('User logged in successfully: ' . 'user_id: ' . $user->id . ', Username: ' . $user->name . ', Email: ' . $user->email . ' from IP: ' . $ipAddress);
     }
 }
