@@ -228,7 +228,7 @@
                         <div class="md:w-2/3">
                             <input id="khorooBag"
                                 class="bg-gray-200 appearance-none rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight @if($errors->has('khoroo')) border border-red-500 @else border-1 border-gray-200 @endif"
-                                type="text" name="khoroo" value="{{request('address')}}">
+                                type="text" name="khoroo" value="{{request('quarter')}}">
                             @error('khoroo')
                             <div class="text-red-500 text-sm mt-1 mb-1">{{ $message }}</div>
                             @enderror
@@ -244,7 +244,7 @@
                         <div class="md:w-2/3">
                             <textarea
                                 class="bg-gray-200 appearance-none rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight @if($errors->has('addressDetail')) border border-red-500 @else border-1 border-gray-200 @endif"
-                                name="addressDetail" rows="3">{{old('addressDetail')}}</textarea>
+                                name="addressDetail" rows="3">{{request('address')}}</textarea>
                             @error('addressDetail')
                             <div class="text-red-500 text-sm mt-1 mb-1">{{ $message }}</div>
                             @enderror
