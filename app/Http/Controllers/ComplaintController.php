@@ -451,9 +451,10 @@ class ComplaintController extends Controller
         }
 
         // channel_id = 7 байвал 1111 төвийн гомдол
-        if ($complaint->channel_id == 7 && $input['source_number'] != null) {
+        $source_number = $input['source_number'];
+        if ($complaint->channel_id == 7 && $source_number != null) {
 
-            $sourceComplaint = SourceComplaint::where('number', '')->first();
+            $sourceComplaint = SourceComplaint::where('number', $source_number)->first();
 
             if ($sourceComplaint != null && $sourceComplaint->complaint_id == null) {
                 $sourceComplaint->update(['complaint_id' => $complaint->id]);
