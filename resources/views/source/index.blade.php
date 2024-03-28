@@ -32,8 +32,8 @@
                                 <div class="uppercase text-xs leading-4 font-semibold text-center text-white">
                                     {{ $complaint['type']}}</div>
                             </div>
-                            <div class="ml-3 p-2 bg-gray-100 rounded">
-                                {{ $complaint['complaint_id'] }}
+                            <div class="ml-3 p-1 bg-gray-100 rounded">
+                                {{ isset($complaint['complaint_id']) ? 'Бүртгэгдсэн' : '' }}
                             </div>
                         </div>
                     </div>
