@@ -455,11 +455,19 @@ class ComplaintController extends Controller
         if ($complaint->channel_id == 7 && $source_number != null) {
 
             $sourceComplaint = SourceComplaint::where('number', $source_number)->first();
-            $sourceComplaint->update(['complaint_id' => $complaint->id]);
 
             // if ($sourceComplaint != null && $sourceComplaint->complaint_id == null) {
             //     $sourceComplaint->update(['complaint_id' => $complaint->id]);
             // }
+
+            if ($sourceComplaint) {
+                // Update the record
+                $sourceComplaint->complaint_id = $complaint->id;
+                $sourceComplaint->save();
+                echo "Record updated successfully.";
+            } else {
+                echo "Record not found.";
+            }
         }
 
 
