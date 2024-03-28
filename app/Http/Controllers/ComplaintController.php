@@ -31,6 +31,7 @@ use Illuminate\Support\Facades\Redis;
 use Symfony\Component\Console\Input\Input;
 use App\Http\Requests\ComplaintStoreRequest;
 use App\Models\ComplaintStep as ModelsComplaintStep;
+use App\Models\SourceComplaint;
 
 class ComplaintController extends Controller
 {
@@ -447,6 +448,16 @@ class ComplaintController extends Controller
                 'desc' => 'Хүлээн авсан',
                 'status_id' => 2
             ]);
+        }
+
+        // channel_id = 7 байвал 1111 төвийн гомдол
+        if ($complaint->channel_id == 7 && $input['source_number'] != null) {
+
+            $sourceComplaint = SourceComplaint::where('number', '')->first();
+
+            if ($sourceComplaint != null && $sourceComplaint->complaint_id == null) {
+                $sourceComplaint->update(['complaint_id' => $complaint->id]);
+            }
         }
 
 

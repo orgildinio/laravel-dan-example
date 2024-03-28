@@ -381,6 +381,8 @@
                                 id="inline-full-name" type="file" name="file">
                         </div>
                     </div>
+                    {{-- 1111-н гомдлын дугаар давхар request-р илгээх --}}
+                    <input type="hidden" name="source_number" value="{{request('number')}}">
                     <div class="md:flex md:items-center mb-6">
                         <div class="md:w-1/3">
                         </div>
