@@ -434,7 +434,6 @@ class ComplaintController extends Controller
         if (empty($input['organization_id'])) {
             $input['organization_id'] = $user->org_id;
         }
-        dd($input);
 
         $complaint = Complaint::create($input);
 
