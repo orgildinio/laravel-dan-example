@@ -2,7 +2,7 @@
     <div class="bg-white shadow rounded-lg p-4 2xl:col-span-1">
         @if (count($complaints) > 0)
             @foreach ($complaints as $complaint)
-                <div class="mx-auto border border-gray-200 rounded-lg text-gray-700 mb-0.5 h-30 @if (isset($complaint['complaint_id'])) 'clickable-row' @else 'disabled' @endif cursor-pointer hover:bg-gray-100"
+                <div class="mx-auto border border-gray-200 rounded-lg text-gray-700 mb-0.5 h-30 clickable-row cursor-pointer hover:bg-gray-100"
                     data-url="{{ route('complaint.create') }}" data-created="{{ $complaint->created_date }}"
                     data-fullname="{{ $complaint->fullname }}" data-phone="{{ $complaint->phone }}"
                     data-email="{{ $complaint->email }}" data-city="{{ $complaint->city }}"
