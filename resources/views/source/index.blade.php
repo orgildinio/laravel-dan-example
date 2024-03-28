@@ -32,7 +32,7 @@
                                 <div class="uppercase text-xs leading-4 font-semibold text-center text-white">
                                     {{ $complaint['type']}}</div>
                             </div>
-                            <div class="p-2 bg-gray-100">
+                            <div class="ml-3 p-2 bg-gray-100 rounded">
                                 {{ $complaint['complaint_id'] }}
                             </div>
                         </div>
