@@ -73,7 +73,7 @@ class SourceComplaintController extends Controller
 
     public function index()
     {
-        $complaints = SourceComplaint::orderBy('created_date', 'desc')->paginate(25);
+        $complaints = SourceComplaint::orderBy('created_date', 'desc')->paginate(15);
 
         return view('source.index', compact('complaints'));
     }

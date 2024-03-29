@@ -13,33 +13,35 @@
                         <div class="space-y-1 border-r-2 pr-3">
                             <div class="text-xs leading-5 font-semibold"><span
                                     class="text-xs leading-4 font-normal text-gray-500"> №</span>
-                                {{ $complaint['number'] }}</div>
+                                {{ $complaint->number }}</div>
                             <div class="text-xs leading-5"><span class="text-xs leading-4 font-normal text-gray-500 pr">
-                                    Төрөл: </span> {{ $complaint['type'] }}</div>
+                                    Төрөл: </span> {{ $complaint->type }}</div>
                             <div class="text-xs leading-5"><span class="text-xs leading-4 font-normal text-gray-500">
-                                    Шинээр ирсэн: </span>{{ $complaint['created_date'] }}</div>
+                                    Шинээр ирсэн: </span>{{ $complaint->created_date }}</div>
                         </div>
                         <div class="flex-1">
                             <div class="ml-3 space-y-1 border-r-2 pr-3">
                                 <div class="text-sm leading-4 font-semibold">
-                                    {{ $complaint['fullname'] }}
+                                    {{ $complaint->fullname }}
                                     <span class="text-xs leading-4 font-normal text-gray-500">Иргэн</span>
                                 </div>
                                 <div class="text-sm leading-4 font-normal">
                                     {{-- {{ Str::limit($complaint['content'], 200) }} --}}
                                     {{-- {{ html_entity_decode($complaint['content'], ENT_QUOTES, 'UTF-8') }} --}}
-                                    {{ e($complaint['content']) }}
+                                    {{ $complaint->content }}
                                 </div>
                             </div>
                         </div>
                         <div>
                             <div class="ml-3 my-5 bg-red-500 p-1 w-20">
                                 <div class="uppercase text-xs leading-4 font-semibold text-center text-white">
-                                    {{ $complaint['type'] }}</div>
+                                    {{ $complaint->type }}</div>
                             </div>
+                            @if (isset($complaint->complaint_id))
                             <div class="ml-3 p-1 bg-gray-100 rounded text-xs">
-                                {{ isset($complaint['complaint_id']) ? 'Бүртгэгдсэн' : '' }}
+                                Бүртгэгдсэн
                             </div>
+                            @endif
                         </div>
                     </div>
                 </div>
