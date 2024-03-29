@@ -75,10 +75,17 @@
                 const lastname = nameParts[0];
                 const firstname = nameParts.slice(1).join(' ');
 
+                // Create a temporary DOM element to decode the HTML entities
+                var tempElement = document.createElement('div');
+                tempElement.innerHTML = content;
+
+                // Retrieve the decoded text from the temporary element
+                var decodedText = tempElement.textContent || tempElement.innerText;
+
                 // Redirect to create page with data
                 window.location.href = url + '?firstname=' + firstname + '&lastname=' + lastname +
                     '&email=' + email + '&created=' + created + '&phone=' + phone + '&city=' + city +
-                    '&district=' + district + '&address=' + address + '&content=' + content + '&number=' +
+                    '&district=' + district + '&address=' + address + '&content=' + decodedText + '&number=' +
                     number + '&quarter=' + quarter;
             });
         });
