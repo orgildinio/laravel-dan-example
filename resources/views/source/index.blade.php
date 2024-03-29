@@ -27,7 +27,8 @@
                                 </div>
                                 <div class="text-sm leading-4 font-normal">
                                     {{-- {{ Str::limit($complaint['content'], 200) }} --}}
-                                    {{ html_entity_decode($complaint['content'], ENT_QUOTES, 'UTF-8') }}
+                                    {{-- {{ html_entity_decode($complaint['content'], ENT_QUOTES, 'UTF-8') }} --}}
+                                    {{ $complaint['content'] }}
                                 </div>
                             </div>
                         </div>
