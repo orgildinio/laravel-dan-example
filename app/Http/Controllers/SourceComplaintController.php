@@ -71,10 +71,42 @@ class SourceComplaintController extends Controller
         }
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $complaints = SourceComplaint::orderBy('created_date', 'desc')->paginate(15);
+        $daterange = $request->query('daterange');
+        $search_text = $request->query('search_text');
+        $selected_year = $request->query('year');
+        $serial_number = $request->query('serial_number');
 
-        return view('source.index', compact('complaints'));
+        $query = SourceComplaint::query();
+
+        if (!empty($selected_year)) {
+            $query->whereYear('created_date', $selected_year);
+        } else {
+            $currentYear = now()->year;
+            $query->whereYear('created_date', $currentYear);
+        }
+
+        if (!empty($search_text)) {
+            $query->where('content', 'LIKE', '%' . $search_text . '%');
+        }
+        if (!empty($serial_number)) {
+            $query->where('number', 'LIKE', '%' . $serial_number . '%');
+        }
+
+        if (!empty($daterange)) {
+            $dates = explode(' to ', $daterange);
+            $start_date = $dates[0];
+            $end_date = $dates[1];
+
+            $query->whereBetween('created_date', [$start_date, $end_date]);
+        }
+
+        $complaints = $query->orderBy('created_date', 'desc')->paginate(15);
+
+        $currentYear = date('Y');
+        $years = range($currentYear, $currentYear - 5, -1);
+
+        return view('source.index', compact('complaints', 'serial_number', 'selected_year', 'daterange', 'search_text', 'years'));
     }
 }
