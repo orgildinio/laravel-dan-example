@@ -456,17 +456,20 @@ class ComplaintController extends Controller
 
             $sourceComplaint = SourceComplaint::where('number', $source_number)->first();
 
-            // if ($sourceComplaint != null && $sourceComplaint->complaint_id == null) {
-            //     $sourceComplaint->update(['complaint_id' => $complaint->id]);
-            // }
-
             if ($sourceComplaint) {
                 // Update the record
                 $sourceComplaint->complaint_id = $complaint->id;
                 $sourceComplaint->save();
-                echo "Record updated successfully.";
-            } else {
-                echo "Record not found.";
+
+                // 1111 төвийн гомдлыг хүлээн авсан төлөвт шилжүүлэх
+                // $params = [
+                //     'action' => 'do-receipt',
+                //     'number' => $source_number,
+                //     'u' => 'smart_42',
+                //     'p' => 'OYGNvAnwZ',
+                //     'api_key' => '-'
+                // ];
+                // $response = Http::get('https://www.11-11.mn/GStest/APIa', $params);
             }
         }
 
