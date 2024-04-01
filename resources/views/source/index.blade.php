@@ -1,3 +1,40 @@
+@php
+    function getBorderColor($category)
+    {
+        switch ($category) {
+            case 'Талархал':
+                return 'border-green-500';
+            case 'Гомдол':
+                return 'border-red-500';
+            case 'Санал':
+                return 'border-yellow-500';
+            case 'Хүсэлт':
+                return 'border-blue-500';
+            case 'Лавлагаа':
+                return 'border-cyan-500';
+            default:
+                return 'border-blue-500';
+        }
+    }
+
+    function getBgColor($category)
+    {
+        switch ($category) {
+            case 'Талархал':
+                return 'bg-green-500';
+            case 'Гомдол':
+                return 'bg-red-500';
+            case 'Санал':
+                return 'bg-yellow-500';
+            case 'Хүсэлт':
+                return 'bg-blue-500';
+            case 'Лавлагаа':
+                return 'bg-cyan-500';
+            default:
+                return 'bg-blue-500';
+        }
+    }
+@endphp
 <x-admin-layout>
     <div class="bg-white shadow rounded-lg p-4 2xl:col-span-1">
         @if (count($complaints) > 0)
@@ -9,7 +46,7 @@
                     data-district="{{ $complaint->district }}" data-address="{{ $complaint->address }}"
                     data-content="{{ $complaint->content }}" data-number="{{ $complaint->number }}"
                     data-quarter="{{ $complaint->quarter }}">
-                    <div class="flex p-3 border-l-4 border-red-500 rounded-lg">
+                    <div class="flex p-3 border-l-4 {{ getBorderColor($complaint->type) }} rounded-lg">
                         <div class="space-y-1 border-r-2 pr-3">
                             <div class="text-xs leading-5 font-semibold"><span
                                     class="text-xs leading-4 font-normal text-gray-500"> №</span>
@@ -33,7 +70,7 @@
                             </div>
                         </div>
                         <div>
-                            <div class="ml-3 my-5 bg-red-500 p-1 w-20">
+                            <div class="ml-3 my-5 {{ getBgColor($complaint->type) }} p-1 w-20">
                                 <div class="uppercase text-xs leading-4 font-semibold text-center text-white">
                                     {{ $complaint->type }}</div>
                             </div>
