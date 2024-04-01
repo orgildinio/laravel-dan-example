@@ -123,6 +123,13 @@ return [
             'path' => storage_path('logs/auth.log'),
             'level' => 'info',
         ],
+
+        '1111_log' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/1111.log'),
+            'level' => 'info',
+            'days' => 7,
+        ],
     ],
 
 ];

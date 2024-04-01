@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Carbon\Carbon;
 use App\Models\SourceComplaint;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Http;
 
 class FetchSourceComplaints extends Command
@@ -83,16 +84,11 @@ class FetchSourceComplaints extends Command
                 }
             }
 
-            // return response()->json(['message' => 'Data fetched and stored successfully.']);
-            // return Command::SUCCESS;
-            $this->info('Data fetched and saved successfully.');
+            // API request success
+            Log::channel('1111_log')->info('Data fetched and stored successfully.');
         } else {
             // API request failed
-            // return response()->json(['error' => 'Failed to fetch data from API.'], 500);
-            // return Command::FAILURE;
-            $this->info('Failed to fetch and save data.');
+            Log::channel('1111_log')->error('Failed to fetch and save data.');
         }
-
-        // return Command::SUCCESS;
     }
 }
