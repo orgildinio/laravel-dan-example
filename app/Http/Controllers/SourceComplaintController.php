@@ -104,6 +104,9 @@ class SourceComplaintController extends Controller
 
         $complaints = $query->orderBy('created_date', 'desc')->paginate(15);
 
+        // Append filter parameters to pagination links
+        $complaints->appends($request->query());
+
         $currentYear = date('Y');
         $years = range($currentYear, $currentYear - 5, -1);
 

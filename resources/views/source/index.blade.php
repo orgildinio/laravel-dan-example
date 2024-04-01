@@ -119,7 +119,7 @@
                             </g>
                         </svg>
                     </button>
-    
+
                     <button type="submit"
                         class="text-white bg-primary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 mb-2">
                         Хайх
@@ -128,7 +128,7 @@
             </div>
         </form>
 
-        
+
         @if (count($complaints) > 0)
             @foreach ($complaints as $complaint)
                 <div class="mx-auto border border-gray-200 rounded-lg text-gray-700 mb-0.5 h-30 clickable-row cursor-pointer hover:bg-gray-100"
@@ -143,7 +143,8 @@
                             <div class="text-xs leading-5 font-semibold"><span
                                     class="text-xs leading-4 font-normal text-gray-500"> №</span>
                                 {{ $complaint->number }}</div>
-                            <div class="text-xs leading-5"><span class="text-xs leading-4 font-normal text-gray-500 pr">
+                            <div class="text-xs leading-5"><span
+                                    class="text-xs leading-4 font-normal text-gray-500 pr">
                                     Төрөл: </span> {{ $complaint->type }}</div>
                             <div class="text-xs leading-5"><span class="text-xs leading-4 font-normal text-gray-500">
                                     Шинээр ирсэн: </span>{{ $complaint->created_date }}</div>
@@ -167,9 +168,9 @@
                                     {{ $complaint->type }}</div>
                             </div>
                             @if (isset($complaint->complaint_id))
-                            <div class="ml-3 p-1 bg-gray-100 rounded text-xs">
-                                Бүртгэгдсэн
-                            </div>
+                                <div class="ml-3 p-1 bg-gray-100 rounded text-xs">
+                                    Бүртгэгдсэн
+                                </div>
                             @endif
                         </div>
                     </div>
@@ -218,8 +219,34 @@
                 // Redirect to create page with data
                 window.location.href = url + '?firstname=' + firstname + '&lastname=' + lastname +
                     '&email=' + email + '&created=' + created + '&phone=' + phone + '&city=' + city +
-                    '&district=' + district + '&address=' + address + '&content=' + decodedText + '&number=' +
+                    '&district=' + district + '&address=' + address + '&content=' + decodedText +
+                    '&number=' +
                     number + '&quarter=' + quarter;
             });
+
+            $('#resetFilters').on('click', function() {
+
+                $('#resetIcon').addClass('animate-spin');
+                setTimeout(() => {
+                    $('#resetIcon').removeClass('animate-spin');
+                }, 1000);
+
+                // Reset filter values to their default or empty state
+                $('#daterange').val('');
+                $('#simple-search').val('');
+                $('#year').val('');
+
+                $('#daterange').change();
+                $('#simple-search').change();
+                $('#year').change();
+            });
+
+            $('#searchForm input, #searchForm select').keypress(function(event) {
+                if (event.keyCode === 13) { // Check if Enter key is pressed
+                    event.preventDefault(); // Prevent form submission
+                    $('#searchForm').submit(); // Submit the form
+                }
+            });
+
         });
     </script>
