@@ -21,6 +21,7 @@ class SourceComplaintController extends Controller
         ];
         $response = Http::get('https://www.11-11.mn/GStest/APIa', $params);
         $result = $response->json();
+        dd($result);
 
         // Check if API request was successful (isValid = true)
         if ($result['smart']['isValid']) {
