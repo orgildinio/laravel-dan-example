@@ -29,6 +29,7 @@ class SourceComplaintController extends Controller
             // Convert the JSON response to an array
             $dataArray = json_decode($responseData, true);
             $data = $dataArray['smart'];
+            Log::channel('1111_log')->info('Data fetched successfully.');
             dd($data);
 
             // Initialize an empty array for the converted data
@@ -66,7 +67,7 @@ class SourceComplaintController extends Controller
             //     }
             // }
 
-            Log::channel('1111_log')->info('Data fetched and stored successfully.');
+
             return response()->json(['message' => 'Data fetched and stored successfully.']);
         } else {
             // API request failed
