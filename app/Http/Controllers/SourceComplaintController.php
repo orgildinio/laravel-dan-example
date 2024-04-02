@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\SourceComplaint;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Models\SourceComplaint;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Http;
 
 class SourceComplaintController extends Controller
@@ -13,7 +14,7 @@ class SourceComplaintController extends Controller
     {
         $params = [
             'action' => 'get-tickets',
-            'count' => 200,
+            'count' => 30,
             'u' => 'smart_42',
             'p' => 'OYGNvAnwZ',
             'api_key' => 0
@@ -65,6 +66,7 @@ class SourceComplaintController extends Controller
             //     }
             // }
 
+            Log::channel('1111_log')->info('Data fetched and stored successfully.');
             return response()->json(['message' => 'Data fetched and stored successfully.']);
         } else {
             // API request failed
