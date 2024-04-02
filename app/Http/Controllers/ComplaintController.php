@@ -462,20 +462,18 @@ class ComplaintController extends Controller
                 $sourceComplaint->save();
 
                 // 1111 төвийн гомдлыг хүлээн авсан төлөвт шилжүүлэх
-                // $params = [
-                //     'action' => 'do-receipt',
-                //     'number' => $source_number,
-                //     'u' => 'smart_42',
-                //     'p' => 'OYGNvAnwZ',
-                //     'api_key' => '-'
-                // ];
-                // $response = Http::get('https://www.11-11.mn/GStest/APIa', $params);
+                $params = [
+                    'action' => 'do-receipt',
+                    'number' => $source_number,
+                    'u' => 'smart_42',
+                    'p' => 'OYGNvAnwZ',
+                    'api_key' => '-'
+                ];
+                $response = Http::get('https://www.11-11.mn/GStest/APIa', $params);
 
-                // if ($response->successful()) {
-
-                // }else {
-
-                // }
+                if ($response->successful()) {
+                } else {
+                }
             }
         }
 

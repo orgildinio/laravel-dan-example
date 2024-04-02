@@ -15,7 +15,7 @@ class SourceComplaintController extends Controller
         $params = [
             'action' => 'get-tickets',
             'count' => 30,
-            'u' => 'smart_42',
+            'u' => 'smart_42aaaaa',
             'p' => 'OYGNvAnwZ',
             'api_key' => 0
         ];
@@ -68,10 +68,10 @@ class SourceComplaintController extends Controller
             Log::channel('1111_log')->info('Data manually fetched successfully.');
             // dd($complaints);
 
-            return response()->json(['message' => 'Data fetched and stored successfully.']);
+            return response()->json(['message' => 'Data manually fetched and stored successfully.']);
         } else {
             // API request failed
-            Log::channel('1111_log')->info('Failed to manually fetch data from API.');
+            Log::channel('1111_log')->error('Failed to manually fetch data from API.');
             return response()->json(['error' => 'Failed to manually fetch data from API.'], 500);
         }
     }
