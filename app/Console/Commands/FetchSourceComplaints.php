@@ -47,11 +47,12 @@ class FetchSourceComplaints extends Command
             // API request success
             Log::channel('1111_log')->info('Data fetched successfully.');
 
-            $responseData = $response->getBody()->getContents();
+            // $responseData = $response->getBody()->getContents();
 
-            // Convert the JSON response to an array
-            $dataArray = json_decode($responseData, true);
-            $data = $dataArray['smart'];
+            // // Convert the JSON response to an array
+            // $dataArray = json_decode($responseData, true);
+            // $data = $dataArray['smart'];
+            $data = $result['smart'];
 
             // Initialize an empty array for the converted data
             $complaints = [];
