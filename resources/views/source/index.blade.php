@@ -254,7 +254,7 @@
                 window.location.href = url + '?firstname=' + firstname + '&lastname=' + lastname +
                     '&email=' + email + '&created=' + created + '&phone=' + phone + '&city=' + city +
                     '&district=' + district + '&address=' + address + '&content=' + decodedText +
-                    '&number=' + number + '&quarter=' + quarter + '&channel_id=7' + '&category_id' + category_id;
+                    '&number=' + number + '&quarter=' + quarter + '&channel_id=7' + '&category_id=' + category_id;
             });
 
             $('#resetFilters').on('click', function() {
