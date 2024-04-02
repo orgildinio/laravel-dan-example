@@ -20,9 +20,11 @@ use App\Models\Registration;
 use Illuminate\Http\Request;
 use App\Models\ComplaintStep;
 use App\Models\ComplaintType;
+use App\Models\SourceComplaint;
 use App\Exports\ExportComplaint;
 use App\Models\ComplaintMakerType;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use App\Models\ComplaintTypeSummary;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
@@ -31,7 +33,6 @@ use Illuminate\Support\Facades\Redis;
 use Symfony\Component\Console\Input\Input;
 use App\Http\Requests\ComplaintStoreRequest;
 use App\Models\ComplaintStep as ModelsComplaintStep;
-use App\Models\SourceComplaint;
 
 class ComplaintController extends Controller
 {
@@ -470,9 +471,14 @@ class ComplaintController extends Controller
                     'api_key' => '-'
                 ];
                 $response = Http::get('https://www.11-11.mn/GStest/APIa', $params);
+                $result = $response->json();
 
-                if ($response->successful()) {
+                if ($result['smart']['isValid']) {
+                    // API request success
+                    Log::channel('1111_log')->info('do-reciept action successfully.');
                 } else {
+                    // API request failed
+                    Log::channel('1111_log')->error('Failed do-reciept action.');
                 }
             }
         }

@@ -39,16 +39,19 @@ class FetchSourceComplaints extends Command
             'api_key' => 0
         ];
         $response = Http::get('https://www.11-11.mn/GStest/APIa', $params);
+        $result = $response->json();
 
         // Check if API request was successful (status code 200)
-        if ($response->successful()) {
-            // $data = $response->json(); // Convert response to JSON
+        if ($result['smart']['isValid']) {
+
+            // API request success
+            Log::channel('1111_log')->info('Data fetched successfully.');
+
             $responseData = $response->getBody()->getContents();
 
             // Convert the JSON response to an array
             $dataArray = json_decode($responseData, true);
             $data = $dataArray['smart'];
-            Log::channel('1111_log')->info('Data fetched successfully.');
 
             // Initialize an empty array for the converted data
             $complaints = [];
@@ -85,8 +88,6 @@ class FetchSourceComplaints extends Command
                     Log::channel('1111_log')->info('Data stored successfully.');
                 }
             }
-
-            // API request success
         } else {
             // API request failed
             Log::channel('1111_log')->error('Failed to fetch data.');
