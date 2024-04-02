@@ -236,8 +236,8 @@
                 const quarter = $(this).data('quarter');
 
                 const nameParts = fullname.split(' ');
-                const lastname = nameParts[0];
-                const firstname = nameParts.slice(1).join(' ');
+                const firstname = nameParts[0];
+                const lastname = nameParts.slice(1).join(' ');
 
                 const type = $(this).data('type');
                 const category_id = createCategoryId(type);
