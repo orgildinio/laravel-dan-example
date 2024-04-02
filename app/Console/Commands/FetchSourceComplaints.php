@@ -82,14 +82,14 @@ class FetchSourceComplaints extends Command
                 if (!$existingItem) {
                     // Data doesn't exist, so create a new record in the database
                     SourceComplaint::create($item);
+                    Log::channel('1111_log')->info('Data stored successfully.');
                 }
             }
 
             // API request success
-            Log::channel('1111_log')->info('Data fetched and stored successfully.');
         } else {
             // API request failed
-            Log::channel('1111_log')->error('Failed to fetch and save data.');
+            Log::channel('1111_log')->error('Failed to fetch data.');
         }
     }
 }
