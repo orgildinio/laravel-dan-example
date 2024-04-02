@@ -16,7 +16,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
-        $schedule->command('command:fetch-source-complaint')->hourly()->appendOutputTo(storage_path('logs/laravel.log'));
+        $schedule->command('command:fetch-source-complaint')->hourly();
     }
 
     /**

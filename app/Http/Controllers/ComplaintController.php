@@ -470,6 +470,12 @@ class ComplaintController extends Controller
                 //     'api_key' => '-'
                 // ];
                 // $response = Http::get('https://www.11-11.mn/GStest/APIa', $params);
+
+                // if ($response->successful()) {
+
+                // }else {
+
+                // }
             }
         }
 
