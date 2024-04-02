@@ -20,11 +20,11 @@ class SourceComplaintController extends Controller
             'api_key' => 0
         ];
         $response = Http::get('https://www.11-11.mn/GStest/APIa', $params);
-        $dataTest = $response->json();
-        dd($dataTest['smart']['isValid']);
+        $result = $response->json();
+        // dd($result['smart']['isValid']);
 
         // Check if API request was successful (status code 200)
-        if ($response->successful()) {
+        if ($result['smart']['isValid']) {
             // $data = $response->json(); // Convert response to JSON
             $responseData = $response->getBody()->getContents();
 
