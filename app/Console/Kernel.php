@@ -16,7 +16,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
-        $schedule->command('command:fetch-source-complaint')->everyMinute();
+        $schedule->command('command:fetch-source-complaint')->everyTenMinutes();
     }
 
     /**
