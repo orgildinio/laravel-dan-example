@@ -28,6 +28,7 @@ class SourceComplaintController extends Controller
             // Convert the JSON response to an array
             $dataArray = json_decode($responseData, true);
             $data = $dataArray['smart'];
+            dd($data);
 
             // Initialize an empty array for the converted data
             $complaints = [];
@@ -52,7 +53,6 @@ class SourceComplaintController extends Controller
                     "path" => $data['smart']['path'][$key],
                 ];
             }
-            dd($complaints);
 
             // // Loop through the data and check if each item already exists in the database
             // foreach ($complaints as $item) {
