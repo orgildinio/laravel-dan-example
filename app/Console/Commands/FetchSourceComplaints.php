@@ -45,13 +45,8 @@ class FetchSourceComplaints extends Command
         if ($result['smart']['isValid']) {
 
             // API request success
-            Log::channel('1111_log')->info('Data fetched successfully.');
+            Log::channel('1111_log')->info('Data fetched successfully from 1111 automatically.');
 
-            // $responseData = $response->getBody()->getContents();
-
-            // // Convert the JSON response to an array
-            // $dataArray = json_decode($responseData, true);
-            // $data = $dataArray['smart'];
             $data = $result['smart'];
 
             // Initialize an empty array for the converted data
@@ -86,12 +81,12 @@ class FetchSourceComplaints extends Command
                 if (!$existingItem) {
                     // Data doesn't exist, so create a new record in the database
                     SourceComplaint::create($item);
-                    Log::channel('1111_log')->info('Data stored successfully.');
+                    Log::channel('1111_log')->info('1111 new complaints stored to database successfully.');
                 }
             }
         } else {
             // API request failed
-            Log::channel('1111_log')->error('Failed to fetch data.');
+            Log::channel('1111_log')->error('Failed to fetch data from 1111 automatically.');
         }
     }
 }
