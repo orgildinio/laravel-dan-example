@@ -137,7 +137,7 @@
                     data-email="{{ $complaint->email }}" data-city="{{ $complaint->city }}"
                     data-district="{{ $complaint->district }}" data-address="{{ $complaint->address }}"
                     data-content="{{ $complaint->content }}" data-number="{{ $complaint->number }}"
-                    data-quarter="{{ $complaint->quarter }}">
+                    data-quarter="{{ $complaint->quarter }}" data-type="{{ $complaint->type }}">
                     <div class="flex p-3 border-l-4 {{ getBorderColor($complaint->type) }} rounded-lg">
                         <div class="space-y-1 border-r-2 pr-3">
                             <div class="text-xs leading-5 font-semibold"><span
@@ -191,6 +191,36 @@
 @push('scripts')
 
     <script>
+        function createCategoryId(str) {
+            let category_id = null;
+            switch (str) {
+                case 'Талархал':
+                    category_id = 1;
+                    break;
+                case 'Гомдол':
+                    category_id = 2;
+                    break;
+                case 'Санал':
+                    category_id = 3;
+                    break;
+                case 'Хүсэлт':
+                    category_id = 4;
+                    break;
+                case 'Лавлагаа':
+                    category_id = 5;
+                    break;
+                case 'Тодорхойгүй':
+                    category_id = 7;
+                    break;
+                case 'Дуудлага':
+                    category_id = 8;
+                    break;
+                default:
+                    category_id = 0;
+                    break;
+            }
+            return category_id;
+        }
         $(document).ready(function() {
             $('.clickable-row').click(function() {
                 const url = $(this).data('url');
@@ -209,6 +239,10 @@
                 const lastname = nameParts[0];
                 const firstname = nameParts.slice(1).join(' ');
 
+                const type = $(this).data('type');
+                const category_id = createCategoryId(type);
+                console.log('category_id: ', category_id);
+
                 // Create a temporary DOM element to decode the HTML entities
                 var tempElement = document.createElement('div');
                 tempElement.innerHTML = content;
@@ -220,8 +254,7 @@
                 window.location.href = url + '?firstname=' + firstname + '&lastname=' + lastname +
                     '&email=' + email + '&created=' + created + '&phone=' + phone + '&city=' + city +
                     '&district=' + district + '&address=' + address + '&content=' + decodedText +
-                    '&number=' +
-                    number + '&quarter=' + quarter;
+                    '&number=' + number + '&quarter=' + quarter + '&channel_id=7' + '&category_id' + category_id;
             });
 
             $('#resetFilters').on('click', function() {

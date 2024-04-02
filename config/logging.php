@@ -119,9 +119,10 @@ return [
         ],
 
         'auth_log' => [
-            'driver' => 'daily',
+            'driver' => 'single',
             'path' => storage_path('logs/auth.log'),
             'level' => 'info',
+            'days' => 14,
         ],
 
         '1111_log' => [
