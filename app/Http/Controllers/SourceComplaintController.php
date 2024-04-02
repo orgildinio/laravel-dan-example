@@ -65,13 +65,14 @@ class SourceComplaintController extends Controller
             //     }
             // }
 
-            Log::channel('1111_log')->info('Data fetched successfully.');
-            dd($complaints);
+            Log::channel('1111_log')->info('Data manually fetched successfully.');
+            // dd($complaints);
 
             return response()->json(['message' => 'Data fetched and stored successfully.']);
         } else {
             // API request failed
-            return response()->json(['error' => 'Failed to fetch data from API.'], 500);
+            Log::channel('1111_log')->info('Failed to manually fetch data from API.');
+            return response()->json(['error' => 'Failed to manually fetch data from API.'], 500);
         }
     }
 
