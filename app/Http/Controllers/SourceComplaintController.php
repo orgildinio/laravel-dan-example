@@ -20,6 +20,7 @@ class SourceComplaintController extends Controller
             'api_key' => 0
         ];
         $response = Http::get('https://www.11-11.mn/GStest/APIa', $params);
+        dd($response);
 
         // Check if API request was successful (status code 200)
         if ($response->successful()) {
