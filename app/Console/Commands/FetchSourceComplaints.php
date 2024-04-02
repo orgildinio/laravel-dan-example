@@ -33,7 +33,7 @@ class FetchSourceComplaints extends Command
     {
         $params = [
             'action' => 'get-tickets',
-            'count' => 50,
+            'count' => 30,
             'u' => 'smart_42',
             'p' => 'OYGNvAnwZ',
             'api_key' => 0
