@@ -67,7 +67,7 @@ class SourceComplaintController extends Controller
             // }
 
             Log::channel('1111_log')->info('Data manually fetched successfully.');
-            // dd($complaints);
+            dd($complaints);
 
             return response()->json(['message' => 'Data manually fetched and stored successfully.']);
         } else {
