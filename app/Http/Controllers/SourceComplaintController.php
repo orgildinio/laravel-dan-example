@@ -33,7 +33,7 @@ class SourceComplaintController extends Controller
             // $dataArray = json_decode($responseData, true);
             // $data = $dataArray['smart'];
             $data = $result['smart'];
-            dd($data);
+            // dd($data);
 
             // Initialize an empty array for the converted data
             $complaints = [];
