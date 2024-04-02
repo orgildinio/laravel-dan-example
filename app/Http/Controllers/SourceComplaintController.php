@@ -106,6 +106,8 @@ class SourceComplaintController extends Controller
             $query->whereBetween('created_date', [$start_date, $end_date]);
         }
 
+        $query->whereNull('complaint_id');
+
         $complaints = $query->orderBy('created_date', 'desc')->paginate(15);
 
         // Append filter parameters to pagination links
