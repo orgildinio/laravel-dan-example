@@ -44,7 +44,7 @@
                 @csrf
                 <div class="md:w-32 w-full md:mr-2 mr-0 mb-2">
                     <select name="year" id="year"
-                        class="text-sm text-gray-600 rounded-lg block w-full appearance-none bg-gray-50 border border-gray-300">
+                        class="text-sm text-gray-600 rounded-lg block w-full appearance-none bg-gray-50 border border-gray-500">
                         @foreach ($years as $year)
                             <option value="{{ $year }}"
                                 {{ old('year', $selected_year) == $year ? 'selected' : '' }}>{{ $year }}
@@ -131,7 +131,7 @@
 
         @if (count($complaints) > 0)
             @foreach ($complaints as $complaint)
-                <div class="mx-auto border border-gray-200 rounded-lg text-gray-700 mb-0.5 h-30 clickable-row cursor-pointer hover:bg-gray-100"
+                <div class="mx-auto border border-gray-300 rounded-lg text-gray-700 mb-0.5 h-30 clickable-row cursor-pointer hover:bg-gray-100"
                     data-url="{{ route('complaint.create') }}" data-created="{{ $complaint->created_date }}"
                     data-fullname="{{ $complaint->fullname }}" data-phone="{{ $complaint->phone }}"
                     data-email="{{ $complaint->email }}" data-city="{{ $complaint->city }}"
