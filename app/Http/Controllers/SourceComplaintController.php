@@ -14,26 +14,18 @@ class SourceComplaintController extends Controller
     {
         $params = [
             'action' => 'get-tickets',
-            'count' => 30,
+            'count' => 150,
             'u' => 'smart_42',
             'p' => 'OYGNvAnwZ',
             'api_key' => 0
         ];
         $response = Http::get('https://www.11-11.mn/GStest/APIa', $params);
         $result = $response->json();
-        // dd($result);
 
         // Check if API request was successful (isValid = true)
         if ($result['smart']['isValid']) {
-            // $data = $response->json(); // Convert response to JSON
-            // $responseData = $response->getBody()->getContents();
-            // dd($responseData);
 
-            // Convert the JSON response to an array
-            // $dataArray = json_decode($responseData, true);
-            // $data = $dataArray['smart'];
             $data = $result['smart'];
-            // dd($data);
 
             // Initialize an empty array for the converted data
             $complaints = [];
