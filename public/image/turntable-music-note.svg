@@ -1,8 +1,46 @@
-<?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
-<svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C21.7764 4.70529 21.9658 6.58687 21.9948 10" stroke="#1C274C" stroke-width="1.5" stroke-linecap="round"/>
-<path d="M19 20V16V12" stroke="#1C274C" stroke-width="1.5" stroke-linecap="round"/>
-<circle cx="17" cy="20" r="2" stroke="#1C274C" stroke-width="1.5"/>
-<path d="M22 15C20.3431 15 19 13.6569 19 12" stroke="#1C274C" stroke-width="1.5" stroke-linecap="round"/>
-<path d="M9 12C9 10.3431 10.3431 9 12 9C13.6569 9 15 10.3431 15 12C15 13.6569 13.6569 15 12 15C10.3431 15 9 13.6569 9 12Z" stroke="#1C274C" stroke-width="1.5"/>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Transformed by: SVG Repo Mixer Tools -->
+
+<svg
+   width="800"
+   height="800"
+   viewBox="0 0 24 24"
+   fill="none"
+   version="1.1"
+   id="svg4"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs4" />
+  <path
+     d="M 12,22 C 7.28595,22 4.92893,22 3.46447,20.5355 2,19.0711 2,16.714 2,12 2,7.28595 2,4.92893 3.46447,3.46447 4.92893,2 7.28595,2 12,2 c 4.714,0 7.0711,0 8.5355,1.46447 1.2409,1.24082 1.4303,3.1224 1.4593,6.53553"
+     stroke="#3e4095"
+     stroke-width="1.5"
+     stroke-linecap="round"
+     id="path1"
+     style="display:inline;stroke-width:1.548;stroke-dasharray:none" />
+  <path
+     d="M 19,20 V 16 12"
+     stroke="#3e4095"
+     stroke-width="1.5"
+     stroke-linecap="round"
+     id="path2" />
+  <circle
+     cx="17"
+     cy="20"
+     r="2"
+     stroke="#3e4095"
+     stroke-width="1.5"
+     id="circle2" />
+  <path
+     d="m 22,15 c -1.6569,0 -3,-1.3431 -3,-3"
+     stroke="#3e4095"
+     stroke-width="1.5"
+     stroke-linecap="round"
+     id="path3" />
+  <path
+     d="m 9,12 c 0,-1.6569 1.3431,-3 3,-3 1.6569,0 3,1.3431 3,3 0,1.6569 -1.3431,3 -3,3 -1.6569,0 -3,-1.3431 -3,-3 z"
+     stroke="#3e4095"
+     stroke-width="1.5"
+     id="path4" />
 </svg>

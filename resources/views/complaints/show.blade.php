@@ -3,7 +3,7 @@
         <div class="flex items-center justify-between mb-4">
             <div class="w-full grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 md:gap-4">
 
-                <div class="col-span-1 flow-root rounded-lg border border-gray-100 py-3 shadow-sm mb-4">
+                <div class="col-span-1 flow-root rounded-lg border border-gray-300 py-3 shadow-lg mb-4">
                     <dl class="-my-3 divide-y divide-gray-100 text-sm">
                         <div class="grid grid-cols-1 gap-1 p-3 even:bg-gray-50 sm:grid-cols-3 sm:gap-4">
                             <dt class="font-medium text-gray-900">№</dt>
@@ -169,7 +169,7 @@
                 </div>
 
 
-                <div class="col-span-3 py-3 mb-4 bg-white p-6 rounded-lg border border-gray-100 shadow-sm">
+                <div class="col-span-3 py-3 mb-4 bg-white p-6 rounded-lg border border-gray-300 shadow-lg">
                     @if (session()->has('message'))
                         <div class="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md my-3"
                             role="alert">

@@ -45,7 +45,7 @@
                 @csrf
                 <div class="md:w-32 w-full md:mr-2 mr-0 mb-2">
                     <select name="year" id="year"
-                        class="text-sm text-gray-600 rounded-lg block w-full appearance-none bg-gray-50 border border-gray-300">
+                        class="text-sm text-gray-600 rounded-lg block w-full appearance-none bg-gray-50 border border-gray-400">
                         @foreach ($years as $year)
                             <option value="{{ $year }}"
                                 {{ old('year', $selected_year) == $year ? 'selected' : '' }}>{{ $year }}
@@ -75,7 +75,7 @@
                             </svg>
                         </div>
                         <input type="text" id="serial_number"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2"
+                            class="bg-gray-50 border border-gray-400 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2"
                             placeholder="Дугаар" name="serial_number" value="{{ $serial_number }}">
                     </div>
                 </div>
@@ -88,7 +88,7 @@
                         </svg>
                     </div>
                     <input type="text" id="daterange"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2"
+                        class="bg-gray-50 border border-gray-400 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2"
                         placeholder="Огноо" name="daterange" value="{{ $daterange }}">
                 </div>
                 <div class="md:w-2/4 w-full md:mr-2 flex items-center mr-0 mb-2">
@@ -102,7 +102,7 @@
                             </svg>
                         </div>
                         <input type="text" id="simple-search"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2"
+                            class="bg-gray-50 border border-gray-400 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2"
                             placeholder="Хайх утгаа оруулна уу" name="search_text" value="{{ $search_text }}">
                     </div>
                 </div>
@@ -133,7 +133,7 @@
         @if (count($complaints) > 0)
             {{-- <p class="text-gray-500 px-2">Нийт: {{ $complaints->count() }}</p> --}}
             @foreach ($complaints as $complaint)
-                <div class="mx-auto border border-gray-200 rounded-lg text-gray-700 mb-0.5 h-30 complaint-show cursor-pointer hover:bg-gray-100"
+                <div class="mx-auto border border-gray-400 rounded-lg text-gray-700 mb-0.5 h-30 complaint-show cursor-pointer hover:bg-gray-100"
                     data-id="{{ $complaint->id }}">
                     <div class="flex p-3 border-l-4 {{ getBorderColor($complaint->category_id) }} rounded-lg">
                         <div class="space-y-1 border-r-2 pr-3">
