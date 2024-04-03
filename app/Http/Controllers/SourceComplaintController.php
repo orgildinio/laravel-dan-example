@@ -14,7 +14,8 @@ class SourceComplaintController extends Controller
     {
         $params = [
             'action' => 'get-tickets',
-            // 'count' => 150,
+            'count' => 30,
+            'orderBy' => 'created_at desc',
             'u' => 'smart_42',
             'p' => 'OYGNvAnwZ',
             'api_key' => 0
