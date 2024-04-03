@@ -22,7 +22,7 @@ class SourceComplaintController extends Controller
         ];
         $response = Http::get('https://www.11-11.mn/GStest/APIa', $params);
         $result = $response->json();
-        dd($result);
+        // dd($result);
 
         // Check if API request was successful (isValid = true)
         if ($result['isValid'] && $result['smart']['isValid']) {
@@ -53,19 +53,19 @@ class SourceComplaintController extends Controller
                 ];
             }
 
-            // // Loop through the data and check if each item already exists in the database
-            // foreach ($complaints as $item) {
-            //     // Check if data already exists based on a unique identifier (e.g., ID, email, etc.)
-            //     $existingItem = SourceComplaint::where('number', $item['number'])->first();
+            // Loop through the data and check if each item already exists in the database
+            foreach ($complaints as $item) {
+                // Check if data already exists based on a unique identifier (e.g., ID, email, etc.)
+                $existingItem = SourceComplaint::where('number', $item['number'])->first();
 
-            //     if (!$existingItem) {
-            //         // Data doesn't exist, so create a new record in the database
-            //         SourceComplaint::create($item);
-            //     }
-            // }
+                if (!$existingItem) {
+                    // Data doesn't exist, so create a new record in the database
+                    SourceComplaint::create($item);
+                }
+            }
 
             Log::channel('1111_log')->info('Data manually fetched successfully.');
-            dd($complaints);
+            // dd($complaints);
 
             return response()->json(['message' => 'Data manually fetched and stored successfully.']);
         } else {
