@@ -187,7 +187,7 @@ class ComplaintStep extends Component
                         'p' => env('1111_API_PASSWORD'),
                         'api_key' => '-',
                         'number' => $complaint->source_number,
-                        'is_close' => false,
+                        'is_close' => 'false',
                         'created_by' => Auth::user()->name,
                         'comment' => $this->desc,
                     ];
@@ -226,7 +226,7 @@ class ComplaintStep extends Component
                         'p' => env('1111_API_PASSWORD'),
                         'api_key' => '-',
                         'number' => $complaint->source_number,
-                        'is_close' => false,
+                        'is_close' => 'false',
                         'created_by' => Auth::user()->name,
                         'comment' => 'Мэргэжилтэн ' . $complaint->controlledUser?->name . 'рүү шилжүүлэв. Тайлбар: ' . $this->desc,
                     ];
@@ -266,7 +266,7 @@ class ComplaintStep extends Component
                         'p' => env('1111_API_PASSWORD'),
                         'api_key' => '-',
                         'number' => $complaint->source_number,
-                        'is_close' => false,
+                        'is_close' => 'false',
                         'created_by' => Auth::user()->name,
                         'comment' => $complaint->secondOrg?->name . ' рүү шилжүүлэв. Тайлбар: ' . $this->desc,
                     ];
@@ -319,7 +319,7 @@ class ComplaintStep extends Component
                         'p' => env('1111_API_PASSWORD'),
                         'api_key' => '-',
                         'number' => $complaint->source_number,
-                        'is_close' => false,
+                        'is_close' => 'false',
                         'created_by' => Auth::user()->name,
                         'comment' => $this->desc,
                     ];
@@ -358,7 +358,7 @@ class ComplaintStep extends Component
                         'p' => env('1111_API_PASSWORD'),
                         'api_key' => '-',
                         'number' => $complaint->source_number,
-                        'is_close' => false,
+                        'is_close' => 'false',
                         'created_by' => Auth::user()->name,
                         'comment' => $this->desc,
                     ];
@@ -406,7 +406,7 @@ class ComplaintStep extends Component
                             'p' => env('1111_API_PASSWORD'),
                             'api_key' => '-',
                             'number' => $complaint->source_number,
-                            'is_close' => true,
+                            'is_close' => 'true',
                             'created_by' => Auth::user()->name,
                             'comment' => $this->desc,
                         ];
@@ -444,7 +444,7 @@ class ComplaintStep extends Component
                                 'p' => env('1111_API_PASSWORD'),
                                 'api_key' => '-',
                                 'number' => $complaint->source_number,
-                                'is_close' => true,
+                                'is_close' => 'true',
                                 'created_by' => Auth::user()->name,
                                 'comment' => $this->desc,
                             ];
@@ -481,7 +481,7 @@ class ComplaintStep extends Component
                                 'p' => env('1111_API_PASSWORD'),
                                 'api_key' => '-',
                                 'number' => $complaint->source_number,
-                                'is_close' => false,
+                                'is_close' => 'false',
                                 'created_by' => Auth::user()->name,
                                 'comment' => $this->desc,
                             ];
