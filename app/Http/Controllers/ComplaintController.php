@@ -452,10 +452,10 @@ class ComplaintController extends Controller
         }
 
         // channel_id = 7 байвал 1111 төвийн гомдол
-        $source_number = $input['source_number'];
-        if ($complaint->channel_id == 7 && $source_number != null) {
+        // $source_number = $input['source_number'];
+        if ($complaint->channel_id == 7 && $complaint->source_number != null) {
 
-            $sourceComplaint = SourceComplaint::where('number', $source_number)->first();
+            $sourceComplaint = SourceComplaint::where('number', $complaint->source_number)->first();
 
             if ($sourceComplaint) {
                 // Update the record
@@ -465,7 +465,7 @@ class ComplaintController extends Controller
                 // 1111 төвийн гомдлыг хүлээн авсан төлөвт шилжүүлэх
                 $params = [
                     'action' => 'do-receipt',
-                    'number' => $source_number,
+                    'number' => $complaint->source_number,
                     'u' => 'smart_42',
                     'p' => 'OYGNvAnwZ',
                     'api_key' => '-'
@@ -473,7 +473,7 @@ class ComplaintController extends Controller
                 $response = Http::get('https://www.11-11.mn/GStest/APIa', $params);
                 $result = $response->json();
 
-                if ($result['smart']['isValid']) {
+                if ($result['isValid'] && $result['smart']['isValid']) {
                     // API request success
                     Log::channel('1111_log')->info('do-reciept action successfully.');
                 } else {

@@ -10,7 +10,9 @@ use Livewire\Component;
 use App\Models\Complaint;
 use App\Models\Organization;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Response;
 use App\Models\ComplaintStep as ModelsComplaintStep;
 
@@ -177,6 +179,30 @@ class ComplaintStep extends Component
                         'file_id' => isset($filename) ? $filename->id : null,
                     ]);
                 }
+                // Хэрвээ 1111-ээс ирсэн гомдол байвал 1111 рүү мэдээлэл дамжуулах
+                if ($complaint->channel_id == 7) {
+                    $params = [
+                        'action' => 'create-log',
+                        'u' => 'smart_42',
+                        'p' => 'OYGNvAnwZ',
+                        'api_key' => '-',
+                        'number' => $complaint->source_number,
+                        'is_close' => false,
+                        'created_by' => Auth::user()->name,
+                        'comment' => $this->desc,
+                    ];
+                    $response = Http::get('https://www.11-11.mn/GStest/APIa', $params);
+                    $result = $response->json();
+
+                    if ($result['isValid'] && $result['smart']['isValid']) {
+                        // 1111 API request success
+                        Log::channel('1111_log')->info('1111 рүү тайлбар амжилттай илгээлээ. user_id: ' . Auth::user()->id . ' complaint_serial_number: ' . $complaint->serial_number);
+                    } else {
+                        // 1111 API request failed
+                        Log::channel('1111_log')->error('Failed create-log action.');
+                    }
+                }
+
                 break;
             case 'Шилжүүлэх':
                 // Байгууллага дотроо өөр хүнд шилжүүлэхэд төлөв тухайн хүн хүлээн авсан болно

@@ -16,8 +16,8 @@ class SourceComplaintController extends Controller
             'action' => 'get-tickets',
             'count' => 200,
             'orderBy' => 'asc',
-            'u' => 'smart_42',
-            'p' => 'OYGNvAnwZ',
+            'u' => env('1111_API_USERNAME'),
+            'p' => env('1111_API_PASSWORD'),
             'api_key' => 0
         ];
         $response = Http::get('https://www.11-11.mn/GStest/APIa', $params);
@@ -54,18 +54,18 @@ class SourceComplaintController extends Controller
             }
 
             // Loop through the data and check if each item already exists in the database
-            foreach ($complaints as $item) {
-                // Check if data already exists based on a unique identifier (e.g., ID, email, etc.)
-                $existingItem = SourceComplaint::where('number', $item['number'])->first();
+            // foreach ($complaints as $item) {
+            //     // Check if data already exists based on a unique identifier (e.g., ID, email, etc.)
+            //     $existingItem = SourceComplaint::where('number', $item['number'])->first();
 
-                if (!$existingItem) {
-                    // Data doesn't exist, so create a new record in the database
-                    SourceComplaint::create($item);
-                }
-            }
+            //     if (!$existingItem) {
+            //         // Data doesn't exist, so create a new record in the database
+            //         SourceComplaint::create($item);
+            //     }
+            // }
 
             Log::channel('1111_log')->info('Data manually fetched successfully.');
-            // dd($complaints);
+            dd($complaints);
 
             return response()->json(['message' => 'Data manually fetched and stored successfully.']);
         } else {

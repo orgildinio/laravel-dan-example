@@ -42,7 +42,7 @@ class FetchSourceComplaints extends Command
         $result = $response->json();
 
         // Check if API request was successful (status code 200)
-        if ($result['smart']['isValid']) {
+        if ($result['isValid'] && $result['smart']['isValid']) {
 
             // API request success
             Log::channel('1111_log')->info('Data fetched successfully from 1111 automatically.');
