@@ -34,8 +34,8 @@ class FetchSourceComplaints extends Command
         $params = [
             'action' => 'get-tickets',
             'count' => 500,
-            'u' => 'smart_42',
-            'p' => 'OYGNvAnwZ',
+            'u' => env('1111_API_USERNAME'),
+            'p' => env('1111_API_PASSWORD'),
             'api_key' => 0
         ];
         $response = Http::get('https://www.11-11.mn/GStest/APIa', $params);

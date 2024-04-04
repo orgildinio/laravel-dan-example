@@ -466,8 +466,8 @@ class ComplaintController extends Controller
                 $params = [
                     'action' => 'do-receipt',
                     'number' => $complaint->source_number,
-                    'u' => 'smart_42',
-                    'p' => 'OYGNvAnwZ',
+                    'u' => env('1111_API_USERNAME'),
+                    'p' => env('1111_API_PASSWORD'),
                     'api_key' => '-'
                 ];
                 $response = Http::get('https://www.11-11.mn/GStest/APIa', $params);
