@@ -84,6 +84,11 @@ class FetchSourceComplaints extends Command
                     Log::channel('1111_log')->info('1111 new complaints stored to database successfully.');
                 }
             }
+
+            // Update closed status for removed data
+            SourceComplaint::whereNotIn('number', collect($complaints)->pluck('number'))
+                ->update(['is_modified' => true]);
+            Log::channel('1111_log')->info('Source complaints updated successfully.');
         } else {
             // API request failed
             Log::channel('1111_log')->error('Failed to fetch data from 1111 automatically.');
