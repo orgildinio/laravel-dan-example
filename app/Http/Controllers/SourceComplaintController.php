@@ -64,7 +64,11 @@ class SourceComplaintController extends Controller
             //     }
             // }
 
-            Log::channel('1111_log')->info('Data manually fetched successfully.');
+            // Update closed status for removed data
+            SourceComplaint::whereNotIn('number', collect($complaints)->pluck('number'))
+                ->update(['is_modified' => true]);
+
+            Log::channel('1111_log')->info('Data manually fetched and modified successfully.');
             dd($complaints);
 
             return response()->json(['message' => 'Data manually fetched and stored successfully.']);
@@ -107,6 +111,7 @@ class SourceComplaintController extends Controller
         }
 
         $query->whereNull('complaint_id');
+        $query->where('is_modified', false);
 
         $complaints = $query->orderBy('created_date', 'desc')->paginate(15);
 
