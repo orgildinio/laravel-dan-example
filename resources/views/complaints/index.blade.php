@@ -98,7 +98,7 @@
                 </a>
             </div>
         </div>
-        <div class="overflow-x-auto border border-gray-400 rounded-lg">
+        <div class="overflow-x-auto border border-gray-300 rounded-lg">
             <table class="min-w-full table-fixed" id="complaint-report">
                 <thead>
                     <tr>
@@ -146,23 +146,23 @@
                 <tbody class="bg-white">
                     @foreach ($complaints as $key => $complaint)
                         <tr class="table-row hover:bg-gray-100 cursor-pointer" data-id="{{ $complaint->id }}">
-                            <td class="p-2 whitespace-no-wrap border-b border-gray-400">
+                            <td class="p-2 whitespace-no-wrap border-b border-gray-300">
                                 <div class="flex items-center">
                                     {{ $key + $complaints->firstItem() }}
                                 </div>
                             </td>
 
-                            <td class="p-2 whitespace-no-wrap border-b border-gray-400">
+                            <td class="p-2 whitespace-no-wrap border-b border-gray-300">
                                 <div class="text-sm leading-5 text-gray-900">{{ $complaint->category->name }}
                                 </div>
                             </td>
 
-                            <td class="p-2 whitespace-no-wrap border-b border-gray-400">
+                            <td class="p-2 whitespace-no-wrap border-b border-gray-300">
                                 <div class="text-sm leading-5 text-gray-900">{{ $complaint->channel->name }}
                                 </div>
                             </td>
 
-                            <td class="p-2 whitespace-no-wrap border-b border-gray-400">
+                            <td class="p-2 whitespace-no-wrap border-b border-gray-300">
                                 <div class="text-sm leading-5 text-gray-900">
                                     @if ($complaint->status_id !== null)
                                         @switch($complaint->status_id)
@@ -204,48 +204,48 @@
                                 </div>
                             </td>
 
-                            <td class="p-2 whitespace-no-wrap border-b border-gray-400">
+                            <td class="p-2 whitespace-no-wrap border-b border-gray-300">
                                 <div class="text-sm leading-5 text-gray-900">{{ $complaint->controlledUser?->name }}
                                 </div>
                             </td>
 
                             @if (Auth::user()->org_id == 99)
-                            <td class="p-2 whitespace-no-wrap border-b border-gray-400">
+                            <td class="p-2 whitespace-no-wrap border-b border-gray-300">
                                 <div class="text-sm leading-5 text-gray-900">{{ $complaint->organization?->name }}
                                 </div>
                             </td>
 
-                            <td class="p-2 whitespace-no-wrap border-b border-gray-400">
+                            <td class="p-2 whitespace-no-wrap border-b border-gray-300">
                                 <div class="text-sm leading-5 text-gray-900">{{ $complaint->secondOrg?->name }}
                                 </div>
                             </td>
 
-                            <td class="p-2 whitespace-no-wrap border-b border-gray-400">
+                            <td class="p-2 whitespace-no-wrap border-b border-gray-300">
                                 <div class="text-sm leading-5 text-gray-900">{{ $complaint->energyType?->name }}
                                 </div>
                             </td>
                             @endif
 
-                            <td class="p-2 whitespace-no-wrap border-b border-gray-400">
+                            <td class="p-2 whitespace-no-wrap border-b border-gray-300">
                                 <div class="text-sm leading-5 text-gray-900">
                                     {{ $complaint->complaint_maker_type_id == 1 ? $complaint->lastname . ' ' . $complaint->firstname : $complaint->complaint_maker_org_name }}
                                 </div>
                             </td>
 
-                            <td class="p-2 whitespace-no-wrap border-b border-gray-400 text-sm">
+                            <td class="p-2 whitespace-no-wrap border-b border-gray-300 text-sm">
                                 <p>{{ Str::limit($complaint->complaint, 150) }}
                                 </p>
                             </td>
 
                             <td
-                                class="p-2 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-400">
+                                class="p-2 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-300">
                                 <span>{{ date('Y-m-d H:i', strtotime($complaint->complaint_date)) }}</span>
                             </td>
                             @if ($complaint->status_id == 6)
-                                <td class="p-2 whitespace-no-wrap border-b border-gray-400"></td>
+                                <td class="p-2 whitespace-no-wrap border-b border-gray-300"></td>
                             @else
                                 <td
-                                    class="p-2 text-xs text-center leading-5 whitespace-no-wrap border-b border-gray-400">
+                                    class="p-2 text-xs text-center leading-5 whitespace-no-wrap border-b border-gray-300">
                                     @if ($complaint->hasExpired())
                                     <span class="text-red-500 text-xs">Хугацаа хэтэрсэн</span>
                                     @else
