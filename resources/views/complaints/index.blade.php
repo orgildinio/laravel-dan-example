@@ -98,7 +98,7 @@
                 </a>
             </div>
         </div>
-        <div class="overflow-x-auto border border-gray-300 rounded-lg">
+        <div class="overflow-x-auto border border-t-2 border-l-2 border-r-2 border-gray-300 rounded-lg">
             <table class="min-w-full table-fixed" id="complaint-report">
                 <thead>
                     <tr>
