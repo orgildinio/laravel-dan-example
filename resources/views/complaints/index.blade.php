@@ -10,17 +10,17 @@
                     <div class="flex flex-row justify-start items-center">
                         <div class="mr-1">
                             <input type="text" id="simple-search"
-                                class="w-32 bg-gray-50 border border-gray-400 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block p-2"
+                                class="w-32 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block p-2"
                                 placeholder="Хайх" name="search_text" value="{{ $search_text }}">
                         </div>
                         <div class="mr-1">
                             <input type="text" id="daterange"
-                                class="w-32 bg-gray-50 border border-gray-400 text-gray-900 text-sm rounded-lg p-2"
+                                class="w-32 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2"
                                 name="daterange" placeholder="Огноо" value="{{ $daterange }}">
                         </div>
                         <div class="mr-1">
                             <select name="status_id" id="status_id"
-                                class="w-32 bg-gray-50 border border-gray-400 text-gray-900 text-sm rounded-lg p-2">
+                                class="w-32 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
                                 <option value="">Төлөв</option>
                                 @foreach ($statuses as $status)
                                     <option value="{{ $status->id }}"
@@ -32,7 +32,7 @@
                         @if (Auth::user()->org_id == 99)
                         <div class="mr-1">
                             <select name="org_id" id="org_id"
-                                class="w-32 bg-gray-50 border border-gray-400 text-gray-900 text-sm rounded-lg p-2">
+                                class="w-32 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
                                 <option value="">Байгууллага</option>
                                 @foreach ($orgs as $org)
                                     <option value="{{ $org->id }}"
@@ -43,7 +43,7 @@
                         </div>
                         <div class="mr-1">
                             <select name="energy_type_id" id="energy_type_id"
-                                class="w-32 bg-gray-50 border border-gray-400 text-gray-900 text-sm rounded-lg p-2">
+                                class="w-32 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
                                 <option value="">Төрөл</option>
                                 @foreach ($energy_types as $type)
                                     <option value="{{ $type->id }}"
@@ -55,7 +55,7 @@
                         @endif
                         <div class="mr-1">
                             <select name="controlled_user_id" id="controlled_user_id"
-                                class="w-32 bg-gray-50 border border-gray-400 text-gray-900 text-sm rounded-lg p-2">
+                                class="w-32 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
                                 <option value="">Мэргэжилтэн</option>
                                 @foreach ($controlled_users as $controlled_user)
                                     <option value="{{ $controlled_user->id }}"
@@ -66,7 +66,7 @@
                         </div>
                         <div class="mr-1">
                             <select name="channel_id" id="channel_id"
-                                class="w-32 bg-gray-50 border border-gray-400 text-gray-900 text-sm rounded-lg p-2">
+                                class="w-32 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
                                 <option value="">Суваг</option>
                                 @foreach ($channels as $channel)
                                     <option value="{{ $channel->id }}"
@@ -86,7 +86,7 @@
             </div>
             <div
                 class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
-                <a class="flex items-center justify-center flex-shrink-0 px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-400 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200"
+                <a class="flex items-center justify-center flex-shrink-0 px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-300 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200"
                     href="{{ route('exportReportExcel', ['daterange' => Request::get('daterange'), 'energy_type_id' => Request::get('energy_type_id'), 'search_text' => Request::get('search_text'), 'status_id' => Request::get('status_id'), 'org_id' => Request::get('org_id'), 'energy_type_id' => Request('energy_type_id'), 'controlled_user_id' => Request('controlled_user_id'), 'channel_id' => Request('channel_id')]) }}">
                     <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24"
                         stroke-width="2" stroke="currentColor" aria-hidden="true">
@@ -103,43 +103,43 @@
                 <thead>
                     <tr>
                         <th
-                            class="p-2 w-[5px] text-xs font-medium leading-4 tracking-wider text-left text-gray-800 uppercase border-b border-gray-400 bg-gray-50">
+                            class="p-2 w-[5px] text-xs font-medium leading-4 tracking-wider text-left text-gray-800 uppercase border-b border-gray-300 bg-gray-50">
                             ID</th>
                         <th
-                            class="p-2 w-[100px] text-xs font-medium leading-4 tracking-wider text-left text-gray-800 uppercase border-b border-gray-400 bg-gray-50">
+                            class="p-2 w-[100px] text-xs font-medium leading-4 tracking-wider text-left text-gray-800 uppercase border-b border-gray-300 bg-gray-50">
                             Төрөл</th>
                         <th
-                            class="p-2 w-[100px] text-xs font-medium leading-4 tracking-wider text-left text-gray-800 uppercase border-b border-gray-400 bg-gray-50">
+                            class="p-2 w-[100px] text-xs font-medium leading-4 tracking-wider text-left text-gray-800 uppercase border-b border-gray-300 bg-gray-50">
                             Суваг</th>
                         <th
-                            class="p-2 w-[150px] text-xs font-medium leading-4 tracking-wider text-left text-gray-800 uppercase border-b border-gray-400 bg-gray-50">
+                            class="p-2 w-[150px] text-xs font-medium leading-4 tracking-wider text-left text-gray-800 uppercase border-b border-gray-300 bg-gray-50">
                             Төлөв</th>
                         <th
-                            class="p-2 text-xs font-medium leading-4 tracking-wider text-left text-gray-800 uppercase border-b border-gray-400 bg-gray-50">
+                            class="p-2 text-xs font-medium leading-4 tracking-wider text-left text-gray-800 uppercase border-b border-gray-300 bg-gray-50">
                             Мэргэжилтэн</th>
                         @if (Auth::user()->org_id == 99)
                         <th
-                            class="p-2 w-[200px] text-xs font-medium leading-4 tracking-wider text-left text-gray-800 uppercase border-b border-gray-400 bg-gray-50">
+                            class="p-2 w-[200px] text-xs font-medium leading-4 tracking-wider text-left text-gray-800 uppercase border-b border-gray-300 bg-gray-50">
                             Байгууллага</th>
                         <th
-                            class="p-2 w-[150px] text-xs font-medium leading-4 tracking-wider text-left text-gray-800 uppercase border-b border-gray-400 bg-gray-50">
+                            class="p-2 w-[150px] text-xs font-medium leading-4 tracking-wider text-left text-gray-800 uppercase border-b border-gray-300 bg-gray-50">
                             Холбогдох ТЗЭ</th>
                         <th
-                            class="p-2 text-xs font-medium leading-4 tracking-wider text-left text-gray-800 uppercase border-b border-gray-400 bg-gray-50">
+                            class="p-2 text-xs font-medium leading-4 tracking-wider text-left text-gray-800 uppercase border-b border-gray-300 bg-gray-50">
                             Төрөл</th>
                         @endif
                         <th
-                            class="p-2 text-xs font-medium leading-4 tracking-wider text-left text-gray-800 uppercase border-b border-gray-400 bg-gray-50">
+                            class="p-2 text-xs font-medium leading-4 tracking-wider text-left text-gray-800 uppercase border-b border-gray-300 bg-gray-50">
                             Овог, нэр / ААН</th>
 
                         <th
-                            class="p-2 w-[500px] text-xs font-medium leading-4 tracking-wider text-left text-gray-800 uppercase border-b border-gray-400 bg-gray-50">
+                            class="p-2 w-[500px] text-xs font-medium leading-4 tracking-wider text-left text-gray-800 uppercase border-b border-gray-300 bg-gray-50">
                             Санал, хүсэлт</th>
                         <th
-                            class="p-2 w-[150px] text-xs font-medium leading-4 tracking-wider text-left text-gray-800 uppercase border-b border-gray-400 bg-gray-50">
+                            class="p-2 w-[150px] text-xs font-medium leading-4 tracking-wider text-left text-gray-800 uppercase border-b border-gray-300 bg-gray-50">
                             Огноо</th>
                         <th
-                            class="p-2 w-[100px] text-xs font-medium leading-4 tracking-wider text-left text-gray-800 uppercase border-b border-gray-400 bg-gray-50">
+                            class="p-2 w-[100px] text-xs font-medium leading-4 tracking-wider text-left text-gray-800 uppercase border-b border-gray-300 bg-gray-50">
                             Үлдсэн хугацаа</th>
                     </tr>
                 </thead>
