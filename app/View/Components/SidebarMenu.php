@@ -125,7 +125,8 @@ class SidebarMenu extends Component
 
         $all_complaints = Complaint::all()->count();
 
-        $source_complaints = SourceComplaint::whereNull('complaint_id')->where('is_modified', false)->count();
+        $currentYear = date('Y');
+        $source_complaints = SourceComplaint::whereNull('complaint_id')->where('is_modified', false)->whereYear('created_date', $currentYear)->count();
 
         return view('components.sidebar-menu', ['new_complaints' => $new_complaints, 'received_complaints' => $received_complaints, 'under_control_complaints' => $under_control_complaints, 'solved_complaints' => $solved_complaints, 'canceled_complaints' => $canceled_complaints, 'all_complaints' => $all_complaints, 'sent_complaints' => $sent_complaints, 'source_complaints' => $source_complaints]);
     }
