@@ -529,7 +529,7 @@
             var selectedStatusId = $("#channel_id").val();
             console.log("selectedStatusId=", selectedStatusId);
 
-            if (selectedStatusId && selectedStatusId === 2) {
+            if (selectedStatusId === 2) {
                 $('#audio_call').show();
             } else {
                 $('#audio_call').hide();
@@ -537,7 +537,7 @@
         });
 
         // Trigger change event on page load in case a channel is pre-selected
-        $('#channel_id').trigger('change');
+        // $('#channel_id').trigger('change');
 
     });
 
