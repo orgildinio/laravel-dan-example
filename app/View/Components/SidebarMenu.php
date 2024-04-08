@@ -125,7 +125,7 @@ class SidebarMenu extends Component
 
         $all_complaints = Complaint::all()->count();
 
-        $source_complaints = SourceComplaint::all();
+        $source_complaints = SourceComplaint::all()->count();
 
         return view('components.sidebar-menu', ['new_complaints' => $new_complaints, 'received_complaints' => $received_complaints, 'under_control_complaints' => $under_control_complaints, 'solved_complaints' => $solved_complaints, 'canceled_complaints' => $canceled_complaints, 'all_complaints' => $all_complaints, 'sent_complaints' => $sent_complaints, 'source_complaints' => $source_complaints]);
     }
