@@ -32,6 +32,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Redis;
 use Symfony\Component\Console\Input\Input;
 use App\Http\Requests\ComplaintStoreRequest;
+use App\Models\Cdr;
 use App\Models\ComplaintStep as ModelsComplaintStep;
 
 class ComplaintController extends Controller
@@ -365,7 +366,10 @@ class ComplaintController extends Controller
         // $aimags = Aimag::orderBy('order', 'asc')->get();
         // $soums = Soum::orderBy('name')->get();
 
-        return view('complaints.create', compact('categories', 'orgs', 'channels', 'complaint_types', 'energy_types', 'complaint_type_summaries', 'complaint_maker_types'));
+        // Fetch the last 10 phone audio calls from the database
+        $audio_calls = Cdr::all();
+
+        return view('complaints.create', compact('categories', 'orgs', 'channels', 'complaint_types', 'energy_types', 'complaint_type_summaries', 'complaint_maker_types', 'audio_calls'));
     }
 
     /**
