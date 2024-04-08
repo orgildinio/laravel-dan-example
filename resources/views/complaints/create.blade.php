@@ -527,9 +527,8 @@
         // Утсаар ярьсан бол дуудлага сонгох dropdown харуулах
         $('#channel_id').change(function () {
             var selectedStatusId = $(this).val();
-            console.log("selectedStatusId=", selectedStatusId);
 
-            if (selectedStatusId == 2) {
+            if (selectedStatusId && selectedStatusId == 2) {
                 $('#audio_call').show();
             } else {
                 $('#audio_call').hide();
