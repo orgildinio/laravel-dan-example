@@ -544,7 +544,7 @@
 
     // Утсаар ярьсан бол дуудлага сонгох dropdown харуулах
     $('#channel_id').change(function () {
-        var selectedStatusId = $(this).find('option:selected').data('status-id');
+        var selectedStatusId = $("#channel_id").val();
         console.log("selectedStatusId=", selectedStatusId);
         if (selectedStatusId && selectedStatusId === 2) {
             $('#audio_call').show();
