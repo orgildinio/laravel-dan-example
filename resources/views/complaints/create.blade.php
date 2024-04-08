@@ -289,7 +289,7 @@
                         <div class="md:w-1/3">
                             <label class="block text-gray-500 text-sm font-bold md:text-right mb-1 md:mb-0 pr-4"
                                 for="inline-full-name">
-                                Select Last Phone Audio Call
+                                Яриа бичлэг сонгох
                             </label>
                         </div>
                         <div class="md:w-2/3">
