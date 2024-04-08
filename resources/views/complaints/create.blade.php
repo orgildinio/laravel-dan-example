@@ -296,7 +296,7 @@
                             <select name="audio_call"
                                 class="bg-gray-200 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500">
                                 @foreach ($audio_calls as $audio_call)
-                                <option value="{{ $audio_call->id }}">{{ $audio_call->calldate . ' -|- ' . $audio_call->dst . ' -|- ' . $audio_call->billsec }}</option>
+                                <option value="{{ $audio_call->id }}">{{ $audio_call->calldate . ' - ' . $audio_call->dst . ' - ' . $audio_call->billsec . 'sec' }}</option>
                                 @endforeach
                             </select>
                         </div>
