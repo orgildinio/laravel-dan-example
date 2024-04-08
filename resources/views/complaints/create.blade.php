@@ -542,4 +542,17 @@
         }
     }
 
+    // Утсаар ярьсан бол дуудлага сонгох dropdown харуулах
+    $('#channel_id').change(function () {
+        var selectedStatusId = $(this).find('option:selected').data('status-id');
+        if (selectedStatusId && selectedStatusId === 2) {
+            $('#audio_call').show();
+        } else {
+            $('#audio_call').hide();
+        }
+    });
+
+    // Trigger change event on page load in case a channel is pre-selected
+    $('#channel_id').trigger('change');
+
 </script>
