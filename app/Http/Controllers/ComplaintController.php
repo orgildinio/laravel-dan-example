@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Exception;
 use Carbon\Carbon;
+use App\Models\Cdr;
 use App\Models\File;
 use App\Models\Soum;
 use App\Models\User;
@@ -24,6 +25,7 @@ use App\Models\SourceComplaint;
 use App\Exports\ExportComplaint;
 use App\Models\ComplaintMakerType;
 use Illuminate\Support\Facades\DB;
+use App\Models\OrganizationNumbers;
 use Illuminate\Support\Facades\Log;
 use App\Models\ComplaintTypeSummary;
 use Illuminate\Support\Facades\Auth;
@@ -32,7 +34,6 @@ use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Redis;
 use Symfony\Component\Console\Input\Input;
 use App\Http\Requests\ComplaintStoreRequest;
-use App\Models\Cdr;
 use App\Models\ComplaintStep as ModelsComplaintStep;
 
 class ComplaintController extends Controller
@@ -356,6 +357,8 @@ class ComplaintController extends Controller
      */
     public function create()
     {
+        $org_id = Auth::user()->org_id;
+
         $categories = Category::orderBy('name', 'asc')->get();
         $orgs = Organization::orderBy('name', 'asc')->get();
         $channels = Channel::all();
@@ -363,11 +366,10 @@ class ComplaintController extends Controller
         $energy_types = EnergyType::all();
         $complaint_type_summaries = ComplaintTypeSummary::all();
         $complaint_maker_types = ComplaintMakerType::all();
-        // $aimags = Aimag::orderBy('order', 'asc')->get();
-        // $soums = Soum::orderBy('name')->get();
 
         // Fetch the last 10 phone audio calls from the database
-        $audio_calls = Cdr::all();
+        $org_numbers = OrganizationNumbers::where('organization_id', $org_id)->pluck('phone_number')->toArray();
+        $audio_calls = Cdr::whereIn('src', $org_numbers)->orderBy('calldate', 'desc')->latest()->take(10)->get();
 
         return view('complaints.create', compact('categories', 'orgs', 'channels', 'complaint_types', 'energy_types', 'complaint_type_summaries', 'complaint_maker_types', 'audio_calls'));
     }
