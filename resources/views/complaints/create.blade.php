@@ -522,7 +522,22 @@
                         console.error('Error getting user data by code...');
                     }
             });
-        })
+        });
+
+        // Утсаар ярьсан бол дуудлага сонгох dropdown харуулах
+        $('#channel_id').change(function () {
+            var selectedStatusId = $("#channel_id").val();
+            console.log("selectedStatusId=", selectedStatusId);
+            if (selectedStatusId && selectedStatusId === 2) {
+                $('#audio_call').show();
+            } else {
+                $('#audio_call').hide();
+            }
+        });
+
+        // Trigger change event on page load in case a channel is pre-selected
+        $('#channel_id').trigger('change');
+        
     });
 
     // Сонгогдсон өргөдөл гаргагчийг шалгах функц
@@ -542,18 +557,6 @@
         }
     }
 
-    // Утсаар ярьсан бол дуудлага сонгох dropdown харуулах
-    $('#channel_id').change(function () {
-        var selectedStatusId = $("#channel_id").val();
-        console.log("selectedStatusId=", selectedStatusId);
-        if (selectedStatusId && selectedStatusId === 2) {
-            $('#audio_call').show();
-        } else {
-            $('#audio_call').hide();
-        }
-    });
-
-    // Trigger change event on page load in case a channel is pre-selected
-    $('#channel_id').trigger('change');
+    
 
 </script>
