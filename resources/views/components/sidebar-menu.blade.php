@@ -23,7 +23,7 @@
                      <span class="ml-3 flex-1 whitespace-nowrap">1111-н хүсэлт</span>
                      @if ($source_complaints > 0)
                      <span
-                     class="bg-gray-100 text-primary border ml-3 text-sm font-medium inline-flex items-center justify-center px-2 rounded-full">{{ $source_complaints }}</span>
+                     class="bg-gray-100 text-primary shadow border ml-3 text-sm font-medium inline-flex items-center justify-center px-2 rounded-full">{{ $source_complaints }}</span>
                      @endif
                   </a>
                </li>
@@ -33,9 +33,9 @@
                      class="text-base text-gray-900 rounded-lg hover:bg-gray-100 flex items-center p-2 group {{ request()->is('complaintStatus/0') ? 'bg-gray-100 text-primary font-medium' : '' }}">
                      <img src="{{ asset('/image/inbox-in.svg')}}" class="w-[24px] h-[24px] shrink-0 inline-block" alt="new">
                      <span class="ml-3 flex-1 whitespace-nowrap">Шинээр ирсэн</span>
-                     @if ($new_complaints!==0)
+                     @if ($new_complaints > 0)
                      <span
-                     class="bg-gray-100 text-primary border ml-3 text-sm font-medium inline-flex items-center justify-center px-2 rounded-full">{{ $new_complaints }}</span>
+                     class="bg-gray-100 text-primary border shadow ml-3 text-sm font-medium inline-flex items-center justify-center px-2 rounded-full">{{ $new_complaints }}</span>
                      @endif
                   </a>
                </li>
@@ -45,9 +45,9 @@
                      <img src="{{ asset('/image/rule-draft.svg')}}" class="w-[24px] h-[24px] shrink-0 inline-block" alt="recieved">
                       
                      <span class="ml-3 flex-1 whitespace-nowrap">Хүлээн авсан</span>
-                     @if ($received_complaints !==0)
+                     @if ($received_complaints > 0)
                      <span
-                        class="bg-gray-100 text-primary border ml-3 text-sm font-medium inline-flex items-center justify-center px-2 rounded-full">{{ $received_complaints }}</span>
+                        class="bg-gray-100 text-primary border shadow ml-3 text-sm font-medium inline-flex items-center justify-center px-2 rounded-full">{{ $received_complaints }}</span>
                      @endif
                   </a>
                </li>
@@ -56,9 +56,9 @@
                      class="text-base text-gray-900 rounded-lg hover:bg-gray-100 flex items-center p-2 group {{ request()->is('complaintStatus/3') ? 'bg-gray-100 text-primary font-medium' : '' }}">
                      <img src="{{ asset('/image/rule-test.svg')}}" class="w-[24px] h-[24px] shrink-0 inline-block" alt="recieved">
                      <span class="ml-3 flex-1 whitespace-nowrap">Хянаж байгаа</span>
-                     @if ($under_control_complaints !== 0)
+                     @if ($under_control_complaints > 0)
                      <span
-                        class="bg-gray-100 text-primary border ml-3 text-sm font-medium inline-flex items-center justify-center px-2 rounded-full">{{ $under_control_complaints }}</span>
+                        class="bg-gray-100 text-primary border shadow ml-3 text-sm font-medium inline-flex items-center justify-center px-2 rounded-full">{{ $under_control_complaints }}</span>
                      @endif
                   </a>
                </li>
@@ -68,9 +68,9 @@
                      class="text-base text-gray-900 rounded-lg hover:bg-gray-100 flex items-center p-2 group {{ request()->is('complaintStatus/1') ? 'bg-gray-100 text-primary font-medium' : '' }}">
                      <img src="{{ asset('/image/document-export.svg')}}" class="w-[24px] h-[24px] shrink-0 inline-block" alt="sent">
                      <span class="ml-3 flex-1 whitespace-nowrap">Шилжүүлсэн</span>
-                     @if ($sent_complaints !== 0)
+                     @if ($sent_complaints > 0)
                      <span
-                        class="bg-gray-100 text-primary border ml-3 text-sm font-medium inline-flex items-center justify-center px-2 rounded-full">{{ $sent_complaints }}</span>
+                        class="bg-gray-100 text-primary border shadow ml-3 text-sm font-medium inline-flex items-center justify-center px-2 rounded-full">{{ $sent_complaints }}</span>
                      @endif
                   </a>
                </li>
@@ -80,9 +80,9 @@
                      class="text-base text-gray-900 rounded-lg hover:bg-gray-100 flex items-center p-2 group {{ request()->is('complaintStatus/6') ? 'bg-gray-100 text-primary font-medium' : '' }}">
                      <img src="{{ asset('/image/approve-invoice.svg')}}" class="w-[24px] h-[24px] shrink-0 inline-block" alt="report">
                      <span class="ml-3 flex-1 whitespace-nowrap">Шийдвэрлэсэн</span>
-                     @if ($solved_complaints!==0)
+                     @if ($solved_complaints > 0)
                      <span
-                        class="bg-gray-100 border text-primary ml-3 text-sm font-medium inline-flex items-center justify-center px-2 rounded-full">{{ $solved_complaints }}</span>
+                        class="bg-gray-100 border shadow text-primary ml-3 text-sm font-medium inline-flex items-center justify-center px-2 rounded-full">{{ $solved_complaints }}</span>
                      @endif
                   </a>
                </li>
@@ -91,9 +91,9 @@
                      class="text-base text-gray-900 rounded-lg hover:bg-gray-100 flex items-center p-2 group {{ request()->is('complaintStatus/4') ? 'bg-gray-100 text-primary font-medium' : '' }}">
                      <img src="{{ asset('/image/rule-cancelled.svg')}}" class="w-[24px] h-[24px] shrink-0 inline-block" alt="cancelled">
                      <span class="ml-3 flex-1 whitespace-nowrap">Цуцлагдсан</span>
-                     @if ($canceled_complaints!==0)
+                     @if ($canceled_complaints > 0)
                      <span
-                        class="bg-gray-100 text-primary border ml-3 text-sm font-medium inline-flex items-center justify-center px-2 rounded-full">{{ $canceled_complaints }}</span>
+                        class="bg-gray-100 text-primary border shadow ml-3 text-sm font-medium inline-flex items-center justify-center px-2 rounded-full">{{ $canceled_complaints }}</span>
                      @endif
                   </a>
                </li>
