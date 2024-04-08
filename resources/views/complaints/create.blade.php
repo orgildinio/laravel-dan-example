@@ -529,7 +529,7 @@
             var selectedStatusId = $(this).val();
             console.log("selectedStatusId=", selectedStatusId);
 
-            if (selectedStatusId === 2) {
+            if (selectedStatusId == 2) {
                 $('#audio_call').show();
             } else {
                 $('#audio_call').hide();
