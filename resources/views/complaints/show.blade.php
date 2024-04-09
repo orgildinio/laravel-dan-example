@@ -204,7 +204,7 @@
                     </div>
 
                     <div>
-                        @if ($complaint->cdr_id != null)
+                        {{-- @if ($complaint->cdr_id != null)
                             <div  class="text-sm px-2 mb-2">
                                 <p>Яриа бичлэг</p>
                                 <audio controls class="w-full">
@@ -212,7 +212,7 @@
                                     Your browser does not support the audio element.
                                 </audio>
                             </div>
-                        @endif
+                        @endif --}}
                         @if ($complaint->audio_file_id != null)
                             <div class="text-sm px-2 mb-2">
                                 <p>Бичлэг</p>

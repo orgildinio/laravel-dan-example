@@ -197,7 +197,7 @@
 
                 <div class="mt-3 space-y-1">
                     <!-- Account Management -->
-                    <x-responsive-nav-link href="{{ route('profile.show') }}" :active="request()->routeIs('profile.show')">
+                    <x-responsive-nav-link href="{{ route('profile') }}" :active="request()->routeIs('profile')">
                         {{ __('Профайл') }}
                     </x-responsive-nav-link>
 

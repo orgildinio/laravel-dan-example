@@ -37,6 +37,7 @@ Route::middleware([
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
     Route::resource('/complaint', ComplaintController::class);
     Route::resource('/user', UserController::class);
+    Route::get('/profile', [UserController::class, 'profile'])->name('profile');
     Route::get('complaintSteps', ComplaintStep::class);
     Route::get('/complaintStatus/{id}', [ComplaintController::class, 'complaintStatus'])->name('complaintStatus');
     Route::put('/updateComplaintStatus/{id}', [ComplaintController::class, 'updateComplaintStatus']);

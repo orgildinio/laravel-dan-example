@@ -129,4 +129,9 @@ class UserController extends Controller
         return redirect()->route('user.index')
             ->with('success', 'User deleted successfully');
     }
+
+    public function profile()
+    {
+        return view('users.profile');
+    }
 }
