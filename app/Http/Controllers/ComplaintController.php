@@ -535,7 +535,7 @@ class ComplaintController extends Controller
         $org_numbers = OrganizationNumbers::where('organization_id', $org_id)->pluck('phone_number')->toArray();
         $audio_calls = Cdr::whereIn('dst', $org_numbers)->orderBy('calldate', 'desc')->latest()->take(10)->get();
 
-        return view('complaints.edit', compact('complaint', 'categories', 'orgs', 'channels', 'complaint_types', 'energy_types', 'complaint_type_summaries', 'complaint_maker_types'));
+        return view('complaints.edit', compact('complaint', 'categories', 'orgs', 'channels', 'complaint_types', 'energy_types', 'complaint_type_summaries', 'complaint_maker_types', 'audio_calls'));
     }
 
     /**
