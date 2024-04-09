@@ -23,6 +23,13 @@
                         </div>
 
                         <div class="grid grid-cols-1 gap-1 p-3 even:bg-gray-50 sm:grid-cols-3 sm:gap-4">
+                            <dt class="font-medium text-gray-900">Утас</dt>
+                            <dd class="text-gray-700 text-right sm:col-span-2">
+                                {{ $complaint->phone }}
+                            </dd>
+                        </div>
+
+                        <div class="grid grid-cols-1 gap-1 p-3 even:bg-gray-50 sm:grid-cols-3 sm:gap-4">
                             <dt class="font-medium text-gray-900">Бүртгэсэн огноо</dt>
                             <dd class="text-gray-700 text-right sm:col-span-2">
                                 {{ date('Y-m-d H:i', strtotime($complaint->complaint_date)) }}</dd>
