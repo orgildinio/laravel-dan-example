@@ -520,6 +520,8 @@ class ComplaintController extends Controller
      */
     public function edit($id)
     {
+        $org_id = Auth::user()->org_id;
+
         $complaint = Complaint::findOrFail($id);
         $categories = Category::all();
         $orgs = Organization::all();
@@ -528,6 +530,10 @@ class ComplaintController extends Controller
         $energy_types = EnergyType::all();
         $complaint_type_summaries = ComplaintTypeSummary::all();
         $complaint_maker_types = ComplaintMakerType::all();
+
+        // Fetch the last 10 phone audio calls from the database
+        $org_numbers = OrganizationNumbers::where('organization_id', $org_id)->pluck('phone_number')->toArray();
+        $audio_calls = Cdr::whereIn('dst', $org_numbers)->orderBy('calldate', 'desc')->latest()->take(10)->get();
 
         return view('complaints.edit', compact('complaint', 'categories', 'orgs', 'channels', 'complaint_types', 'energy_types', 'complaint_type_summaries', 'complaint_maker_types'));
     }
