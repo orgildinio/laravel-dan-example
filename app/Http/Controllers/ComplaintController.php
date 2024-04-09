@@ -633,6 +633,6 @@ class ComplaintController extends Controller
         $complaint->delete();
 
         // return redirect()->route('complaint.index')->with('success', 'Амжилттай устгалаа.');
-        return redirect()->route('userComplaints', ['id' => $complaint->id])->with('success', 'Санал хүсэлт амжилттай устгалаа.');
+        return redirect()->route('complaint.create')->with('success', 'Амжилттай устгалаа.');
     }
 }
