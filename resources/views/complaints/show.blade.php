@@ -197,6 +197,7 @@
                     </div>
 
                     <div>
+                        <div>Яриа бичлэг: {{ $complaint->cdr_id }}</div>
                         @if ($complaint->audio_file_id != null)
                             <div class="text-sm px-2 mb-2">
                                 <p>Бичлэг</p>
