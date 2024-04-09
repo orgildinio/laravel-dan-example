@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use App\Models\Cdr;
 use App\Models\File;
 use App\Models\User;
 use App\Models\Rating;
@@ -71,6 +72,11 @@ class Complaint extends Model
     public function audioFile()
     {
         return $this->belongsTo(File::class);
+    }
+
+    public function cdr()
+    {
+        return $this->belongsTo(Cdr::class);
     }
 
     public function status()

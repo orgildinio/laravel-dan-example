@@ -198,6 +198,12 @@
 
                     <div>
                         <div>Яриа бичлэг: {{ $complaint->cdr_id }}</div>
+                        <div>
+                            <audio controls>
+                                <source src="{{ asset('records/' . $complaint->cdr->linkedid) }}.wav" type="audio/mpeg">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
                         @if ($complaint->audio_file_id != null)
                             <div class="text-sm px-2 mb-2">
                                 <p>Бичлэг</p>
