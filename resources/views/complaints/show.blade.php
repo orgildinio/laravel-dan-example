@@ -198,13 +198,13 @@
 
                     <div>
                         @if ($complaint->cdr_id != null)
-                        <div  class="text-sm px-2 mb-2">
-                            <p>Яриа бичлэг</p>
-                            <audio controls>
-                                <source src="{{ asset('records/' . $complaint->cdr?->linkedid) }}.wav" type="audio/mpeg">
-                                Your browser does not support the audio element.
-                            </audio>
-                        </div>
+                            <div  class="text-sm px-2 mb-2">
+                                <p>Яриа бичлэг</p>
+                                <audio controls class="w-full">
+                                    <source src="{{ asset('records/' . $complaint->cdr?->linkedid) }}.wav" type="audio/mpeg">
+                                    Your browser does not support the audio element.
+                                </audio>
+                            </div>
                         @endif
                         @if ($complaint->audio_file_id != null)
                             <div class="text-sm px-2 mb-2">
