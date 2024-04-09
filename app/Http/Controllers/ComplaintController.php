@@ -369,7 +369,7 @@ class ComplaintController extends Controller
 
         // Fetch the last 10 phone audio calls from the database
         $org_numbers = OrganizationNumbers::where('organization_id', $org_id)->pluck('phone_number')->toArray();
-        $audio_calls = Cdr::whereIn('src', $org_numbers)->orderBy('calldate', 'desc')->latest()->take(10)->get();
+        $audio_calls = Cdr::whereIn('dst', $org_numbers)->orderBy('calldate', 'desc')->latest()->take(10)->get();
 
         return view('complaints.create', compact('categories', 'orgs', 'channels', 'complaint_types', 'energy_types', 'complaint_type_summaries', 'complaint_maker_types', 'audio_calls'));
     }
@@ -481,10 +481,10 @@ class ComplaintController extends Controller
 
                 if ($result['isValid'] && $result['smart']['isValid']) {
                     // API request success
-                    Log::channel('1111_log')->info('do-reciept action successfully.');
+                    Log::channel('1111_log')->info('do-reciept action successfully. 1111 ээс ирсэн гомдлыг амжилттэй хүлээн авлаа. UserId: ' . Auth::user()->id . ' complaint_serial_number: ' . $complaint->serial_number);
                 } else {
                     // API request failed
-                    Log::channel('1111_log')->error('Failed do-reciept action.');
+                    Log::channel('1111_log')->error('Failed do-reciept action. 1111 ээс ирсэн гомдлыг хүлээн авахад алдаа гарлаа.');
                 }
             }
         }
