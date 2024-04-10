@@ -85,7 +85,7 @@
                                     {{ __('Тохиргоо') }}
                                 </div>
 
-                                <x-dropdown-link href="{{ route('profile.show') }}">
+                                <x-dropdown-link href="{{ route('profile') }}">
                                     {{ __('Профайл') }}
                                 </x-dropdown-link>
 
