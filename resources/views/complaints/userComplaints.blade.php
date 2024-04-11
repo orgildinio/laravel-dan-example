@@ -68,8 +68,10 @@
                                       </span>
                               
                                       <span class="hidden sm:block"> Хүлээн авсан </span>
+
+                                      <img src="{{ asset('/image/rule-draft.svg')}}" class="h-6 w-6 sm:hidden" alt="recieved">
                               
-                                      <svg
+                                      {{-- <svg
                                         class="h-6 w-6 sm:hidden"
                                         xmlns="http://www.w3.org/2000/svg"
                                         fill="none"
@@ -82,7 +84,7 @@
                                           stroke-linejoin="round"
                                           d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"
                                         />
-                                      </svg>
+                                      </svg> --}}
                                     </li>
                               
                                     <li class="relative flex justify-center text-{{$complaint->status_id == 3 ? 'blue' : 'gray'}}-600">
@@ -105,7 +107,8 @@
                               
                                       <span class="hidden sm:block"> Хянаж байгаа </span>
                               
-                                      <svg
+                                      <img src="{{ asset('/image/rule-test.svg')}}" class="mx-auto h-6 w-6 sm:hidden" alt="recieved">
+                                      {{-- <svg
                                         class="mx-auto h-6 w-6 sm:hidden"
                                         xmlns="http://www.w3.org/2000/svg"
                                         fill="none"
@@ -123,7 +126,7 @@
                                           stroke-linejoin="round"
                                           d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
                                         />
-                                      </svg>
+                                      </svg> --}}
                                     </li>
                               
                                     <li class="relative flex justify-end text-{{$complaint->status_id == 6 ? 'blue' : 'gray'}}-600">
@@ -144,7 +147,8 @@
                               
                                       <span class="hidden sm:block"> Шийдвэрлэсэн </span>
                               
-                                      <svg
+                                      <img src="{{ asset('/image/approve-invoice.svg')}}" class="h-6 w-6 text-blue-900 sm:hidden" alt="report">
+                                      {{-- <svg
                                         class="h-6 w-6 sm:hidden"
                                         xmlns="http://www.w3.org/2000/svg"
                                         fill="none"
@@ -157,7 +161,7 @@
                                           stroke-linejoin="round"
                                           d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
                                         />
-                                      </svg>
+                                      </svg> --}}
                                     </li>
                                   </ol>
                                 </div>
