@@ -46,7 +46,11 @@
                     bg-green-200
                     @else
                     bg-gray-200 
-                    @endif">Өргөдөл
+                    @endif">
+                    {{-- @if ($step->status_id == 1)
+                        {{$step->org->name . ' руу'}}
+                    @endif --}}
+                    Өргөдөл
                     гомдол {{ $step->status?->name }}</span>
             </div>
             <div class="p-4">
