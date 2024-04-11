@@ -16,11 +16,6 @@
                         {{ __('Нүүр') }}
                     </x-nav-link>
                 </div>
-                {{-- <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link href="{{ route('complaints') }}" :active="request()->routeIs('complaints')">
-                        {{ __('Санал хүсэлт') }}
-                    </x-nav-link>
-                </div> --}}
                 @guest
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-nav-link href="{{ route('addComplaint') }}" :active="request()->routeIs('addComplaint')">
@@ -33,6 +28,11 @@
                         <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                             <x-nav-link href="{{ route('addComplaint') }}" :active="request()->routeIs('addComplaint')">
                                 {{ __('Өргөдөл, гомдол илгээх') }}
+                            </x-nav-link>
+                        </div>
+                        <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                            <x-nav-link href="{{ route('userComplaints') }}" :active="request()->routeIs('userComplaints')">
+                                {{ __('Миний илгээсэн санал') }}
                             </x-nav-link>
                         </div>
                     @endif
@@ -80,18 +80,20 @@
                             </x-slot>
 
                             <x-slot name="content">
-                                <!-- Account Management -->
-                                <div class="block px-4 py-2 text-xs text-gray-400">
-                                    {{ __('Тохиргоо') }}
-                                </div>
+                                @if (Auth::user()->role?->name === 'dan')
+                                    <!-- Account Management -->
+                                    <div class="block px-4 py-2 text-xs text-gray-400">
+                                        {{ __('Тохиргоо') }}
+                                    </div>
 
-                                <x-dropdown-link href="{{ route('profile') }}">
-                                    {{ __('Профайл') }}
-                                </x-dropdown-link>
+                                    <x-dropdown-link href="{{ route('profile') }}">
+                                        {{ __('Профайл') }}
+                                    </x-dropdown-link>
 
-                                <x-dropdown-link href="{{ route('userComplaints') }}">
-                                    {{ __('Миний илгээсэн санал') }}
-                                </x-dropdown-link>
+                                    <x-dropdown-link href="{{ route('userComplaints') }}">
+                                        {{ __('Миний илгээсэн санал') }}
+                                    </x-dropdown-link>
+                                @endif
 
 
                                 @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
@@ -165,6 +167,11 @@
                 <div class="pt-2 pb-3 space-y-1">
                     <x-responsive-nav-link href="{{ route('addComplaint') }}" :active="request()->routeIs('addComplaint')">
                         {{ __('Өргөдөл, гомдол илгээх') }}
+                    </x-responsive-nav-link>
+                </div>
+                <div class="pt-2 pb-3 space-y-1">
+                    <x-responsive-nav-link href="{{ route('userComplaints') }}" :active="request()->routeIs('userComplaints')">
+                        {{ __('Миний илгээсэн санал хүсэлт') }}
                     </x-responsive-nav-link>
                 </div>
             @endif

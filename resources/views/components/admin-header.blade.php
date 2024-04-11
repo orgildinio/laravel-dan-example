@@ -80,7 +80,7 @@
                     </div>
                     <ul class="py-1 text-gray-500" aria-labelledby="dropdown">
                         <li>
-                            <a href="{{ route('profile.show') }}"
+                            <a href="{{ route('adminProfile') }}"
                                 class="block py-2 px-4 text-sm hover:bg-gray-100">Профайл</a>
                         </li>
                     </ul>

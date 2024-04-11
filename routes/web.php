@@ -39,6 +39,8 @@ Route::middleware([
     Route::resource('/user', UserController::class);
     Route::get('/profile', [UserController::class, 'profile'])->name('profile');
     Route::post('/update-profile', [UserController::class, 'updateProfile'])->name('updateProfile');
+    Route::get('/adminProfile', [UserController::class, 'adminProfile'])->name('adminProfile');
+    Route::post('/update-admin-profile', [UserController::class, 'updateAdminProfile'])->name('updateAdminProfile');
     Route::get('complaintSteps', ComplaintStep::class);
     Route::get('/complaintStatus/{id}', [ComplaintController::class, 'complaintStatus'])->name('complaintStatus');
     Route::put('/updateComplaintStatus/{id}', [ComplaintController::class, 'updateComplaintStatus']);

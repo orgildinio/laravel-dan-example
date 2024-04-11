@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Organization;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -145,8 +146,8 @@ class UserController extends Controller
         $request->validate([
             'phone' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:users,email,' . $user->id,
-            'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            // 'password' => 'required|string|min:8|confirmed'
+            'photo' => 'sometimes|image|mimes:jpeg,png,jpg,gif|max:2048',
+            // 'password' => 'nullable|required|string|min:8|confirmed',
         ]);
 
         if (trim($request->password) == '') {
@@ -165,6 +166,43 @@ class UserController extends Controller
         $user->update($input);
 
         return redirect()->route('profile')
+            ->with('success', 'Хэрэглэгчийн мэдээлэл амжилттэй засагдлаа.');
+    }
+
+    public function adminProfile()
+    {
+        return view('users.adminProfile');
+    }
+
+    public function updateAdminProfile(Request $request)
+    {
+        $user = Auth::user();
+        $input = $request->all();
+        // dd($input);
+
+        $request->validate([
+            'phone' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:users,email,' . $user->id,
+            'photo' => 'sometimes|image|mimes:jpeg,png,jpg,gif|max:2048',
+            // 'password' => 'required|string|min:8|confirmed'
+        ]);
+
+        if (trim($request->password) == '') {
+            $input = $request->except('password');
+        } else {
+            $input['password'] = Hash::make($request->password);
+        }
+
+        if ($request->hasFile('photo')) {
+            $photoPath = $request->file('photo')->store('profile-photos', 'public');
+
+            // Update the user's profile photo path in the database
+            $user->profile_photo_path = $photoPath;
+        }
+
+        $user->update($input);
+
+        return redirect()->route('adminProfile')
             ->with('success', 'Хэрэглэгчийн мэдээлэл амжилттэй засагдлаа.');
     }
 }
