@@ -24,7 +24,7 @@
         </h2>
     </x-slot>
 
-    <div class="py-8">
+    <div class="py-8 bg-slate-50">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div aria-label="group of cards" tabindex="0" class="focus:outline-none w-full">
                 @foreach ($complaints as $complaint)
@@ -34,12 +34,10 @@
                         <div class="flex items-center border-b border-gray-300 pb-6">
                             <div class="flex items-start justify-between w-full">
                                 <div class="">
-                                    <p tabindex="0"
-                                        class="focus:outline-none font-medium leading-5 text-gray-800 ">
-                                        <span class="bg-primary px-4 py-1 text-white text-md rounded">№{{$complaint->serial_number}}</span></p>
-                                    <p tabindex="0"
+                                    <p class="bg-primary px-4 py-1 text-white text-md rounded">№{{$complaint->serial_number}}</p>
+                                    {{-- <p tabindex="0"
                                         class="focus:outline-none text-sm leading-normal pt-2 text-gray-500">
-                                        {{$complaint->complaint_date}}</p>
+                                        {{$complaint->complaint_date}}</p> --}}
                                 </div>
                                 <div class="text-blue-900 font-bold text-lg">
                                   {{$complaint->organization?->name}} - {{$complaint->status?->name}}
@@ -54,86 +52,19 @@
                                         {{$complaint->complaint}}</p>
                                 </a>
                             </div>
-                            <div class="text-right my-4">
-                              <span class="text-white text-lg px-8 py-2 font-bold {{getBgColor($complaint->category_id)}}">
-                                {{$complaint->category?->name}}
-                              </span>
+                            <div class="flex justify-between items-center">
+                              <div>
+                                <span class="text-gray-600 text-sm italic">
+                                  {{ $complaint->complaint_date }}
+                                  {{-- {{ \Carbon\Carbon::parse($complaint->complaint_date)->diffForHumans() }} --}}
+                                </span>
+                              </div>
+                              <div>
+                                <span class="text-white text-lg px-8 py-2 font-bold {{getBgColor($complaint->category_id)}}">
+                                  {{$complaint->category?->name}}
+                                </span>
+                              </div>
                             </div>
-                            
-                            {{-- <div>
-                                <h2 class="sr-only">Явц</h2>
-                              
-                                <div class="after:mt-4 after:block after:h-1 after:w-full after:rounded-lg after:bg-gray-200">
-                                  <ol class="grid grid-cols-3 text-sm font-medium text-gray-500">
-                                    <li class="relative flex justify-start text-{{$complaint->status_id == 2 ? 'blue' : 'gray'}}-600">
-                                      <span class="absolute -bottom-[1.75rem] start-0 rounded-full bg-{{$complaint->status_id == 2 || $complaint->status_id==3 ? 'blue' : 'gray'}}-600">
-                                        <svg
-                                          class="h-5 w-5"
-                                          xmlns="http://www.w3.org/2000/svg"
-                                          viewBox="0 0 20 20"
-                                          fill="currentColor"
-                                        >
-                                          <path
-                                            fill-rule="evenodd"
-                                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                                            clip-rule="evenodd"
-                                          />
-                                        </svg>
-                                      </span>
-                              
-                                      <span class="hidden sm:block"> Хүлээн авсан </span>
-
-                                      <img src="{{ asset('/image/rule-draft.svg')}}" class="h-6 w-6 sm:hidden" alt="recieved">
-                            
-                                    </li>
-                              
-                                    <li class="relative flex justify-center text-{{$complaint->status_id == 3 ? 'blue' : 'gray'}}-600">
-                                      <span
-                                        class="absolute -bottom-[1.75rem] left-1/2 -translate-x-1/2 rounded-full bg-{{$complaint->status_id == 3 ? 'blue' : 'gray'}}-600"
-                                      >
-                                        <svg
-                                          class="h-5 w-5"
-                                          xmlns="http://www.w3.org/2000/svg"
-                                          viewBox="0 0 20 20"
-                                          fill="currentColor"
-                                        >
-                                          <path
-                                            fill-rule="evenodd"
-                                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                                            clip-rule="evenodd"
-                                          />
-                                        </svg>
-                                      </span>
-                              
-                                      <span class="hidden sm:block"> Хянаж байгаа </span>
-                              
-                                      <img src="{{ asset('/image/rule-test.svg')}}" class="mx-auto h-6 w-6 sm:hidden" alt="recieved">
-                                    </li>
-                              
-                                    <li class="relative flex justify-end text-{{$complaint->status_id == 6 ? 'blue' : 'gray'}}-600">
-                                      <span class="absolute -bottom-[1.75rem] end-0 rounded-full bg-{{$complaint->status_id == 6 ? 'blue' : 'gray'}}-600">
-                                        <svg
-                                          class="h-5 w-5"
-                                          xmlns="http://www.w3.org/2000/svg"
-                                          viewBox="0 0 20 20"
-                                          fill="currentColor"
-                                        >
-                                          <path
-                                            fill-rule="evenodd"
-                                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                                            clip-rule="evenodd"
-                                          />
-                                        </svg>
-                                      </span>
-                              
-                                      <span class="hidden sm:block"> Шийдвэрлэсэн </span>
-                              
-                                      <img src="{{ asset('/image/approve-invoice.svg')}}" class="h-6 w-6 text-blue-900 sm:hidden" alt="report">
-                                    </li>
-                                  </ol>
-                                </div>
-                            </div> --}}
-
                             <div class="w-full px-6 py-4">
                               <div class="relative flex items-center justify-between w-full">
                                 <div class="absolute left-0 top-2/4 h-0.5 w-full -translate-y-2/4 bg-gray-300"></div>
