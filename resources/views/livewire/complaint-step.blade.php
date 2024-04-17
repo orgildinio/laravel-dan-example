@@ -5,11 +5,11 @@
                 {{ session('success') }}
               </div>
         @endif
-        @if (session('info'))
+        {{-- @if (session('info'))
             <div class="p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50" role="alert">
                 {{ session('info') }}
               </div>
-        @endif
+        @endif --}}
         @if (session('warning'))
             <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50" role="alert">
                 {{ session('warning') }}

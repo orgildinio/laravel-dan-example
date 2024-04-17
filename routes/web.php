@@ -55,12 +55,13 @@ Route::middleware([
     Route::post('/orgNumber/{id}', [OrgNumberController::class, 'save'])->name('orgNumber.save');
     Route::resource('/organization', OrganizationController::class);
 
+    Route::get('/userComplaints', [ComplaintController::class, 'userComplaints'])->name('userComplaints');
+
     // 1111 ээс санал хүсэлт авах
     Route::resource('/sourceComplaint', SourceComplaintController::class);
     Route::get('/fetchComplaints', [SourceComplaintController::class, 'fetchComplaints'])->name('fetchComplaints');
 });
 Route::get('/complaints', [ComplaintController::class, 'complaints'])->name('complaints');
-Route::get('/userComplaints', [ComplaintController::class, 'userComplaints'])->name('userComplaints');
 Route::get('/showComplaint/{id}', [ComplaintController::class, 'showComplaint'])->name('showComplaint');
 
 // Дан системээр нэвтрэх
