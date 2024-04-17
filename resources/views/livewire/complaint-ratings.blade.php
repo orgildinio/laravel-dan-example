@@ -47,7 +47,7 @@
                                             @error('comment')
                                                 <p class="mt-1 text-red-500">{{ $message }}</p>
                                             @enderror
-                                            <textarea wire:model.lazy="comment" name="description" class="block w-full px-4 py-3 border border-1 rounded-lg focus:border-blue-500 focus:outline-none" placeholder="Comment.."></textarea>
+                                            <textarea wire:model.lazy="comment" name="description" class="block w-full px-4 py-3 border border-gray-300 bg-slate-100 shadow-inner rounded-lg focus:border-blue-500 focus:outline-none" placeholder="Comment.."></textarea>
                                         </div>
                                     </div>
                                     <div class="">
