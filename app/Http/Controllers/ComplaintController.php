@@ -519,15 +519,21 @@ class ComplaintController extends Controller
     {
         $complaint = Complaint::findOrFail($id);
 
+        $file_url = null;
+        $file_ext = null;
+        $fileSizeInKilobytes = null;
+
         if ($complaint->file_id != null) {
             $file_url = 'files/' . $complaint->file?->filename; // Example dynamic image URL
             $file_ext = pathinfo($complaint->file?->filename, PATHINFO_EXTENSION);
+            $fileSizeInBytes = filesize(public_path($file_url));
+            $fileSizeInKilobytes = round($fileSizeInBytes / 1024); // Convert Kbytes to megabytes
         }
 
         $rating = Rating::where('user_id', auth()->user()->id)->where('complaint_id', $id)->first();
         // dd($rating);
 
-        return view('complaints.show', compact('complaint', 'rating', 'file_url', 'file_ext'));
+        return view('complaints.show', compact('complaint', 'rating', 'file_url', 'file_ext', 'fileSizeInKilobytes'));
     }
 
     /**
