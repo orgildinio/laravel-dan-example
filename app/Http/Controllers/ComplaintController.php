@@ -154,10 +154,19 @@ class ComplaintController extends Controller
     public function showComplaint($id)
     {
         $complaint = Complaint::findOrFail($id);
+
+        if ($complaint->file_id != null) {
+            $file_url = 'files/' . $complaint->file?->filename; // Example dynamic image URL
+            $file_ext = pathinfo($complaint->file?->filename, PATHINFO_EXTENSION);
+            $fileSizeInBytes = filesize(public_path($file_url));
+            $fileSizeInKilobytes = round($fileSizeInBytes / 1024); // Convert Kbytes to megabytes
+
+        }
+
         $complaint_steps = ModelsComplaintStep::where('complaint_id', $id)->get();
 
         // dd($complaint_steps);
-        return view('complaints.showComplaint', compact('complaint', 'complaint_steps'));
+        return view('complaints.showComplaint', compact('complaint', 'complaint_steps', 'file_url', 'file_ext', 'fileSizeInKilobytes'));
     }
 
     public function index(Request $request)
@@ -506,10 +515,16 @@ class ComplaintController extends Controller
     public function show($id)
     {
         $complaint = Complaint::findOrFail($id);
+
+        if ($complaint->file_id != null) {
+            $file_url = 'files/' . $complaint->file?->filename; // Example dynamic image URL
+            $file_ext = pathinfo($complaint->file?->filename, PATHINFO_EXTENSION);
+        }
+
         $rating = Rating::where('user_id', auth()->user()->id)->where('complaint_id', $id)->first();
         // dd($rating);
 
-        return view('complaints.show', compact('complaint', 'rating'));
+        return view('complaints.show', compact('complaint', 'rating', 'file_url', 'file_ext'));
     }
 
     /**
