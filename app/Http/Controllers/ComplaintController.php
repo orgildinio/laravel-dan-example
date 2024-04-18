@@ -155,21 +155,23 @@ class ComplaintController extends Controller
     {
         $complaint = Complaint::findOrFail($id);
 
-        $file_url = null;
-        $file_ext = null;
+        $fileName = null;
+        $fileUrl = null;
+        $fileExt = null;
         $fileSizeInKilobytes = null;
 
         if ($complaint->file_id != null) {
-            $file_url = 'files/' . $complaint->file?->filename; // Example dynamic image URL
-            $file_ext = pathinfo($complaint->file?->filename, PATHINFO_EXTENSION);
-            $fileSizeInBytes = filesize(public_path($file_url));
+            $fileName = $complaint->file?->filename; // Example dynamic image URL
+            $fileUrl = 'files/' . $complaint->file?->filename; // Example dynamic image URL
+            $fileExt = pathinfo($complaint->file?->filename, PATHINFO_EXTENSION);
+            $fileSizeInBytes = filesize(public_path($fileUrl));
             $fileSizeInKilobytes = round($fileSizeInBytes / 1024); // Convert Kbytes to megabytes
         }
 
         $complaint_steps = ModelsComplaintStep::where('complaint_id', $id)->get();
 
         // dd($complaint_steps);
-        return view('complaints.showComplaint', compact('complaint', 'complaint_steps', 'file_url', 'file_ext', 'fileSizeInKilobytes'));
+        return view('complaints.showComplaint', compact('complaint', 'complaint_steps', 'fileName', 'fileUrl', 'fileExt', 'fileSizeInKilobytes'));
     }
 
     public function index(Request $request)
@@ -519,21 +521,24 @@ class ComplaintController extends Controller
     {
         $complaint = Complaint::findOrFail($id);
 
-        $file_url = null;
-        $file_ext = null;
+        $fileName = null;
+        $fileUrl = null;
+        $fileExt = null;
         $fileSizeInKilobytes = null;
 
         if ($complaint->file_id != null) {
-            $file_url = 'files/' . $complaint->file?->filename; // Example dynamic image URL
-            $file_ext = pathinfo($complaint->file?->filename, PATHINFO_EXTENSION);
-            $fileSizeInBytes = filesize(public_path($file_url));
+            $fileName = $complaint->file?->filename;
+            $fileUrl = 'files/' . $complaint->file?->filename; // Example dynamic image URL
+            $fileExt = pathinfo($complaint->file?->filename, PATHINFO_EXTENSION);
+            $fileSizeInBytes = filesize(public_path($fileUrl));
             $fileSizeInKilobytes = round($fileSizeInBytes / 1024); // Convert Kbytes to megabytes
         }
+
 
         $rating = Rating::where('user_id', auth()->user()->id)->where('complaint_id', $id)->first();
         // dd($rating);
 
-        return view('complaints.show', compact('complaint', 'rating', 'file_url', 'file_ext', 'fileSizeInKilobytes'));
+        return view('complaints.show', compact('complaint', 'rating', 'fileName', 'fileUrl', 'fileExt', 'fileSizeInKilobytes'));
     }
 
     /**
