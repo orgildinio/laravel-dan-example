@@ -93,6 +93,18 @@
      crossorigin=""></script>
     <script src="https://unpkg.com/mic-recorder-to-mp3@2.2.1/dist/index.min.js"></script>
 
+    <script>
+        $(document).ready(function() {
+            // Check if it's the first Google login (using a session flag)
+            var isFirstDanLogin = "{{ session('first_dan_login') }}";
+    
+            if (isFirstDanLogin) {
+                // $('#registrationModal').modal('show'); // Show the modal
+                console.log("First Dan Login");
+            }
+        });
+    </script>
+
     @stack('scripts')
 
     @livewireScripts
