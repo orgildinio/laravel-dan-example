@@ -21,7 +21,7 @@
                 <x-faq></x-faq>
             </div>
 
-            @if (session('first_dan_login'))
+            @if (session('first_dan_login') == true)
                 @livewire('update-dan-user')
             @endif
 
