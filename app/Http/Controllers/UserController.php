@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Organization;
+use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
@@ -32,8 +33,9 @@ class UserController extends Controller
     public function create()
     {
         $orgs = Organization::orderBy('name', 'asc')->get();
+        $roles = Role::orderBy('name', 'desc')->get();
 
-        return view('users.create', compact('orgs'));
+        return view('users.create', compact('orgs', 'roles'));
     }
 
     /**
@@ -50,10 +52,11 @@ class UserController extends Controller
 
         $request->validate([
             'name' => 'required',
-            'email' => 'required',
-            'password' => 'required',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|string|min:6',
             'org_id' => 'required',
             'division' => 'required',
+            'phone' => 'required',
         ]);
 
         $input['password'] = Hash::make($request->password);
@@ -84,8 +87,9 @@ class UserController extends Controller
     public function edit(User $user)
     {
         $orgs = Organization::orderBy('name', 'asc')->get();
+        $roles = Role::orderBy('name', 'desc')->get();
 
-        return view('users.edit', compact('user', 'orgs'));
+        return view('users.edit', compact('user', 'orgs', 'roles'));
     }
 
     /**
@@ -99,9 +103,10 @@ class UserController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'email' => 'required',
+            'email' => 'required|email|unique:users,email,' . $user->id,
             'org_id' => 'required',
             'division' => 'required',
+            'phone' => 'required',
         ]);
 
         $input = $request->all();

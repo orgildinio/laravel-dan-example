@@ -5,16 +5,6 @@
                 <div>
                     <h1 class="py-4 mb-2 mt-0 text-2xl font-medium leading-tight text-gray">Шинэ хэрэглэгч бүртгэх</h1>
                 </div>
-                @if ($errors->any())
-                    <div class="bg-red-200 p-2 mb-2 text-red-700 rounded-md">
-                        <strong>Whoops!</strong> Алдаа гарлаа.<br><br>
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
                 <form class="max-w-sm bg-gray-100 p-5" method="POST" action="{{ route('user.store') }}"
                     enctype="multipart/form-data">
                     @csrf
@@ -22,22 +12,22 @@
                         <label for="name" class="block mb-2 text-sm font-medium text-gray-900">Хэрэглэгчийн
                             нэр</label>
                         <input type="text" name="name"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                            required autocomplete="off">
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                        @error('name') <span class="text-red-500">{{ $message }}</span> @enderror
                     </div>
                     <div class="mb-5">
                         <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Имэйл
                             хаяг</label>
                         <input type="email" name="email"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                            placeholder="name@mail.com" required>
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                        @error('email') <span class="text-red-500">{{ $message }}</span> @enderror
                     </div>
                     <div class="mb-5">
                         <label for="password" class="block mb-2 text-sm font-medium text-gray-900">Нууц
                             үг</label>
                         <input type="password" name="password"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                            required>
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                        @error('password') <span class="text-red-500">{{ $message }}</span> @enderror
                     </div>
 
                     <div class="md-5">
@@ -50,13 +40,26 @@
                             <option value="{{ $org->id }}">{{ $org->name }}</option>
                             @endforeach
                         </select>
+                        @error('org_id') <span class="text-red-500">{{ $message }}</span> @enderror
+                    </div>
+                    <div class="md-5">
+                        <label for="role_id" class="block mb-2 text-sm font-medium text-gray-900">
+                            Хандах эрх
+                        </label>
+                        <select name="role_id"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                            @foreach ($roles as $role)
+                            <option value="{{ $role->id }}">{{ $role->name }}</option>
+                            @endforeach
+                        </select>
+                        @error('role_id') <span class="text-red-500">{{ $message }}</span> @enderror
                     </div>
                     <br>
                     <div class="mb-5">
                         <label for="division" class="block mb-2 text-sm font-medium text-gray-900">Албан тушаал</label>
                         <input type="text" name="division"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required
-                            >
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                        @error('division') <span class="text-red-500">{{ $message }}</span> @enderror
                     </div>
 
                     <div class="mb-5">
@@ -64,6 +67,7 @@
                         <input type="text" name="phone"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                             >
+                        @error('phone') <span class="text-red-500">{{ $message }}</span> @enderror
                     </div>
 
                     <button type="submit"
