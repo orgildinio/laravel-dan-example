@@ -14,7 +14,7 @@ class UpdateDanUser extends Component
     public $email;
     public $password;
     public $password_confirmation;
-    public $isOpen = false;
+    public $isOpen = true;
 
     protected $messages = [
         'username.required' => 'Заавал бөглөнө',
