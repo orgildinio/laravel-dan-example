@@ -13,7 +13,7 @@
    openFaq10: false,
    openFaq11: false
    }
-   " class="relative z-20 overflow-hidden bg-white pt-20 pb-12 lg:pt-[120px] lg:pb-[90px] border-t border-inherit">
+   " class="relative z-10 overflow-hidden bg-white pt-20 pb-12 lg:pt-[120px] lg:pb-[90px] border-t border-inherit">
    <div class="max-w-7xl mx-auto">
       <div class="flex flex-wrap -mx-4">
          <div class="w-full px-4">

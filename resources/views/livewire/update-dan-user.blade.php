@@ -1,21 +1,26 @@
 <div>
     <div>
         @if ($isOpen)
-            <div  class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+            <div  class="relative z-20" aria-labelledby="modal-title" role="dialog" aria-modal="true">
                 <div wire:click="closeModal" class="fixed inset-0 bg-gray-400 bg-opacity-75 transition-opacity"></div>
         
-                <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+                <div class="fixed inset-0 z-20 w-screen overflow-y-auto">
                     <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
                         <div
                             class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg p-6">
+                            <h1 class="text-xl font-medium text-gray-800 ">Хэрэглэгчийн мэдээлэл</h1>
+                            <p class="mt-2 text-sm text-gray-500 ">
+                                Дараагийн удаа бүртгэлтэй имэйл хаяг, нууц үгээ ашиглан системд нэвтрэх боломжтой.
+                            </p>
+
                             <form wire:submit.prevent="updateUser">
                                 @csrf
                     
-                                <div>
+                                {{-- <div>
                                     <x-label for="username" value="{{ __('Хэрэглэгчийн нэр') }}" />
                                     <x-input class="block mt-1 w-full" type="text" wire:model="username" :value="old('username')" />
                                     @error('username') <span class="text-red-500">{{ $message }}</span> @enderror
-                                </div>
+                                </div> --}}
                     
                                 <div class="mt-4">
                                     <x-label for="email" value="{{ __('И-мэйл') }}" />

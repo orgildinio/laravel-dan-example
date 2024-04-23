@@ -17,7 +17,6 @@ class UpdateDanUser extends Component
     public $isOpen = true;
 
     protected $messages = [
-        'username.required' => 'Заавал бөглөнө',
         'email.required' => 'Заавал бөглөнө',
         'password.required' => 'Заавал бөглөнө',
     ];
@@ -49,14 +48,14 @@ class UpdateDanUser extends Component
     public function updateUser()
     {
         $this->validate([
-            'username' => 'required',
-            'email' => 'required|email',
+            // 'username' => 'required',
+            'email' => 'required|email|unique:users,email,' . $this->user->id . '',
             'password' => 'required|string|min:6',
             'password_confirmation' => 'same:password'
         ]);
 
         $this->user->update([
-            'name' => $this->username,
+            // 'name' => $this->username,
             'email' => $this->email,
             'password' => Hash::make($this->password),
         ]);
