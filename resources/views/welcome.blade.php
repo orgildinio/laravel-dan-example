@@ -21,9 +21,9 @@
                 <x-faq></x-faq>
             </div>
 
-            {{-- @if (session('first_dan_login')) --}}
+            @if (session('first_dan_login'))
                 @livewire('update-dan-user')
-            {{-- @endif --}}
+            @endif
 
         </div>
     </div>
