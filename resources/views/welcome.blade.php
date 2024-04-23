@@ -36,7 +36,7 @@
 
         if (isFirstDanLogin) {
             // $('#registrationModal').modal('show'); // Show the modal
-            console.log("First Dan Login");
+            console.log("First Dan Login: ", isFirstDanLogin);
         }
     });
 </script>
