@@ -14,6 +14,7 @@ use App\Models\Status;
 use App\Models\Channel;
 use App\Models\DanUser;
 use App\Models\Category;
+use App\Mail\WelcomeMail;
 use App\Models\Complaint;
 use App\Models\EnergyType;
 use App\Models\Organization;
@@ -30,6 +31,7 @@ use Illuminate\Support\Facades\Log;
 use App\Models\ComplaintTypeSummary;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Redis;
 use Symfony\Component\Console\Input\Input;
@@ -502,6 +504,9 @@ class ComplaintController extends Controller
                 }
             }
         }
+        // Send email
+        // $mail = Mail::to($user->email)->send(new WelcomeMail($user));
+        // dd($mail);
 
 
         if (Auth::user()->org_id != null) {
@@ -509,6 +514,20 @@ class ComplaintController extends Controller
         } else {
             return redirect()->route('userComplaints', ['id' => $complaint->id])->with('success', 'Санал хүсэлт амжилттай бүртгэлээ.');
         }
+    }
+    public function sendmail()
+    {
+        $user = Auth::user();
+        // Send email
+        $mail = Mail::to("gantulgarus@gmail.com")->send(new WelcomeMail($user));
+
+        if ($mail) {
+            return 'Email sent successfully!';
+        } else {
+            return 'Failed to send email.';
+        }
+
+        // dd($mail);
     }
 
     /**

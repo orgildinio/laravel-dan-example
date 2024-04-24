@@ -38,6 +38,7 @@ Route::middleware([
     Route::resource('/complaint', ComplaintController::class);
     Route::resource('/user', UserController::class);
     Route::get('/profile', [UserController::class, 'profile'])->name('profile');
+    Route::get('/sendmail', [ComplaintController::class, 'sendmail'])->name('sendmail');
     Route::post('/update-profile', [UserController::class, 'updateProfile'])->name('updateProfile');
     Route::get('/adminProfile', [UserController::class, 'adminProfile'])->name('adminProfile');
     Route::post('/update-admin-profile', [UserController::class, 'updateAdminProfile'])->name('updateAdminProfile');

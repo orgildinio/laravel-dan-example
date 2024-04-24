@@ -144,6 +144,8 @@ class UserController extends Controller
 
     public function updateProfile(Request $request)
     {
+        /** @var \App\Models\User $user **/
+
         $user = Auth::user();
         $input = $request->all();
         // dd($input);
@@ -181,6 +183,8 @@ class UserController extends Controller
 
     public function updateAdminProfile(Request $request)
     {
+        /** @var \App\Models\User $user **/
+
         $user = Auth::user();
         $input = $request->all();
         // dd($input);
