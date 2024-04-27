@@ -2,25 +2,30 @@
 
 namespace App\Mail;
 
+use App\Models\User;
+use App\Models\Complaint;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class WelcomeMail extends Mailable
+class ComplaintStatusMail extends Mailable
 {
     use Queueable, SerializesModels;
+    public $user, $complaint;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(User $user, Complaint $complaint)
     {
-        //
+        $this->user = $user;
+        $this->complaint = $complaint;
     }
 
     /**
@@ -31,7 +36,7 @@ class WelcomeMail extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'Welcome Mail',
+            subject: 'Өргөдөл, гомдлын шийдвэрлэлт',
         );
     }
 
@@ -43,7 +48,12 @@ class WelcomeMail extends Mailable
     public function content()
     {
         return new Content(
-            view: 'emails.welcome'
+            view: 'emails.complaint-status',
+            with: [
+                'user' => $this->user,
+                'complaint' => $this->complaint,
+                'complaint_url' => URL::route('showComplaint', $this->complaint->id)
+            ]
         );
     }
 

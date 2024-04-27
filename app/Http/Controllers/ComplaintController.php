@@ -16,6 +16,7 @@ use App\Models\DanUser;
 use App\Models\Category;
 use App\Mail\WelcomeMail;
 use App\Models\Complaint;
+use App\Jobs\SendEmailJob;
 use App\Models\EnergyType;
 use App\Models\Organization;
 use App\Models\Registration;
@@ -26,6 +27,7 @@ use App\Models\SourceComplaint;
 use App\Exports\ExportComplaint;
 use App\Models\ComplaintMakerType;
 use Illuminate\Support\Facades\DB;
+use App\Mail\ComplaintNotification;
 use App\Models\OrganizationNumbers;
 use Illuminate\Support\Facades\Log;
 use App\Models\ComplaintTypeSummary;
@@ -471,6 +473,10 @@ class ComplaintController extends Controller
                 'desc' => 'Хүлээн авсан',
                 'status_id' => 2
             ]);
+            // Send email about complaint recieved
+            if ($complaint->email != null) {
+                SendEmailJob::dispatch($user, $complaint);
+            }
         }
 
         // channel_id = 7 байвал 1111 төвийн гомдол
@@ -505,29 +511,13 @@ class ComplaintController extends Controller
             }
         }
         // Send email
-        // $mail = Mail::to($user->email)->send(new WelcomeMail($user));
-        // dd($mail);
-
+        // Mail::to($user->email)->send(new ComplaintNotification($user, $complaint));
 
         if (Auth::user()->org_id != null) {
             return redirect()->route('complaint.create')->with('success', 'Санал хүсэлт амжилттай бүртгэлээ.');
         } else {
             return redirect()->route('userComplaints', ['id' => $complaint->id])->with('success', 'Санал хүсэлт амжилттай бүртгэлээ.');
         }
-    }
-    public function sendmail()
-    {
-        $user = Auth::user();
-        // Send email
-        $mail = Mail::to("gantulgarus@gmail.com")->send(new WelcomeMail($user));
-
-        if ($mail) {
-            return 'Email sent successfully!';
-        } else {
-            return 'Failed to send email.';
-        }
-
-        // dd($mail);
     }
 
     /**
