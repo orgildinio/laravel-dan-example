@@ -475,7 +475,7 @@ class ComplaintController extends Controller
             ]);
             // Send email about complaint recieved
             if ($complaint->email != null) {
-                SendEmailJob::dispatch($user, $complaint);
+                SendEmailJob::dispatch($complaint);
             }
         }
 

@@ -2,7 +2,6 @@
 
 namespace App\Mail;
 
-use App\Models\User;
 use App\Models\Complaint;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
@@ -15,16 +14,15 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 class ComplaintNotification extends Mailable
 {
     use Queueable, SerializesModels;
-    public $user, $complaint;
+    public $complaint;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(User $user, Complaint $complaint)
+    public function __construct(Complaint $complaint)
     {
-        $this->user = $user;
         $this->complaint = $complaint;
     }
 
@@ -50,7 +48,6 @@ class ComplaintNotification extends Mailable
         return new Content(
             markdown: 'emails.complaint.notification',
             with: [
-                'user' => $this->user,
                 'complaint' => $this->complaint,
                 'complaint_url' => URL::route('showComplaint', $this->complaint->id)
             ]

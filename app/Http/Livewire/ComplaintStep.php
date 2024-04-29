@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Status;
 use Livewire\Component;
 use App\Models\Complaint;
+use App\Jobs\SendEmailJob;
 use App\Models\Organization;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Log;
@@ -311,6 +312,11 @@ class ComplaintStep extends Component
                     ]);
                 }
 
+                // Send email about complaint recieved
+                if ($complaint->email != null) {
+                    SendEmailJob::dispatch($complaint);
+                }
+
                 // Хэрвээ 1111-ээс ирсэн гомдол байвал 1111 рүү мэдээлэл дамжуулах
                 if ($complaint->channel_id == 7 && $complaint->source_number != null) {
                     $params = [
@@ -349,6 +355,11 @@ class ComplaintStep extends Component
                     'desc' => $this->desc,
                     'file_id' => isset($filename) ? $filename->id : null,
                 ]);
+
+                // Send email about complaint recieved
+                if ($complaint->email != null) {
+                    SendEmailJob::dispatch($complaint);
+                }
 
                 // Хэрвээ 1111-ээс ирсэн гомдол байвал 1111 рүү мэдээлэл дамжуулах
                 if ($complaint->channel_id == 7 && $complaint->source_number != null) {
@@ -398,6 +409,11 @@ class ComplaintStep extends Component
                         'file_id' => isset($filename) ? $filename->id : null,
                     ]);
 
+                    // Send email about complaint recieved
+                    if ($complaint->email != null) {
+                        SendEmailJob::dispatch($complaint);
+                    }
+
                     // Хэрвээ 1111-ээс ирсэн гомдол байвал 1111 рүү мэдээлэл дамжуулах
                     if ($complaint->channel_id == 7 && $complaint->source_number != null) {
                         $params = [
@@ -436,6 +452,11 @@ class ComplaintStep extends Component
                             'file_id' => isset($filename) ? $filename->id : null,
                         ]);
 
+                        // Send email about complaint recieved
+                        if ($complaint->email != null) {
+                            SendEmailJob::dispatch($complaint);
+                        }
+
                         // Хэрвээ 1111-ээс ирсэн гомдол байвал 1111 рүү мэдээлэл дамжуулах
                         if ($complaint->channel_id == 7 && $complaint->source_number != null) {
                             $params = [
@@ -472,6 +493,11 @@ class ComplaintStep extends Component
                             'amount' => $this->amount,
                             'file_id' => isset($filename) ? $filename->id : null,
                         ]);
+
+                        // Send email about complaint recieved
+                        if ($complaint->email != null) {
+                            SendEmailJob::dispatch($complaint);
+                        }
 
                         // Хэрвээ 1111-ээс ирсэн гомдол байвал 1111 рүү мэдээлэл дамжуулах
                         if ($complaint->channel_id == 7 && $complaint->source_number != null) {
@@ -512,6 +538,12 @@ class ComplaintStep extends Component
                     'sent_date' => Carbon::now()->toDateTimeString(),
                     'desc' => $this->desc
                 ]);
+
+                // Send email about complaint recieved
+                if ($complaint->email != null) {
+                    SendEmailJob::dispatch($complaint);
+                }
+
                 break;
 
             default:

@@ -1,6 +1,6 @@
 <x-mail::message>
 
-Сайн байна уу, {{$user->name}}
+Сайн байна уу, {{$complaint->firstname}}
 
 Таны <strong>№{{$complaint->serial_number}}</strong> дугаартай гомдол <strong>{{$complaint->status->name}}</strong> төлөвт орсон байна.
 
