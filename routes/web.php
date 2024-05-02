@@ -35,6 +35,10 @@ Route::middleware([
     'verified'
 ])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+    Route::get('/dashboardEhzh', [DashboardController::class, 'dashboardEhzh'])->name('dashboardEhzh');
+    Route::get('/dashboardTze', [DashboardController::class, 'dashboardTze'])->name('dashboardTze');
+    Route::get('/dashboardEhs', [DashboardController::class, 'dashboardEhs'])->name('dashboardEhs');
+    Route::get('/dashboardTzeShow', [DashboardController::class, 'dashboardTzeShow'])->name('dashboardTzeShow');
     Route::resource('/complaint', ComplaintController::class);
     Route::resource('/user', UserController::class);
     Route::get('/profile', [UserController::class, 'profile'])->name('profile');
@@ -64,6 +68,10 @@ Route::middleware([
 Route::get('/complaints', [ComplaintController::class, 'complaints'])->name('complaints');
 Route::get('/showComplaint/{id}', [ComplaintController::class, 'showComplaint'])->name('showComplaint');
 
-// Дан системээр нэвтрэх
+// Дан систем Иргэнээр нэвтрэх
 Route::get('auth/redirect', [DanAuthController::class, 'redirectToDan']);
 Route::get('auth/callback', [DanAuthController::class, 'handleDanCallback']);
+
+// Дан систем Байгууллагаар нэвтрэх
+Route::get('auth/redirectOrg', [DanAuthController::class, 'redirectToDanOrg']);
+Route::get('auth/callbackOrg', [DanAuthController::class, 'handleDanOrgCallback']);

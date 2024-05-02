@@ -34,4 +34,20 @@ class DashboardController extends Controller
 
         return view('dashboard', compact('complaints_by_channels', 'complaints_by_months', 'complaints_by_status', 'web', 'utas', 'email', 'mobile', 'bichgeer', 'biychlen'));
     }
+    public function dashboardEhzh()
+    {
+        return view('dashboard.ehzh');
+    }
+    public function dashboardTze()
+    {
+        return view('dashboard.tze');
+    }
+    public function dashboardEhs()
+    {
+        return view('dashboard.ehs');
+    }
+    public function dashboardTzeShow()
+    {
+        return view('dashboard.tzeShow');
+    }
 }

@@ -1,6 +1,6 @@
 <aside id="sidebar"
-   class="fixed hidden z-20 h-full top-0 left-0 pt-16 flex lg:flex flex-shrink-0 flex-col w-64 transition-width duration-75"
-   aria-label="Sidebar" :class="{ '-ml-64': !sidebarOpen }">
+   class="fixed hidden z-20 h-full top-0 left-0 pt-16 flex lg:flex flex-shrink-0 flex-col transition-width duration-75"
+   aria-label="Sidebar" :class="{'w-64': sidebarOpen, 'w-0': !sidebarOpen}">
    <div class="relative flex-1 flex flex-col min-h-0 border-r border-gray-200 bg-white pt-0">
       <div class="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
          <div class="flex-1 px-3 bg-white divide-y space-y-1">
@@ -8,12 +8,43 @@
                {{-- <li class="bg-purple-50">
                   <div class="rounded-lg font-bold text-sm p-2 text-primary">{{ Auth::user()->org?->name }}</div>
                </li> --}}
-               <li>
+               {{-- <li>
                   <a href="{{ route('dashboard') }}"
                      class="text-base text-gray-900 rounded-lg flex items-center p-2 hover:bg-gray-100 group {{ Request::routeIs('dashboard') ? 'bg-gray-100 text-primary font-medium' : '' }}">
                      <img src="{{ asset('/image/dashboard-layout.svg')}}" class="w-[24px] h-[24px] shrink-0 inline-block" alt="dashboard">
                      <span class="ml-3">Хянах самбар</span>
                   </a>
+               </li> --}}
+               <li x-data="{ subMenuOpen: false }">
+                  <button x-on:click="subMenuOpen = !subMenuOpen" type="button" class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 {{ (Request::routeIs('dashboardEhzh') || Request::routeIs('dashboardTze') || Request::routeIs('dashboardEhs')) ? 'bg-gray-100 text-primary font-medium' : '' }}">
+                        <img src="{{ asset('/image/dashboard-layout.svg')}}" class="w-[24px] h-[24px] shrink-0 inline-block" alt="dashboard">
+                        <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Хянах самбар</span>
+                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                        </svg>
+                  </button>
+                  <ul x-show="subMenuOpen" class="py-2 space-y-2 ml-4">
+                     @if (Auth::user()->org_id == 99)   
+                     <li>
+                        <a href="{{ route('dashboardEhzh') }}" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-6 group hover:bg-gray-100 {{ Request::routeIs('dashboardEhzh') ? 'bg-gray-100 text-primary font-medium' : '' }}">
+                           ЭХЗХ
+                        </a>
+                     </li>
+                     <li>
+                        <a href="{{ route('dashboardTze') }}" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-6 group hover:bg-gray-100 {{ Request::routeIs('dashboardTze') ? 'bg-gray-100 text-primary font-medium' : '' }}">
+                           ТЗЭ</a>
+                     </li>
+                     <li>
+                        <a href="{{ route('dashboardEhs') }}" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-6 group hover:bg-gray-100 {{ Request::routeIs('dashboardEhs') ? 'bg-gray-100 text-primary font-medium' : '' }}">
+                           ЭХС</a>
+                     </li>
+                     @else
+                     <li>
+                        <a href="{{ route('dashboardTzeShow') }}" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-6 group hover:bg-gray-100 {{ Request::routeIs('dashboardTzeShow') ? 'bg-gray-100 text-primary font-medium' : '' }}">
+                           ТЗЭ</a>
+                     </li>
+                     @endif
+                  </ul>
                </li>
                {{-- @if (Auth::user()->org_id == 99)    --}}
                <li>

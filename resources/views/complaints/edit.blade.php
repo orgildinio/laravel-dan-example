@@ -401,7 +401,7 @@
 
 @push('scripts')
 
-<script>
+<script type="module">
     $(document).ready(function() {
 
         // Datepicker select input
@@ -535,80 +535,5 @@
             $('#conditionalInput3').removeClass('hidden');
         }
     }
-    // document.addEventListener('DOMContentLoaded', function () {
-    //     flatpickr("#datetime", {
-    //         enableTime: true,
-    //         dateFormat: "Y-m-d H:i",
-    //         time_24hr: true,
-    //         // defaultDate: new Date(),
-    //         defaultHour: "9",
-    //         defaultMinute: "00",
-    //     });
-    // });
-
-    // $(document).ready(function() {
-    //     // Find the initially selected value when the page loads
-    //     var initiallySelectedValue = $('input[name="complaint_maker_type_id"]:checked').val();
-    //     console.log('Initially Selected Value:', initiallySelectedValue);
-    //     if(initiallySelectedValue == 1){
-    //         $('#conditionalInput3').addClass('hidden');
-    //     }else{
-    //         $('#conditionalInput1').addClass('hidden');
-    //         $('#conditionalInput2').addClass('hidden');
-    //     }
-    // });
-
-    // var radioButtons = document.querySelectorAll('input[name="complaint_maker_type_id"]');
-
-    // radioButtons.forEach(function(radioButton) {
-    //     radioButton.addEventListener('change', function() {
-
-    //         var selectedValue = radioButton.value;
-    //         console.log(selectedValue);
-
-    //         document.getElementById('conditionalInput1').classList.toggle('hidden', selectedValue !== '1');
-    //         document.getElementById('conditionalInput2').classList.toggle('hidden', selectedValue !== '1');
-    //         document.getElementById('conditionalInput3').classList.toggle('hidden', selectedValue == '1');
-
-    //     });
-    // });
-
-    // //Өргөдлийн товч утга татах
-    // $("input[name='energy_type_id']").change(function(){
-    //     if( $(this).is(":checked") ){
-    //         var energy_type_id = $(this).val();
-    //         console.log(energy_type_id);
-    //     }
-    //     if($("#complaint_type_id").val() ==null){
-    //         var complaint_type_id = null;
-    //         console.log(complaint_type_id);
-    //     }else{
-    //         var complaint_type_id=$("#complaint_type_id").val();
-    //         console.log(complaint_type_id);
-    //     }
-
-    //     $.ajax({
-    //             url: '/getTypeSummary',
-    //             method: 'GET',
-    //             headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
-    //             data: {
-    //                 energy_type_id: energy_type_id,
-    //                 complaint_type_id: complaint_type_id,
-    //             },
-    //             success: function (result) {
-    //                 console.log(result);
-    //                 $('#complaint_type_summary_id').html('<option value="">-- Сонгох --</option>');
-    //                 $.each(result.summaries, function (key, value) {
-    //                     $("#complaint_type_summary_id").append('<option value="' + value
-    //                         .id + '">' + value.name + '</option>');
-    //                 });
-    //             },
-    //             error: function(error) {
-    //                 console.error('Error getting summary data...');
-    //             }
-    //     });
-    // })
-
-    
 
 </script>

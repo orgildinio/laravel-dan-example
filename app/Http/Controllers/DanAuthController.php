@@ -59,12 +59,6 @@ class DanAuthController extends Controller
             "user_id" => $user->id
         ]);
 
-        // $appUser = User::where('id', 5)->first();
-        // $appUser->update([
-        //     'name' => $danUser->firstname,
-        //     'danImage' => $danUser->image
-        // ]);
-
         // dd($danUser);
 
         Auth::loginUsingId($user->id, true);
@@ -72,5 +66,14 @@ class DanAuthController extends Controller
         // Auth::login($user, true);
 
         return redirect()->route("welcome")->with('success', 'Амжилттай нэвтэрлээ.');
+    }
+
+    public function redirectToDanOrg()
+    {
+        return Socialite::driver('dan')->redirect();
+    }
+
+    public function handleDanOrgCallback()
+    {
     }
 }

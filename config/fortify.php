@@ -65,7 +65,11 @@ return [
     // 'home' => RouteServiceProvider::HOME,
     'home' => function () {
         if (Auth::user()->org_id !== null) {
-            return '/dashboard';
+            if (Auth::user()->org_id == 99) {
+                return '/dashboard';
+            } else {
+                return '/dashboardTzeShow';
+            };
         } else {
             return RouteServiceProvider::HOME;
         }
