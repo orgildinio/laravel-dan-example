@@ -1,0 +1,6 @@
+  2024-04-29 12:36:17 App\Jobs\SendEmailJob .......................... RUNNING
+  2024-04-29 12:36:21 App\Jobs\SendEmailJob .................. 4,166.84ms DONE
+  2024-04-29 14:06:11 App\Jobs\SendEmailJob .......................... RUNNING
+  2024-04-29 14:06:14 App\Jobs\SendEmailJob .................. 3,446.01ms DONE
+  2024-04-29 14:07:20 App\Jobs\SendEmailJob .......................... RUNNING
+  2024-04-29 14:07:23 App\Jobs\SendEmailJob .................. 3,392.50ms DONE
