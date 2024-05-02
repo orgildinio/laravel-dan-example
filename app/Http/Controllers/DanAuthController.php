@@ -47,19 +47,19 @@ class DanAuthController extends Controller
             ]);
         }
 
-        $danUserModel = DanUser::create([
-            'personId' => $danUser->personId,
-            'firstname' => $danUser->firstname,
-            'lastname' => $danUser->lastname,
-            'regnum' => $danUser->regnum,
-            'aimagCityName' => $danUser->aimagCityName,
-            'soumDistrictName' => $danUser->soumDistrictName,
-            'bagKhorooName' => $danUser->bagKhorooName,
-            'passportAddress' => $danUser->passportAddress,
-            'image' => $danUser->image,
-            "gender" => $danUser->gender,
-            "user_id" => $user->id
-        ]);
+        // DanUser::create([
+        //     'personId' => $danUser->personId,
+        //     'firstname' => $danUser->firstname,
+        //     'lastname' => $danUser->lastname,
+        //     'regnum' => $danUser->regnum,
+        //     'aimagCityName' => $danUser->aimagCityName,
+        //     'soumDistrictName' => $danUser->soumDistrictName,
+        //     'bagKhorooName' => $danUser->bagKhorooName,
+        //     'passportAddress' => $danUser->passportAddress,
+        //     'image' => $danUser->image,
+        //     "gender" => $danUser->gender,
+        //     "user_id" => $user->id
+        // ]);
 
         // dd($danUser);
 
