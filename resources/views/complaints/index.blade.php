@@ -273,25 +273,24 @@
 
 @push('scripts')
 
-    <script>
-        $(document).ready(function() {
+<script type="module">
+    $(document).ready(function() {
 
-            $('#daterange').flatpickr({
-                mode: 'range',
-                // showMonths: 2,
-                // dateFormat: 'Y-m-d',
-                locale: {
-                    firstDayOfWeek: 1
-                }
-            });
-
-            // Add click event handler to table rows with class 'table-row'
-            $('.table-row').click(function() {
-                // Get the value of the 'data-id' attribute of the clicked row
-                var id = $(this).data('id');
-
-                window.location.href = '/complaint/' + id;
-
-            });
+        flatpickr("#daterange", {
+            mode: "range",
+            dateFormat: "Y-m-d",
+            locale: {
+                firstDayOfWeek: 1
+            }
         });
-    </script>
+
+        // Add click event handler to table rows with class 'table-row'
+        $('.table-row').click(function() {
+            // Get the value of the 'data-id' attribute of the clicked row
+            var id = $(this).data('id');
+
+            window.location.href = '/complaint/' + id;
+
+        });
+    });
+</script>

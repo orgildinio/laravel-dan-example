@@ -327,8 +327,7 @@
     </div>
     @push('scripts')
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script>
+    <script type="module">
         const button = document.getElementById("micBtn");
         const submitButton = document.getElementById("sbmBtn");
         const audioFile = document.getElementById('audio');

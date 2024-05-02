@@ -10,16 +10,20 @@
 
    <!-- Fonts -->
    <link rel="preconnect" href="https://fonts.bunny.net">
-   <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+   {{-- <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" /> --}}
    {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"> --}}
-   <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/airbnb.css">
 
 
    <!-- Scripts -->
    @vite(['resources/css/app.css', 'resources/js/app.js'])
-   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+   {{-- <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> --}}
+   {{-- <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script> --}}
    <script src="https://code.highcharts.com/highcharts.js"></script>
+   <script src="https://code.highcharts.com/stock/highstock.js"></script>
+   <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+   <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+   <script src="https://code.highcharts.com/modules/heatmap.js"></script>
+   <script src="https://code.highcharts.com/modules/treemap.js"></script>
    <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
 
 
@@ -45,7 +49,7 @@
       </div>
    </div>
    {{-- <script async defer src="https://buttons.github.io/buttons.js"></script> --}}
-   <script src="https://demo.themesberg.com/windster/app.bundle.js"></script>
+   {{-- <script src="https://demo.themesberg.com/windster/app.bundle.js"></script> --}}
 
    @stack('modals')
    

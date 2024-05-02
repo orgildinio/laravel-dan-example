@@ -262,66 +262,66 @@
 
 @push('scripts')
 
-    <script>
-        $(document).ready(function() {
-            flatpickr("#daterange", {
-                mode: "range",
-                dateFormat: "Y-m-d",
-                locale: {
-                    firstDayOfWeek: 1
-                }
-            });
-
-            $('#resetFilters').on('click', function() {
-
-                $('#resetIcon').addClass('animate-spin');
-                setTimeout(() => {
-                    $('#resetIcon').removeClass('animate-spin');
-                }, 1000);
-
-                // Reset filter values to their default or empty state
-                $('#daterange').val('');
-                $('#simple-search').val('');
-                $('#year').val('');
-
-                $('#daterange').change();
-                $('#simple-search').change();
-                $('#year').change();
-            });
-
-            $('#searchForm input, #searchForm select').keypress(function (event) {
-                if (event.keyCode === 13) { // Check if Enter key is pressed
-                    event.preventDefault(); // Prevent form submission
-                    $('#searchForm').submit(); // Submit the form
-                }
-            });
-
-            // Add click event handler to table rows with class 'table-row'
-            $('.complaint-show').click(function() {
-                // Get the value of the 'data-id' attribute of the clicked row
-                var id = $(this).data('id');
-
-                $.ajax({
-                    url: '/updateComplaintStatus/' + id,
-                    method: 'PUT',
-                    headers: {
-                        'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    data: {},
-                    success: function(response) {
-                        console.log(response.message);
-                    },
-                    error: function(error) {
-                        console.error(error.responseText);
-                    }
-                });
-
-                window.location.href = '/complaint/' + id;
-
-            });
-            $('.complaint-show').on('click', '#action', function(e) {
-                e.stopPropagation();
-                // Add your logic to handle the dropdown button click event
-            });
+<script type="module">
+    $(document).ready(function() {
+        flatpickr("#daterange", {
+            mode: "range",
+            dateFormat: "Y-m-d",
+            locale: {
+                firstDayOfWeek: 1
+            }
         });
-    </script>
+
+        $('#resetFilters').on('click', function() {
+
+            $('#resetIcon').addClass('animate-spin');
+            setTimeout(() => {
+                $('#resetIcon').removeClass('animate-spin');
+            }, 1000);
+
+            // Reset filter values to their default or empty state
+            $('#daterange').val('');
+            $('#simple-search').val('');
+            $('#year').val('');
+
+            $('#daterange').change();
+            $('#simple-search').change();
+            $('#year').change();
+        });
+
+        $('#searchForm input, #searchForm select').keypress(function (event) {
+            if (event.keyCode === 13) { // Check if Enter key is pressed
+                event.preventDefault(); // Prevent form submission
+                $('#searchForm').submit(); // Submit the form
+            }
+        });
+
+        // Add click event handler to table rows with class 'table-row'
+        $('.complaint-show').click(function() {
+            // Get the value of the 'data-id' attribute of the clicked row
+            var id = $(this).data('id');
+
+            $.ajax({
+                url: '/updateComplaintStatus/' + id,
+                method: 'PUT',
+                headers: {
+                    'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {},
+                success: function(response) {
+                    console.log(response.message);
+                },
+                error: function(error) {
+                    console.error(error.responseText);
+                }
+            });
+
+            window.location.href = '/complaint/' + id;
+
+        });
+        $('.complaint-show').on('click', '#action', function(e) {
+            e.stopPropagation();
+            // Add your logic to handle the dropdown button click event
+        });
+    });
+</script>
