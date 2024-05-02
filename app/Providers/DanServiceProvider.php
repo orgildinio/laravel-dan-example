@@ -46,7 +46,7 @@ class DanServiceProvider extends AbstractProvider implements ProviderInterface
      */
     protected function getUserByToken($token)
     {
-        //dd($token);        
+        dd($token);
         $response = $this->getHttpClient()->post('https://sso.gov.mn/oauth2/api/v1/service', [
             'headers' => [
                 'Authorization' => 'Bearer ' . $token,
