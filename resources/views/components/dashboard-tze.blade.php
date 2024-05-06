@@ -1,5 +1,60 @@
-<div class="mt-4">
-    <section class="grid md:grid-cols-2 xl:grid-cols-4 gap-4 my-4">
+<div class="bg-white">
+
+    <section class="grid grid-cols-8 gap-2 mt-2">
+        <div class="col-span-2">
+            <div class="border border-gray-300 flex items-center justify-start">
+                <div class="my-5 px-4">
+                    <div class="block text-primary font-bold text-sm">Нийт гомдол</div>
+                    <div class="block text-black font-bold text-lg">{{ $tze_tog + $tze_dulaan }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-span-2">
+            <div class="border border-gray-300 flex items-center justify-start">
+                <div class="my-5 px-4">
+                    <div class="block text-primary font-bold text-sm">Цахилгаан</div>
+                    <div class="block text-black font-bold text-lg">{{ $tze_tog }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-span-2">
+            <div class="border border-gray-300 flex items-center justify-start">
+                <div class="my-5 px-4">
+                    <div class="block text-primary font-bold text-sm">Дулаан</div>
+                    <div class="block text-black font-bold text-lg">{{ $tze_dulaan }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-span-2">
+            <div class="border border-gray-300 flex items-center justify-start">
+                <div class="my-5 px-4">
+                    <div class="block text-primary font-bold text-sm">Хугацаа хэтэрсэн</div>
+                    <div class="block text-black font-bold text-lg">{{ $exp_comp }}</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="grid grid-cols-8 gap-2 mt-2">
+        <div class="col-span-2">
+            <div class="border border-gray-300">
+                <div id="chartEnergyTypeTze"></div>
+            </div>
+        </div>
+        <div class="col-span-2">
+            <div class="border border-gray-300">
+                <div id="pieChartStatusTze"></div>
+            </div>
+        </div>
+        <div class="col-span-4">
+            <div class="border border-gray-300">
+                <div id="lineChartTze"></div>
+            </div>
+        </div>
+    </section>
+
+
+    {{-- <section class="grid md:grid-cols-2 xl:grid-cols-4 gap-4 my-4">
         <div class="flex flex-col justify-between items-start px-8 py-4 bg-white shadow rounded-lg">
             <div class="">
                 <span class="block text-gray-700 font-bold text-lg">Нийт өргөдөл, гомдол</span>
@@ -63,12 +118,12 @@
             </div>
         </div>
 
-    </section>
-    <section class="grid md:grid-cols-3 xl:grid-cols-3 gap-4">
+    </section> --}}
+    {{-- <section class="grid md:grid-cols-3 xl:grid-cols-3 gap-4">
         <div id="chartEnergyTypeTze" class="bg-white shadow rounded-lg"></div>
         <div id="pieChartStatusTze" class="bg-white shadow rounded-lg"></div>
         <div id="lineChartTze" class="bg-white shadow rounded-lg"></div>
-    </section>
+    </section> --}}
     <section class="grid md:grid-cols-2 xl:grid-cols-2 mt-4 mb-4">
       <div class="flex items-center border-r border-black">
          <div class="flex-1 border-t border-b border-black mx-4"></div>
@@ -186,39 +241,34 @@
     Highcharts.chart('chartEnergyTypeTze', {
         chart: {
             type: 'pie',
-            marginTop: 10
+            height: 250,
+            // marginTop: 10
             // width: 300
         },
         title: {
-            text: 'Гомдлын төрөл'
+            text: 'Цахилгаан ба Дулаан',
+            align: 'left',
+            style: {
+                fontSize: '14px',
+                color: '#3e4095',
+                fontWeight: 'bold',
+            }
         },
         plotOptions: {
             pie: {
                 innerSize: '50%',
-                size: 250,
-                depth: 45,
+                size: 150,
                 dataLabels: {
                     enabled: true,
-                    format: '<b>{point.percentage:.1f}%</b>',
-                    distance: -35,
-                    connectorPadding: 0,
+                    format: '{point.name}:<br> {point.y}',
                     style: {
-                        fontSize: '14px',
-                        color: '#fff',
-                        fontWeight: 'bold',
-                        textOutline: 'none'
+                        fontSize: '9px',
                     },
+                    connectorPadding: 0.01
                 },
-                showInLegend: true,
             }
         },
-        // legend: {
-        //    floating: true,
-        //    // layout: 'vertical',
-        //    x: -100,
-        //    y: 10
-        // },
-        colors: ['#00BFFF', '#FF6347'],
+        colors: ['#818cf8', '#3730a3'],
         series: [{
             name: 'Өргөдөл, гомдол',
             colorByPoint: true,
@@ -232,65 +282,38 @@
                 },
             ]
         }],
-        // subtitle: {
-        //    text: 'Нийт:  {{ $tze_tog + $tze_dulaan }}', // Display the total value in the center
-        //    verticalAlign: 'middle',
-        //    floating: true,
-        //    style: {
-        //       fontSize: '18px',
-        //       color: '#000',
-        //       fontWeight: 'bold'
-        //    }
-        // }
     });
     const customColorsStacked = ['#fca5a5', '#d1d5db', '#86efac', '#fde047', '#93c5fd', '#fdba74', '#f9fafb'];
     // Create the pie chart Иргэн ААН СӨХ ТЗЭ Төрийн байгууллага
     Highcharts.chart('pieChartStatusTze', {
         chart: {
             type: 'pie',
-            marginTop: 70
+            height: 250
         },
         title: {
-            text: 'Гомдлын төрөл'
+            text: 'Гомдлын төрөл',
+            align: 'left',
+            style: {
+                fontSize: '14px',
+                color: '#3e4095',
+                fontWeight: 'bold',
+            }
         },
         plotOptions: {
             pie: {
                 innerSize: '50%',
-                size: 250,
-                depth: 45,
+                size: 150,
                 dataLabels: {
                     enabled: true,
-                    // format: '<b>{point.percentage:.1f}%</b>',
-                    formatter: function() {
-                        // Show data labels for non-zero points only
-                        if (this.y !== 0) {
-                            return '<b>' + this.percentage.toFixed(1) + '</b>% ';
-                        } else {
-                            return null; // Return null to hide the data label
-                        }
-                    },
-                    distance: -35,
-                    connectorPadding: 0,
+                    format: '{point.name}:<br> {point.y}',
                     style: {
-                        fontSize: '14px',
-                        color: '#fff',
-                        fontWeight: 'bold',
-                        textOutline: 'none'
+                        fontSize: '9px',
                     },
+                    connectorPadding: 0.01
                 },
-                showInLegend: true,
             }
         },
-        legend: {
-            // maxHeight: 50,
-            // floating: true,
-            // layout: 'vertical',
-            // x: 10,
-            // y: 10
-        },
-        colors: ['#f9fafb', '#3b82f6', '#f59e0b', '#fde047', '#22c55e', '#64748b',
-            '#ef4444'
-        ], // Set custom colors
+        colors: ['#342BC2', '#6F68F1', '#9993FF', '#407ED9', '#2465C3', '#1897BF'],
         series: [{
             name: 'Өргөдөл, гомдол',
             colorByPoint: true,
@@ -336,27 +359,53 @@
     });
     Highcharts.chart('lineChartTze', {
         chart: {
-            type: 'area'
+            type: 'area',
+            height: 250
         },
         title: {
-            text: 'Санал гомдол'
+            text: 'Санал гомдол',
+            align: 'left',
+            style: {
+                fontSize: '14px',
+                color: '#3e4095',
+                fontWeight: 'bold',
+            }
         },
         xAxis: {
             categories: monthLabels
         },
         yAxis: {
             title: {
-                text: 'Values'
+                text: 'Тоо'
             }
+        },
+        legend: {
+            enabled: false
         },
         plotOptions: {
             area: {
                 fillOpacity: 0.5
+            },
+            series: {
+                dataLabels: {
+                    enabled: true,
+                    backgroundColor: 'rgba(255,255,255,0.8)',
+                    borderColor: 'black',
+                    borderWidth: 1,
+                    padding: 5,
+                    borderRadius: 3,
+                    shape: 'callout',
+                    align: 'center',
+                    verticalAlign: 'bottom',
+                    x: 0,
+                    y: 30
+                }
             }
         },
         series: [{
             name: 'Санал гомдол',
-            data: monthDatas
+            data: monthDatas,
+            color: '#6366f1'
         }]
     });
 

@@ -66,7 +66,7 @@ return [
     'home' => function () {
         if (Auth::user()->org_id !== null) {
             if (Auth::user()->org_id == 99) {
-                return '/dashboard';
+                return '/dashboardEhzh';
             } else {
                 return '/dashboardTzeShow';
             };
