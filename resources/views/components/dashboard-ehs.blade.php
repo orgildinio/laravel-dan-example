@@ -1,102 +1,107 @@
-<div class="mt-4">
-    <section class="grid md:grid-cols-2 xl:grid-cols-4 gap-4 my-4">
-        <div class="flex flex-col justify-between items-start px-8 py-4 bg-white shadow rounded-lg">
-            <div class="">
-                <span class="block text-gray-700 font-bold text-lg">Нийт өргөдөл, гомдол</span>
-            </div>
-            <div class="w-full flex items-center justify-between">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="w-8 h-8 rounded-full text-purple-700"
-                    viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25ZM6.75 12h.008v.008H6.75V12Zm0 3h.008v.008H6.75V15Zm0 3h.008v.008H6.75V18Z" />
-                </svg>
-                <div>
-                    <span class="block text-4xl font-bold">{{ $ehs_tog_count + $ehs_dulaan_count }}</span>
+<div class="bg-white">
+    <section class="grid grid-cols-8 gap-2 mt-2">
+        <div class="col-span-2">
+            <div class="border border-gray-300 flex items-center justify-start">
+                <div class="my-5 px-4">
+                    <div class="block text-primary font-bold text-sm">Нийт гомдол</div>
+                    <div class="block text-black font-bold text-lg">{{ $ehs_tog_count + $ehs_dulaan_count }}</div>
                 </div>
             </div>
         </div>
-        <div class="flex flex-col justify-between items-start px-8 py-4 bg-white shadow rounded-lg">
-            <div class="pb-4">
-                <span class="block text-gray-700 font-bold text-lg">Нийт өргөдөл, гомдол /Цахилгаан/</span>
-            </div>
-            <div class="w-full flex items-center justify-between">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="w-8 h-8 rounded-full text-blue-700">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z" />
-                </svg>
-                <div>
-                    <span class="block text-4xl font-bold">{{ $ehs_tog_count }}</span>
+        <div class="col-span-2">
+            <div class="border border-gray-300 flex items-center justify-start">
+                <div class="my-5 px-4">
+                    <div class="block text-primary font-bold text-sm">Цахилгаан</div>
+                    <div class="block text-black font-bold text-lg">{{ $ehs_tog_count }}</div>
                 </div>
             </div>
         </div>
-        <div class="flex flex-col justify-between items-start px-8 py-4 bg-white shadow rounded-lg">
-            <div class="">
-                <span class="block text-gray-700 font-bold text-lg">Нийт өргөдөл, гомдол /Дулаан/</span>
-            </div>
-            <div class="w-full flex items-center justify-between">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="w-8 h-8 rounded-full text-orange-700">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M15.362 5.214A8.252 8.252 0 0 1 12 21 8.25 8.25 0 0 1 6.038 7.047 8.287 8.287 0 0 0 9 9.601a8.983 8.983 0 0 1 3.361-6.867 8.21 8.21 0 0 0 3 2.48Z" />
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M12 18a3.75 3.75 0 0 0 .495-7.468 5.99 5.99 0 0 0-1.925 3.547 5.975 5.975 0 0 1-2.133-1.001A3.75 3.75 0 0 0 12 18Z" />
-                </svg>
-                <div>
-                    <span class="inline-block text-4xl font-bold">{{ $ehs_dulaan_count }}</span>
+        <div class="col-span-2">
+            <div class="border border-gray-300 flex items-center justify-start">
+                <div class="my-5 px-4">
+                    <div class="block text-primary font-bold text-sm">Дулаан</div>
+                    <div class="block text-black font-bold text-lg">{{ $ehs_dulaan_count }}</div>
                 </div>
             </div>
         </div>
-        <div class="flex flex-col justify-between items-start px-8 py-4 bg-white shadow rounded-lg">
-            <div class="">
-                <span class="block text-gray-700 font-bold text-lg">Хугацаа хэтэрсэн өргөдөл, гомдол</span>
-            </div>
-            <div class="w-full flex items-center justify-between">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="w-8 h-8 rounded-full text-red-700">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                </svg>
-                <div>
-                    <span class="block text-4xl font-bold">{{ $exp_comp }}</span>
+        <div class="col-span-2">
+            <div class="border border-gray-300 flex items-center justify-start">
+                <div class="my-5 px-4">
+                    <div class="block text-primary font-bold text-sm">Хугацаа хэтэрсэн</div>
+                    <div class="block text-black font-bold text-lg">{{ $exp_comp }}</div>
                 </div>
             </div>
         </div>
+    </section>
 
-    </section>
-    <section class="grid md:grid-cols-3 xl:grid-cols-3 gap-4">
-        <div class="bg-white shadow rounded-lg">
-            <div id="barChartStatusEhs"></div>
+    <section class="grid grid-cols-8 gap-2 mt-2">
+        <div class="col-span-3">
+            <div class="border border-gray-300">
+                <div id="pieChartStatusEhs"></div>
+            </div>
         </div>
-        <div class="bg-white shadow rounded-lg">
-            <div id="chartEnergyTypeEhs"></div>
+        <div class="col-span-2">
+            <div class="border border-gray-300">
+                <div id="chartEnergyTypeEhs"></div>
+            </div>
         </div>
-        <div class="bg-white shadow rounded-lg">
-            <div id="pieChartCategoryEhs"></div>
-        </div>
-    </section>
-    <section class="grid md:grid-cols-3 xl:grid-cols-3 gap-4 mt-4">
-        <div class="bg-white shadow rounded-lg">
-            <div id="pieChartStatusEhs"></div>
-        </div>
-        <div class="bg-white shadow rounded-lg">
-            <div id="pieCharTypeSummaryEhs"></div>
-        </div>
-        <div class="bg-white shadow rounded-lg">
-            <div id="pieChartMakerEhs"></div>
+        <div class="col-span-3">
+            <div class="border border-gray-300">
+                <div id="chartTreemap"></div>
+            </div>
         </div>
     </section>
-    <section class="grid md:grid-cols-2 xl:grid-cols-2 gap-4 mt-4">
-        <div class="bg-white shadow rounded-lg">
-            <div id="lineChartEhs"></div>
+
+    <section class="grid grid-cols-8 gap-2 mt-2">
+        <div class="col-span-5">
+            <div class="border border-gray-300">
+                <div id="lineChartEhs"></div>
+            </div>
         </div>
-        <div class="bg-white shadow rounded-lg">
-            <div id="barChartChannelEhs"></div>
+        <div class="col-span-3">
+            <div class="border border-gray-300">
+                <div id="pieChartCategoryEhs"></div>
+            </div>
         </div>
     </section>
+
+    <section class="grid grid-cols-8 gap-2 mt-2">
+        <div class="col-span-3">
+            <div class="border border-gray-300">
+                <div id="pieChartMakerEhs"></div>
+            </div>
+        </div>
+        <div class="col-span-5">
+            <div class="border border-gray-300">
+                <div id="barChartChannelEhs"></div>
+            </div>
+        </div>
+    </section>
+
 </div>
 
 <script type="text/javascript">
+
+const statusCategoryMapping = {
+        0: 'Шинээр ирсэн',
+        1: 'Шилжүүлсэн',
+        2: 'Хүлээн авсан',
+        3: 'Хянаж байгаа',
+        4: 'Хугацаа хэтэрсэн',
+        5: 'Буцаасан',
+        6: 'Шийдвэрлэсэн'
+    };
+    const customColors = ['#fca5a5', '#d1d5db', '#fde047', '#93c5fd', '#fdba74', '#f9fafb', '#86efac'];
+
+    const statusBarColors = [
+        '#f9fafb',
+        '#d1d5db',
+        '#fde047',
+        '#93c5fd',
+        '#fdba74',
+        '#fca5a5',
+        '#86efac',
+    ];
 
    // bar chart status
 
@@ -113,104 +118,36 @@
     }));
     const statusEhsDataset = [...dataStatusEhs, expireEhs];
 
-   Highcharts.chart('barChartStatusEhs', {
-        chart: {
-            type: 'bar'
-        },
-        title: {
-            text: 'Гомдлын төлөв',
-            // align: 'left'
-        },
-        subtitle: {
-            text: 'ЭХС - Гомдлын шийдвэрлэлтийн явц',
-            align: 'center'
-        },
-        xAxis: {
-            categories: ['Шинээр ирсэн', 'Шилжүүлсэн', 'Хүлээн авсан', 'Хянаж байгаа', 'Цуцалсан', 'Буцаасан',
-                'Шийдвэрлэсэн', 'Хугацаа хэтэрсэн'
-            ],
-            title: {
-                text: null
-            },
-            gridLineWidth: 1,
-            lineWidth: 0
-        },
-        yAxis: {
-            min: 0,
-            title: {
-                text: 'Санал, гомдлын тоо',
-                // align: 'high'
-            },
-            labels: {
-                overflow: 'justify'
-            },
-            gridLineWidth: 0
-        },
-        tooltip: {
-            valueSuffix: ' ширхэг'
-        },
-        plotOptions: {
-            bar: {
-                borderRadius: '50%',
-                dataLabels: {
-                    enabled: true,
-                    align: 'left', // Justify the data labels to the left
-                    x: 800
-                },
-                // groupPadding: 0.1
-            },
-            series: {
-                pointWidth: 10 // Set the width of the bars to 20 pixels
-            }
-        },
-        legend: {
-            enabled: false
-        },
-        credits: {
-            enabled: false
-        },
-        series: [{
-            name: 'Санал, гомдлын тоо',
-            data: statusEhsDataset
-        }, ]
-    });
-
     // ЭХЗХ Chart энергийн төрлөөр 
     Highcharts.chart('chartEnergyTypeEhs', {
         chart: {
-            type: 'pie'
+            type: 'pie',
+            height: 250
         },
         title: {
-            text: 'Гомдлын төрөл'
+            text: 'Цахилгаан ба Дулаан',
+            align: 'left',
+            style: {
+                fontSize: '14px',
+                color: '#3e4095',
+                fontWeight: 'bold',
+            }
         },
-        subtitle: {
-            text: 'ЭХС - Гомдлын төрөл цахилгаан, дулаан',
-            align: 'center'
-        },
-        // tooltip: {
-        //    valueSuffix: '%'
-        // },
         plotOptions: {
             pie: {
                 innerSize: '50%',
-                size: 250,
-                depth: 45,
+                size: 150,
                 dataLabels: {
                     enabled: true,
-                    format: '<b>{point.percentage:.1f}%</b>',
-                    distance: -35,
-                    connectorPadding: 0,
+                    format: '{point.name}:<br> {point.y}',
                     style: {
-                        fontSize: '14px',
-                        color: '#fff',
-                        fontWeight: 'bold',
-                        textOutline: 'none'
+                        fontSize: '9px',
                     },
+                    connectorPadding: 0.01
                 },
-                showInLegend: true,
             }
         },
-        colors: ['#3b82f6', '#f97316'],
+        colors: ['#818cf8', '#3730a3'],
         series: [{
             name: 'Өргөдөл, гомдол',
             colorByPoint: true,
@@ -229,75 +166,116 @@
     const ehsCategoryData = @json($ehs_category);
     Highcharts.chart('pieChartCategoryEhs', {
         chart: {
-            type: 'pie'
+            type: 'pie',
+            height: 250
         },
         title: {
-            text: 'Өргөдлийн ангилал'
-        },
-        subtitle: {
-            text: 'ЭХС - Ирсэн өргөдөл, гомдлын ангилал',
-            align: 'center'
+            text: 'Өргөдлийн ангилал',
+            align: 'left',
+            style: {
+                fontSize: '14px',
+                color: '#3e4095',
+                fontWeight: 'bold',
+            }
         },
         plotOptions: {
             pie: {
                 innerSize: '50%',
-                size: 250,
-                depth: 45,
+                size: 150,
                 dataLabels: {
                     enabled: true,
-                    format: '<b>{point.percentage:.1f}%</b>',
-                    distance: -35,
-                    connectorPadding: 0,
+                    format: '{point.name}:<br> {point.y}',
                     style: {
-                        fontSize: '14px',
-                        color: '#fff',
-                        fontWeight: 'bold',
-                        textOutline: 'none'
+                        fontSize: '9px',
                     },
+                    connectorPadding: 0.1,
                 },
-                showInLegend: true,
             }
         },
+        colors: ['#342BC2', '#6F68F1', '#9993FF', '#407ED9', '#2465C3', '#1897BF'],
         series: [{
-            type: 'pie',
             name: 'Өргөдөл, гомдол',
             data: ehsCategoryData
         }]
     });
+
+    const ehsTypeData = @json($ehs_type_count);
+    ehsTypeData.forEach((obj, index) => {
+        obj.colorValue = index + 1;
+    });
+    Highcharts.chart('chartTreemap', {
+        chart: {
+            height: 250
+        },
+        colorAxis: {
+            minColor: '#a5b4fc',
+            maxColor: '#312e81'
+        },
+        plotOptions: {
+            series: {
+                dataLabels: {
+                    enabled: true,
+                    format: '{point.name} - {point.value}',
+                    color: '#FFFFFF',
+                    style: {
+                        textOutline: 'none',
+                        fontSize: 10
+                    },
+                }
+            }
+        },
+        legend: {
+            enabled: false
+        },
+        series: [{
+            type: 'treemap',
+            layoutAlgorithm: 'squarified',
+            clip: false,
+            data: ehsTypeData
+        }],
+        title: {
+            text: 'Өргөдлийн төрлөөр',
+            align: 'left',
+            style: {
+                fontSize: '14px',
+                color: '#3e4095',
+                fontWeight: 'bold',
+            }
+        }
+    });
+
+
     // // Create the pie chart Иргэн ААН СӨХ ТЗЭ Төрийн байгууллага
     const ehsStatusData = @json($ehs_status_count);
     Highcharts.chart('pieChartStatusEhs', {
         chart: {
-            type: 'pie'
+            type: 'pie',
+            height: 250,
         },
         title: {
-            text: 'Гомдлын төрөл'
-        },
-        subtitle: {
-            text: 'ЭХС - Гомдлын шийдвэрлэлтийн явц',
-            align: 'center'
+            text: 'Гомдлын шийдвэрлэлт',
+            align: 'left',
+            style: {
+                fontSize: '14px',
+                color: '#3e4095',
+                fontWeight: 'bold',
+            }
         },
         plotOptions: {
             pie: {
                 innerSize: '50%',
-                size: 250,
-                depth: 45,
+                size: 150,
                 dataLabels: {
                     enabled: true,
-                    format: '<b>{point.percentage:.1f}%</b>',
-                    distance: -35,
-                    connectorPadding: 0,
+                    format: '{point.name}:<br> {point.y}',
                     style: {
-                        fontSize: '12px',
-                        // color: '#fff',
-                        fontWeight: 'bold',
-                        textOutline: 'none'
+                        fontSize: '9px',
                     },
+                    connectorPadding: 0.01
                 },
-                showInLegend: true,
             }
         },
-        colors: customColors, // Set custom colors
+        colors: ['#342BC2', '#6F68F1', '#9993FF', '#407ED9', '#2465C3', '#1897BF'],
         series: [{
             name: 'Өргөдөл, гомдол',
             colorByPoint: true,
@@ -305,82 +283,39 @@
         }]
     });
 
-    const ehsTypeData = @json($ehs_type_count);
-    Highcharts.chart('pieCharTypeSummaryEhs', {
-        chart: {
-            type: 'pie'
-        },
-        title: {
-            text: 'Гомдлын төрөл'
-        },
-        subtitle: {
-            text: 'ЭХС - Гомдлын төрлөөр',
-            align: 'center'
-        },
-        plotOptions: {
-            pie: {
-                innerSize: '50%',
-                size: 250,
-                depth: 45,
-                dataLabels: {
-                    enabled: true,
-                    format: '<b>{point.percentage:.1f}%</b>',
-                    distance: -35,
-                    connectorPadding: 0,
-                    style: {
-                        fontSize: '14px',
-                        // color: '#fff',
-                        fontWeight: 'bold',
-                        textOutline: 'none'
-                    },
-                },
-                showInLegend: true,
-            }
-        },
-        colors: ['#082f49', '#075985', '#0284c7', '#38bdf8'], // Set custom colors
-        series: [{
-            name: 'Өргөдөл, гомдол',
-            colorByPoint: true,
-            data: ehsTypeData
-        }]
-    });
-
     // Create the pie chart Иргэн ААН СӨХ ТЗЭ Төрийн байгууллага
     const ehsMakerData = @json($ehs_maker_count);
     Highcharts.chart('pieChartMakerEhs', {
         chart: {
-            type: 'pie'
+            type: 'pie',
+            height: 250
         },
         title: {
-            text: 'Гомдол гаргагчийн төрөл'
-        },
-        subtitle: {
-            text: 'ЭХС - Гомдол гаргагчийн төрлөөр',
-            align: 'center'
+            text: 'Гомдол гаргагч',
+            align: 'left',
+            style: {
+                fontSize: '14px',
+                color: '#3e4095',
+                fontWeight: 'bold',
+            }
         },
         plotOptions: {
             pie: {
                 innerSize: '50%',
-                size: 250,
-                depth: 45,
+                size: 150,
                 dataLabels: {
                     enabled: true,
-                    format: '<b>{point.percentage:.1f}%</b>',
-                    distance: -35,
-                    connectorPadding: 0,
+                    format: '{point.name}:<br> {point.y}',
                     style: {
-                        fontSize: '14px',
-                        // color: '#fff',
-                        fontWeight: 'bold',
-                        textOutline: 'none'
+                        fontSize: '9px',
                     },
+                    connectorPadding: 0.1,
                 },
-                showInLegend: true,
             }
         },
+        colors: ['#342BC2', '#6F68F1', '#9993FF', '#407ED9', '#2465C3', '#1897BF'],
         series: [{
             name: 'Өргөдөл, гомдол',
-            colorByPoint: true,
             data: ehsMakerData
         }]
     });
@@ -395,31 +330,50 @@
     });
     Highcharts.chart('lineChartEhs', {
         chart: {
-            type: 'area'
+            type: 'areaspline',
+            height: 250
         },
         title: {
-            text: 'Санал гомдол'
-        },
-        subtitle: {
-            text: 'ЭХС - Санал, гомдлын тоо тухайн жилийн сараар',
-            align: 'center'
+            text: 'Санал гомдол',
+            align: 'left',
+            style: {
+                fontSize: '14px',
+                color: '#3e4095',
+                fontWeight: 'bold',
+            }
         },
         xAxis: {
             categories: ehsMonthLabels
         },
         yAxis: {
             title: {
-                text: 'Values'
+                text: ''
             }
         },
         plotOptions: {
             area: {
                 fillOpacity: 0.5
+            },
+            series: {
+                dataLabels: {
+                    enabled: true,
+                    backgroundColor: 'rgba(255,255,255,0.8)',
+                    borderColor: 'black',
+                    borderWidth: 1,
+                    padding: 5,
+                    borderRadius: 3,
+                    shape: 'callout',
+                    align: 'center',
+                    verticalAlign: 'bottom',
+                    x: 0,
+                    y: 30
+                }
             }
         },
         series: [{
             name: 'Санал гомдол',
-            data: ehsMonthDatas
+            data: ehsMonthDatas,
+            color: '#6366f1'
         }]
     });
 
@@ -427,50 +381,63 @@
     const ehsChannelsData = @json($ehs_channels_count);
     Highcharts.chart('barChartChannelEhs', {
         chart: {
-            type: 'bar'
+            type: 'column',
+            height: 250,
         },
         title: {
-            text: 'Хүлээн авсан суваг'
-        },
-        subtitle: {
-            text: ''
+            text: 'Хүлээн авсан суваг',
+            align: 'left',
+            style: {
+                fontSize: '14px',
+                color: '#3e4095',
+                fontWeight: 'bold',
+            }
         },
         xAxis: {
-            categories: ['Беб хуудас', 'Утас', 'И-Мэйл', 'Биечлэн', 'Гар утас', 'Албан бичиг']
+            categories: ['Беб хуудас', 'Утас', 'И-Мэйл', 'Биечлэн', 'Гар утас', 'Албан бичиг'],
+            labels: {
+                style: {
+                    fontSize: '10px' // Set the font size of x-axis labels
+                }
+            },
         },
         yAxis: {
             title: {
-                text: 'Ирсэн өргөдөл, гомдлын тоо'
+                text: ''
             }
-        },
-        legend: {
-            layout: 'vertical',
-            align: 'right',
-            verticalAlign: 'middle'
         },
         plotOptions: {
             series: {
-                allowPointSelect: true
+                dataLabels: {
+                    enabled: true,
+                    style: {
+                        textOutline: '1px contrast',
+                        color: 'black',
+                        textOutline: 'none',
+                        fontSize: 10
+                    },
+                    backgroundColor: 'rgba(255,255,255,0.8)',
+                    borderColor: 'black',
+                    borderWidth: 1,
+                    padding: 2,
+                    borderRadius: 1,
+                    shape: 'square'
+                },
+                pointWidth: 50,
             }
         },
+        legend: {
+            itemStyle: {
+                fontSize: '9px'
+            },
+            align: 'left',
+            verticalAlign: 'top',
+            itemMarginTop: 0
+        },
+        colors: ['#342BC2', '#6F68F1', '#9993FF', '#407ED9', '#2465C3', '#1897BF'],
         series: [{
             name: 'Нийт',
-            //   data: newChartData
             data: ehsChannelsData
         }],
-        responsive: {
-            rules: [{
-                condition: {
-                    maxWidth: 1000
-                },
-                chartOptions: {
-                    legend: {
-                        layout: 'horizontal',
-                        align: 'center',
-                        verticalAlign: 'bottom'
-                    }
-                }
-            }]
-        }
     });
 </script>

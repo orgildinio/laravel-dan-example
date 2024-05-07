@@ -83,17 +83,6 @@
             </div>
         </div>
     </section>
-
-    {{-- <section class="grid md:grid-cols-4 xl:grid-cols-4 gap-4 mt-4">
-        <div id="barChartStatusTog" class="bg-white shadow rounded-lg"></div>
-        <div id="pieChartMakerElectric" class="bg-white shadow rounded-lg"></div>
-        <div id="barChartStatusDulaan" class="bg-white shadow rounded-lg"></div>
-        <div id="pieChartMakerDulaan" class="bg-white shadow rounded-lg"></div>
-    </section>
-    <section class="grid md:grid-cols-2 xl:grid-cols-2 gap-4 mt-4">
-        <div id="barChartElectric" class="bg-white shadow rounded-lg"></div>
-        <div id="barChartDulaan" class="bg-white shadow rounded-lg"></div>
-    </section> --}}
 </div>
 
 <script type="text/javascript">
@@ -240,7 +229,7 @@
     });
     Highcharts.chart('lineChartTze', {
         chart: {
-            type: 'area',
+            type: 'areaspline',
             height: 250
         },
         title: {
@@ -257,7 +246,7 @@
         },
         yAxis: {
             title: {
-                text: 'Тоо'
+                text: ''
             }
         },
         legend: {
@@ -356,7 +345,7 @@
         },
         yAxis: {
             title: {
-                text: 'Санал, гомдлын тоо'
+                text: ''
             },
         },
         plotOptions: {
@@ -462,7 +451,7 @@
         },
         yAxis: {
             title: {
-                text: 'Санал, гомдлын тоо'
+                text: ''
             }
         },
         plotOptions: {
@@ -509,73 +498,6 @@
     };
     let statusTogDataset = [...dataStatusTog, statusExpireTog];
 
-    //  let datalableTog = statusTogDataset.map(function(obj) {
-    //      return obj[Object.keys(obj)[1]];
-    //  });
-
-    // Highcharts.chart('barChartStatusTog', {
-    //     chart: {
-    //         type: 'bar'
-    //     },
-    //     title: {
-    //         text: 'Гомдлын төлөв',
-    //         // align: 'left'
-    //     },
-    //     subtitle: {
-    //         text: '',
-    //         align: ''
-    //     },
-    //     xAxis: {
-    //         categories: ['Шинээр ирсэн', 'Шилжүүлсэн', 'Хүлээн авсан', 'Хянаж байгаа', 'Цуцалсан', 'Буцаасан',
-    //             'Шийдвэрлэсэн', 'Хугацаа хэтэрсэн'
-    //         ],
-    //         title: {
-    //             text: null
-    //         },
-    //         gridLineWidth: 1,
-    //         lineWidth: 0
-    //     },
-    //     yAxis: {
-    //         min: 0,
-    //         title: {
-    //             text: 'Санал, гомдлын тоо',
-    //             // align: 'high'
-    //         },
-    //         labels: {
-    //             overflow: 'justify'
-    //         },
-    //         gridLineWidth: 0
-    //     },
-    //     tooltip: {
-    //         valueSuffix: ' ширхэг'
-    //     },
-    //     plotOptions: {
-    //         bar: {
-    //             borderRadius: '50%',
-    //             dataLabels: {
-    //                 enabled: true,
-    //                 align: 'left', // Justify the data labels to the left
-    //                 x: 800
-    //             },
-    //             // groupPadding: 0.1
-    //         },
-    //         series: {
-    //             pointWidth: 10 // Set the width of the bars to 20 pixels
-    //         }
-    //     },
-    //     legend: {
-    //         enabled: false
-    //     },
-    //     credits: {
-    //         enabled: false
-    //     },
-    //     series: [{
-    //         name: 'Санал, гомдлын тоо',
-    //         data: statusTogDataset
-    //     }, ]
-    // });
-
-
     // Bar chart status dulaan
     let statusCountDulaan = @json($statusDulaan);
     let dataStatusDulaan = statusCountDulaan.map((obj, index) => ({
@@ -587,68 +509,6 @@
         color: '#fca5a5'
     };
     let statusDulaanDataset = [...dataStatusDulaan, statusExpireDulaan];
-
-    // Highcharts.chart('barChartStatusDulaan', {
-    //     chart: {
-    //         type: 'bar'
-    //     },
-    //     title: {
-    //         text: 'Гомдлын төлөв',
-    //         // align: 'left'
-    //     },
-    //     subtitle: {
-    //         text: '',
-    //         align: ''
-    //     },
-    //     xAxis: {
-    //         categories: ['Шинээр ирсэн', 'Шилжүүлсэн', 'Хүлээн авсан', 'Хянаж байгаа', 'Цуцалсан', 'Буцаасан',
-    //             'Шийдвэрлэсэн', 'Хугацаа хэтэрсэн'
-    //         ],
-    //         title: {
-    //             text: null
-    //         },
-    //         gridLineWidth: 1,
-    //         lineWidth: 0
-    //     },
-    //     yAxis: {
-    //         min: 0,
-    //         title: {
-    //             text: 'Санал, гомдлын тоо',
-    //             // align: 'high'
-    //         },
-    //         labels: {
-    //             overflow: 'justify'
-    //         },
-    //         gridLineWidth: 0
-    //     },
-    //     tooltip: {
-    //         valueSuffix: ' ширхэг'
-    //     },
-    //     plotOptions: {
-    //         bar: {
-    //             borderRadius: '50%',
-    //             dataLabels: {
-    //                 enabled: true,
-    //                 align: 'left', // Justify the data labels to the left
-    //                 x: 800
-    //             },
-    //             // groupPadding: 0.1
-    //         },
-    //         series: {
-    //             pointWidth: 10 // Set the width of the bars to 20 pixels
-    //         }
-    //     },
-    //     legend: {
-    //         enabled: false
-    //     },
-    //     credits: {
-    //         enabled: false
-    //     },
-    //     series: [{
-    //         name: 'Санал, гомдлын тоо',
-    //         data: statusDulaanDataset
-    //     }, ]
-    // });
 
     var compMakerTogCount = <?php echo $compMakerTogCount; ?>;
     // Create the pie chart Иргэн ААН СӨХ ТЗЭ Төрийн байгууллага
@@ -766,7 +626,7 @@
         },
         yAxis: {
             title: {
-                text: 'Санал, гомдлын тоо'
+                text: ''
             }
         },
         plotOptions: {
@@ -810,54 +670,4 @@
         ],
     });
 
-    
-
-    // Highcharts.chart('barChartDulaan', {
-    //     chart: {
-    //         type: 'bar'
-    //     },
-    //     title: {
-    //         text: 'Хүлээн авсан суваг - Дулаан'
-    //     },
-    //     subtitle: {
-    //         text: ''
-    //     },
-    //     xAxis: {
-    //         categories: channelDulaanLabels
-    //     },
-    //     yAxis: {
-    //         title: {
-    //             text: 'Ирсэн өргөдөл, гомдлын тоо'
-    //         }
-    //     },
-    //     legend: {
-    //         layout: 'vertical',
-    //         align: 'right',
-    //         verticalAlign: 'middle'
-    //     },
-    //     plotOptions: {
-    //         series: {
-    //             allowPointSelect: true
-    //         }
-    //     },
-    //     series: [{
-    //         name: 'Нийт',
-    //         //   data: newChartData
-    //         data: channelDulaanDatas
-    //     }],
-    //     responsive: {
-    //         rules: [{
-    //             condition: {
-    //                 maxWidth: 1000
-    //             },
-    //             chartOptions: {
-    //                 legend: {
-    //                     layout: 'horizontal',
-    //                     align: 'center',
-    //                     verticalAlign: 'bottom'
-    //                 }
-    //             }
-    //         }]
-    //     }
-    // });
 </script>

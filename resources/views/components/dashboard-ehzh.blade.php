@@ -311,69 +311,6 @@
     let statusDataset = [...dataStatus, expireComp];
     // console.log(statusDataset);
 
-    // Highcharts.chart('chartStatus', {
-    //     chart: {
-    //         type: 'bar'
-    //     },
-    //     title: {
-    //         text: 'Гомдлын төлөв',
-    //         // align: 'left'
-    //     },
-    //     subtitle: {
-    //         text: 'ЭХЗХ - Гомдлын шийдвэрлэлтийн явц',
-    //         align: 'center'
-    //     },
-    //     xAxis: {
-    //         categories: ['Шинээр ирсэн', 'Шилжүүлсэн', 'Хүлээн авсан', 'Хянаж байгаа', 'Цуцалсан', 'Буцаасан',
-    //             'Шийдвэрлэсэн', 'Хугацаа хэтэрсэн'
-    //         ],
-    //         title: {
-    //             text: null
-    //         },
-    //         gridLineWidth: 1,
-    //         lineWidth: 0
-    //     },
-    //     yAxis: {
-    //         min: 0,
-    //         title: {
-    //             text: 'Санал, гомдлын тоо',
-    //             // align: 'high'
-    //         },
-    //         labels: {
-    //             overflow: 'justify'
-    //         },
-    //         gridLineWidth: 0
-    //     },
-    //     tooltip: {
-    //         valueSuffix: ' ширхэг'
-    //     },
-    //     plotOptions: {
-    //         bar: {
-    //             borderRadius: '50%',
-    //             dataLabels: {
-    //                 enabled: true,
-    //                 align: 'left', // Justify the data labels to the left
-    //                 x: 800
-    //             },
-    //             // groupPadding: 0.1
-    //         },
-    //         series: {
-    //             pointWidth: 10 // Set the width of the bars to 20 pixels
-    //         }
-    //     },
-    //     legend: {
-    //         enabled: false
-    //     },
-    //     credits: {
-    //         enabled: false
-    //     },
-    //     series: [{
-    //         name: 'Санал, гомдлын тоо',
-    //         data: statusDataset
-    //     }, ]
-    // });
-
-
     // ЭХЗХ Chart энергийн төрлөөр 
     Highcharts.chart('chartEnergyType', {
         chart: {
@@ -404,7 +341,6 @@
                 },
             }
         },
-        // colors: ['#00BFFF', '#FF6347'],
         colors: ['#818cf8', '#3730a3'],
         series: [{
             name: 'Өргөдөл, гомдол',
@@ -536,7 +472,7 @@
         },
         yAxis: {
             title: {
-                text: 'Санал, гомдлын тоо'
+                text: ''
             },
         },
         plotOptions: {
@@ -626,12 +562,6 @@
         },
         xAxis: {
             categories: uniqueOrganizationNamesDulaan,
-            // min: 0,
-            // max: 1,
-            // scrollbar: {
-            //     enabled: true
-            // },
-            // tickLength: 0,
             labels: {
                 style: {
                     fontSize: '10px' // Set the font size of x-axis labels
@@ -640,7 +570,7 @@
         },
         yAxis: {
             title: {
-                text: 'Санал, гомдлын тоо'
+                text: ''
             },
         },
         plotOptions: {
@@ -679,7 +609,6 @@
     Highcharts.chart('pieChartMaker', {
         chart: {
             type: 'pie',
-            // width: 400,
             height: 250
         },
         title: {
@@ -711,81 +640,6 @@
             data: compTypeMakersCount
         }]
     });
-
-    // Create the pie chart
-    // Highcharts.chart('pieChartStatus', {
-    //     chart: {
-    //         type: 'pie'
-    //     },
-    //     title: {
-    //         text: 'Гомдлын төлөв'
-    //     },
-    //     subtitle: {
-    //         text: 'ЭХЗХ - Гомдлын шийдвэрлэлтийн явц',
-    //         align: 'center'
-    //     },
-    //     plotOptions: {
-    //         pie: {
-    //             innerSize: '50%',
-    //             size: 250,
-    //             depth: 45,
-    //             dataLabels: {
-    //                 enabled: true,
-    //                 formatter: function() {
-    //                     // Show data labels for non-zero points only
-    //                     if (this.y !== 0) {
-    //                         return '<b>' + this.percentage.toFixed(1) + '</b>% ';
-    //                     } else {
-    //                         return null; // Return null to hide the data label
-    //                     }
-    //                 },
-    //                 distance: -35,
-    //                 connectorPadding: 0,
-    //                 style: {
-    //                     fontSize: '14px',
-    //                     color: '#fff',
-    //                     fontWeight: 'bold',
-    //                     textOutline: 'none'
-    //                 },
-    //             },
-    //             showInLegend: true,
-    //         }
-    //     },
-    //     colors: ['#f9fafb', '#3b82f6', '#f59e0b', '#fde047', '#22c55e', '#64748b', '#ef4444'],
-    //     series: [{
-    //         name: 'Өргөдөл, гомдол',
-    //         colorByPoint: true,
-    //         data: [{
-    //                 name: 'Шинээр ирсэн',
-    //                 y: {{ $new_comp }}
-    //             },
-    //             {
-    //                 name: 'Хүлээн авсан',
-    //                 y: {{ $rec_comp }}
-    //             },
-    //             {
-    //                 name: 'Хянаж байгаа',
-    //                 y: {{ $ctl_comp }}
-    //             },
-    //             {
-    //                 name: 'Шилжүүлсэн',
-    //                 y: {{ $snt_comp }}
-    //             },
-    //             {
-    //                 name: 'Шийдвэрлэсэн',
-    //                 y: {{ $slv_comp }}
-    //             },
-    //             {
-    //                 name: 'Буцаасан',
-    //                 y: {{ $rtn_comp }}
-    //             },
-    //             {
-    //                 name: 'Хугацаа хэтэрсэн',
-    //                 y: {{ $exp_comp }}
-    //             },
-    //         ]
-    //     }]
-    // });
 
     // Хүлээн авсан суваг
     Highcharts.chart('chartBarChannel', {
@@ -863,7 +717,7 @@
     // Line chart санал гомдлын тоо
     Highcharts.chart('chartAreaEhzh', {
         chart: {
-            type: 'area',
+            type: 'areaspline',
             height: 250
         },
         title: {
@@ -880,7 +734,7 @@
         },
         yAxis: {
             title: {
-                text: 'Тоо'
+                text: ''
             }
         },
         legend: {
@@ -904,7 +758,7 @@
                     x: 0,
                     y: 30
                 }
-            }
+            },
         },
         series: [{
             name: 'Санал гомдол',
@@ -913,50 +767,4 @@
         }]
     });
 
-    // Colors
-    // Highcharts.chart('pieCharTypeSummary', {
-    //     chart: {
-    //         type: 'pie'
-    //     },
-    //     title: {
-    //         text: 'Гомдлын төрөл'
-    //     },
-    //     subtitle: {
-    //         text: 'ЭХЗХ - Гомдлын төрлөөр',
-    //         align: 'center'
-    //     },
-    //     plotOptions: {
-    //         pie: {
-    //             innerSize: '50%',
-    //             size: 250,
-    //             depth: 45,
-    //             dataLabels: {
-    //                 enabled: true,
-    //                 formatter: function() {
-    //                     // Show data labels for non-zero points only
-    //                     if (this.y !== 0) {
-    //                         return '<b>' + this.percentage.toFixed(1) + '</b>% ';
-    //                     } else {
-    //                         return null; // Return null to hide the data label
-    //                     }
-    //                 },
-    //                 distance: -35,
-    //                 connectorPadding: 0,
-    //                 style: {
-    //                     fontSize: '14px',
-    //                     // color: '#fff',
-    //                     fontWeight: 'bold',
-    //                     textOutline: 'none'
-    //                 },
-    //             },
-    //             showInLegend: true,
-    //         }
-    //     },
-    //     // colors: ['#082f49', '#075985', '#0284c7', '#38bdf8'], // Set custom colors
-    //     series: [{
-    //         name: 'Өргөдөл, гомдол',
-    //         colorByPoint: true,
-    //         data: chartDataCompTypes
-    //     }]
-    // });
 </script>

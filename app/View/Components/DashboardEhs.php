@@ -51,7 +51,7 @@ class DashboardEhs extends Component
             ->get();
 
         $ehs_type_count = Complaint::from('complaints as c')
-            ->select('ct.name', DB::raw('COUNT(c.id) as y'))
+            ->select('ct.name', DB::raw('COUNT(c.id) as value'))
             ->leftJoin('complaint_types as ct', 'c.complaint_type_id', '=', 'ct.id')
             ->groupBy('ct.name')
             ->get();
