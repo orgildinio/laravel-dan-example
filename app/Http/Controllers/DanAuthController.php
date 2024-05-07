@@ -72,12 +72,12 @@ class DanAuthController extends Controller
 
     public function redirectToDanOrg()
     {
-        return Socialite::driver('danorg')->redirect();
+        return Socialite::driver('dan')->scopes(['email', 'user_birthday'])->redirect();
     }
 
     public function handleDanOrgCallback()
     {
-        $danUser = Socialite::driver('danorg')->user();
+        $danUser = Socialite::driver('dan')->user();
 
         dd($danUser);
     }
