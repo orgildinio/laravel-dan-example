@@ -216,7 +216,7 @@
             <div id="chartBarChannel"></div>
         </div>
     </section> --}}
-    
+
 </div>
 
 <script type="text/javascript">
@@ -438,7 +438,12 @@
             series: {
                 dataLabels: {
                     enabled: true,
-                    format: '{point.name}({point.value})'
+                    format: '{point.name} - {point.value}',
+                    color: '#FFFFFF',
+                    style: {
+                        textOutline: 'none',
+                        fontSize: 10
+                    },
                 }
             }
         },
@@ -520,9 +525,6 @@
                 color: '#3e4095',
                 fontWeight: 'bold',
             }
-        },
-        credits: {
-            enabled: false
         },
         xAxis: {
             categories: uniqueOrganizationNamesTog,
@@ -626,10 +628,10 @@
             categories: uniqueOrganizationNamesDulaan,
             // min: 0,
             // max: 1,
-            scrollbar: {
-                enabled: true
-            },
-            tickLength: 0,
+            // scrollbar: {
+            //     enabled: true
+            // },
+            // tickLength: 0,
             labels: {
                 style: {
                     fontSize: '10px' // Set the font size of x-axis labels

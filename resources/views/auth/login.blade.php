@@ -23,9 +23,8 @@
                                 </span>
                             </a>
 
-                            <button type="button"
-                                class="w-full max-w-xs font-bold shadow-sm rounded-lg py-3 bg-gray-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline mt-5 cursor-not-allowed disabled:opacity-75"
-                                disabled>
+                            <a href="{{ url('auth/redirectOrg') }}"
+                                class="w-full max-w-xs font-bold shadow-sm rounded-lg py-3 bg-gray-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline mt-5">
                                 <div class="bg-white p-1 rounded-full">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                         stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -36,7 +35,7 @@
                                 <span class="ml-4">
                                     Байгууллага
                                 </span>
-                            </button>
+                            </a>
                         </div>
 
                         <div class="my-12 border-b text-center">
