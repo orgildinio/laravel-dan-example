@@ -17,7 +17,7 @@ class DanAuthController extends Controller
 {
     public function redirectToDan()
     {
-        return Socialite::driver('dan')->redirect();
+        return Socialite::driver('dan')->scopes(['W3sic2VydmljZXMiOiBbIldTMTAwMTAxX2dldENpdGl6ZW5JRENhcmRJbmZvIl0sICJ3c2RsIjogImh0dHBzOi8veHlwLmdvdi5tbi9jaXRpemVuLTEuMy4wL3dzP1dTREwifV0='])->redirect();
     }
 
     public function handleDanCallback()
