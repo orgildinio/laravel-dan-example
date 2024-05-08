@@ -17,7 +17,11 @@ class DanAuthController extends Controller
 {
     public function redirectToDan()
     {
-        return Socialite::driver('dan')->scopes('[{$services => ["WS100101_getCitizenIDCardInfo"], $wsdl => "https://xyp.gov.mn/citizen-1.3.0/ws?WSDL"}]')->redirect();
+        $json = '[{"services": ["WS100101_getCitizenIDCardInfo"], "wsdl": "https://xyp.gov.mn/citizen-1.3.0/ws?WSDL"}]';
+
+        $scope = base64_encode($json);
+
+        return Socialite::driver('dan')->scopes($scope)->redirect();
     }
 
     public function handleDanCallback()
