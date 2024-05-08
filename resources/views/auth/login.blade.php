@@ -9,7 +9,7 @@
                     </h1>
                     <div class="w-full flex-1 mt-8">
                         <div class="flex flex-col items-center">
-                            <a href="{{ route('danlogin', ['provider' => 'citizen']) }}"
+                            <a href="{{ route('danlogin', ['type' => 'citizen']) }}"
                                 class="w-full max-w-xs font-bold shadow-sm rounded-lg py-3 bg-indigo-100 hover:bg-indigo-200 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline">
                                 <div class="bg-white p-1 rounded-full">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"

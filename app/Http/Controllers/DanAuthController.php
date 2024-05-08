@@ -9,11 +9,12 @@ use Laravel\Socialite\Facades\Socialite;
 
 class DanAuthController extends Controller
 {
-    public function redirectToDan($provider)
+    public function redirectToDan($type)
     {
-        $provider = request()->query('provider');
+        $type = request()->query('type');
+        dd($type);
 
-        if ($provider == 'citizen') {
+        if ($type == 'citizen') {
             $json = '[{"services": ["WS100101_getCitizenIDCardInfo"], "wsdl": "https://xyp.gov.mn/citizen-1.3.0/ws?WSDL"}]';
 
             $scope = base64_encode($json);
