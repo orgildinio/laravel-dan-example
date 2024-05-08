@@ -6,7 +6,7 @@ use Laravel\Socialite\Two\User;
 use Laravel\Socialite\Two\AbstractProvider;
 use Laravel\Socialite\Two\ProviderInterface;
 
-class DanOrgServiceProvider extends AbstractProvider implements ProviderInterface
+class OrgServiceProvider extends AbstractProvider implements ProviderInterface
 {
     /**
      * @var string[]
