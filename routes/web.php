@@ -69,7 +69,7 @@ Route::get('/complaints', [ComplaintController::class, 'complaints'])->name('com
 Route::get('/showComplaint/{id}', [ComplaintController::class, 'showComplaint'])->name('showComplaint');
 
 // Дан систем Иргэнээр нэвтрэх
-Route::get('auth/redirect', [DanAuthController::class, 'redirectToDan']);
+Route::get('auth/redirect/{provider}', [DanAuthController::class, 'redirectToDan'])->name('danlogin');
 Route::get('auth/callback', [DanAuthController::class, 'handleDanCallback']);
 
 // Дан систем Байгууллагаар нэвтрэх

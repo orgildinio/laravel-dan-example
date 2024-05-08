@@ -3,24 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\DanUser;
-use App\Models\Category;
-use App\Models\EnergyType;
-use App\Models\Organization;
-use Illuminate\Http\Request;
-use App\Models\ComplaintType;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
 
 class DanAuthController extends Controller
 {
-    public function redirectToDan()
+    public function redirectToDan($provider)
     {
-        $json = '[{"services": ["WS100101_getCitizenIDCardInfo"], "wsdl": "https://xyp.gov.mn/citizen-1.3.0/ws?WSDL"}]';
+        $provider = request()->query('provider');
 
-        $scope = base64_encode($json);
+        if ($provider == 'citizen') {
+            $json = '[{"services": ["WS100101_getCitizenIDCardInfo"], "wsdl": "https://xyp.gov.mn/citizen-1.3.0/ws?WSDL"}]';
+
+            $scope = base64_encode($json);
+        } else {
+            $json = '[{"services": ["WS100301_getLegalEntityInfo"], "wsdl": "https://xyp.gov.mn/legal-entity-1.3.0/ws?WSDL"}]';
+
+            $scope = base64_encode($json);
+        }
+
 
         return Socialite::driver('dan')->scopes($scope)->redirect();
     }

@@ -9,7 +9,7 @@
                     </h1>
                     <div class="w-full flex-1 mt-8">
                         <div class="flex flex-col items-center">
-                            <a href="{{ url('auth/redirect') }}"
+                            <a href="{{ route('danlogin', ['provider' => 'citizen']) }}"
                                 class="w-full max-w-xs font-bold shadow-sm rounded-lg py-3 bg-indigo-100 hover:bg-indigo-200 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline">
                                 <div class="bg-white p-1 rounded-full">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -23,7 +23,7 @@
                                 </span>
                             </a>
 
-                            <a href="{{ url('auth/redirectOrg') }}"
+                            <a href="{{ route('danlogin', ['provider' => 'org']) }}"
                                 class="w-full max-w-xs font-bold shadow-sm rounded-lg py-3 bg-gray-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline mt-5">
                                 <div class="bg-white p-1 rounded-full">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
