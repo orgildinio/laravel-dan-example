@@ -74,4 +74,4 @@ Route::get('auth/callback', [DanAuthController::class, 'handleDanCallback']);
 
 // Дан систем Байгууллагаар нэвтрэх
 Route::get('auth/redirectOrg', [DanAuthController::class, 'redirectToDanOrg'])->name('orglogin');
-Route::get('auth/callbackOrg', [DanAuthController::class, 'handleDanOrgCallback']);
+// Route::get('auth/callbackOrg', [DanAuthController::class, 'handleDanOrgCallback']);

@@ -63,7 +63,7 @@ class DanServiceProvider extends AbstractProvider implements ProviderInterface
      */
     protected function mapUserToObject(array $user)
     {
-        dd($user);
+        dd($user[0]['citizen_loginType']);
         $userData = $user[1]["services"]["WS100101_getCitizenIDCardInfo"]["response"];
         // dd($userData);
 
