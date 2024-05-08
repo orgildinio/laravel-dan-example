@@ -18,7 +18,8 @@ class DanAuthController extends Controller
 
             $scope = base64_encode($json);
         } else {
-            $json = '[{"services": ["WS100301_getLegalEntityInfo"], "wsdl": "https://xyp.gov.mn/legal-entity-1.3.0/ws?WSDL"}]';
+            // $json = '[{"services": ["WS100301_getLegalEntityInfo"], "wsdl": "https://xyp.gov.mn/legal-entity-1.3.0/ws?WSDL"}]';
+            $json = '[{"services": ["WS100301_getLegalEntityInfo1111"], "wsdl": "https://xyp.gov.mn/legal-entity-1.3.0/ws?WSDL"}]';
 
             $scope = base64_encode($json);
         }
