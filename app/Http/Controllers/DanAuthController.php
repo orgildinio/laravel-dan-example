@@ -47,37 +47,19 @@ class DanAuthController extends Controller
             ]);
         }
 
-        // DanUser::create([
-        //     'personId' => $danUser->personId,
-        //     'firstname' => $danUser->firstname,
-        //     'lastname' => $danUser->lastname,
-        //     'regnum' => $danUser->regnum,
-        //     'aimagCityName' => $danUser->aimagCityName,
-        //     'soumDistrictName' => $danUser->soumDistrictName,
-        //     'bagKhorooName' => $danUser->bagKhorooName,
-        //     'passportAddress' => $danUser->passportAddress,
-        //     'image' => $danUser->image,
-        //     "gender" => $danUser->gender,
-        //     "user_id" => $user->id
-        // ]);
-
-        // dd($danUser);
-
         Auth::loginUsingId($user->id, true);
-
-        // Auth::login($user, true);
 
         return redirect()->route("welcome")->with('success', 'Амжилттай нэвтэрлээ.');
     }
 
     public function redirectToDanOrg()
     {
-        return Socialite::driver('dan')->scopes(['email', 'user_birthday'])->redirect();
+        return Socialite::driver('org')->redirect();
     }
 
     public function handleDanOrgCallback()
     {
-        $danUser = Socialite::driver('dan')->user();
+        $danUser = Socialite::driver('org')->user();
 
         dd($danUser);
     }
