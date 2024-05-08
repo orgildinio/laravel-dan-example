@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use App\Models\ComplaintType;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
 
 class DanAuthController extends Controller
@@ -58,6 +59,10 @@ class DanAuthController extends Controller
 
     public function redirectToDanOrg()
     {
+        if (Route::is('dan.redirectorg')) {
+            config(['services.dan.redirect' => 'https://consumer.energy.mn/auth/callbackOrg']);
+        }
+
         $json = '[{"services": ["WS100301_getLegalEntityInfo"], "wsdl": "https://xyp.gov.mn/legal-entity-1.3.0/ws?WSDL"}]';
 
         $scope = base64_encode($json);
