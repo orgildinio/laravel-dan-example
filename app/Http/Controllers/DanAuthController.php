@@ -14,12 +14,12 @@ class DanAuthController extends Controller
     {
 
         if ($type == 'citizen') {
-            $json = '[{"services": ["WS100101_getCitizenIDCardInfo"], "wsdl": "https://xyp.gov.mn/citizen-1.3.0/ws?WSDL"}]';
+            $json = '[{"services": ["WS100101_getCitizenIDCardInfo1"], "wsdl": "https://xyp.gov.mn/citizen-1.3.0/ws?WSDL"}]';
 
             $scope = base64_encode($json);
         } else {
             // $json = '[{"services": ["WS100301_getLegalEntityInfo"], "wsdl": "https://xyp.gov.mn/legal-entity-1.3.0/ws?WSDL"}]';
-            $json = '[{"services": ["WS100301_getLegalEntityInfo1111"], "wsdl": "https://xyp.gov.mn/legal-entity-1.3.0/ws?WSDL"}]';
+            $json = '[{"services": "dddd", "wsdl": "dddd"}]';
 
             $scope = base64_encode($json);
         }
