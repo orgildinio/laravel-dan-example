@@ -30,5 +30,9 @@ class AuthServiceProvider extends ServiceProvider
         Socialite::extend('dan', function ($app) {
             return Socialite::buildProvider(DanServiceProvider::class, config('services.dan'));
         });
+
+        Socialite::extend('org', function ($app) {
+            return Socialite::buildProvider(DanServiceProvider::class, config('services.org'));
+        });
     }
 }
