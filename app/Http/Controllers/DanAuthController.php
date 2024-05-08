@@ -18,14 +18,12 @@ class DanAuthController extends Controller
 
             $scope = base64_encode($json);
         } elseif ($type == 'org') {
-            // $json = '[{"services": ["WS100301_getLegalEntityInfo"], "wsdl": "https://xyp.gov.mn/legal-entity-1.3.0/ws?WSDL"}]';
-            $json = '[{"services": "dddd", "wsdl": "dddd"}]';
+            $json = '[{"services": ["WS100301_getLegalEntityInfo"], "wsdl": "https://xyp.gov.mn/legal-entity-1.3.0/ws?WSDL"}]';
 
             $scope = base64_encode($json);
         } else {
             $scope = null;
         }
-        dd($scope);
 
 
         return Socialite::driver('dan')->scopes($scope)->redirect();
