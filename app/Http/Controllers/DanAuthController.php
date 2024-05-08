@@ -58,7 +58,11 @@ class DanAuthController extends Controller
 
     public function redirectToDanOrg()
     {
-        return Socialite::driver('dan')->scopes(['W3sic2VydmljZXMiOiBbIldTMTAwMzAxX2dldExlZ2FsRW50aXR5SW5mbyJdLCAid3NkbCI6ICJodHRwczovL3h5cC5nb3YubW4vbGVnYWwtZW50aXR5LTEuMy4wL3dzP1dTREwifV0='])->redirect();
+        $json = '[{"services": ["WS100301_getLegalEntityInfo"], "wsdl": "https://xyp.gov.mn/legal-entity-1.3.0/ws?WSDL"}]';
+
+        $scope = base64_encode($json);
+
+        return Socialite::driver('dan')->scopes($scope)->redirect();
     }
 
     public function handleDanOrgCallback()
