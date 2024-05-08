@@ -12,7 +12,7 @@ class DanAuthController extends Controller
 {
     public function redirectToDan(Request $request, $type)
     {
-        dd($request);
+        dd($type);
         $type = request()->query('type');
 
         if ($type == 'citizen') {
