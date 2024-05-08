@@ -86,7 +86,7 @@ class DanServiceProvider extends AbstractProvider implements ProviderInterface
 
             $userData = $user[1]["services"]["WS100307_getLegalEntityInfoWithRegnum"]["response"];
 
-            dd(response()->json($userData));
+            dd($userData);
 
             return (new User())->setRaw($userData)->map([
                 'personId' => $userData['personId'],
