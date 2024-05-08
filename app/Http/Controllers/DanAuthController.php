@@ -3,16 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Socialite\Facades\Socialite;
 
 class DanAuthController extends Controller
 {
-    public function redirectToDan($type)
+    public function redirectToDan(Request $request, $type)
     {
+        dd($request);
         $type = request()->query('type');
-        dd($type);
 
         if ($type == 'citizen') {
             $json = '[{"services": ["WS100101_getCitizenIDCardInfo"], "wsdl": "https://xyp.gov.mn/citizen-1.3.0/ws?WSDL"}]';
