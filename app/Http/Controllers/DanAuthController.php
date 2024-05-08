@@ -10,24 +10,29 @@ use Laravel\Socialite\Facades\Socialite;
 
 class DanAuthController extends Controller
 {
-    public function redirectToDan($type)
+    public function redirectToDan()
     {
 
-        if ($type == 'citizen') {
-            $json = '[{"services": ["WS100101_getCitizenIDCardInfo"], "wsdl": "https://xyp.gov.mn/citizen-1.3.0/ws?WSDL"}]';
+        // if ($type == 'citizen') {
+        //     $json = '[{"services": ["WS100101_getCitizenIDCardInfo"], "wsdl": "https://xyp.gov.mn/citizen-1.3.0/ws?WSDL"}]';
 
-            $scope = base64_encode($json);
-        } elseif ($type == 'org') {
-            $json = '[{"services": ["WS100301_getLegalEntityInfo"], "wsdl": "https://xyp.gov.mn/citizen-1.3.0/ws?WSDL"}]';
+        //     $scope = base64_encode($json);
+        // } elseif ($type == 'org') {
+        //     $json = '[{"services": ["WS100301_getLegalEntityInfo"], "wsdl": "https://xyp.gov.mn/legal-entity-1.3.0/ws?WSDL"}]';
 
-            $scope = base64_encode($json);
-        } else {
-            $scope = null;
-        }
+        //     $scope = base64_encode($json);
+        // } else {
+        //     $scope = null;
+        // }
+
+        $json = '[{"services": ["WS100101_getCitizenIDCardInfo"], "wsdl": "https://xyp.gov.mn/citizen-1.3.0/ws?WSDL"}]';
+
+        $scope = base64_encode($json);
 
 
         return Socialite::driver('dan')->scopes($scope)->redirect();
     }
+
 
     public function handleDanCallback()
     {
