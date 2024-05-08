@@ -68,7 +68,7 @@ class DanAuthController extends Controller
 
     public function redirectToDanOrg()
     {
-        $json = '[{"services": ["WS100301_getLegalEntityInfo"], "wsdl": "https://xyp.gov.mn/legal-entity-1.3.0/ws?WSDL"}]';
+        $json = '[{"services": ["WS100307_getLegalEntityInfoWithRegnum"], "wsdl": "https://xyp.gov.mn/legal-entity-1.3.0/ws?WSDL"}]';
 
         $scope = base64_encode($json);
 
