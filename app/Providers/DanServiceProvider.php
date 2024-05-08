@@ -52,6 +52,7 @@ class DanServiceProvider extends AbstractProvider implements ProviderInterface
                 'Authorization' => 'Bearer ' . $token,
             ],
         ]);
+        dd($response);
 
         return json_decode($response->getBody(), true);
     }
