@@ -59,20 +59,16 @@ class DanAuthController extends Controller
 
     public function redirectToDanOrg()
     {
-        if (Route::is('dan.redirectorg')) {
-            config(['services.dan.redirect' => 'https://consumer.energy.mn/auth/callbackOrg']);
-        }
-
         $json = '[{"services": ["WS100301_getLegalEntityInfo"], "wsdl": "https://xyp.gov.mn/legal-entity-1.3.0/ws?WSDL"}]';
 
         $scope = base64_encode($json);
 
-        return Socialite::driver('dan')->scopes($scope)->redirect();
+        return Socialite::driver('danorg')->scopes($scope)->redirect();
     }
 
     public function handleDanOrgCallback()
     {
-        $danUser = Socialite::driver('dan')->user();
+        $danUser = Socialite::driver('danorg')->user();
 
         dd($danUser);
     }

@@ -6,7 +6,7 @@ use Laravel\Socialite\Two\User;
 use Laravel\Socialite\Two\AbstractProvider;
 use Laravel\Socialite\Two\ProviderInterface;
 
-class DanServiceProvider extends AbstractProvider implements ProviderInterface
+class DanOrgServiceProvider extends AbstractProvider implements ProviderInterface
 {
     /**
      * @var string[]
@@ -52,6 +52,7 @@ class DanServiceProvider extends AbstractProvider implements ProviderInterface
                 'Authorization' => 'Bearer ' . $token,
             ],
         ]);
+        dd($response);
 
         return json_decode($response->getBody(), true);
     }
@@ -62,6 +63,8 @@ class DanServiceProvider extends AbstractProvider implements ProviderInterface
      */
     protected function mapUserToObject(array $user)
     {
+
+        dd($user);
         $userData = $user[1]["services"]["WS100101_getCitizenIDCardInfo"]["response"];
         // dd($userData);
 

@@ -37,10 +37,10 @@ return [
         'redirect' => env('DAN_REDIRECT_URI'),
     ],
 
-    'org' => [
+    'danorg' => [
         'client_id' => env('DAN_CLIENT_ID'),
         'client_secret' => env('DAN_CLIENT_SECRET'),
-        'redirect' => env('ORG_REDIRECT_URI'),
+        'redirect' => env('DAN_ORG_REDIRECT_URI'),
     ],
 
 
