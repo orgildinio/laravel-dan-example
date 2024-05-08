@@ -64,20 +64,44 @@ class DanServiceProvider extends AbstractProvider implements ProviderInterface
     protected function mapUserToObject(array $user)
     {
         dd($user[0]['citizen_loginType']);
-        $userData = $user[1]["services"]["WS100101_getCitizenIDCardInfo"]["response"];
-        // dd($userData);
 
-        return (new User())->setRaw($userData)->map([
-            'personId' => $userData['personId'],
-            'firstname' => $userData['firstname'],
-            'lastname' => $userData['lastname'],
-            'regnum' => $userData['regnum'],
-            'aimagCityName' => $userData['aimagCityName'],
-            'soumDistrictName' => $userData['soumDistrictName'],
-            'bagKhorooName' => $userData['bagKhorooName'],
-            'passportAddress' => $userData['passportAddress'],
-            'image' => $userData['image'],
-            'gender' => $userData['gender']
-        ]);
+        // dd($userData);
+        if ($user[0]['citizen_loginType'] == 104) {
+
+            $userData = $user[1]["services"]["WS100101_getCitizenIDCardInfo"]["response"];
+
+            return (new User())->setRaw($userData)->map([
+                'personId' => $userData['personId'],
+                'firstname' => $userData['firstname'],
+                'lastname' => $userData['lastname'],
+                'regnum' => $userData['regnum'],
+                'aimagCityName' => $userData['aimagCityName'],
+                'soumDistrictName' => $userData['soumDistrictName'],
+                'bagKhorooName' => $userData['bagKhorooName'],
+                'passportAddress' => $userData['passportAddress'],
+                'image' => $userData['image'],
+                'gender' => $userData['gender']
+            ]);
+        } elseif ($user[0]['citizen_loginType'] == 1) {
+
+            $userData = $user[1]["services"]["WS100307_getLegalEntityInfoWithRegnum"]["response"];
+
+            dd($userData);
+
+            return (new User())->setRaw($userData)->map([
+                'personId' => $userData['personId'],
+                'firstname' => $userData['firstname'],
+                'lastname' => $userData['lastname'],
+                'regnum' => $userData['regnum'],
+                'aimagCityName' => $userData['aimagCityName'],
+                'soumDistrictName' => $userData['soumDistrictName'],
+                'bagKhorooName' => $userData['bagKhorooName'],
+                'passportAddress' => $userData['passportAddress'],
+                'image' => $userData['image'],
+                'gender' => $userData['gender']
+            ]);
+        } else {
+            return null;
+        }
     }
 }
