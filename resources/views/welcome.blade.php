@@ -29,7 +29,7 @@
     </div>
 </x-app-layout>
 
-<script>
+<script type="module">
     $(document).ready(function() {
         // Check if it's the first Google login (using a session flag)
         var isFirstDanLogin = "{{ session('first_dan_login') }}";
