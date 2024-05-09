@@ -38,7 +38,8 @@
                                             data-original="#000000" />
                                     </svg>
                                     Зураг солих
-                                    <input type="file" id='uploadFile' name="photo" class="hidden" onchange="loadFile(event)" />
+                                    <input type="file" id='uploadFile' name="photo" class="hidden"
+                                        onchange="loadFile(event)" />
                                 </label>
                                 {{-- <label class="block">
                                     <input type="file" name="photo" onchange="loadFile(event)"
@@ -69,27 +70,56 @@
                             <h2 class="text-xl font-bold mb-4">Үндсэн мэдээлэл</h2>
 
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div>
-                                    <label for="lastname" class="block text-sm font-medium text-gray-700">Овог</label>
-                                    <input type="text" id="lastname" name="lastname"
-                                        class="mt-1 block w-full border-gray-300 bg-gray-200 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-gray-600 sm:text-sm cursor-not-allowed"
-                                        value="{{ Auth::user()->danLastname }}" disabled>
-                                </div>
+                                @if (Auth::user()->companyName != null)
+                                    <div>
+                                        <label for="companyName"
+                                            class="block text-sm font-medium text-gray-700">Байгууллагын нэр</label>
+                                        <input type="text" id="companyName" name="companyName"
+                                            class="mt-1 block w-full border-gray-300 bg-gray-200 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-gray-600 sm:text-sm cursor-not-allowed"
+                                            value="{{ Auth::user()->companyName }}" disabled>
+                                    </div>
 
-                                <div>
-                                    <label for="firstname" class="block text-sm font-medium text-gray-700">Нэр</label>
-                                    <input type="text" id="firstname" name="firstname"
-                                        class="mt-1 block w-full border-gray-300 bg-gray-200 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-gray-600 sm:text-sm cursor-not-allowed"
-                                        value="{{ Auth::user()->danFirstname }}" disabled>
-                                </div>
+                                    <div>
+                                        <label for="companyType"
+                                            class="block text-sm font-medium text-gray-700">Хэлбэр</label>
+                                        <input type="text" id="companyType" name="companyType"
+                                            class="mt-1 block w-full border-gray-300 bg-gray-200 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-gray-600 sm:text-sm cursor-not-allowed"
+                                            value="{{ Auth::user()->companyType }}" disabled>
+                                    </div>
 
-                                <div>
-                                    <label for="regnum" class="block text-sm font-medium text-gray-700">Регистрийн
-                                        дугаар</label>
-                                    <input type="text" id="regnum" name="regnum"
-                                        class="mt-1 block w-full border-gray-300 bg-gray-200 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-gray-600 sm:text-sm cursor-not-allowed"
-                                        value="{{ Auth::user()->danRegnum }}" disabled>
-                                </div>
+                                    <div>
+                                        <label for="companyRegnum"
+                                            class="block text-sm font-medium text-gray-700">Регистрийн
+                                            дугаар</label>
+                                        <input type="text" id="companyRegnum" name="companyRegnum"
+                                            class="mt-1 block w-full border-gray-300 bg-gray-200 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-gray-600 sm:text-sm cursor-not-allowed"
+                                            value="{{ Auth::user()->companyRegnum }}" disabled>
+                                    </div>
+                                @else
+                                    <div>
+                                        <label for="lastname"
+                                            class="block text-sm font-medium text-gray-700">Овог</label>
+                                        <input type="text" id="lastname" name="lastname"
+                                            class="mt-1 block w-full border-gray-300 bg-gray-200 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-gray-600 sm:text-sm cursor-not-allowed"
+                                            value="{{ Auth::user()->danLastname }}" disabled>
+                                    </div>
+
+                                    <div>
+                                        <label for="firstname"
+                                            class="block text-sm font-medium text-gray-700">Нэр</label>
+                                        <input type="text" id="firstname" name="firstname"
+                                            class="mt-1 block w-full border-gray-300 bg-gray-200 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-gray-600 sm:text-sm cursor-not-allowed"
+                                            value="{{ Auth::user()->danFirstname }}" disabled>
+                                    </div>
+
+                                    <div>
+                                        <label for="regnum" class="block text-sm font-medium text-gray-700">Регистрийн
+                                            дугаар</label>
+                                        <input type="text" id="regnum" name="regnum"
+                                            class="mt-1 block w-full border-gray-300 bg-gray-200 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-gray-600 sm:text-sm cursor-not-allowed"
+                                            value="{{ Auth::user()->danRegnum }}" disabled>
+                                    </div>
+                                @endif
 
                                 <div>
                                     <label for="city" class="block text-sm font-medium text-gray-700">УБ/Орон
@@ -127,7 +157,8 @@
                                 </div>
 
                                 <div>
-                                    <label for="email" class="block text-sm font-medium text-gray-700">Имэйл</label>
+                                    <label for="email"
+                                        class="block text-sm font-medium text-gray-700">Имэйл</label>
                                     <input type="email" id="email" name="email"
                                         class="mt-1 block w-full border-gray-300 bg-gray-50 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                         value="{{ Auth::user()->email }}">
