@@ -20,12 +20,21 @@ class DanAuthController extends Controller
         return Socialite::driver('dan')->scopes($scope)->redirect();
     }
 
+    public function redirectToDanOrg()
+    {
+        $json = '[{"services": ["WS100307_getLegalEntityInfoWithRegnum"], "wsdl": "https://xyp.gov.mn/legal-entity-1.3.0/ws?WSDL"}]';
+
+        $scope = base64_encode($json);
+
+        return Socialite::driver('dan')->scopes($scope)->redirect();
+    }
+
 
     public function handleDanCallback()
     {
         $danUser = Socialite::driver('dan')->user();
 
-        // dd($danUser);
+        dd($danUser);
 
         $user = User::where('danRegnum', $danUser->regnum)->first();
 
@@ -53,19 +62,12 @@ class DanAuthController extends Controller
         return redirect()->route("welcome")->with('success', 'Амжилттай нэвтэрлээ.');
     }
 
-    public function redirectToDanOrg()
-    {
-        $json = '[{"services": ["WS100307_getLegalEntityInfoWithRegnum"], "wsdl": "https://xyp.gov.mn/legal-entity-1.3.0/ws?WSDL"}]';
 
-        $scope = base64_encode($json);
 
-        return Socialite::driver('dan')->scopes($scope)->redirect();
-    }
+    // public function handleDanOrgCallback()
+    // {
+    //     $danUser = Socialite::driver('dan')->user();
 
-    public function handleDanOrgCallback()
-    {
-        $danUser = Socialite::driver('dan')->user();
-
-        dd($danUser);
-    }
+    //     dd($danUser);
+    // }
 }

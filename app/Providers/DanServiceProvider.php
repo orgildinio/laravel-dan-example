@@ -64,9 +64,10 @@ class DanServiceProvider extends AbstractProvider implements ProviderInterface
     protected function mapUserToObject(array $user)
     {
         // dd($user[0]['citizen_loginType']);
+        $login_type = $user[0]['citizen_loginType'];
 
         // dd($userData);
-        if ($user[0]['citizen_loginType'] == 104) {
+        if ($login_type == 104) {
 
             $userData = $user[1]["services"]["WS100101_getCitizenIDCardInfo"]["response"];
 
@@ -80,25 +81,25 @@ class DanServiceProvider extends AbstractProvider implements ProviderInterface
                 'bagKhorooName' => $userData['bagKhorooName'],
                 'passportAddress' => $userData['passportAddress'],
                 'image' => $userData['image'],
-                'gender' => $userData['gender']
+                'gender' => $userData['gender'],
+                'login_type' => $login_type
             ]);
-        } elseif ($user[0]['citizen_loginType'] == 1) {
+        } elseif ($login_type == 1) {
 
             $userData = $user[1]["services"]["WS100307_getLegalEntityInfoWithRegnum"]["response"];
 
-            dd($userData);
+            // dd($userData);
 
             return (new User())->setRaw($userData)->map([
-                'personId' => $userData['personId'],
-                'firstname' => $userData['firstname'],
-                'lastname' => $userData['lastname'],
-                'regnum' => $userData['regnum'],
-                'aimagCityName' => $userData['aimagCityName'],
-                'soumDistrictName' => $userData['soumDistrictName'],
-                'bagKhorooName' => $userData['bagKhorooName'],
-                'passportAddress' => $userData['passportAddress'],
-                'image' => $userData['image'],
-                'gender' => $userData['gender']
+                'companyName' => $userData['general']['companyName'],
+                'description' => $userData['general']['description'],
+                'regnum' => $userData['general']['companyRegnum'],
+                'ownershipTypeName' => $userData['general']['ownershipTypeName'],
+                'profitTypeName' => $userData['general']['profitTypeName'],
+                'aimagCityName' => $userData['address']['stateCity']['name'],
+                'soumDistrictName' => $userData['address']['soumDistrict']['name'],
+                'bagKhorooName' => $userData['address']['bagKhoroo']['name'],
+                'login_type' => $login_type
             ]);
         } else {
             return null;
