@@ -88,7 +88,7 @@ class DanServiceProvider extends AbstractProvider implements ProviderInterface
 
             $userData = $user[1]["services"]["WS100307_getLegalEntityInfoWithRegnum"]["response"];
 
-            dd($userData);
+            // dd($userData);
 
             return (new User())->setRaw($userData)->map([
                 'companyName' => $userData['general']['companyName'],
@@ -96,9 +96,9 @@ class DanServiceProvider extends AbstractProvider implements ProviderInterface
                 'regnum' => $userData['general']['companyRegnum'],
                 'ownershipTypeName' => $userData['general']['ownershipTypeName'],
                 'profitTypeName' => $userData['general']['profitTypeName'],
-                'aimagCityName' => $userData['address']['stateCity']['name'],
-                'soumDistrictName' => $userData['address']['soumDistrict']['name'],
-                'bagKhorooName' => $userData['address']['bagKhoroo']['name'],
+                'aimagCityName' => $userData['address'][0]['stateCity']['name'],
+                'soumDistrictName' => $userData['address'][0]['soumDistrict']['name'],
+                'bagKhorooName' => $userData['address'][0]['bagKhoroo']['name'],
                 'login_type' => $login_type
             ]);
         } else {
