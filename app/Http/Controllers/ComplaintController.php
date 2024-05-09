@@ -431,16 +431,22 @@ class ComplaintController extends Controller
             $input['status_id'] = 2; // Хүлээн авсан төлөвт орно
         } else {
             // Хэрэглэгчийн мэдээлэл хадгалах
+            if ($user->companyName) {
+                $input['complaint_maker_org_name'] = $user->companyName;
+                $input['registerNumber'] = $user->companyRegnum;
+                $input['complaint_maker_type_id'] = 2; // ААН
+            } else {
+                $input['registerNumber'] = $user->danRegnum ? $user->danRegnum : '';
+                $input['complaint_maker_type_id'] = 1; // Иргэн
+            }
+
             $input['lastname'] = $user->danLastname ? $user->danLastname : '';
             $input['firstname'] = $user->danFirstname ? $user->danFirstname : '';
-            $input['lastname'] = $user->danLastname ? $user->danLastname : '';
-            $input['registerNumber'] = $user->danRegnum ? $user->danRegnum : '';
             $input['country'] = $user->danAimagCityName ? $user->danAimagCityName : '';
             $input['district'] = $user->danSoumDistrictName ? $user->danSoumDistrictName : '';
             $input['khoroo'] = $user->danBagKhorooName ? $user->danBagKhorooName : '';
 
             // Өргөдлийн мэдээлэл хадгалах
-            $input['complaint_maker_type_id'] = 1; // Иргэн
             $input['status_id'] = 0; // Шинээр ирсэн төлөвт орно
         }
         // Бүртгэсэн болон Дуусах хугацаа

@@ -71,7 +71,7 @@ return [
                 return '/dashboardTzeShow';
             };
         } else {
-            return RouteServiceProvider::HOME;
+            return '/addComplaint';
         }
         return RouteServiceProvider::HOME;
     },
