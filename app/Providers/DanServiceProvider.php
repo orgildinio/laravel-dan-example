@@ -52,7 +52,7 @@ class DanServiceProvider extends AbstractProvider implements ProviderInterface
                 'Authorization' => 'Bearer ' . $token,
             ],
         ]);
-        dd($response);
+        // dd($response);
 
         return json_decode($response->getBody(), true);
     }
@@ -71,6 +71,7 @@ class DanServiceProvider extends AbstractProvider implements ProviderInterface
 
             $userData = $user[1]["services"]["WS100101_getCitizenIDCardInfo"]["response"];
 
+            dd($userData);
             return (new User())->setRaw($userData)->map([
                 'personId' => $userData['personId'],
                 'firstname' => $userData['firstname'],
