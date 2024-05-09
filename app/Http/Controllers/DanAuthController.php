@@ -16,7 +16,6 @@ class DanAuthController extends Controller
 
         $scope = base64_encode($json);
 
-
         return Socialite::driver('dan')->scopes($scope)->redirect();
     }
 

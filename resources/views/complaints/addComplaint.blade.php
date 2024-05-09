@@ -5,13 +5,14 @@
         </h2>
     </x-slot>
 
-    <div>
+    <div class="container mx-auto">
         @if ($message = Session::get('success'))
             <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-2 mb-4" role="alert">
                 <p>{{ $message }}</p>
             </div>
         @endif
     </div>
+    
     <div class="py-8 bg-slate-50">
         <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-5 m-5">
