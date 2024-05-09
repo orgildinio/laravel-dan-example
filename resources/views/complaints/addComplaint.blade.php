@@ -5,6 +5,13 @@
         </h2>
     </x-slot>
 
+    <div>
+        @if ($message = Session::get('success'))
+            <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-2 mb-4" role="alert">
+                <p>{{ $message }}</p>
+            </div>
+        @endif
+    </div>
     <div class="py-8 bg-slate-50">
         <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-5 m-5">
@@ -12,11 +19,7 @@
                 
                 <form id="submitForm" method="POST" action="{{ route('complaint.store') }}" enctype="multipart/form-data">
                     @csrf
-                    @if ($message = Session::get('success'))
-                    <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-2 mb-4" role="alert">
-                        <p>{{ $message }}</p>
-                    </div>
-                    @endif
+                    
                     <div class="md:flex md:items-center mb-2">
                         <div class="md:w-1/3">
                             <label class="block text-gray-700 text-sm font-bold md:text-right mb-1 md:mb-0 pr-4"
