@@ -77,6 +77,7 @@ class DanAuthController extends Controller
                     'danAimagCityName' => $danUser->aimagCityName,
                     'danSoumDistrictName' => $danUser->soumDistrictName,
                     'danBagKhorooName' => $danUser->bagKhorooName,
+                    'password' => Hash::make(123456),
                     'role_id' => 5
                 ]);
             }
