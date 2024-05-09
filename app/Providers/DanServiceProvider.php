@@ -63,33 +63,11 @@ class DanServiceProvider extends AbstractProvider implements ProviderInterface
      */
     protected function mapUserToObject(array $user)
     {
-        dd($user);
+        // dd($user);
         $login_type = $user[0]['citizen_loginType'];
-
-        // dd($userData);
-        if ($login_type == 104) {
-
-            $userData = $user[1]["services"]["WS100101_getCitizenIDCardInfo"]["response"];
-
-            dd($userData);
-            return (new User())->setRaw($userData)->map([
-                'personId' => $userData['personId'],
-                'firstname' => $userData['firstname'],
-                'lastname' => $userData['lastname'],
-                'regnum' => $userData['regnum'],
-                'aimagCityName' => $userData['aimagCityName'],
-                'soumDistrictName' => $userData['soumDistrictName'],
-                'bagKhorooName' => $userData['bagKhorooName'],
-                'passportAddress' => $userData['passportAddress'],
-                'image' => $userData['image'],
-                'gender' => $userData['gender'],
-                'login_type' => $login_type
-            ]);
-        } elseif ($login_type == 1) {
-
+        // login_type = 1 байгууллагаар нэвтэрсэн
+        if ($login_type == 1) {
             $userData = $user[1]["services"]["WS100307_getLegalEntityInfoWithRegnum"]["response"];
-
-            // dd($userData);
 
             return (new User())->setRaw($userData)->map([
                 'companyName' => $userData['general']['companyName'],
@@ -103,7 +81,21 @@ class DanServiceProvider extends AbstractProvider implements ProviderInterface
                 'login_type' => $login_type
             ]);
         } else {
-            return null;
+            $userData = $user[1]["services"]["WS100101_getCitizenIDCardInfo"]["response"];
+
+            return (new User())->setRaw($userData)->map([
+                'personId' => $userData['personId'],
+                'firstname' => $userData['firstname'],
+                'lastname' => $userData['lastname'],
+                'regnum' => $userData['regnum'],
+                'aimagCityName' => $userData['aimagCityName'],
+                'soumDistrictName' => $userData['soumDistrictName'],
+                'bagKhorooName' => $userData['bagKhorooName'],
+                'passportAddress' => $userData['passportAddress'],
+                'image' => $userData['image'],
+                'gender' => $userData['gender'],
+                'login_type' => $login_type
+            ]);
         }
     }
 }
