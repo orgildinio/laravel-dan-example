@@ -64,7 +64,7 @@ class DanAuthController extends Controller
             return redirect()->route("addComplaint")->with('success', 'Амжилттай нэвтэрлээ.');
         } elseif ($danUser->login_type == 1) {
 
-            $user = User::where('danRegnum', $danUser->regnum)->first();
+            $user = User::where('companyRegnum', $danUser->regnum)->first();
 
             if (!$user) {
                 // If the user doesn't exist, create a new user in your database
@@ -72,7 +72,7 @@ class DanAuthController extends Controller
                 $user = User::create([
                     'name' => $danUser->companyName,
                     'companyName' => $danUser->companyName . " " . $danUser->description,
-                    'danRegnum' => $danUser->regnum,
+                    'companyRegnum' => $danUser->regnum,
                     'companyType' => $danUser->ownershipTypeName . ", " . $danUser->profitTypeName,
                     'danAimagCityName' => $danUser->aimagCityName,
                     'danSoumDistrictName' => $danUser->soumDistrictName,

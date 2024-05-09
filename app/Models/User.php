@@ -44,6 +44,7 @@ class User extends Authenticatable
         'phone',
         'companyName',
         'companyType',
+        'companyRegnum',
     ];
 
     /**
