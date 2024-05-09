@@ -35,8 +35,30 @@ class DanAuthController extends Controller
 
         // dd($danUser->login_type);
 
-        if ($danUser->login_type == 104) {
+        if ($danUser->login_type == 1) {
 
+            $user = User::where('companyRegnum', $danUser->regnum)->first();
+
+            if (!$user) {
+                // If the user doesn't exist, create a new user in your database
+                // session(['first_dan_login' => true]);
+                $user = User::create([
+                    'name' => $danUser->companyName,
+                    'companyName' => $danUser->companyName . " " . $danUser->description,
+                    'companyRegnum' => $danUser->regnum,
+                    'companyType' => $danUser->ownershipTypeName . ", " . $danUser->profitTypeName,
+                    'danAimagCityName' => $danUser->aimagCityName,
+                    'danSoumDistrictName' => $danUser->soumDistrictName,
+                    'danBagKhorooName' => $danUser->bagKhorooName,
+                    'password' => Hash::make(123456),
+                    'role_id' => 5
+                ]);
+            }
+
+            Auth::loginUsingId($user->id, true);
+
+            return redirect()->route("addComplaint")->with('success', 'Амжилттай нэвтэрлээ.');
+        } else {
             $user = User::where('danRegnum', $danUser->regnum)->first();
 
             if (!$user) {
@@ -61,31 +83,6 @@ class DanAuthController extends Controller
             Auth::loginUsingId($user->id, true);
 
             return redirect()->route("addComplaint")->with('success', 'Амжилттай нэвтэрлээ.');
-        } elseif ($danUser->login_type == 1) {
-
-            $user = User::where('companyRegnum', $danUser->regnum)->first();
-
-            if (!$user) {
-                // If the user doesn't exist, create a new user in your database
-                // session(['first_dan_login' => true]);
-                $user = User::create([
-                    'name' => $danUser->companyName,
-                    'companyName' => $danUser->companyName . " " . $danUser->description,
-                    'companyRegnum' => $danUser->regnum,
-                    'companyType' => $danUser->ownershipTypeName . ", " . $danUser->profitTypeName,
-                    'danAimagCityName' => $danUser->aimagCityName,
-                    'danSoumDistrictName' => $danUser->soumDistrictName,
-                    'danBagKhorooName' => $danUser->bagKhorooName,
-                    'password' => Hash::make(123456),
-                    'role_id' => 5
-                ]);
-            }
-
-            Auth::loginUsingId($user->id, true);
-
-            return redirect()->route("addComplaint")->with('success', 'Амжилттай нэвтэрлээ.');
-        } else {
-            return redirect()->route("welcome")->with('error', 'Нэвтрэхэд алдаа гарлаа.');
         }
     }
 }
