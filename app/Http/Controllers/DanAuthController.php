@@ -34,7 +34,7 @@ class DanAuthController extends Controller
     {
         $danUser = Socialite::driver('dan')->user();
 
-        dd($danUser);
+        dd($danUser->login_type);
 
         $user = User::where('danRegnum', $danUser->regnum)->first();
 
