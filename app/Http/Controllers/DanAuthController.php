@@ -70,6 +70,7 @@ class DanAuthController extends Controller
                 // If the user doesn't exist, create a new user in your database
                 session(['first_dan_login' => true]);
                 $user = User::create([
+                    'name' => $danUser->companyName,
                     'companyName' => $danUser->companyName . " " . $danUser->description,
                     'danRegnum' => $danUser->regnum,
                     'companyType' => $danUser->ownershipTypeName . ", " . $danUser->profitTypeName,
