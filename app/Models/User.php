@@ -41,7 +41,9 @@ class User extends Authenticatable
         'danPassportAddress',
         'danGender',
         'role_id',
-        'phone'
+        'phone',
+        'companyName',
+        'companyType',
     ];
 
     /**

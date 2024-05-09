@@ -34,40 +34,57 @@ class DanAuthController extends Controller
     {
         $danUser = Socialite::driver('dan')->user();
 
-        dd($danUser->login_type);
+        // dd($danUser->login_type);
 
-        $user = User::where('danRegnum', $danUser->regnum)->first();
+        if ($danUser->login_type == 104) {
 
-        if (!$user) {
-            // If the user doesn't exist, create a new user in your database
-            session(['first_dan_login' => true]);
-            $user = User::create([
-                'name' => $danUser->firstname,
-                'danImage' => $danUser->image,
-                'danFirstname' => $danUser->firstname,
-                'danLastname' => $danUser->lastname,
-                'danRegnum' => $danUser->regnum,
-                'danAimagCityName' => $danUser->aimagCityName,
-                'danSoumDistrictName' => $danUser->soumDistrictName,
-                'danBagKhorooName' => $danUser->bagKhorooName,
-                'danPassportAddress' => $danUser->passportAddress,
-                "danGender" => $danUser->gender,
-                'password' => Hash::make(123456),
-                'role_id' => 5
-            ]);
+            $user = User::where('danRegnum', $danUser->regnum)->first();
+
+            if (!$user) {
+                // If the user doesn't exist, create a new user in your database
+                session(['first_dan_login' => true]);
+                $user = User::create([
+                    'name' => $danUser->firstname,
+                    'danImage' => $danUser->image,
+                    'danFirstname' => $danUser->firstname,
+                    'danLastname' => $danUser->lastname,
+                    'danRegnum' => $danUser->regnum,
+                    'danAimagCityName' => $danUser->aimagCityName,
+                    'danSoumDistrictName' => $danUser->soumDistrictName,
+                    'danBagKhorooName' => $danUser->bagKhorooName,
+                    'danPassportAddress' => $danUser->passportAddress,
+                    "danGender" => $danUser->gender,
+                    'password' => Hash::make(123456),
+                    'role_id' => 5
+                ]);
+            }
+
+            Auth::loginUsingId($user->id, true);
+
+            return redirect()->route("addComplaint")->with('success', 'Амжилттай нэвтэрлээ.');
+        } elseif ($danUser->login_type == 1) {
+
+            $user = User::where('danRegnum', $danUser->regnum)->first();
+
+            if (!$user) {
+                // If the user doesn't exist, create a new user in your database
+                session(['first_dan_login' => true]);
+                $user = User::create([
+                    'companyName' => $danUser->companyName . " " . $danUser->description,
+                    'danRegnum' => $danUser->regnum,
+                    'companyType' => $danUser->ownershipTypeName . ", " . $danUser->profitTypeName,
+                    'danAimagCityName' => $danUser->aimagCityName,
+                    'danSoumDistrictName' => $danUser->soumDistrictName,
+                    'danBagKhorooName' => $danUser->bagKhorooName,
+                    'role_id' => 5
+                ]);
+            }
+
+            Auth::loginUsingId($user->id, true);
+
+            return redirect()->route("addComplaint")->with('success', 'Амжилттай нэвтэрлээ.');
+        } else {
+            return redirect()->route("welcome")->with('error', 'Нэвтрэхэд алдаа гарлаа.');
         }
-
-        Auth::loginUsingId($user->id, true);
-
-        return redirect()->route("welcome")->with('success', 'Амжилттай нэвтэрлээ.');
     }
-
-
-
-    // public function handleDanOrgCallback()
-    // {
-    //     $danUser = Socialite::driver('dan')->user();
-
-    //     dd($danUser);
-    // }
 }
