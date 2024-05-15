@@ -190,7 +190,7 @@
 
 @push('scripts')
 
-    <script>
+    <script type="module">
         function createCategoryId(str) {
             let category_id = null;
             switch (str) {
