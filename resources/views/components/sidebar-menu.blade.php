@@ -46,7 +46,7 @@
                      @endif
                   </ul>
                </li>
-               {{-- @if (Auth::user()->org_id == 99)    --}}
+               @if (Auth::user()->org_id == 99)   
                <li>
                   <a href="{{ route('sourceComplaint.index') }}"
                      class="text-base text-gray-900 rounded-lg hover:bg-gray-100 flex items-center p-2 group {{ Request::routeIs('sourceComplaint.index') ? 'bg-gray-100 text-primary font-medium' : '' }}">
@@ -58,7 +58,7 @@
                      @endif
                   </a>
                </li>
-               {{-- @endif --}}
+               @endif
                <li>
                   <a href="{{ route('complaintStatus', ['id' => 0]) }}"
                      class="text-base text-gray-900 rounded-lg hover:bg-gray-100 flex items-center p-2 group {{ request()->is('complaintStatus/0') ? 'bg-gray-100 text-primary font-medium' : '' }}">
