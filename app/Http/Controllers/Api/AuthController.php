@@ -11,16 +11,18 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    public function login(LoginApiRequest $request)
+    public function login(Request $request)
     {
         // Check if regnum is not null
-        if ($request->regnum != null) {
-            $user = User::where('danRegnum', $request->regnum)->first();
-        } else {
-            return response()->json([
-                'status' => "Not valid data",
-            ], 400); // Use a 400 Bad Request status code for invalid data
-        }
+        // if ($request->regnum != null) {
+        //     $user = User::where('danRegnum', $request->regnum)->first();
+        // } else {
+        //     return response()->json([
+        //         'status' => "Not valid data",
+        //     ], 400); // Use a 400 Bad Request status code for invalid data
+        // }
+
+        $user = User::where('danRegnum', $request->regnum)->first();
 
         // If user does not exist, create a new user
         if (!$user) {

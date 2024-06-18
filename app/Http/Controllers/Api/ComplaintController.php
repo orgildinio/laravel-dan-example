@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
+use Log;
 use Exception;
 use Carbon\Carbon;
+use App\Models\File;
 use App\Models\Complaint;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -25,9 +27,30 @@ class ComplaintController extends Controller
 
     public function getComplaintByUser($regnum)
     {
-        $complaints = Complaint::where("registerNumber", $regnum)->get();
+        $complaints = Complaint::where("registerNumber", $regnum)->orderBy("complaint_date", "desc")->get();
         return ComplaintResource::collection($complaints);
     }
+
+    // public function search(Request $request)
+    // {
+    //     $query = Complaint::query();
+
+    //     if ($request->has('serial_number')) {
+    //         $query->where('serial_number', 'like', '%' . $request->input('serial_number') . '%');
+    //     }
+
+    //     if ($request->has('complaint')) {
+    //         $query->where('complaint', 'like', '%' . $request->input('complaint') . '%');
+    //     }
+
+    //     if ($request->has('organization')) {
+    //         $query->where('organization', 'like', '%' . $request->input('organization') . '%');
+    //     }
+
+    //     $complaints = $query->get();
+
+    //     return response()->json($complaints);
+    // }
 
     /**
      * Show the form for creating a new resource.
@@ -39,6 +62,46 @@ class ComplaintController extends Controller
         //
     }
 
+    public function upload(Request $request, $complaint_id)
+    {
+        // $customMessages = [
+        //     'file.required' => 'A file is required.',
+        //     'file.image' => 'The file must be an image.',
+        //     'file.mimes' => 'The file must be a type of jpeg, png, jpg, or gif.',
+        //     'file.max' => 'The file must not be greater than 2048 kilobytes.',
+        // ];
+
+        // $validatedData = $request->validate([
+        //     'file' => 'required|image|mimes:jpeg,png,jpg,gif|max:4096',
+        // ], $customMessages);
+
+        // Find the complaint
+        $complaint = Complaint::find($complaint_id);
+
+        if (!$complaint) {
+            return response()->json(['error' => 'Complaint not found'], 404);
+        }
+
+        if ($file = $request->file('file')) {
+            $name = time() . $file->getClientOriginalName();
+
+            $file->move('files', $name);
+            $newfile = File::create(['filename' => $name]);
+            $complaint->file_id = $newfile->id;
+            $complaint->save();
+
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'File upload successfully',
+                'file_id' => $newfile->id,
+                'complaint_id' => $complaint_id
+            ], 200);
+        }
+
+        return response()->json(['error' => 'File not uploaded', "id" => $complaint_id], 400);
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -47,27 +110,7 @@ class ComplaintController extends Controller
      */
     public function store(Request $request)
     {
-        // $complaint = Complaint::create($request->all());
-
-        // return new ComplaintResource($complaints);
-        // Validate the request
-        // $validator = Validator::make($request->all(), [
-        //     // 'email' => 'required|string|max:255', // Replace with actual field names and rules
-        //     // 'phone' => 'required|integer',        // Replace with actual field names and rules
-        //     // Add more validation rules as needed
-        // ]);
-
-        // if ($validator->fails()) {
-        //     return response()->json([
-        //         'status' => 'failed',
-        //         'message' => 'Validation failed',
-        //         'errors' => $validator->errors()
-        //     ], 422);
-        // }
-
         try {
-            // Create the complaint using validated data
-            // $complaint = Complaint::create($validator->validated());
             $input = $request->all();
             $input['complaint_date'] = Carbon::now();
             $register_date = Carbon::parse($input['complaint_date']);
