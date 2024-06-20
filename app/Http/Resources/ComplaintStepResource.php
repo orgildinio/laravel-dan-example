@@ -22,7 +22,7 @@ class ComplaintStepResource extends JsonResource
         $data['desc'] = $this->desc;
         $data['date'] = $this->sent_date;
         $data['fileName'] = $this->file?->filename;
-        $data['filaurl'] = $this->file_id ? URL::to('files/' . $this->file?->filename) : null;
+        $data['fileUrl'] = $this->file_id ? URL::to('files/' . $this->file?->filename) : null;
 
         return $data;
     }
