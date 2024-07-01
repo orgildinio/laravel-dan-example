@@ -63,6 +63,7 @@ Route::middleware([
     Route::post('/update-profile', [UserController::class, 'updateProfile'])->name('updateProfile');
     Route::get('/addComplaint', [ComplaintController::class, 'addComplaint'])->name('addComplaint');
     Route::get('/userComplaints', [ComplaintController::class, 'userComplaints'])->name('userComplaints');
+    Route::get('complaintSteps', ComplaintStep::class);
 });
 
 Route::middleware([
@@ -77,7 +78,7 @@ Route::middleware([
     Route::get('/dashboardTzeShow', [DashboardController::class, 'dashboardTzeShow'])->name('dashboardTzeShow');
     Route::get('/adminProfile', [UserController::class, 'adminProfile'])->name('adminProfile');
     Route::post('/update-admin-profile', [UserController::class, 'updateAdminProfile'])->name('updateAdminProfile');
-    Route::get('complaintSteps', ComplaintStep::class);
+    // Route::get('complaintSteps', ComplaintStep::class);
     Route::get('/complaintStatus/{id}', [ComplaintController::class, 'complaintStatus'])->name('complaintStatus');
     Route::put('/updateComplaintStatus/{id}', [ComplaintController::class, 'updateComplaintStatus']);
     Route::get('/exportReportExcel', [ComplaintController::class, 'exportReportExcel'])->name('exportReportExcel');

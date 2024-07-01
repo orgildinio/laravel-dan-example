@@ -527,8 +527,9 @@ class ComplaintStep extends Component
                 break;
             case 'Сунгах':
                 // Шийдвэрлэх хугацааг 48 цагаар сунгах, төлөв өөрчлөгдөхгүй
-                $expire_date = Carbon::parse($complaint->expire_date);
-                $complaint->expire_date = $expire_date->addHours(48);
+                // $expire_date = Carbon::parse($complaint->expire_date);
+                // $complaint->expire_date = $expire_date->addHours(48);
+                $complaint->expire_date = $this->selected_date;
                 $complaint->save();
                 ModelsComplaintStep::create([
                     'org_id' => $this->org_id,

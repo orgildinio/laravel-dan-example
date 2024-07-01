@@ -72,7 +72,14 @@
                             </label>
                         </div>
                         <div class="md:w-2/3">
-                            <input type="text" id="datepicker" wire:model="selected_date" class="bg-gray-200 appearance-none  rounded w-full py-2 px-10 text-gray-700 text-sm leading-tight border-1 border-gray-200" placeholder="Select Date">
+                            {{-- <input type="text" id="datepicker" wire:model="selected_date" class="bg-gray-200 appearance-none  rounded w-full py-2 px-10 text-gray-700 text-sm leading-tight border-1 border-gray-200" placeholder="Сонгох"> --}}
+                            <div x-data x-init="flatpickr($refs.input, {
+                                onChange: function(selectedDates, dateStr, instance) {
+                                    @this.set('selected_date', dateStr);
+                                }
+                            })">
+                            <input type="text" x-ref="input" wire:model="selected_date" class="form-input rounded-md shadow-sm mt-1 block w-full">
+                        </div>
                         </div>
                     </div>
                     @endif
@@ -126,15 +133,15 @@
     </div>
 </div>
 
-<script>
+<script type="module">
     console.log("livewire datepicker...");
-    document.addEventListener('livewire:load', function () {
-        flatpickr("#datepicker", {
-            enableTime: true,
-            dateFormat: "Y-m-d H:i",
-            onChange: function(selectedDates, dateStr, instance) {
-                @this.set('selectedDate', dateStr);
-            }
-        });
-    });
+    
+    // flatpickr("#datepicker", {
+    //     enableTime: true,
+    //     dateFormat: "Y-m-d H:i",
+    //     onChange: function(selectedDates, dateStr, instance) {
+    //         console.log("selectedDates", dateStr);
+    //         @this.set('selectedDate', dateStr);
+    //     }
+    // });
 </script>
