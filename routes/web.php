@@ -50,6 +50,7 @@ Route::middleware([
     Route::get('/getTypeSummary', [ComplaintController::class, 'getTypeSummary']);
     Route::get('/getUserDataByCode', [ComplaintController::class, 'getUserDataByCode']);
     Route::get('/getOrgByEnergyTypeId', [ComplaintController::class, 'getOrgByEnergyTypeId']);
+    Route::resource('/complaint', ComplaintController::class);
 });
 
 Route::middleware([
@@ -80,7 +81,7 @@ Route::middleware([
     Route::get('/complaintStatus/{id}', [ComplaintController::class, 'complaintStatus'])->name('complaintStatus');
     Route::put('/updateComplaintStatus/{id}', [ComplaintController::class, 'updateComplaintStatus']);
     Route::get('/exportReportExcel', [ComplaintController::class, 'exportReportExcel'])->name('exportReportExcel');
-    Route::resource('/complaint', ComplaintController::class);
+    // Route::resource('/complaint', ComplaintController::class);
     Route::resource('/user', UserController::class);
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::resource('/cdr', CdrController::class);

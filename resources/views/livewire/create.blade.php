@@ -63,6 +63,19 @@
                         </div>
                     </div>
                     @endif
+                    @if ($selectedAction == "Сунгах")
+                    <div class="md:flex md:items-center mb-2">
+                        <div class="md:w-1/3">
+                            <label class="block text-gray-500 text-sm font-bold md:text-right mb-1 md:mb-0 pr-4"
+                                for="inline-full-name">
+                                Сунгах огноо
+                            </label>
+                        </div>
+                        <div class="md:w-2/3">
+                            <input type="text" id="datepicker" wire:model="selected_date" class="bg-gray-200 appearance-none  rounded w-full py-2 px-10 text-gray-700 text-sm leading-tight border-1 border-gray-200" placeholder="Select Date">
+                        </div>
+                    </div>
+                    @endif
 
                     @if ($selectedAction == "Шийдвэрлэх" && $complaint_type_id == 1 && ($complaint_type_summary_id == 18 || $complaint_type_summary_id == 25))
                     <div class="md:flex md:items-center mb-2">
@@ -112,3 +125,16 @@
         </div>
     </div>
 </div>
+
+<script>
+    console.log("livewire datepicker...");
+    document.addEventListener('livewire:load', function () {
+        flatpickr("#datepicker", {
+            enableTime: true,
+            dateFormat: "Y-m-d H:i",
+            onChange: function(selectedDates, dateStr, instance) {
+                @this.set('selectedDate', dateStr);
+            }
+        });
+    });
+</script>
