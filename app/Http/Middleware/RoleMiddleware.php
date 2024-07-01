@@ -15,15 +15,20 @@ class RoleMiddleware
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
-    public function handle(Request $request, Closure $next, $role)
+    public function handle(Request $request, Closure $next, ...$roles)
     {
         if (!Auth::check()) {
             return redirect('/login');
         }
 
         $user = Auth::user();
-        if ($user->role->name !== $role) {
-            return redirect('/'); // Or some other unauthorized page
+        // if ($user->role->name !== $role) {
+        //     return redirect('/'); // Or some other unauthorized page
+        // }
+        foreach ($roles as $role) {
+            if ($user->role === $role) {
+                return $next($request);
+            }
         }
 
         return $next($request);
