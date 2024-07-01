@@ -40,7 +40,7 @@ class ComplaintStep extends Component
         $this->orgs = Organization::orderBy('name', 'asc')->get();
         $this->all_status = Status::all();
 
-        if (Auth::user()->org_id == 99) {
+        if (Auth::user()->role->name == "admin" || Auth::user()->role->name == "ehzh") {
 
             // Use a switch case to set actions based on both status_id and organization_id
             switch ($this->status_id) {

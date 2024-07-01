@@ -92,7 +92,7 @@
                                                                                 d="M8 0a8 8 0 1 0 8 8 8.009 8.009 0 0 0-8-8Zm0 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8Z" />
                                                                         </svg>
                                                                     @elseif ($step->status_id == 6)
-                                                                        <svg class="fill-red-500"
+                                                                        <svg class="fill-emerald-600"
                                                                             xmlns="http://www.w3.org/2000/svg"
                                                                             width="16" height="16">
                                                                             <path

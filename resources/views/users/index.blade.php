@@ -12,9 +12,31 @@
             <p>{{ $message }}</p>
         </div>
         @endif
+        <form method="GET" action="{{ route('users.index') }}">
+            <div class="flex flex-wrap mb-6">
+                <div class="w-full md:w-1/5 px-2 mb-4 md:mb-0">
+                    <input type="text" name="name" class="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200" placeholder="Нэр" value="{{ request('name') }}">
+                </div>
+                <div class="w-full md:w-1/5 px-2 mb-4 md:mb-0">
+                    <input type="text" name="email" class="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200" placeholder="Имэйл" value="{{ request('email') }}">
+                </div>
+                <div class="w-full md:w-1/5 px-2 mb-4 md:mb-0">
+                    <select name="org_id"
+                        class="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 text-gray-500">
+                        <option value="">Байгууллага</option>
+                        @foreach ($orgs as $org)
+                        <option value="{{ $org->id }}" {{ request('org_id') == $org->id ? 'selected' : '' }}>{{ $org->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="w-full md:w-1/5 px-2 mb-4 md:mb-0">
+                    <button type="submit" class="w-full px-3 py-2 bg-indigo-600 text-white rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring focus:ring-indigo-200">Хайх</button>
+                </div>
+            </div>
+        </form>
+        
         <div class="flex flex-col">
             <div class="overflow-x-auto">
-                
                 <table class="min-w-full border border-gray-200 rounded-lg">
                     <thead>
                         <tr>
@@ -128,8 +150,8 @@
                     </tbody>
                 </table>
                 <br>
-                {{-- {!! $users->links() !!} --}}
-                {!! $users->withQueryString()->links() !!} 
+                {{-- {!! $users->withQueryString()->links() !!}  --}}
+                {{ $users->links() }}
             </div>
         </div>
     </div>

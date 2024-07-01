@@ -17,12 +17,32 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::whereNotNull('org_id')->latest()->paginate(5);
+        // dd($request);
+        $query = User::query();
 
-        return view('users.index', compact('users'))
-            ->with('i', (request()->input('page', 1) - 1) * 5);
+        if ($request->filled('name')) {
+            $query->where('name', 'like', '%' . $request->name . '%');
+        }
+
+        if ($request->filled('email')) {
+            $query->where('email', 'like', '%' . $request->email . '%');
+        }
+
+        if ($request->filled('org_id')) {
+            $query->where('org_id', $request->org_id);
+        }
+
+        $query->whereNotNull('org_id');
+        $query->orderBy('created_at', 'desc');
+
+        // $users = $query->whereNotNull('org_id')->orderBy('created_at', 'desc')->paginate(15);
+        $users = $query->paginate(10)->appends($request->query());
+
+        $orgs = Organization::orderBy('name', 'asc')->get();
+
+        return view('users.index', compact('users', 'orgs'))->with('i', (request()->input('page', 1) - 1) * 15);
     }
 
     /**
