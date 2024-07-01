@@ -40,6 +40,7 @@ Route::get('auth/callback', [DanAuthController::class, 'handleDanCallback']);
 Route::get('auth/redirectOrg', [DanAuthController::class, 'redirectToDanOrg'])->name('orglogin');
 // Route::get('auth/callbackOrg', [DanAuthController::class, 'handleDanOrgCallback']);
 
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),

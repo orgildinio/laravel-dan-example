@@ -17,20 +17,36 @@ class RoleMiddleware
      */
     public function handle(Request $request, Closure $next, ...$roles)
     {
+        // if (!Auth::check()) {
+        //     return redirect('/login');
+        // }
+
+        // $user = Auth::user();
+        // // if ($user->role->name !== $role) {
+        // //     return redirect('/'); // Or some other unauthorized page
+        // // }
+        // foreach ($roles as $role) {
+        //     if ($user->role->name !== $role) {
+        //         return redirect('/');
+        //     }
+        // }
+
+        // return $next($request);
+
         if (!Auth::check()) {
             return redirect('/login');
         }
 
         $user = Auth::user();
-        // if ($user->role->name !== $role) {
-        //     return redirect('/'); // Or some other unauthorized page
-        // }
+
         foreach ($roles as $role) {
-            if ($user->role === $role) {
+            if ($user->role->name === $role) {
                 return $next($request);
             }
         }
 
-        return $next($request);
+        // return redirect('/unauthorized');
+        // abort(403, 'Unauthorized action.');
+        return response()->view('errors.403', [], 403);
     }
 }
