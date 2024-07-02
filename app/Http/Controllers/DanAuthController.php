@@ -12,7 +12,8 @@ class DanAuthController extends Controller
 {
     public function redirectToDan()
     {
-        $json = '[{"services": ["WS100101_getCitizenIDCardInfo"], "wsdl": "https://xyp.gov.mn/citizen-1.3.0/ws?WSDL"}]';
+        // $json = '[{"services": ["WS100101_getCitizenIDCardInfo"], "wsdl": "https://xyp.gov.mn/citizen-1.3.0/ws?WSDL"}]';
+        $json = '[{"services": ["WS100103_getCitizenAddressInfo"], "wsdl": "https://xyp.gov.mn/citizen-1.5.0/ws?WSDL"}]';
 
         $scope = base64_encode($json);
 
