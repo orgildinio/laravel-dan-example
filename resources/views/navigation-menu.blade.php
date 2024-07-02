@@ -93,6 +93,10 @@
                                     <x-dropdown-link href="{{ route('userComplaints') }}">
                                         {{ __('Миний илгээсэн санал') }}
                                     </x-dropdown-link>
+
+                                    <x-dropdown-link href="{{ route('user-guide') }}">
+                                        {{ __('Гарын авлага') }}
+                                    </x-dropdown-link>
                                 @endif
 
 

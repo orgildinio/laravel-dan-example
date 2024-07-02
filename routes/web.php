@@ -51,6 +51,10 @@ Route::middleware([
     Route::get('/getUserDataByCode', [ComplaintController::class, 'getUserDataByCode']);
     Route::get('/getOrgByEnergyTypeId', [ComplaintController::class, 'getOrgByEnergyTypeId']);
     Route::resource('/complaint', ComplaintController::class);
+
+    Route::get('/user-guide', function () {
+        return view('user-guide');
+    })->name('user-guide');
 });
 
 Route::middleware([
@@ -93,4 +97,8 @@ Route::middleware([
     // 1111 ээс санал хүсэлт авах
     Route::resource('/sourceComplaint', SourceComplaintController::class);
     Route::get('/fetchComplaints', [SourceComplaintController::class, 'fetchComplaints'])->name('fetchComplaints');
+
+    Route::get('/tze-guide', function () {
+        return view('tze-guide');
+    })->name('tze-guide');
 });

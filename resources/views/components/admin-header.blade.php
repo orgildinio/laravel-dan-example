@@ -61,6 +61,12 @@
                             </ul>
                             <ul class="py-1 text-gray-500" aria-labelledby="dropdown">
                                 <li>
+                                    <a href="{{ route('tze-guide') }}"
+                                        class="block py-2 px-4 text-sm hover:bg-gray-100">Гарын авлага</a>
+                                </li>
+                            </ul>
+                            <ul class="py-1 text-gray-500" aria-labelledby="dropdown">
+                                <li>
                                     <form method="POST" action="{{ route('logout') }}" x-data>
                                         @csrf
                                 <li>
