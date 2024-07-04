@@ -17,7 +17,7 @@
             </div>
             <div class="flex items-center justify-between w-full">
                 <div class="flex items-center">
-                    <h1 class="hidden sm:inline-flex text-primary font-roboto font-bold uppercase">Өргөдөл, гомдлын цахим систем</h1>
+                    <h1 class="hidden sm:inline-flex text-primary font-roboto font-bold uppercase">Дуудлага, гомдлын бүртгэл, хяналтын нэгдсэн цахим систем</h1>
                 </div>
                 <div class="flex items-center">
                     <a href="{{ route('complaint.create') }}"

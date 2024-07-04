@@ -3,7 +3,7 @@
         <div class="items-center lg:flex">
             <div class="w-full lg:w-1/2">
                 <div class="lg:max-w-lg">
-                    <h1 class="text-3xl font-semibold text-gray-800 lg:text-4xl">Өргөдөл, гомдлын <br> цахим <span class="text-primary ">систем</span></h1>
+                    <h1 class="text-3xl font-semibold text-gray-800 lg:text-4xl">Дуудлага, гомдлын бүртгэл, хяналтын нэгдсэн<br> цахим <span class="text-primary ">систем</span></h1>
                     
                     <p class="my-3 text-gray-600">Эрчим хүч хэрэглэгч иргэн, аж ахуйн нэгжээс эрчим хүчний зохицуулах хороо болон цахилгаан дулаан түгээх, хангах тусгай зөвшөөрөл эзэмшигчид  санал, хүсэлт, өргөдөл, гомдол гаргах</p>
                     
