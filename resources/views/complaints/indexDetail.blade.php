@@ -136,7 +136,7 @@
                 <div class="mx-auto border border-gray-300 rounded-lg text-gray-700 mb-0.5 h-30 complaint-show cursor-pointer hover:bg-gray-100"
                     data-id="{{ $complaint->id }}">
                     <div class="flex p-3 border-l-4 {{ getBorderColor($complaint->category_id) }} rounded-lg">
-                        <div class="space-y-1 border-r-2 pr-3">
+                        <div class="space-y-1 border-r-2 pr-3 w-64">
                             <div class="text-xs leading-5 font-semibold"><span
                                     class="text-xs leading-4 font-normal text-gray-500"> №</span>
                                 {{ $complaint->serial_number }}</div>
@@ -150,7 +150,9 @@
                                     @if ($complaint->hasExpired())
                                         <span class="text-red-500 text-xs">Хугацаа хэтэрсэн</span>
                                     @else
-                                        <span>{{ now()->diffInHours($complaint->expire_date) > 24 ? now()->diffInDays($complaint->expire_date) . ' өдөр' : now()->diffInHours($complaint->expire_date) . ' цаг' }}</span>
+                                        {{-- <span>{{ now()->diffInHours($complaint->expire_date) > 24 ? now()->diffInDays($complaint->expire_date) . ' өдөр' : now()->diffInHours($complaint->expire_date) . ' цаг' }}</span> --}}
+                                        <span>{{ \App\Helpers\DateHelper::formatDateDiff(now(), $complaint->expire_date) }}
+                                        </span>
                                     @endif
                                 </div>
                             @endif

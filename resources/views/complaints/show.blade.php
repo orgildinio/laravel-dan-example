@@ -43,7 +43,9 @@
                                         <i class="fa-solid fa-circle fa-beat-fade text-red-500"></i>
                                         <span class="">Хугацаа хэтэрсэн</span>
                                     @else
-                                        <span>{{ now()->diffInHours($complaint->expire_date) > 24 ? now()->diffInDays($complaint->expire_date) . ' өдөр' : now()->diffInHours($complaint->expire_date) . ' цаг' }}</span>
+                                        {{-- <span>{{ now()->diffInHours($complaint->expire_date) > 24 ? now()->diffInDays($complaint->expire_date) . ' өдөр' : now()->diffInHours($complaint->expire_date) . ' цаг' }}</span> --}}
+                                        <span>{{ \App\Helpers\DateHelper::formatDateDiff(now(), $complaint->expire_date) }}
+                                        </span>
                                     @endif
                                 </dd>
                             </div>

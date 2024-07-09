@@ -64,6 +64,32 @@ class Complaint extends Model
         return $expireDate->isPast();
     }
 
+    // Өргөдөл, гомдлын шийдвэрлэх хугацааг өргөдлийн ангилал болон сувгаас хамаарч өгөх
+    public function setExpireDate($complaintTypeId, $channelId)
+    {
+        $expireTimes = [
+            2 => [7 => 24, 3 => 48, 6 => 48, 1 => 0.5, 5 => 0.5, 2 => 0.5, 4 => 0.5],
+            1 => [7 => 24, 3 => 48, 6 => 48, 1 => 24, 5 => 24, 2 => 24, 4 => 24],
+            3 => [7 => 24, 3 => 48, 6 => 48, 1 => 24, 5 => 24, 2 => 24, 4 => 24],
+            5 => [7 => 24, 3 => 48, 6 => 48, 1 => 0.5, 5 => 12, 2 => 12, 4 => 12],
+            6 => [7 => 24, 3 => 48, 6 => 48, 1 => 0.5, 5 => 12, 2 => 12, 4 => 12],
+        ];
+
+        $now = now();
+        $register_date = Carbon::parse($now);
+
+        if (isset($expireTimes[$complaintTypeId][$channelId])) {
+            $expire_time = $expireTimes[$complaintTypeId][$channelId];
+            if ($expire_time > 1) {
+                $this->expire_date = $register_date->addHours($expire_time);
+            } else {
+                $this->expire_date = $register_date->addMinutes($expire_time * 60);
+            }
+        } else {
+            $this->expire_date = $register_date->addHours(48);
+        }
+    }
+
     public function file()
     {
         return $this->belongsTo(File::class);

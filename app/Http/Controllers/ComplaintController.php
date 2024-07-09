@@ -78,6 +78,14 @@ class ComplaintController extends Controller
         $complaint_types = ComplaintType::all();
         $energy_types = EnergyType::all();
 
+        // $user_district = $danUser->danSoumDistrictName;
+        // $user_khoroo_number = intval(str_replace(['-р хороо'], '', $danUser->danBagKhorooName));
+
+        // $orgs = Organization::whereHas('serviceAreas', function ($query) use ($user_district, $user_khoroo_number) {
+        //     $query->where('district', 'LIKE', '%' . $user_district . '%')
+        //         ->where('khoroo', 'LIKE', '%' . $user_khoroo_number . '%');
+        // })->get();
+
         return view('complaints.addComplaint', compact('categories', 'orgs', 'complaint_types', 'energy_types', 'danUser'));
     }
 
@@ -120,12 +128,33 @@ class ComplaintController extends Controller
     }
     public function getOrgByEnergyTypeId(Request $request)
     {
+        $danUser = Auth::user();
         $energy_type_id = $request->input('energy_type_id');
 
-        $data['orgs'] = Organization::where("plant_id", $energy_type_id)
-            ->whereNotIn("id", [99])
-            ->orderBy("name")
-            ->get(["name", "id"]);
+        $user_district = $danUser->danSoumDistrictName;
+        $user_khoroo_number = intval(str_replace(['-р хороо'], '', $danUser->danBagKhorooName));
+
+        if ($energy_type_id == 1) {
+            $data['orgs'] = Organization::where("plant_id", $energy_type_id)
+                ->whereNotIn("id", [99])
+                ->orderBy("name")
+                ->get(["name", "id"]);
+        } else {
+
+            $data['orgs'] = Organization::whereHas('serviceAreas', function ($query) use ($user_district, $user_khoroo_number) {
+                $query->where('district', 'LIKE', '%' . $user_district . '%')
+                    ->where('khoroo', 'LIKE', '%' . $user_khoroo_number . '%');
+            })->where("plant_id", $energy_type_id)
+                ->whereNotIn("id", [99])
+                ->orderBy("name")
+                ->get(["name", "id"]);
+        }
+
+
+        // $data['orgs'] = Organization::where("plant_id", $energy_type_id)
+        //     ->whereNotIn("id", [99])
+        //     ->orderBy("name")
+        //     ->get(["name", "id"]);
 
         return response()->json($data);
     }
@@ -401,7 +430,7 @@ class ComplaintController extends Controller
     public function store(ComplaintStoreRequest $request)
     {
         $input = $request->all();
-        // dd($input);
+
 
         $user = Auth::user();
 
@@ -449,11 +478,9 @@ class ComplaintController extends Controller
             // Өргөдлийн мэдээлэл хадгалах
             $input['status_id'] = 0; // Шинээр ирсэн төлөвт орно
         }
-        // Бүртгэсэн болон Дуусах хугацаа
-        if (empty($input['complaint_date']) && empty($input['expire_date'])) {
+        // Бүртгэсэн хугацаа
+        if (empty($input['complaint_date'])) {
             $input['complaint_date'] = now();
-            $register_date = Carbon::parse($input['complaint_date']);
-            $input['expire_date'] = $register_date->addHours(48);
         }
 
         // Хэрэв Иргэн ААН гомдол гаргавал суваг нь Веб байна
@@ -466,7 +493,15 @@ class ComplaintController extends Controller
             $input['organization_id'] = $user->org_id;
         }
 
-        $complaint = Complaint::create($input);
+        $complaint = new Complaint($input);
+
+        // Дуусах хугацаа
+        if (empty($input['expire_date'])) {
+            $complaint->setExpireDate($input['complaint_type_id'], $input['channel_id']);
+        }
+
+        //$complaint = Complaint::create($input);
+        $complaint->save();
 
         if ($complaint->status_id == 2) {
             ComplaintStep::create([

@@ -25,5 +25,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Carbon::setLocale(app()->getLocale());
+        require_once app_path('Helpers/helpers.php');
     }
 }
