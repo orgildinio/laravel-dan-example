@@ -97,6 +97,9 @@ class ExportComplaint implements FromCollection, WithHeadings, ShouldAutoSize, W
             ->when(isset($_GET['org_id']), function ($query) {
                 $query->where('organization_id', $_GET['org_id']);
             })
+            ->when(isset($_GET['second_org_id']), function ($query) {
+                $query->where('second_org_id', $_GET['second_org_id']);
+            })
             ->when(Auth::user()->org_id != 99, function ($query) {
                 $query->where('organization_id', Auth::user()->org_id);
             })

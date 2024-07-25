@@ -42,6 +42,17 @@
                             </select>
                         </div>
                         <div class="mr-1">
+                            <select name="second_org_id" id="seond_org_id"
+                                class="w-32 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
+                                <option value="">Хариуцсан ТЗЭ</option>
+                                @foreach ($orgs as $org)
+                                    <option value="{{ $org->id }}"
+                                        {{ old('second_org_id', $second_org_id) == $org->id ? 'selected' : '' }}>
+                                        {{ $org->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mr-1">
                             <select name="energy_type_id" id="energy_type_id"
                                 class="w-32 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
                                 <option value="">Төрөл</option>
@@ -87,7 +98,7 @@
             <div
                 class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
                 <a class="flex items-center justify-center flex-shrink-0 px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-300 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200"
-                    href="{{ route('exportReportExcel', ['daterange' => Request::get('daterange'), 'energy_type_id' => Request::get('energy_type_id'), 'search_text' => Request::get('search_text'), 'status_id' => Request::get('status_id'), 'org_id' => Request::get('org_id'), 'energy_type_id' => Request('energy_type_id'), 'controlled_user_id' => Request('controlled_user_id'), 'channel_id' => Request('channel_id')]) }}">
+                    href="{{ route('exportReportExcel', ['daterange' => Request::get('daterange'), 'energy_type_id' => Request::get('energy_type_id'), 'search_text' => Request::get('search_text'), 'status_id' => Request::get('status_id'), 'org_id' => Request::get('org_id'), 'second_org_id' => Request::get('second_org_id'), 'energy_type_id' => Request('energy_type_id'), 'controlled_user_id' => Request('controlled_user_id'), 'channel_id' => Request('channel_id')]) }}">
                     <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24"
                         stroke-width="2" stroke="currentColor" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -264,6 +275,7 @@
                 'daterange' => $daterange,
                 'status_id' => $status_id,
                 'org_id' => $org_id,
+                'second_org_id' => $second_org_id,
                 'energy_type_id' => $energy_type_id,
                 'controlled_user_id' => $controlled_user_id,
                 'channel_id' => $channel_id,

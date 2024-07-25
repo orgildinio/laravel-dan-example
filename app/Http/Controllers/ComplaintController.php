@@ -214,6 +214,7 @@ class ComplaintController extends Controller
         $search_text = $request->query('search_text');
         $status_id = $request->query('status_id');
         $org_id = $request->query('org_id');
+        $second_org_id = $request->query('second_org_id');
         $energy_type_id = $request->query('energy_type_id');
         $controlled_user_id = $request->query('controlled_user_id');
         $channel_id = $request->query('channel_id');
@@ -238,6 +239,9 @@ class ComplaintController extends Controller
 
         if ($org_id !== null) {
             $query->where('organization_id', $org_id);
+        }
+        if ($second_org_id !== null) {
+            $query->where('second_org_id', $second_org_id);
         }
 
         if ($controlled_user_id !== null) {
@@ -266,7 +270,7 @@ class ComplaintController extends Controller
         $channels = Channel::all();
         $controlled_users = User::where('org_id', Auth::user()->org_id)->orderBy('name', 'asc')->get();
 
-        return view('complaints.index', compact('complaints', 'daterange', 'search_text', 'statuses', 'status_id', 'org_id', 'orgs', 'energy_type_id', 'energy_types', 'channel_id', 'channels', 'controlled_user_id', 'controlled_users'));
+        return view('complaints.index', compact('complaints', 'daterange', 'search_text', 'statuses', 'status_id', 'org_id', 'orgs', 'energy_type_id', 'energy_types', 'channel_id', 'channels', 'controlled_user_id', 'controlled_users', 'second_org_id'));
     }
 
     public function ExportReportExcel(Request $request)
