@@ -34,8 +34,27 @@ class SourceComplaintController extends Controller
             $complaints = [];
 
             // Iterate through the 'smart' array to create the desired format
-            foreach ($data['smart']['created_at'] as $key => $value) {
-                $complaints[] = [
+            // foreach ($data['smart']['created_at'] as $key => $value) {
+            //     $complaints[] = [
+            //         "created_date" => Carbon::createFromFormat('M d, Y h:i:s A', $data['smart']['created_at'][$key]),
+            //         "source" => $data['smart']['source'][$key],
+            //         "quarter" => $data['smart']['quarter'][$key],
+            //         "assigned_at" => $data['smart']['assigned_at'][$key],
+            //         "number" => $data['smart']['number'][$key],
+            //         "city" => $data['smart']['city'][$key],
+            //         "register_no" => $data['smart']['register_no'][$key],
+            //         "phone" => $data['smart']['phone'][$key],
+            //         "content" => $data['smart']['content'][$key],
+            //         "email" => $data['smart']['email'][$key],
+            //         "type" => $data['smart']['type'][$key],
+            //         "address" => $data['smart']['address'][$key],
+            //         "district" => $data['smart']['district'][$key],
+            //         "fullname" => $data['smart']['fullname'][$key],
+            //         "path" => $data['smart']['path'][$key],
+            //     ];
+            // }
+            $complaints = array_map(function ($key) use ($data) {
+                return [
                     "created_date" => Carbon::createFromFormat('M d, Y h:i:s A', $data['smart']['created_at'][$key]),
                     "source" => $data['smart']['source'][$key],
                     "quarter" => $data['smart']['quarter'][$key],
@@ -52,7 +71,7 @@ class SourceComplaintController extends Controller
                     "fullname" => $data['smart']['fullname'][$key],
                     "path" => $data['smart']['path'][$key],
                 ];
-            }
+            }, array_keys($data['smart']['created_at']));
 
             // Loop through the data and check if each item already exists in the database
             // foreach ($complaints as $item) {
