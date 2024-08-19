@@ -28,7 +28,7 @@ class SourceComplaintController extends Controller
         if ($result['isValid'] && $result['smart']['isValid']) {
 
             $data = $result['smart'];
-            dd($data);
+            // dd($data);
 
             // Initialize an empty array for the converted data
             $complaints = [];
@@ -36,7 +36,7 @@ class SourceComplaintController extends Controller
             // Iterate through the 'smart' array to create the desired format
             foreach ($data['smart']['created_at'] as $key => $value) {
                 $complaints[] = [
-                    "created_date" => Carbon::createFromFormat('M d, Y h:i:s A', $data['smart']['created_at'][$key]),
+                    "created_at" => Carbon::createFromFormat('M d, Y h:i:s A', $data['smart']['created_at'][$key]),
                     "source" => $data['smart']['source'][$key],
                     "quarter" => $data['smart']['quarter'][$key],
                     "assigned_at" => $data['smart']['assigned_at'][$key],
