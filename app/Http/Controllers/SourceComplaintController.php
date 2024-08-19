@@ -55,15 +55,15 @@ class SourceComplaintController extends Controller
             }
 
             // Loop through the data and check if each item already exists in the database
-            // foreach ($complaints as $item) {
-            //     // Check if data already exists based on a unique identifier (e.g., ID, email, etc.)
-            //     $existingItem = SourceComplaint::where('number', $item['number'])->first();
+            foreach ($complaints as $item) {
+                // Check if data already exists based on a unique identifier (e.g., ID, email, etc.)
+                $existingItem = SourceComplaint::where('number', $item['number'])->first();
 
-            //     if (!$existingItem) {
-            //         // Data doesn't exist, so create a new record in the database
-            //         SourceComplaint::create($item);
-            //     }
-            // }
+                if (!$existingItem) {
+                    // Data doesn't exist, so create a new record in the database
+                    SourceComplaint::create($item);
+                }
+            }
 
             // Update closed status for removed data
             SourceComplaint::whereNotIn('number', collect($complaints)->pluck('number'))
