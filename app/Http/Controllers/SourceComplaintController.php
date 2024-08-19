@@ -28,6 +28,7 @@ class SourceComplaintController extends Controller
         if ($result['isValid'] && $result['smart']['isValid']) {
 
             $data = $result['smart'];
+            dd($data);
 
             // Initialize an empty array for the converted data
             $complaints = [];
