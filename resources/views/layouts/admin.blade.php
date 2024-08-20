@@ -27,7 +27,7 @@
 </head>
 
 <body>
-   <div class="font-roboto text-gray-900 antialiased" x-data="{ sidebarOpen: true }">
+   {{-- <div class="font-roboto text-gray-900 antialiased" x-data="{ sidebarOpen: true }">
       <x-admin-header></x-admin-header>
       <div class="flex overflow-hidden bg-white pt-16" :class="{ '-ml-64': !sidebarOpen }">
          <x-sidebar-menu></x-sidebar-menu>
@@ -42,7 +42,51 @@
             </main>
          </div>
       </div>
+   </div> --}}
+   {{-- <div class="font-roboto text-gray-900 antialiased" x-data="{ sidebarOpen: true }">
+      <x-admin-header></x-admin-header>
+      <div class="flex overflow-hidden bg-white pt-16">
+          <x-sidebar-menu :class="{ 'block': sidebarOpen, 'hidden': !sidebarOpen }" class="fixed lg:relative z-20 bg-white w-64 lg:block transition-all duration-300 ease-in-out"></x-sidebar-menu>
+          <div class="bg-gray-900 opacity-50 fixed inset-0 z-10 lg:hidden" x-show="sidebarOpen" @click="sidebarOpen = false"></div>
+          <div id="main-content" class="h-full w-full bg-gray-50 relative overflow-y-auto transition-all duration-300 ease-in-out"
+              :class="{ 'lg:ml-64': sidebarOpen, 'ml-0': !sidebarOpen }">
+              <main>
+                  <div class="pt-6 px-4 mb-10">
+                      <div class="w-full grid grid-cols-1 xl:grid-cols-1 2xl:grid-cols-1 gap-4">
+                          {{ $slot }}
+                      </div>
+                  </div>
+              </main>
+          </div>
+      </div>
+  </div> --}}
+  <div class="font-roboto text-gray-900 antialiased" x-data="{ sidebarOpen: window.innerWidth >= 1024 }" x-init="
+   window.addEventListener('resize', () => {
+       sidebarOpen = window.innerWidth >= 1024;
+   });
+">
+   <x-admin-header></x-admin-header>
+   <div class="flex overflow-hidden bg-white pt-16">
+       <x-sidebar-menu 
+           :class="{ 'block': sidebarOpen, 'hidden': !sidebarOpen }" 
+           class="fixed lg:relative z-20 bg-white w-64 transition-all duration-300 ease-in-out lg:block">
+       </x-sidebar-menu>
+       <div class="bg-gray-900 opacity-50 fixed inset-0 z-10 lg:hidden" x-show="sidebarOpen" @click="sidebarOpen = false"></div>
+       <div id="main-content" class="h-full w-full bg-gray-50 relative overflow-y-auto transition-all duration-300 ease-in-out"
+           :class="{ 'lg:ml-64': sidebarOpen, 'ml-0': !sidebarOpen }">
+           <main>
+               <div class="pt-6 px-4 mb-10">
+                   <div class="w-full grid grid-cols-1 xl:grid-cols-1 2xl:grid-cols-1 gap-4">
+                       {{ $slot }}
+                   </div>
+               </div>
+           </main>
+       </div>
    </div>
+</div>
+
+  
+  
 
    @stack('modals')
    
