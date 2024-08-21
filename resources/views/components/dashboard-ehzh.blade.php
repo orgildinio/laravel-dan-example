@@ -234,6 +234,7 @@
     });
 
     var compChannelsCount = <?php echo $compChannelsCount; ?>;
+    // console.log(compChannelsCount);
 
     var channelLabels = compChannelsCount.map(function(obj) {
         return obj[Object.keys(obj)[0]];
@@ -657,7 +658,7 @@
             }
         },
         xAxis: {
-            categories: ['Беб хуудас', 'Утас', 'И-Мэйл', 'Биечлэн', 'Гар утас', 'Албан бичиг'],
+            categories: channelLabels,
             labels: {
                 style: {
                     fontSize: '11px'
@@ -696,7 +697,7 @@
         colors: ['#6F68F1', '#9993FF', '#407ED9', '#2465C3', '#1897BF'],
         series: [{
             name: 'Нийт',
-            data: compChannelsCount
+            data: channelDatas
         }],
         responsive: {
             rules: [{

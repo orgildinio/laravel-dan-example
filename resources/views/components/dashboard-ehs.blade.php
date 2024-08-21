@@ -379,6 +379,13 @@ const statusCategoryMapping = {
 
     // Хүлээн авсан суваг
     const ehsChannelsData = @json($ehs_channels_count);
+    var channelLabels = ehsChannelsData.map(function(obj) {
+        return obj[Object.keys(obj)[0]];
+    });
+    var channelDatas = ehsChannelsData.map(function(obj) {
+        return obj[Object.keys(obj)[1]];
+    });
+    // console.log(ehsChannelsData);
     Highcharts.chart('barChartChannelEhs', {
         chart: {
             type: 'column',
@@ -394,7 +401,7 @@ const statusCategoryMapping = {
             }
         },
         xAxis: {
-            categories: ['Беб хуудас', 'Утас', 'И-Мэйл', 'Биечлэн', 'Гар утас', 'Албан бичиг'],
+            categories: channelLabels,
             labels: {
                 style: {
                     fontSize: '10px' // Set the font size of x-axis labels
@@ -437,7 +444,7 @@ const statusCategoryMapping = {
         colors: ['#342BC2', '#6F68F1', '#9993FF', '#407ED9', '#2465C3', '#1897BF'],
         series: [{
             name: 'Нийт',
-            data: ehsChannelsData
+            data: channelDatas
         }],
     });
 </script>
