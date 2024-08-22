@@ -1,7 +1,7 @@
 <!-- resources/views/cdr/index.blade.php -->
 <x-admin-layout>
-    <div class="container mx-auto px-2 py-4">
-        <h1 class="text-2xl font-bold mb-4">Байгууллага</h1>
+    <div class="bg-white shadow rounded-lg p-4 2xl:col-span-1">
+        <h1 class="text-2xl font-bold mb-4">Байгууллагын мэдээлэл</h1>
         
 
         @if ($message = Session::get('success'))
@@ -19,7 +19,7 @@
             <table class="w-full table-auto">
                 <thead>
                     <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-                        <th class="p-3 text-left">id</th>
+                        <th class="p-3 text-left">№</th>
                         <th class="p-3 text-left">Байгууллагын</th>
                         <th class="p-3 text-left">Төрөл</th>
                         <th class="p-3 text-left">Дугаар</th>
@@ -29,9 +29,9 @@
                 <tbody class="text-gray-600 text-sm font-light">
                     @foreach ($orgs as $org)
                         <tr class="border-b border-gray-200 hover:bg-gray-100">
-                            <td class="p-3 text-left">{{ $org->id }}</td>
+                            <td class="p-3 text-left">{{ $loop->iteration }}</td>
                             <td class="p-3 text-left">{{ $org->name }}</td>
-                            <td class="p-3 text-left">{{ $org->plant_id }}</td>
+                            <td class="p-3 text-left">{{ $org->plant_id == 1 ? "Цахилгаан" : "Дулаан" }}</td>
                             <td class="p-3 text-left">
                                 @foreach ($org->orgNumber as $item)
                                     <p>{{$item->phone_number}}</p>    
@@ -40,7 +40,7 @@
                             <td class="py-3 px-6 text-center">
                                 <div x-data="{ open: false }">
                                     <button @click="open = true"
-                                        class="text-blue-500 hover:text-blue-800"><i class="fa-solid fa-square-phone-flip fa-2x"></i></button>
+                                        class="text-blue-500 hover:text-blue-800"><i class="fa-solid fa-square-phone-flip fa-lg"></i></button>
 
                                     <div x-show="open" @click.away="open = false"
                                         class="fixed z-10 inset-0 overflow-y-auto">
