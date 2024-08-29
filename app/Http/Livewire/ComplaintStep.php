@@ -95,7 +95,7 @@ class ComplaintStep extends Component
     {
         // $this->isOpen = true;
         // Check user permissions before opening the modal
-        if (Auth::user()->role?->name == 'ehzh') {
+        if (Auth::user()->role->name == "admin" || Auth::user()->role?->name == 'ehzh') {
             $this->isOpen = true;
             $this->showPermissionWarning = false;
         } else {
