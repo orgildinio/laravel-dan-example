@@ -142,7 +142,7 @@
             {{-- Тохиргоо --}}
             @auth
             <ul class="pt-4 mt-4 space-y-2 border-t border-gray-200">
-               @if (Auth::user()->role?->name == 'admin')
+               @if (Auth::user()->role?->name == 'admin' || Auth::user()->role?->name == 'ehzh')
                <li>
                   <a href="{{ route('user.index') }}"
                      class="text-base text-gray-900 rounded-lg hover:bg-gray-100 flex items-center p-2 group {{ Request::routeIs('user.index') ? 'bg-gray-100 text-primary font-medium' : '' }}">
