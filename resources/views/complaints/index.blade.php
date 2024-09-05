@@ -1,5 +1,12 @@
 <x-admin-layout>
     <div class="bg-white shadow rounded-lg p-4 2xl:col-span-1">
+        @if (Auth::user()->role?->name == "ehzh" || Auth::user()->role?->name == "admin")    
+        <div class="flex justify-end space-x-2">
+            <a href="{{ route('report1.show') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded">Тайлан 1</a>
+            <a href="#" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded">Тайлан 2</a>
+            <a href="#" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded">Тайлан 3</a>
+        </div>
+        @endif
         <div class="">
             <h1 class="text-xl font-bold"> Нийт ирсэн санал, хүсэлт</h1>
         </div>

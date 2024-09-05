@@ -1,17 +1,18 @@
 <?php
 
-use App\Http\Controllers\CdrController;
 use App\Models\Complaint;
 use App\Http\Livewire\ComplaintStep;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CdrController;
 use App\Http\Controllers\UserController;
 use Laravel\Socialite\Facades\Socialite;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\DanAuthController;
 use App\Http\Controllers\ComplaintController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\OrgNumberController;
+use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\SourceComplaintController;
 
 /*
@@ -58,7 +59,8 @@ Route::middleware([
 });
 
 Route::middleware([
-    'auth:sanctum', 'role:dan',
+    'auth:sanctum',
+    'role:dan',
     config('jetstream.auth_session'),
     'verified'
 ])->group(function () {
@@ -71,7 +73,8 @@ Route::middleware([
 });
 
 Route::middleware([
-    'auth:sanctum', 'role:admin,ehzh,tze',
+    'auth:sanctum',
+    'role:admin,ehzh,tze',
     config('jetstream.auth_session'),
     'verified'
 ])->group(function () {
@@ -93,6 +96,7 @@ Route::middleware([
     Route::resource('/orgNumber', OrgNumberController::class);
     Route::post('/orgNumber/{id}', [OrgNumberController::class, 'save'])->name('orgNumber.save');
     Route::resource('/organization', OrganizationController::class);
+    Route::get('/report1', [ReportController::class, 'showReport'])->name('report1.show');
 
     // 1111 ээс санал хүсэлт авах
     Route::resource('/sourceComplaint', SourceComplaintController::class);
