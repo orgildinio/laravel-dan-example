@@ -30,6 +30,10 @@ Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
 
+Route::get('/privacy', function () {
+    return view('privacy');
+})->name('privacy');
+
 Route::get('/complaints', [ComplaintController::class, 'complaints'])->name('complaints');
 Route::get('/showComplaint/{id}', [ComplaintController::class, 'showComplaint'])->name('showComplaint');
 
