@@ -120,7 +120,7 @@
                             </g>
                         </svg>
                     </button>
-    
+
                     <button type="submit"
                         class="text-white bg-primary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 mb-2">
                         Хайх
@@ -140,7 +140,8 @@
                             <div class="text-xs leading-5 font-semibold"><span
                                     class="text-xs leading-4 font-normal text-gray-500"> №</span>
                                 {{ $complaint->serial_number }}</div>
-                            <div class="text-xs leading-5"><span class="text-xs leading-4 font-normal text-gray-500 pr">
+                            <div class="text-xs leading-5"><span
+                                    class="text-xs leading-4 font-normal text-gray-500 pr">
                                     Төрөл: </span> {{ $complaint->energyType?->name }}</div>
                             <div class="text-xs leading-5"><span class="text-xs leading-4 font-normal text-gray-500">
                                     {{ $complaint->status?->name }}: </span>{{ $complaint->updated_at }}</div>
@@ -217,7 +218,6 @@
                                     {{ $complaint->category?->name }}</div>
                             </div>
                         </div>
-                        @if (Auth::user()->role?->name == 'admin')    
                         <div>
                             <div x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false"
                                 id="action" class="inline-flex relative">
@@ -229,25 +229,31 @@
                                             d="M19 9l-7 7-7-7" />
                                     </svg>
                                 </button>
-                                    <div x-cloak x-show="open" @click.away="open = false"
-                                        class="w-32 absolute top-10 right-0 p-2 bg-white border border-gray-200 rounded-lg shadow">
+                                @if ($complaint->status_id != 6)  
+                                <div x-cloak x-show="open" @click.away="open = false"
+                                    class="w-32 absolute top-10 right-0 p-2 bg-white border border-gray-200 rounded-lg shadow">
 
-                                        <form action="{{ route('complaint.destroy', $complaint->id) }}" method="POST">
-   
-                                            <div class="px-2 py-1 cursor-pointer hover:bg-sky-100 rounded-lg">
-                                                <a class="" href="{{ route('complaint.edit',$complaint->id) }}">Засах</a>
-                                            </div>
+                                    <form action="{{ route('complaint.destroy', $complaint->id) }}" method="POST">
+                                          
+                                        <div class="px-2 py-1 cursor-pointer hover:bg-sky-100 rounded-lg">
+                                            <a class=""
+                                                href="{{ route('complaint.edit', $complaint->id) }}">Засах</a>
+                                        </div>
+                                        
+
+                                        @if (Auth::user()->role?->name == 'admin')
                                             <div class="px-2 py-1 cursor-pointer hover:bg-sky-100 rounded-lg">
                                                 @csrf
                                                 @method('DELETE')
-                                  
+
                                                 <button type="submit" class="">Устгах</button>
                                             </div>
-                                        </form>
-                                    </div>
+                                        @endif
+                                    </form>
+                                </div>
+                                @endif
                             </div>
                         </div>
-                        @endif
                     </div>
                 </div>
             @endforeach
@@ -264,66 +270,66 @@
 
 @push('scripts')
 
-<script type="module">
-    $(document).ready(function() {
-        flatpickr("#daterange", {
-            mode: "range",
-            dateFormat: "Y-m-d",
-            locale: {
-                firstDayOfWeek: 1
-            }
-        });
-
-        $('#resetFilters').on('click', function() {
-
-            $('#resetIcon').addClass('animate-spin');
-            setTimeout(() => {
-                $('#resetIcon').removeClass('animate-spin');
-            }, 1000);
-
-            // Reset filter values to their default or empty state
-            $('#daterange').val('');
-            $('#simple-search').val('');
-            $('#year').val('');
-
-            $('#daterange').change();
-            $('#simple-search').change();
-            $('#year').change();
-        });
-
-        $('#searchForm input, #searchForm select').keypress(function (event) {
-            if (event.keyCode === 13) { // Check if Enter key is pressed
-                event.preventDefault(); // Prevent form submission
-                $('#searchForm').submit(); // Submit the form
-            }
-        });
-
-        // Add click event handler to table rows with class 'table-row'
-        $('.complaint-show').click(function() {
-            // Get the value of the 'data-id' attribute of the clicked row
-            var id = $(this).data('id');
-
-            $.ajax({
-                url: '/updateComplaintStatus/' + id,
-                method: 'PUT',
-                headers: {
-                    'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-                },
-                data: {},
-                success: function(response) {
-                    console.log(response.message);
-                },
-                error: function(error) {
-                    console.error(error.responseText);
+    <script type="module">
+        $(document).ready(function() {
+            flatpickr("#daterange", {
+                mode: "range",
+                dateFormat: "Y-m-d",
+                locale: {
+                    firstDayOfWeek: 1
                 }
             });
 
-            window.location.href = '/complaint/' + id;
+            $('#resetFilters').on('click', function() {
 
+                $('#resetIcon').addClass('animate-spin');
+                setTimeout(() => {
+                    $('#resetIcon').removeClass('animate-spin');
+                }, 1000);
+
+                // Reset filter values to their default or empty state
+                $('#daterange').val('');
+                $('#simple-search').val('');
+                $('#year').val('');
+
+                $('#daterange').change();
+                $('#simple-search').change();
+                $('#year').change();
+            });
+
+            $('#searchForm input, #searchForm select').keypress(function(event) {
+                if (event.keyCode === 13) { // Check if Enter key is pressed
+                    event.preventDefault(); // Prevent form submission
+                    $('#searchForm').submit(); // Submit the form
+                }
+            });
+
+            // Add click event handler to table rows with class 'table-row'
+            $('.complaint-show').click(function() {
+                // Get the value of the 'data-id' attribute of the clicked row
+                var id = $(this).data('id');
+
+                $.ajax({
+                    url: '/updateComplaintStatus/' + id,
+                    method: 'PUT',
+                    headers: {
+                        'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: {},
+                    success: function(response) {
+                        console.log(response.message);
+                    },
+                    error: function(error) {
+                        console.error(error.responseText);
+                    }
+                });
+
+                window.location.href = '/complaint/' + id;
+
+            });
+            $('.complaint-show').on('click', '#action', function(e) {
+                e.stopPropagation();
+                // Add your logic to handle the dropdown button click event
+            });
         });
-        $('.complaint-show').on('click', '#action', function(e) {
-            e.stopPropagation();
-            // Add your logic to handle the dropdown button click event
-        });
-    });
-</script>
+    </script>
