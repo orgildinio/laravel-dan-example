@@ -84,7 +84,7 @@
                 </div>
                 @endif
 
-                @if ($selectedAction == "Шийдвэрлэх" && $complaint_type_id == 1 && ($complaint_type_summary_id == 18 || $complaint_type_summary_id == 25))
+                @if ($selectedAction == "Шийдвэрлэх" && $complaint_type_id == 1)
                 <div class="md:flex md:items-center mb-2">
                     <div class="md:w-1/3">
                         <label class="block text-gray-500 text-sm font-bold md:text-right mb-1 md:mb-0 pr-4"
