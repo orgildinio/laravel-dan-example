@@ -26,6 +26,7 @@ use App\Http\Controllers\Api\ComplaintTypeSummaryController;
 // });
 
 Route::post('login', [AuthController::class, 'login']);
+Route::post('loginEmail', [AuthController::class, 'loginEmail']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('user', [AuthController::class, 'user']);

@@ -69,4 +69,35 @@ class AuthController extends Controller
     {
         return $request->user();
     }
+
+    public function loginEmail(Request $request)
+    {
+        $credentials = $request->only('email', 'password');
+
+        // Validate request
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        // Check if the email and password match any user
+        if (!Auth::attempt($credentials)) {
+            // Check if email exists
+            $user = User::where('email', $request->email)->first();
+            if ($user && !Hash::check($request->password, $user->password)) {
+                return response()->json(['error' => 'Invalid password'], 401);
+            }
+
+            return response()->json(['error' => 'Invalid email or password'], 401);
+        }
+
+        // Generate token and return response
+        $user = Auth::user();
+        $token = $user->createToken('Personal Access Token')->plainTextToken;
+
+        return response()->json([
+            'token' => $token,
+            'user' => $user,
+        ]);
+    }
 }
