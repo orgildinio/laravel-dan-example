@@ -80,7 +80,8 @@ class DanAuthController extends Controller
                 ]);
             }
 
-            Auth::loginUsingId($user->id, true);
+            // Auth::loginUsingId($user->id, true);
+            Auth::login($user, true);
 
             return redirect()->route("addComplaint")->with('success', 'Амжилттай нэвтэрлээ.');
         }
