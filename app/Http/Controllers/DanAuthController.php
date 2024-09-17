@@ -33,7 +33,7 @@ class DanAuthController extends Controller
     {
         $danUser = Socialite::driver('dan')->user();
 
-        // dd($danUser->login_type);
+        dd($danUser);
 
         if ($danUser->login_type == 1) {
 
