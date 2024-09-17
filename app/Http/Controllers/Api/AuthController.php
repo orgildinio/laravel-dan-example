@@ -93,6 +93,12 @@ class AuthController extends Controller
 
         // Generate token and return response
         $user = Auth::user();
+
+        // Check if the user has the role 'dan'
+        if (!$user->role || $user->role?->name !== 'dan') {
+            return response()->json(['error' => 'ТЗЭ-ийн эрхээр нэвтрэх боломжгүй!'], 403);
+        }
+
         $token = $user->createToken('Personal Access Token')->plainTextToken;
 
         return response()->json([
