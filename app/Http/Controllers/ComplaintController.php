@@ -219,6 +219,10 @@ class ComplaintController extends Controller
         $controlled_user_id = $request->query('controlled_user_id');
         $channel_id = $request->query('channel_id');
 
+        $user_code = $request->query('user_code');
+        $phone = $request->query('phone');
+        $expire_status = $request->query('expire_status');
+
         $query = Complaint::query();
         $query->orderBy('complaint_date', 'desc');
 
@@ -252,6 +256,22 @@ class ComplaintController extends Controller
             $query->where('channel_id', $channel_id);
         }
 
+        if ($phone !== null) {
+            $query->where('phone', $phone);
+        }
+        if ($user_code !== null) {
+            $userdata = Registration::where('code', $user_code)->first();
+            // dd($userdata->phoneNumber);
+            $query->where('phone', $userdata->phoneNumber);
+        }
+
+        // Filter by expired status
+        if ($expire_status === 'expired') {
+            $query->where('expire_date', '<', now())->where('status_id', '!=', 6);
+        } elseif ($expire_status === 'not_expired') {
+            $query->where('expire_date', '>', now());
+        }
+
         // Нэвтэрсэн хэрэглэгч ЭХЗХ биш ТЗЭ бол зөвхөн тухайн байгууллагын мэдээллийг харуулна
         $logged_user_org_id = Auth::user()->org_id;
         if ($logged_user_org_id != 99) {
@@ -270,7 +290,7 @@ class ComplaintController extends Controller
         $channels = Channel::all();
         $controlled_users = User::where('org_id', Auth::user()->org_id)->orderBy('name', 'asc')->get();
 
-        return view('complaints.index', compact('complaints', 'daterange', 'search_text', 'statuses', 'status_id', 'org_id', 'orgs', 'energy_type_id', 'energy_types', 'channel_id', 'channels', 'controlled_user_id', 'controlled_users', 'second_org_id'));
+        return view('complaints.index', compact('complaints', 'daterange', 'search_text', 'statuses', 'status_id', 'org_id', 'orgs', 'energy_type_id', 'energy_types', 'channel_id', 'channels', 'controlled_user_id', 'controlled_users', 'second_org_id', 'phone', 'user_code', 'expire_status'));
     }
 
     public function ExportReportExcel(Request $request)

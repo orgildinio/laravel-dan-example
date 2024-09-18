@@ -1,20 +1,23 @@
 <x-admin-layout>
     <div class="bg-white shadow rounded-lg p-4 2xl:col-span-1">
-        @if (Auth::user()->role?->name == "ehzh" || Auth::user()->role?->name == "admin")    
-        <div class="flex justify-end space-x-2">
-            <a href="{{ route('report1.show') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded">Тайлан 1</a>
-            <a href="#" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded">Тайлан 2</a>
-            <a href="#" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded">Тайлан 3</a>
-        </div>
+        @if (Auth::user()->role?->name == 'ehzh' || Auth::user()->role?->name == 'admin')
+            <div class="flex justify-end space-x-2">
+                <a href="{{ route('report1.show') }}"
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded">Тайлан 1</a>
+                <a href="#" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded">Тайлан
+                    2</a>
+                <a href="#" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded">Тайлан
+                    3</a>
+            </div>
         @endif
         <div class="">
             <h1 class="text-xl font-bold"> Нийт ирсэн санал, хүсэлт</h1>
         </div>
         <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 py-4">
-            <div class="w-full md:w-2/3">
+            <div class="w-full">
                 <form method="GET" autocomplete="off">
                     @csrf
-                    <div class="flex flex-row justify-start items-center">
+                    <div class="flex flex-wrap items-center gap-2">
                         <div class="mr-1">
                             <input type="text" id="simple-search"
                                 class="w-32 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block p-2"
@@ -37,39 +40,39 @@
                             </select>
                         </div>
                         @if (Auth::user()->org_id == 99)
-                        <div class="mr-1">
-                            <select name="org_id" id="org_id"
-                                class="w-32 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
-                                <option value="">Байгууллага</option>
-                                @foreach ($orgs as $org)
-                                    <option value="{{ $org->id }}"
-                                        {{ old('org_id', $org_id) == $org->id ? 'selected' : '' }}>
-                                        {{ $org->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="mr-1">
-                            <select name="second_org_id" id="seond_org_id"
-                                class="w-32 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
-                                <option value="">Хариуцсан ТЗЭ</option>
-                                @foreach ($orgs as $org)
-                                    <option value="{{ $org->id }}"
-                                        {{ old('second_org_id', $second_org_id) == $org->id ? 'selected' : '' }}>
-                                        {{ $org->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="mr-1">
-                            <select name="energy_type_id" id="energy_type_id"
-                                class="w-32 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
-                                <option value="">Төрөл</option>
-                                @foreach ($energy_types as $type)
-                                    <option value="{{ $type->id }}"
-                                        {{ old('energy_type_id', $energy_type_id) == $type->id ? 'selected' : '' }}>
-                                        {{ $type->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
+                            <div class="mr-1">
+                                <select name="org_id" id="org_id"
+                                    class="w-32 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
+                                    <option value="">Байгууллага</option>
+                                    @foreach ($orgs as $org)
+                                        <option value="{{ $org->id }}"
+                                            {{ old('org_id', $org_id) == $org->id ? 'selected' : '' }}>
+                                            {{ $org->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="mr-1">
+                                <select name="second_org_id" id="seond_org_id"
+                                    class="w-32 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
+                                    <option value="">Хариуцсан ТЗЭ</option>
+                                    @foreach ($orgs as $org)
+                                        <option value="{{ $org->id }}"
+                                            {{ old('second_org_id', $second_org_id) == $org->id ? 'selected' : '' }}>
+                                            {{ $org->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="mr-1">
+                                <select name="energy_type_id" id="energy_type_id"
+                                    class="w-32 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
+                                    <option value="">Төрөл</option>
+                                    @foreach ($energy_types as $type)
+                                        <option value="{{ $type->id }}"
+                                            {{ old('energy_type_id', $energy_type_id) == $type->id ? 'selected' : '' }}>
+                                            {{ $type->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         @endif
                         <div class="mr-1">
                             <select name="controlled_user_id" id="controlled_user_id"
@@ -93,6 +96,26 @@
                                 @endforeach
                             </select>
                         </div>
+                        <div class="mr-1">
+                            <input type="text" id="user_code"
+                                class="w-32 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block p-2"
+                                placeholder="Код" name="user_code" value="{{ $user_code }}">
+                        </div>
+                        <div class="mr-1">
+                            <input type="text" id="phone"
+                                class="w-32 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block p-2"
+                                placeholder="Утас" name="phone" value="{{ $phone }}">
+                        </div>
+                        <div class="mr-1">
+                            <select name="expire_status" id="expire_status"
+                                class="w-32 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
+                                <option value="" {{ $expire_status == '' ? 'selected' : '' }}>Бүгд</option>
+                                <option value="expired" {{ $expire_status == 'expired' ? 'selected' : '' }}>Хугацаа
+                                    хэтэрсэн</option>
+                                <option value="not_expired" {{ $expire_status == 'not_expired' ? 'selected' : '' }}>
+                                    Хугацаа хэтрээгүй</option>
+                            </select>
+                        </div>
                         <div>
                             <button type="submit"
                                 class="flex items-center justify-center text-white bg-primary hover:bg-primaryHover focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2">
@@ -105,7 +128,7 @@
             <div
                 class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
                 <a class="flex items-center justify-center flex-shrink-0 px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-300 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200"
-                    href="{{ route('exportReportExcel', ['daterange' => Request::get('daterange'), 'energy_type_id' => Request::get('energy_type_id'), 'search_text' => Request::get('search_text'), 'status_id' => Request::get('status_id'), 'org_id' => Request::get('org_id'), 'second_org_id' => Request::get('second_org_id'), 'energy_type_id' => Request('energy_type_id'), 'controlled_user_id' => Request('controlled_user_id'), 'channel_id' => Request('channel_id')]) }}">
+                    href="{{ route('exportReportExcel', ['daterange' => Request::get('daterange'), 'energy_type_id' => Request::get('energy_type_id'), 'search_text' => Request::get('search_text'), 'status_id' => Request::get('status_id'), 'org_id' => Request::get('org_id'), 'second_org_id' => Request::get('second_org_id'), 'energy_type_id' => Request('energy_type_id'), 'controlled_user_id' => Request('controlled_user_id'), 'channel_id' => Request('channel_id'), 'user_code' => Request('user_code'), 'phone' => Request('phone'), 'expire_status' => Request('expire_status')]) }}">
                     <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24"
                         stroke-width="2" stroke="currentColor" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -136,15 +159,15 @@
                             class="p-2 text-xs font-medium leading-4 tracking-wider text-left text-gray-800 uppercase border-b border-gray-300 bg-gray-50">
                             Мэргэжилтэн</th>
                         @if (Auth::user()->org_id == 99)
-                        <th
-                            class="p-2 w-[200px] text-xs font-medium leading-4 tracking-wider text-left text-gray-800 uppercase border-b border-gray-300 bg-gray-50">
-                            Байгууллага</th>
-                        <th
-                            class="p-2 w-[150px] text-xs font-medium leading-4 tracking-wider text-left text-gray-800 uppercase border-b border-gray-300 bg-gray-50">
-                            Холбогдох ТЗЭ</th>
-                        <th
-                            class="p-2 text-xs font-medium leading-4 tracking-wider text-left text-gray-800 uppercase border-b border-gray-300 bg-gray-50">
-                            Төрөл</th>
+                            <th
+                                class="p-2 w-[200px] text-xs font-medium leading-4 tracking-wider text-left text-gray-800 uppercase border-b border-gray-300 bg-gray-50">
+                                Байгууллага</th>
+                            <th
+                                class="p-2 w-[150px] text-xs font-medium leading-4 tracking-wider text-left text-gray-800 uppercase border-b border-gray-300 bg-gray-50">
+                                Холбогдох ТЗЭ</th>
+                            <th
+                                class="p-2 text-xs font-medium leading-4 tracking-wider text-left text-gray-800 uppercase border-b border-gray-300 bg-gray-50">
+                                Төрөл</th>
                         @endif
                         <th
                             class="p-2 text-xs font-medium leading-4 tracking-wider text-left text-gray-800 uppercase border-b border-gray-300 bg-gray-50">
@@ -189,7 +212,8 @@
                                             @break
 
                                             @case('1')
-                                                <div class="bg-cyan-100 text-cyan-900 p-1 text-center rounded text-xs whitespace-nowrap">
+                                                <div
+                                                    class="bg-cyan-100 text-cyan-900 p-1 text-center rounded text-xs whitespace-nowrap">
                                                     Шилжүүлсэн</div>
                                             @break
 
@@ -228,20 +252,20 @@
                             </td>
 
                             @if (Auth::user()->org_id == 99)
-                            <td class="p-2 whitespace-no-wrap border-b border-gray-300">
-                                <div class="text-sm leading-5 text-gray-900">{{ $complaint->organization?->name }}
-                                </div>
-                            </td>
+                                <td class="p-2 whitespace-no-wrap border-b border-gray-300">
+                                    <div class="text-sm leading-5 text-gray-900">{{ $complaint->organization?->name }}
+                                    </div>
+                                </td>
 
-                            <td class="p-2 whitespace-no-wrap border-b border-gray-300">
-                                <div class="text-sm leading-5 text-gray-900">{{ $complaint->secondOrg?->name }}
-                                </div>
-                            </td>
+                                <td class="p-2 whitespace-no-wrap border-b border-gray-300">
+                                    <div class="text-sm leading-5 text-gray-900">{{ $complaint->secondOrg?->name }}
+                                    </div>
+                                </td>
 
-                            <td class="p-2 whitespace-no-wrap border-b border-gray-300">
-                                <div class="text-sm leading-5 text-gray-900">{{ $complaint->energyType?->name }}
-                                </div>
-                            </td>
+                                <td class="p-2 whitespace-no-wrap border-b border-gray-300">
+                                    <div class="text-sm leading-5 text-gray-900">{{ $complaint->energyType?->name }}
+                                    </div>
+                                </td>
                             @endif
 
                             <td class="p-2 whitespace-no-wrap border-b border-gray-300">
@@ -265,9 +289,9 @@
                                 <td
                                     class="p-2 text-xs text-center leading-5 whitespace-no-wrap border-b border-gray-300">
                                     @if ($complaint->hasExpired())
-                                    <span class="text-red-500 text-xs">Хугацаа хэтэрсэн</span>
+                                        <span class="text-red-500 text-xs">Хугацаа хэтэрсэн</span>
                                     @else
-                                    <span>{{ now()->diffInHours($complaint->expire_date) > 24 ? now()->diffInDays($complaint->expire_date) . ' өдөр' : now()->diffInHours($complaint->expire_date) . ' цаг' }}</span>
+                                        <span>{{ now()->diffInHours($complaint->expire_date) > 24 ? now()->diffInDays($complaint->expire_date) . ' өдөр' : now()->diffInHours($complaint->expire_date) . ' цаг' }}</span>
                                     @endif
                                 </td>
                             @endif
@@ -286,30 +310,33 @@
                 'energy_type_id' => $energy_type_id,
                 'controlled_user_id' => $controlled_user_id,
                 'channel_id' => $channel_id,
+                'phone' => $phone,
+                'user_code' => $user_code,
+                'expire_status' => $expire_status,
             ])->links() !!}
     </div>
 </x-admin-layout>
 
 @push('scripts')
 
-<script type="module">
-    $(document).ready(function() {
+    <script type="module">
+        $(document).ready(function() {
 
-        flatpickr("#daterange", {
-            mode: "range",
-            dateFormat: "Y-m-d",
-            locale: {
-                firstDayOfWeek: 1
-            }
+            flatpickr("#daterange", {
+                mode: "range",
+                dateFormat: "Y-m-d",
+                locale: {
+                    firstDayOfWeek: 1
+                }
+            });
+
+            // Add click event handler to table rows with class 'table-row'
+            $('.table-row').click(function() {
+                // Get the value of the 'data-id' attribute of the clicked row
+                var id = $(this).data('id');
+
+                window.location.href = '/complaint/' + id;
+
+            });
         });
-
-        // Add click event handler to table rows with class 'table-row'
-        $('.table-row').click(function() {
-            // Get the value of the 'data-id' attribute of the clicked row
-            var id = $(this).data('id');
-
-            window.location.href = '/complaint/' + id;
-
-        });
-    });
-</script>
+    </script>

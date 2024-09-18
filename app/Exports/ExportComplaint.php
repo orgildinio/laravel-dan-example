@@ -3,22 +3,23 @@
 namespace App\Exports;
 
 use App\Models\Complaint;
+use App\Models\Registration;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Events\AfterSheet;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 use PhpOffice\PhpSpreadsheet\Style\Color;
 use PhpOffice\PhpSpreadsheet\Style\Style;
+use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\WithStyles;
+use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithColumnWidths;
 use Maatwebsite\Excel\Concerns\WithDefaultStyles;
-use Maatwebsite\Excel\Concerns\WithEvents;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
-use Maatwebsite\Excel\Concerns\WithMapping;
 
 
 class ExportComplaint implements FromCollection, WithHeadings, ShouldAutoSize, WithStyles, WithColumnWidths, WithEvents, WithMapping
@@ -114,6 +115,20 @@ class ExportComplaint implements FromCollection, WithHeadings, ShouldAutoSize, W
             })
             ->when(isset($_GET['second_org_id']), function ($query) {
                 $query->where('second_org_id', $_GET['second_org_id']);
+            })
+            ->when(isset($_GET['phone']), function ($query) {
+                $query->where('phone', $_GET['phone']);
+            })
+            // ->when(isset($_GET['user_code']), function ($query) {
+            //     $userdata = Registration::where('code', $_GET['user_code'])->first();
+            //     $query->where('phone', $userdata->phoneNumber);
+            // })
+            ->when(isset($_GET['expire_status']), function ($query) {
+                if ($_GET['expire_status'] === 'expired') {
+                    $query->where('expire_date', '<', now())->where('status_id', '!=', 6);
+                } elseif ($_GET['expire_status'] === 'not_expired') {
+                    $query->where('expire_date', '>', now());
+                }
             })
             ->orderBy('complaints.complaint_date', 'desc')
             ->get();
