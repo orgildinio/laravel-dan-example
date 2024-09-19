@@ -14,26 +14,10 @@ class AuthController extends Controller
 {
     public function login(Request $request)
     {
-        // Validate request data
-        try {
-            // Validate request data
-            $request->validate([
-                'firstname' => 'required|string|max:255',
-                'lastname' => 'required|string|max:255',
-                'regnum' => 'required|size:10|regex:/^[А-ЯӨҮа-яөү]{2}[0-9]{8}$/u',
-                'aimagCityName' => 'required|string|max:255',
-                'soumDistrictName' => 'required|string|max:255',
-                'bagKhorooName' => 'required|string|max:255',
-                'passportAddress' => 'nullable|string|max:255',
-                'gender' => 'required|string|max:10',
-                'image' => 'nullable|string', // Image may not always be required
-            ]);
-        } catch (ValidationException $e) {
-            // Return a custom response for validation failure
+        if ($request->regnum == null) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'Validation failed',
-                'errors' => $e->errors() // This provides detailed validation errors
+                'message' => 'Validation failed'
             ], 422);
         }
 
