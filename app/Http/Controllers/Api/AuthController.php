@@ -13,32 +13,58 @@ class AuthController extends Controller
 {
     public function login(Request $request)
     {
-        // Check if regnum is not null
-        // if ($request->regnum != null) {
-        //     $user = User::where('danRegnum', $request->regnum)->first();
-        // } else {
-        //     return response()->json([
-        //         'status' => "Not valid data",
-        //     ], 400); // Use a 400 Bad Request status code for invalid data
+
+        // $user = User::where('danRegnum', $request->regnum)->first();
+
+        // // If user does not exist, create a new user
+        // if (!$user) {
+        //     $user = User::create([
+        //         'name' => $request->firstname,
+        //         'danImage' => $request->image,
+        //         'danFirstname' => $request->firstname,
+        //         'danLastname' => $request->lastname,
+        //         'danRegnum' => $request->regnum,
+        //         'danAimagCityName' => $request->aimagCityName,
+        //         'danSoumDistrictName' => $request->soumDistrictName,
+        //         'danBagKhorooName' => $request->bagKhorooName,
+        //         'danPassportAddress' => $request->passportAddress,
+        //         "danGender" => $request->gender,
+        //         'password' => Hash::make(123456),
+        //         'role_id' => 5
+        //     ]);
         // }
 
-        $user = User::where('danRegnum', $request->regnum)->first();
+        // Validate request data
+        $validatedData = $request->validate([
+            'firstname' => 'required|string|max:255',
+            'lastname' => 'required|string|max:255',
+            'regnum' => 'required|string|max:255',
+            'aimagCityName' => 'required|string|max:255',
+            'soumDistrictName' => 'required|string|max:255',
+            'bagKhorooName' => 'required|string|max:255',
+            'passportAddress' => 'required|string|max:255',
+            'gender' => 'required|string|max:10',
+            'image' => 'nullable|string', // Image may not always be required
+        ]);
+
+        // Search for the user by registration number
+        $user = User::where('danRegnum', $validatedData['regnum'])->first();
 
         // If user does not exist, create a new user
         if (!$user) {
             $user = User::create([
-                'name' => $request->firstname,
-                'danImage' => $request->image,
-                'danFirstname' => $request->firstname,
-                'danLastname' => $request->lastname,
-                'danRegnum' => $request->regnum,
-                'danAimagCityName' => $request->aimagCityName,
-                'danSoumDistrictName' => $request->soumDistrictName,
-                'danBagKhorooName' => $request->bagKhorooName,
-                'danPassportAddress' => $request->passportAddress,
-                "danGender" => $request->gender,
+                'name' => $validatedData['firstname'],
+                'danImage' => $validatedData['image'] ?? null, // Optional image field
+                'danFirstname' => $validatedData['firstname'],
+                'danLastname' => $validatedData['lastname'],
+                'danRegnum' => $validatedData['regnum'],
+                'danAimagCityName' => $validatedData['aimagCityName'],
+                'danSoumDistrictName' => $validatedData['soumDistrictName'],
+                'danBagKhorooName' => $validatedData['bagKhorooName'],
+                'danPassportAddress' => $validatedData['passportAddress'],
+                'danGender' => $validatedData['gender'],
                 'password' => Hash::make(123456),
-                'role_id' => 5
+                'role_id' => 5,
             ]);
         }
 
