@@ -11,41 +11,63 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    public function login(Request $request)
+    public function login1(Request $request)
     {
 
-        // $user = User::where('danRegnum', $request->regnum)->first();
+        $user = User::where('danRegnum', $request->regnum)->first();
 
-        // // If user does not exist, create a new user
-        // if (!$user) {
-        //     $user = User::create([
-        //         'name' => $request->firstname,
-        //         'danImage' => $request->image,
-        //         'danFirstname' => $request->firstname,
-        //         'danLastname' => $request->lastname,
-        //         'danRegnum' => $request->regnum,
-        //         'danAimagCityName' => $request->aimagCityName,
-        //         'danSoumDistrictName' => $request->soumDistrictName,
-        //         'danBagKhorooName' => $request->bagKhorooName,
-        //         'danPassportAddress' => $request->passportAddress,
-        //         "danGender" => $request->gender,
-        //         'password' => Hash::make(123456),
-        //         'role_id' => 5
-        //     ]);
-        // }
+        // If user does not exist, create a new user
+        if (!$user) {
+            $user = User::create([
+                'name' => $request->firstname,
+                'danImage' => $request->image,
+                'danFirstname' => $request->firstname,
+                'danLastname' => $request->lastname,
+                'danRegnum' => $request->regnum,
+                'danAimagCityName' => $request->aimagCityName,
+                'danSoumDistrictName' => $request->soumDistrictName,
+                'danBagKhorooName' => $request->bagKhorooName,
+                'danPassportAddress' => $request->passportAddress,
+                "danGender" => $request->gender,
+                'password' => Hash::make(123456),
+                'role_id' => 5
+            ]);
+        }
 
-        // Validate request data
-        $validatedData = $request->validate([
-            'firstname' => 'required|string|max:255',
-            'lastname' => 'required|string|max:255',
-            'regnum' => 'required|string|max:255',
-            'aimagCityName' => 'required|string|max:255',
-            'soumDistrictName' => 'required|string|max:255',
-            'bagKhorooName' => 'required|string|max:255',
-            'passportAddress' => 'required|string|max:255',
-            'gender' => 'required|string|max:10',
-            'image' => 'nullable|string', // Image may not always be required
+        // Generate an authentication token for the user
+        $token = $user->createToken('auth_token')->plainTextToken;
+
+        // Return the response with the token and user data
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'Bearer',
+            'user' => $user
         ]);
+    }
+
+    public function login(Request $request)
+    {
+        try {
+            // Validate request data
+            $validatedData = $request->validate([
+                'firstname' => 'required|string|max:255',
+                'lastname' => 'required|string|max:255',
+                'regnum' => 'required|size:10|regex:/^[А-ЯӨҮа-яөү]{2}[0-9]{8}$/u',
+                'aimagCityName' => 'required|string|max:255',
+                'soumDistrictName' => 'required|string|max:255',
+                'bagKhorooName' => 'required|string|max:255',
+                'passportAddress' => 'nullable|string|max:255',
+                'gender' => 'required|string|max:10',
+                'image' => 'nullable|string', // Image may not always be required
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            // Return a custom response for validation failure
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Validation failed',
+                'errors' => $e->errors() // This provides detailed validation errors
+            ], 422);
+        }
 
         // Search for the user by registration number
         $user = User::where('danRegnum', $validatedData['regnum'])->first();
@@ -61,7 +83,7 @@ class AuthController extends Controller
                 'danAimagCityName' => $validatedData['aimagCityName'],
                 'danSoumDistrictName' => $validatedData['soumDistrictName'],
                 'danBagKhorooName' => $validatedData['bagKhorooName'],
-                'danPassportAddress' => $validatedData['passportAddress'],
+                'danPassportAddress' => $validatedData['passportAddress'] ?? null,
                 'danGender' => $validatedData['gender'],
                 'password' => Hash::make(123456),
                 'role_id' => 5,
@@ -78,6 +100,7 @@ class AuthController extends Controller
             'user' => $user
         ]);
     }
+
 
     public function logout(Request $request)
     {
