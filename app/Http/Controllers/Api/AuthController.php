@@ -5,14 +5,37 @@ namespace App\Http\Controllers\Api;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\LoginApiRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\LoginApiRequest;
+use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
     public function login(Request $request)
     {
+        // Validate request data
+        try {
+            // Validate request data
+            $request->validate([
+                'firstname' => 'required|string|max:255',
+                'lastname' => 'required|string|max:255',
+                'regnum' => 'required|size:10|regex:/^[А-ЯӨҮа-яөү]{2}[0-9]{8}$/u',
+                'aimagCityName' => 'required|string|max:255',
+                'soumDistrictName' => 'required|string|max:255',
+                'bagKhorooName' => 'required|string|max:255',
+                'passportAddress' => 'nullable|string|max:255',
+                'gender' => 'required|string|max:10',
+                'image' => 'nullable|string', // Image may not always be required
+            ]);
+        } catch (ValidationException $e) {
+            // Return a custom response for validation failure
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Validation failed',
+                'errors' => $e->errors() // This provides detailed validation errors
+            ], 422);
+        }
 
         $user = User::where('danRegnum', $request->regnum)->first();
 
