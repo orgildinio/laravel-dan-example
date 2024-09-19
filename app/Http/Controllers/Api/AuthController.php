@@ -14,12 +14,6 @@ class AuthController extends Controller
 {
     public function login(Request $request)
     {
-        if ($request->regnum == null) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Validation failed'
-            ], 422);
-        }
 
         $user = User::where('danRegnum', $request->regnum)->first();
 
