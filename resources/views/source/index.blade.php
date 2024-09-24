@@ -38,16 +38,16 @@
 <x-admin-layout>
     <div class="bg-white shadow rounded-lg p-4 2xl:col-span-1">
 
-        @session('success')
+        @if (session('success'))
             <div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
-                {{ $value }}
+                {{ session('success') }}
             </div>
-        @endsession
-        @session('error')
+        @endif
+        @if (session('error'))
             <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                {{ $value }}
-              </div>
-        @endsession
+                {{ session('error') }}
+            </div>
+        @endif
 
         {{-- Filter --}}
         <form id="searchForm" method="GET" autocomplete="off">
