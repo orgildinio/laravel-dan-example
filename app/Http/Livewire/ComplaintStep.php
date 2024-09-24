@@ -24,6 +24,8 @@ class ComplaintStep extends Component
     public $complaint_steps, $org_id, $status_id, $complaint_id, $recieved_user_id, $sent_user_id, $recieved_date, $sent_date, $desc, $orgs, $all_status, $actions, $selectedAction, $controlled_user_id, $employees, $selected_user_id, $second_user_id, $file, $step_id, $expire_date, $is_expired, $complaint_type_id, $complaint_type_summary_id, $amount, $selected_date;
     public $isOpen = 0;
     public $showPermissionWarning = false;
+    public $isEditMode = false;
+
 
     public function mount($complaint)
     {
@@ -88,6 +90,7 @@ class ComplaintStep extends Component
     public function create()
     {
         $this->resetInputFields();
+        $this->isEditMode = false; // Set to create mode
         $this->openModal();
     }
 
@@ -167,6 +170,7 @@ class ComplaintStep extends Component
                         'status_id' => 8,
                         'sent_date' => Carbon::now()->toDateTimeString(),
                         'desc' => $this->desc,
+                        'action_taken' => $this->selectedAction,
                         'file_id' => isset($filename) ? $filename->id : null,
                     ]);
                 } else {
@@ -177,6 +181,7 @@ class ComplaintStep extends Component
                         'status_id' => 8,
                         'sent_date' => Carbon::now()->toDateTimeString(),
                         'desc' => $this->desc,
+                        'action_taken' => $this->selectedAction,
                         'file_id' => isset($filename) ? $filename->id : null,
                     ]);
                 }
@@ -216,7 +221,8 @@ class ComplaintStep extends Component
                     'sent_user_id' => Auth::user()->id,
                     'status_id' => 1,
                     'sent_date' => Carbon::now()->toDateTimeString(),
-                    'desc' => $this->desc
+                    'desc' => $this->desc,
+                    'action_taken' => $this->selectedAction,
                 ]);
 
                 // Хэрвээ 1111-ээс ирсэн гомдол байвал 1111 рүү мэдээлэл дамжуулах
@@ -256,7 +262,8 @@ class ComplaintStep extends Component
                     'sent_user_id' => Auth::user()->id,
                     'status_id' => 1,
                     'sent_date' => Carbon::now()->toDateTimeString(),
-                    'desc' => $this->desc
+                    'desc' => $this->desc,
+                    'action_taken' => $this->selectedAction,
                 ]);
 
                 // Хэрвээ 1111-ээс ирсэн гомдол байвал 1111 рүү мэдээлэл дамжуулах
@@ -296,6 +303,7 @@ class ComplaintStep extends Component
                         'status_id' => 3,
                         'sent_date' => Carbon::now()->toDateTimeString(),
                         'desc' => $this->desc,
+                        'action_taken' => $this->selectedAction,
                         'file_id' => isset($filename) ? $filename->id : null,
                     ]);
                 } else {
@@ -308,6 +316,7 @@ class ComplaintStep extends Component
                         'status_id' => 3,
                         'sent_date' => Carbon::now()->toDateTimeString(),
                         'desc' => $this->desc,
+                        'action_taken' => $this->selectedAction,
                         'file_id' => isset($filename) ? $filename->id : null,
                     ]);
                 }
@@ -353,6 +362,7 @@ class ComplaintStep extends Component
                     'status_id' => 4,
                     'sent_date' => Carbon::now()->toDateTimeString(),
                     'desc' => $this->desc,
+                    'action_taken' => $this->selectedAction,
                     'file_id' => isset($filename) ? $filename->id : null,
                 ]);
 
@@ -405,6 +415,7 @@ class ComplaintStep extends Component
                         'status_id' => 6,
                         'sent_date' => Carbon::now()->toDateTimeString(),
                         'desc' => $this->desc,
+                        'action_taken' => $this->selectedAction,
                         'amount' => $this->amount,
                         'file_id' => isset($filename) ? $filename->id : null,
                     ]);
@@ -448,6 +459,7 @@ class ComplaintStep extends Component
                             'status_id' => 6,
                             'sent_date' => Carbon::now()->toDateTimeString(),
                             'desc' => $this->desc,
+                            'action_taken' => $this->selectedAction,
                             'amount' => $this->amount,
                             'file_id' => isset($filename) ? $filename->id : null,
                         ]);
@@ -490,6 +502,7 @@ class ComplaintStep extends Component
                             'status_id' => 6,
                             'sent_date' => Carbon::now()->toDateTimeString(),
                             'desc' => $this->desc,
+                            'action_taken' => $this->selectedAction,
                             'amount' => $this->amount,
                             'file_id' => isset($filename) ? $filename->id : null,
                         ]);
@@ -537,7 +550,8 @@ class ComplaintStep extends Component
                     'sent_user_id' => Auth::user()->id,
                     'status_id' => 7,
                     'sent_date' => Carbon::now()->toDateTimeString(),
-                    'desc' => $this->desc
+                    'desc' => $this->desc,
+                    'action_taken' => $this->selectedAction,
                 ]);
 
                 // Send email about complaint recieved
@@ -566,7 +580,33 @@ class ComplaintStep extends Component
         $this->complaint_id = $complaint_step->complaint_id;
         $this->desc = $complaint_step->desc;
 
+        $this->selectedAction = $complaint_step->action_taken;
+
+        $this->isEditMode = true;
+        $this->step_id = $id;
+
         $this->openModal();
+    }
+
+    public function update()
+    {
+        $this->validate([
+            'desc' => 'required',
+        ]);
+
+        // Find the existing complaint step
+        $complaintStep = ModelsComplaintStep::findOrFail($this->step_id);
+
+        // Update the description
+        $complaintStep->desc = $this->desc;
+
+        // Save the updated complaint step
+        $complaintStep->save();
+
+        session()->flash('success', 'Амжилттай шинэчиллээ.');
+
+        $this->closeModal();
+        $this->resetInputFields();
     }
 
     /**

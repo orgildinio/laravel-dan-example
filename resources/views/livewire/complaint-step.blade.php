@@ -110,6 +110,15 @@
                             <x-file-list-component :$fileName :$fileExt :$fileUrl :$fileSizeInKilobytes />
                         </div>
                     @endif
+
+                    <!-- Edit and Delete Buttons -->
+                    @if (Auth::user()->role->name == "ehzh")    
+                    <div class="text-right mt-4">
+                        <button wire:click="edit({{ $step->id }})" class="bg-yellow-500 hover:bg-yellow-700 text-white py-1 px-3 rounded">Засах</button>
+                        {{-- <button wire:click="confirmDelete({{ $step->id }})" class="bg-red-500 hover:bg-red-700 text-white py-1 px-3 rounded">Устгах</button> --}}
+                    </div>
+                    @endif
+
                 </div>
             </div>
         </div>

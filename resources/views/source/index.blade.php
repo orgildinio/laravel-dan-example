@@ -38,6 +38,17 @@
 <x-admin-layout>
     <div class="bg-white shadow rounded-lg p-4 2xl:col-span-1">
 
+        @session('success')
+            <div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
+                {{ $value }}
+            </div>
+        @endsession
+        @session('error')
+            <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                {{ $value }}
+              </div>
+        @endsession
+
         {{-- Filter --}}
         <form id="searchForm" method="GET" autocomplete="off">
             <div class="w-full flex flex-col md:flex-row items-center justify-start pb-2">
@@ -167,11 +178,9 @@
                                 <div class="uppercase text-xs leading-4 font-semibold text-center text-white">
                                     {{ $complaint->type }}</div>
                             </div>
-                            @if (isset($complaint->complaint_id))
-                                <div class="ml-3 p-1 bg-gray-100 rounded text-xs">
-                                    Бүртгэгдсэн
-                                </div>
-                            @endif
+                            <div class="ml-3 p-1 bg-gray-100 rounded text-xs">
+                                <a class="" onclick="return confirm('1111-рүү Өргөдөл, гомдол буцаах уу?')" href="{{route('sourceComplaint.unreceipt', $complaint->id)}}">Буцаах</a>
+                            </div>
                         </div>
                     </div>
                 </div>

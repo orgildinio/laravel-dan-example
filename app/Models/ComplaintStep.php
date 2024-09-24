@@ -11,7 +11,7 @@ class ComplaintStep extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['org_id', 'complaint_id', 'recieved_user_id', 'sent_user_id', 'recieved_date', 'sent_date', 'desc', 'status_id', 'amount', 'file_id'];
+    protected $fillable = ['org_id', 'complaint_id', 'recieved_user_id', 'sent_user_id', 'recieved_date', 'sent_date', 'desc', 'status_id', 'amount', 'file_id', 'action_taken',];
 
     public function org()
     {

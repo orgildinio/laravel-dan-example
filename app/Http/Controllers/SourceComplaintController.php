@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\SourceComplaint;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 
 class SourceComplaintController extends Controller
@@ -123,5 +124,40 @@ class SourceComplaintController extends Controller
         $years = range($currentYear, $currentYear - 5, -1);
 
         return view('source.index', compact('complaints', 'serial_number', 'selected_year', 'daterange', 'search_text', 'years'));
+    }
+
+    // 1111-ээс ирсэн хамааралгүй гомдлыг 1111-рүү буцаах
+    public function unreceipt($id)
+    {
+
+        $sourceComplaint = SourceComplaint::findOrFail($id);
+
+        if ($sourceComplaint) {
+            // Update the record
+            $sourceComplaint->is_modified = true;
+            $sourceComplaint->save();
+
+            // 1111 төвийн гомдлыг хүлээн авсан төлөвт шилжүүлэх
+            $params = [
+                'action' => 'un-receipt',
+                'number' => $sourceComplaint->number,
+                'u' => env('1111_API_USERNAME'),
+                'p' => env('1111_API_PASSWORD'),
+                'api_key' => '-'
+            ];
+            $response = Http::get('https://www.11-11.mn/GStest/APIa', $params);
+            $result = $response->json();
+
+            if ($result['isValid'] && $result['smart']['isValid']) {
+                // API request success
+                Log::channel('1111_log')->info('un-reciept action successfully. 1111 ээс ирсэн гомдлыг амжилттай буцаав. UserId: ' . Auth::user()->id . ' sourceComplaint_number: ' . $sourceComplaint->number);
+
+                return redirect()->route('source.index')->with('success', '1111 ээс ирсэн гомдлыг амжилттай буцаав.');
+            } else {
+                // API request failed
+                Log::channel('1111_log')->error('Failed un-reciept action. 1111 ээс ирсэн гомдлыг буцаахад алдаа гарлаа.');
+                return redirect()->route('source.index')->with('error', '1111 ээс ирсэн гомдлыг буцаахад алдаа гарлаа.');
+            }
+        }
     }
 }
