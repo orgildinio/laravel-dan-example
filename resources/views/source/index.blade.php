@@ -179,7 +179,7 @@
                                     {{ $complaint->type }}</div>
                             </div>
                             <div class="ml-3 p-1 bg-gray-100 rounded text-xs">
-                                <a class="" onclick="return confirm('1111-рүү Өргөдөл, гомдол буцаах уу?')" href="{{route('sourceComplaint.unreceipt', $complaint->id)}}">Буцаах</a>
+                                <a class="" onclick="return confirm('1111-рүү Өргөдөл, гомдол буцаах уу?')" href="{{route('unreceipt', $complaint->id)}}">Буцаах</a>
                             </div>
                         </div>
                     </div>
