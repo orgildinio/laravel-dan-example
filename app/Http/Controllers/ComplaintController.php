@@ -131,30 +131,30 @@ class ComplaintController extends Controller
         $danUser = Auth::user();
         $energy_type_id = $request->input('energy_type_id');
 
-        $user_district = $danUser->danSoumDistrictName;
-        $user_khoroo_number = intval(str_replace(['-р хороо'], '', $danUser->danBagKhorooName));
+        // $user_district = $danUser->danSoumDistrictName;
+        // $user_khoroo_number = intval(str_replace(['-р хороо'], '', $danUser->danBagKhorooName));
 
-        if ($energy_type_id == 1) {
-            $data['orgs'] = Organization::where("plant_id", $energy_type_id)
-                ->whereNotIn("id", [99])
-                ->orderBy("name")
-                ->get(["name", "id"]);
-        } else {
+        // if ($energy_type_id == 1) {
+        //     $data['orgs'] = Organization::where("plant_id", $energy_type_id)
+        //         ->whereNotIn("id", [99])
+        //         ->orderBy("name")
+        //         ->get(["name", "id"]);
+        // } else {
 
-            $data['orgs'] = Organization::whereHas('serviceAreas', function ($query) use ($user_district, $user_khoroo_number) {
-                $query->where('district', 'LIKE', '%' . $user_district . '%')
-                    ->where('khoroo', 'LIKE', '%' . $user_khoroo_number . '%');
-            })->where("plant_id", $energy_type_id)
-                ->whereNotIn("id", [99])
-                ->orderBy("name")
-                ->get(["name", "id"]);
-        }
+        //     $data['orgs'] = Organization::whereHas('serviceAreas', function ($query) use ($user_district, $user_khoroo_number) {
+        //         $query->where('district', 'LIKE', '%' . $user_district . '%')
+        //             ->where('khoroo', 'LIKE', '%' . $user_khoroo_number . '%');
+        //     })->where("plant_id", $energy_type_id)
+        //         ->whereNotIn("id", [99])
+        //         ->orderBy("name")
+        //         ->get(["name", "id"]);
+        // }
 
 
-        // $data['orgs'] = Organization::where("plant_id", $energy_type_id)
-        //     ->whereNotIn("id", [99])
-        //     ->orderBy("name")
-        //     ->get(["name", "id"]);
+        $data['orgs'] = Organization::where("plant_id", $energy_type_id)
+            ->whereNotIn("id", [99])
+            ->orderBy("name")
+            ->get(["name", "id"]);
 
         return response()->json($data);
     }
