@@ -220,7 +220,7 @@
                             <div  class="text-sm px-2 mb-2">
                                 <p>Яриа бичлэг</p>
                                 <audio controls class="w-full">
-                                    <source src="{{ asset('records/' . $complaint->cdr?->linkedid) }}.wav" type="audio/mpeg">
+                                    <source src="{{ asset('records/' . $complaint->cdr?->record_name) }}.wav" type="audio/mpeg">
                                     Your browser does not support the audio element.
                                 </audio>
                             </div>
