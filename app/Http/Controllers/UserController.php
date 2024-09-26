@@ -81,6 +81,9 @@ class UserController extends Controller
 
         $input['password'] = Hash::make($request->password);
 
+        // registriin dugaart test utga olgoh
+        $input['danRegnum'] = 'TT111111';
+
         User::create($input);
 
         return redirect()->route('user.index')

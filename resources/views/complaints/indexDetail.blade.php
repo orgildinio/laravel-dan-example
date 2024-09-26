@@ -145,7 +145,7 @@
                                     Төрөл: </span> {{ $complaint->energyType?->name }}</div>
                             <div class="text-xs leading-5"><span class="text-xs leading-4 font-normal text-gray-500">
                                     {{ $complaint->status?->name }}: </span>{{ $complaint->updated_at }}</div>
-                            @if ($status_id != 6)
+                            @if ($complaint->status_id != 6)
                                 <div class="text-sm leading-5"><span
                                         class="text-xs leading-4 font-normal text-gray-500"> Үлдсэн хугацаа: </span>
                                     @if ($complaint->hasExpired())
