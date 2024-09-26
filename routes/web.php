@@ -105,7 +105,7 @@ Route::middleware([
     // 1111 ээс санал хүсэлт авах
     Route::resource('/sourceComplaint', SourceComplaintController::class);
     Route::get('/fetchComplaints', [SourceComplaintController::class, 'fetchComplaints'])->name('fetchComplaints');
-    Route::post('/unreceipt/{id}', [SourceComplaintController::class, 'unreceipt'])->name('unreceipt');
+    Route::get('/unreceipt/{id}', [SourceComplaintController::class, 'unreceipt'])->name('unreceipt');
 
     Route::get('/tze-guide', function () {
         return view('tze-guide');
