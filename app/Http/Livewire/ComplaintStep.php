@@ -10,6 +10,7 @@ use Livewire\Component;
 use App\Models\Complaint;
 use App\Jobs\SendEmailJob;
 use App\Models\Organization;
+use App\Jobs\SendTzeEmailJob;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
@@ -265,6 +266,13 @@ class ComplaintStep extends Component
                     'desc' => $this->desc,
                     'action_taken' => $this->selectedAction,
                 ]);
+
+                // Хүлээн авч буй ТЗЭ байгууллагын хэрэглэгч
+                $recvUser = User::where('org_id', $this->org_id)->first();
+                // Send email about new complaint recieved
+                if ($recvUser != null) {
+                    SendTzeEmailJob::dispatch($complaint, $recvUser);
+                }
 
                 // Хэрвээ 1111-ээс ирсэн гомдол байвал 1111 рүү мэдээлэл дамжуулах
                 if ($complaint->channel_id == 7 && $complaint->source_number != null) {

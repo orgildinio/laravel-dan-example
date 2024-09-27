@@ -3,6 +3,7 @@
 namespace App\Mail;
 
 use App\Models\Complaint;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -14,15 +15,17 @@ class TzeNotificationMail extends Mailable
 {
     use Queueable, SerializesModels;
     public $complaint; // Passing data to the email
+    public $user;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(Complaint $complaint)
+    public function __construct(Complaint $complaint, User $user)
     {
         $this->complaint = $complaint;
+        $this->user = $user;
     }
 
     /**
@@ -45,9 +48,10 @@ class TzeNotificationMail extends Mailable
     public function content()
     {
         return new Content(
-            markdown: 'emails.complaint.tze-notification',
+            view: 'emails.complaint.tze-notification',
             with: [
-                'complaint' => $this->complaint
+                'complaint' => $this->complaint,
+                'user' => $this->user,
             ]
         );
     }

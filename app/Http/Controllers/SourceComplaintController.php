@@ -152,11 +152,11 @@ class SourceComplaintController extends Controller
                 // API request success
                 Log::channel('1111_log')->info('un-reciept action successfully. 1111 ээс ирсэн гомдлыг амжилттай буцаав. UserId: ' . Auth::user()->id . ' sourceComplaint_number: ' . $sourceComplaint->number);
 
-                return redirect()->route('source.index')->with('success', '1111 ээс ирсэн гомдлыг амжилттай буцаав.');
+                return redirect()->route('sourceComplaint.index')->with('success', '1111 ээс ирсэн гомдлыг амжилттай буцаав.');
             } else {
                 // API request failed
                 Log::channel('1111_log')->error('Failed un-reciept action. 1111 ээс ирсэн гомдлыг буцаахад алдаа гарлаа.');
-                return redirect()->route('source.index')->with('error', '1111 ээс ирсэн гомдлыг буцаахад алдаа гарлаа.');
+                return redirect()->route('sourceComplaint.index')->with('error', '1111 ээс ирсэн гомдлыг буцаахад алдаа гарлаа.');
             }
         }
     }
