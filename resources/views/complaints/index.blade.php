@@ -65,7 +65,7 @@
                             <div class="mr-1">
                                 <select name="energy_type_id" id="energy_type_id"
                                     class="w-32 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
-                                    <option value="">Төрөл</option>
+                                    <option value="">Энергийн төрөл</option>
                                     @foreach ($energy_types as $type)
                                         <option value="{{ $type->id }}"
                                             {{ old('energy_type_id', $energy_type_id) == $type->id ? 'selected' : '' }}>
@@ -116,6 +116,33 @@
                                     Хугацаа хэтрээгүй</option>
                             </select>
                         </div>
+                        <div class="mr-1">
+                            <select name="complaint_type_id" id="complaint_type_id"
+                                class="w-32 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
+                                <option value="">Гомдлын төрөл</option>
+                                @foreach ($complaint_types as $type)
+                                    <option value="{{ $type->id }}"
+                                        {{ old('complaint_type_id', $complaint_type_id) == $type->id ? 'selected' : '' }}>
+                                        {{ $type->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mr-1">
+                            <select name="complaint_type_summary_id" id="complaint_type_summary_id"
+                                class="w-32 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
+                                <option value="">Товч утга</option>
+                                {{-- @foreach ($complaint_type_summaries as $summary)
+                                    <option value="{{ $summary->id }}"
+                                        {{ old('complaint_type_summary_id', $complaint_type_summary_id) == $summary->id ? 'selected' : '' }}>
+                                        {{ $summary->name }}</option>
+                                @endforeach --}}
+                            </select>
+                        </div>
+                        <div class="mr-1">
+                            <a href="{{ url()->current() }}" class="flex items-center justify-center bg-gray-300 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2">
+                                Цэвэрлэх
+                            </a>
+                        </div>
                         <div>
                             <button type="submit"
                                 class="flex items-center justify-center text-white bg-primary hover:bg-primaryHover focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2">
@@ -128,7 +155,7 @@
             <div
                 class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
                 <a class="flex items-center justify-center flex-shrink-0 px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-300 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200"
-                    href="{{ route('exportReportExcel', ['daterange' => Request::get('daterange'), 'energy_type_id' => Request::get('energy_type_id'), 'search_text' => Request::get('search_text'), 'status_id' => Request::get('status_id'), 'org_id' => Request::get('org_id'), 'second_org_id' => Request::get('second_org_id'), 'energy_type_id' => Request('energy_type_id'), 'controlled_user_id' => Request('controlled_user_id'), 'channel_id' => Request('channel_id'), 'user_code' => Request('user_code'), 'phone' => Request('phone'), 'expire_status' => Request('expire_status')]) }}">
+                    href="{{ route('exportReportExcel', ['daterange' => Request::get('daterange'), 'energy_type_id' => Request::get('energy_type_id'), 'search_text' => Request::get('search_text'), 'status_id' => Request::get('status_id'), 'org_id' => Request::get('org_id'), 'second_org_id' => Request::get('second_org_id'), 'energy_type_id' => Request('energy_type_id'), 'controlled_user_id' => Request('controlled_user_id'), 'channel_id' => Request('channel_id'), 'user_code' => Request('user_code'), 'phone' => Request('phone'), 'expire_status' => Request('expire_status'), 'complaint_type_id' => Request('complaint_type_id'), 'complaint_type_summary_id' => Request('complaint_type_summary_id')]) }}">
                     <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24"
                         stroke-width="2" stroke="currentColor" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -313,6 +340,8 @@
                 'phone' => $phone,
                 'user_code' => $user_code,
                 'expire_status' => $expire_status,
+                'complaint_type_id' => $complaint_type_id,
+                'complaint_type_summary_id' => $complaint_type_summary_id,
             ])->links() !!}
     </div>
 </x-admin-layout>
@@ -338,5 +367,51 @@
                 window.location.href = '/complaint/' + id;
 
             });
+
+            // find complaint_type_summaries depending on complaint_type
+            $('#energy_type_id, #complaint_type_id').on('change', function () {
+            // var complaintTypeId = $(this).val();
+            var energy_type_id = $("#energy_type_id").val();
+            var complaint_type_id = $("#complaint_type_id").val();
+
+            if (energy_type_id && complaint_type_id) {
+                $.ajax({
+                    // url: '/getComplaintSummaries/' + complaintTypeId,
+                    // type: 'GET',
+                    // dataType: 'json',
+                    // success: function (data) {
+                    //     $('#complaint_type_summary_id').empty();
+                    //     $('#complaint_type_summary_id').append('<option value="">Товч утга</option>');
+                    //     $.each(data, function (key, value) {
+                    //         $('#complaint_type_summary_id').append('<option value="' + value.id + '">' + value.name + '</option>');
+                    //     });
+                    // }
+                    url: '/getTypeSummary',
+                        method: 'GET',
+                        headers: {
+                            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data: {
+                            energy_type_id: energy_type_id,
+                            complaint_type_id: complaint_type_id,
+                        },
+                        success: function(result) {
+                            $('#complaint_type_summary_id').html(
+                                '<option value="">-- Сонгох --</option>');
+                            $.each(result.summaries, function(key, value) {
+                                $("#complaint_type_summary_id").append('<option value="' +
+                                    value
+                                    .id + '">' + value.name + '</option>');
+                            });
+                        },
+                        error: function(error) {
+                            console.error('Error getting summary data...');
+                        }
+                });
+            } else {
+                $('#complaint_type_summary_id').empty();
+                $('#complaint_type_summary_id').append('<option value="">Товч утга</option>');
+            }
+        });
         });
     </script>

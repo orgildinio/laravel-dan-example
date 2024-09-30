@@ -56,41 +56,17 @@ class ExportComplaint implements FromCollection, WithHeadings, ShouldAutoSize, W
         // return Complaint::all();
         // $complaints = Complaint::with('complaintSteps')->get();
 
-        // dd(json_encode($complaints));
-
-        $complaints = Complaint::join('categories', 'complaints.category_id', '=', 'categories.id')
-            ->join('channels', 'complaints.channel_id', '=', 'channels.id')
-            ->join('statuses', 'complaints.status_id', '=', 'statuses.id')
-            ->join('users', 'complaints.controlled_user_id', '=', 'users.id')
-            ->join('organizations as org1', 'complaints.organization_id', '=', 'org1.id')
-            // ->join('organizations as org2', 'complaints.second_org_id', '=', 'org2.id')
-            ->join('energy_types', 'complaints.energy_type_id', '=', 'energy_types.id')
-            ->join('complaint_maker_types', 'complaints.complaint_maker_type_id', '=', 'complaint_maker_types.id')
-            ->select(
-                'complaints.serial_number',
-                'categories.name as category',
-                'channels.name as channel',
-                'statuses.name as status',
-                'users.name as name',
-                'org1.name as org_name',
-                'complaints.second_org_id',
-                'energy_types.name as energytype',
-                'complaint_maker_types.name as orgtype',
-                'complaints.lastname',
-                'complaints.firstname',
-                'complaints.complaint_maker_org_name',
-                'complaints.phone',
-                'complaints.complaint',
-                'complaints.complaint_date',
-            )
+        $complaints = Complaint::with(['complaintSteps', 'category', 'channel', 'status', 'controlledUser', 'organization', 'energyType', 'complaintType', 'complaintTypeSummary'])
+            ->select('complaints.*') // Select all fields from complaints
             ->when(isset($_GET['daterange']), function ($query) {
                 $date_range = explode(' to ', $_GET['daterange']);
-                $date['start'] = \Carbon\Carbon::parse($date_range[0])->format('Y-m-d H:i:s');
-                $date['end'] = \Carbon\Carbon::parse($date_range[1])->format('Y-m-d H:i:s');
-                $query->whereBetween('complaint_date', [$date['start'], $date['end']]);
+                $query->whereBetween('complaint_date', [
+                    \Carbon\Carbon::parse($date_range[0])->startOfDay(),
+                    \Carbon\Carbon::parse($date_range[1])->endOfDay()
+                ]);
             })
             ->when(isset($_GET['search_text']), function ($query) {
-                $query->where('complaint', 'like', "%{$_GET['search_text']}%");
+                $query->where('complaint', 'like', "%" . $_GET['search_text'] . "%");
             })
             ->when(isset($_GET['status_id']), function ($query) {
                 $query->where('status_id', $_GET['status_id']);
@@ -113,16 +89,15 @@ class ExportComplaint implements FromCollection, WithHeadings, ShouldAutoSize, W
             ->when(isset($_GET['channel_id']), function ($query) {
                 $query->where('channel_id', $_GET['channel_id']);
             })
-            ->when(isset($_GET['second_org_id']), function ($query) {
-                $query->where('second_org_id', $_GET['second_org_id']);
-            })
             ->when(isset($_GET['phone']), function ($query) {
                 $query->where('phone', $_GET['phone']);
             })
-            // ->when(isset($_GET['user_code']), function ($query) {
-            //     $userdata = Registration::where('code', $_GET['user_code'])->first();
-            //     $query->where('phone', $userdata->phoneNumber);
-            // })
+            ->when(isset($_GET['complaint_type_id']), function ($query) {
+                $query->where('complaint_type_id', $_GET['complaint_type_id']);
+            })
+            ->when(isset($_GET['complaint_type_summary_id']), function ($query) {
+                $query->where('complaint_type_summary_id', $_GET['complaint_type_summary_id']);
+            })
             ->when(isset($_GET['expire_status']), function ($query) {
                 if ($_GET['expire_status'] === 'expired') {
                     $query->where('expire_date', '<', now())->where('status_id', '!=', 6);
@@ -130,43 +105,58 @@ class ExportComplaint implements FromCollection, WithHeadings, ShouldAutoSize, W
                     $query->where('expire_date', '>', now());
                 }
             })
-            ->orderBy('complaints.complaint_date', 'desc')
+            ->orderBy('complaint_date', 'desc')
             ->get();
+
 
         return $complaints;
     }
 
     public function map($row): array
     {
+        // Format complaint steps, you can adjust the format as needed
+        // $complaintSteps = $row->complaintSteps->map(function ($step) {
+        //     return ' (' . $step->created_at->format('Y-m-d') . ')' . $step->desc;  // Example format
+        // })->implode(', ');  // Join all steps into a single string with commas separating them
+
+        // Get only the last complaint step, if available
+        $lastStep = $row->complaintSteps->last();
+
+        $complaintSteps = $lastStep ?
+            '(' . $lastStep->created_at->format('Y-m-d') . ') ' . $lastStep->desc :
+            'No steps available';  // Fallback text if no steps exist
+
+        $mappedData = [
+            $row->serial_number,
+            $row->category?->name,
+            $row->channel?->name,
+            $row->status?->name,
+            $row->controlledUser?->name,
+            $row->organization?->name,
+            $row->secondOrg?->name,
+            $row->energyType?->name,
+            $row->complaintType?->name,
+            $row->complaintTypeSummary?->name,
+            $row->complaintMakerType?->name,
+            $row->lastname,
+            $row->firstname,
+            $row->complaint_maker_org_name,
+            $row->phone,
+            $row->complaint,
+            $row->complaint_date,
+            $complaintSteps
+        ];
+
         if (Auth::user()->org_id == 99) {
-            return [
-                $row->serial_number,
-                $row->category,
-                $row->channel,
-                $row->status,
-                $row->name,
-                $row->org_name,
-                $row->secondOrg?->name,
-                $row->energytype,
-                $row->orgtype,
-                $row->lastname,
-                $row->firstname,
-                $row->complaint_maker_org_name,
-                $row->phone,
-                $row->complaint,
-                $row->complaint_date,
-            ];
+            return $mappedData; // Return all data if org_id is 99
         } else {
             return [
                 $row->serial_number,
-                $row->category,
-                $row->channel,
-                $row->status,
-                $row->name,
-                // $row->org_name,
-                // $row->secondOrg?->name,
-                // $row->energytype,
-                $row->orgtype,
+                $row->category?->name,
+                $row->channel?->name,
+                $row->status?->name,
+                $row->controlledUser?->name,
+                $row->complaintMakerType?->name,
                 $row->lastname,
                 $row->firstname,
                 $row->complaint_maker_org_name,
@@ -189,13 +179,16 @@ class ExportComplaint implements FromCollection, WithHeadings, ShouldAutoSize, W
                 'Хариуцсан байгууллага',
                 'Холбогдох ТЗЭ',
                 'Энергийн төрөл',
+                'Гомдлын төрөл',
+                'Өргөдлийн товч утга',
                 'Өргөдөл гаргагчийн төрөл',
                 'Овог',
                 'Нэр',
                 'ААН-н нэр',
                 'Утас',
                 'Санал хүсэлт',
-                'Бүртгэсэн огноо'
+                'Бүртгэсэн огноо',
+                'Шийдвэрлэлт'
             ];
         } else {
             return [
@@ -204,9 +197,6 @@ class ExportComplaint implements FromCollection, WithHeadings, ShouldAutoSize, W
                 'Суваг',
                 'Төлөв',
                 'Хариуцсан мэргэжилтэн',
-                // 'Хариуцсан байгууллага',
-                // 'Холбогдох ТЗЭ',
-                // 'Энергийн төрөл',
                 'Өргөдөл гаргагчийн төрөл',
                 'Овог',
                 'Нэр',
@@ -223,7 +213,7 @@ class ExportComplaint implements FromCollection, WithHeadings, ShouldAutoSize, W
         return [
             AfterSheet::class => function (AfterSheet $event) {
 
-                $cellRange = 'A1:O1'; // All headers
+                $cellRange = 'A1:R1'; // All headers
                 $event->sheet->getDelegate()->getStyle($cellRange)->getFont()->setSize(12);
                 $event->sheet->getDelegate()->getStyle($cellRange)
                     ->getFill()
