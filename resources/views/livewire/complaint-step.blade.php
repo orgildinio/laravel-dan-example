@@ -92,7 +92,7 @@
                         @if (isset($step->amount))
                             
                         <div class="text-sm text-gray-700 mt-2 font-bold">
-                            Үнийн дүн: {{ number_format($step->amount) }}₮
+                            Үнийн дүн: {{ number_format((float)$step->amount) }}₮
                         </div>
                         @endif
                     </div>
