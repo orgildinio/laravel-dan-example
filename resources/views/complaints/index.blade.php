@@ -342,6 +342,7 @@
                 'expire_status' => $expire_status,
                 'complaint_type_id' => $complaint_type_id,
                 'complaint_type_summary_id' => $complaint_type_summary_id,
+                'relatedComplaintIds' => $relatedComplaintIds
             ])->links() !!}
     </div>
 </x-admin-layout>

@@ -53,7 +53,6 @@
                                         <i class="fa-solid fa-circle fa-beat-fade text-red-500"></i>
                                         <span class="">Хугацаа хэтэрсэн</span>
                                     @else
-                                        {{-- <span>{{ now()->diffInHours($complaint->expire_date) > 24 ? now()->diffInDays($complaint->expire_date) . ' өдөр' : now()->diffInHours($complaint->expire_date) . ' цаг' }}</span> --}}
                                         <span>{{ \App\Helpers\DateHelper::formatDateDiff(now(), $complaint->expire_date) }}
                                         </span>
                                     @endif
@@ -183,6 +182,15 @@
                                 
                             {{ $rating->comment }}
                             @endif
+                        </div>
+                        <div class="grid grid-cols-1 gap-1 p-3 even:bg-gray-50 sm:grid-cols-3 sm:gap-4">
+                            <dt class="font-medium text-gray-900">Холбоотой гомдлууд</dt>
+                            <dd class="text-gray-700 text-right sm:col-span-2">
+                                <a href="{{ route('complaint.index', ['related_complaints' => $related_complaints->pluck('id')->toArray()]) }}"
+                                    class="text-blue-500 hover:underline">
+                                     {{ count($related_complaints) }} гомдлууд
+                                 </a>
+                            </dd>
                         </div>
                     </dl>
                 </div>

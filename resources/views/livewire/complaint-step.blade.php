@@ -25,6 +25,11 @@
     </div>
 
     @foreach ($complaint_steps as $step)
+        @if ($step->status_id == 7)
+            <div class="p-2 bg-red-100 text-red-800 text-sm rounded mb-4">
+                Шийдвэрлэх хугацаа хэтэрсэн
+            </div>
+        @endif
         <div
             class="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] border border-gray-300">
             <div class="border-b-2 border-neutral-100 px-6 py-3 font-semibold">

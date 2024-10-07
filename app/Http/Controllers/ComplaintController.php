@@ -226,8 +226,16 @@ class ComplaintController extends Controller
         $complaint_type_id = $request->query('complaint_type_id');
         $complaint_type_summary_id = $request->query('complaint_type_summary_id');
 
+        // Retrieve the related complaint IDs from the query parameters
+        $relatedComplaintIds = $request->query('related_complaints', []);
+
         $query = Complaint::query();
         $query->orderBy('complaint_date', 'desc');
+
+        // Fetch complaints based on the provided IDs
+        if ($relatedComplaintIds !== null && !empty($relatedComplaintIds)) {
+            $query->whereIn('id', $relatedComplaintIds);
+        }
 
         if (isset($daterange)) {
             $dates = explode(' to ', $daterange);
@@ -302,7 +310,7 @@ class ComplaintController extends Controller
         $complaint_types = ComplaintType::all();
         $complaint_type_summaries = ComplaintTypeSummary::all();
 
-        return view('complaints.index', compact('complaints', 'daterange', 'search_text', 'statuses', 'status_id', 'org_id', 'orgs', 'energy_type_id', 'energy_types', 'channel_id', 'channels', 'controlled_user_id', 'controlled_users', 'second_org_id', 'phone', 'user_code', 'expire_status', 'complaint_types', 'complaint_type_id', 'complaint_type_summaries', 'complaint_type_summary_id'));
+        return view('complaints.index', compact('complaints', 'daterange', 'search_text', 'statuses', 'status_id', 'org_id', 'orgs', 'energy_type_id', 'energy_types', 'channel_id', 'channels', 'controlled_user_id', 'controlled_users', 'second_org_id', 'phone', 'user_code', 'expire_status', 'complaint_types', 'complaint_type_id', 'complaint_type_summaries', 'complaint_type_summary_id', 'relatedComplaintIds'));
     }
 
     public function ExportReportExcel(Request $request)
@@ -624,7 +632,9 @@ class ComplaintController extends Controller
         $rating = Rating::where('user_id', auth()->user()->id)->where('complaint_id', $id)->first();
         // dd($rating);
 
-        return view('complaints.show', compact('complaint', 'rating', 'fileName', 'fileUrl', 'fileExt', 'fileSizeInKilobytes'));
+        $related_complaints = Complaint::where('phone', $complaint->phone)->where('firstname', $complaint->firstname)->get();
+
+        return view('complaints.show', compact('complaint', 'rating', 'fileName', 'fileUrl', 'fileExt', 'fileSizeInKilobytes', 'related_complaints'));
     }
 
     /**
