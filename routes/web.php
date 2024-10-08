@@ -101,6 +101,7 @@ Route::middleware([
     Route::post('/orgNumber/{id}', [OrgNumberController::class, 'save'])->name('orgNumber.save');
     Route::resource('/organization', OrganizationController::class);
     Route::get('/report1', [ReportController::class, 'showReport'])->name('report1.show');
+    Route::get('/energyReport', [ReportController::class, 'energyReport'])->name('energyReport');
 
     // 1111 ээс санал хүсэлт авах
     Route::resource('/sourceComplaint', SourceComplaintController::class);
