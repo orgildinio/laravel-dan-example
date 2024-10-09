@@ -1,43 +1,55 @@
 <style>
     .table-container {
-            display: flex;
-            justify-content: space-around;
-        }
-    #energy {
+        display: flex;
+    }
+
+    .energyReport {
         font-family: Arial, Helvetica, sans-serif;
+        font-size: 12px;
         border-collapse: collapse;
-        width: 100%;
+        /* width: 100%; */
     }
 
-    #energy thead {
-        height: 200px;
+    .energyReport th, .energyReport td {
+        border: 1px solid black;
+        padding: 4px;
+        height: 50px;
     }
 
-    #energy td,
-    #energy th {
-        border: 1px solid #ddd;
-        padding: 8px;
-        height: 150px;
-    }
-
-    #energy tr:nth-child(even) {
+    .energyReport tr:nth-child(even) {
         background-color: #f2f2f2;
     }
 
-    #energy tr:hover {
+    .energyReport tr:hover {
         background-color: #ddd;
     }
 
-    #energy th {
+    .energyReport th {
         padding-top: 12px;
         padding-bottom: 12px;
         text-align: left;
-        background-color: purple;
-        color: white;
+        color: #030712;
+        writing-mode: vertical-rl;
+        transform: rotate(180deg);
+        white-space: nowrap;
+        height: 550px;
+        width: 40px;
+        text-align: center;
     }
-    td:last-child {
-            font-weight: bold;
-        }
+
+    .energyReport td:last-child {
+        font-weight: bold;
+    }
+
+    #table1 th {
+        background-color: lightcyan;
+    }
+    #table2 th {
+        background-color: lightyellow;
+    }
+    #table3 th {
+        background-color: lightgray;
+    }
 </style>
 <x-admin-layout>
     <h3 class="text-xl font-bold">Тайлан Цахилгаан</h3>
@@ -64,11 +76,11 @@
             </div>
         </form>
         <div class="table-container">
-        <table id="energy">
+        <table class="energyReport" id="table1">
             <thead>
                 <tr>
-                    <th>№</th>
-                    <th>Байгууллага</th>
+                    <th style="background-color: white;">Д/д</th>
+                    <th style="background-color: white;">Байгууллага</th>
                     <th>Хүчдэлгүй</th>
                     <th>Хүчдэлийн түвшин муу
                     </th>
@@ -124,7 +136,7 @@
                         <td>
                             {{ $loop->iteration }}
                         </td>
-                        <td>
+                        <td style="white-space: nowrap;">
                             {{ $item->organization_name }}
                         </td>
                         <td>
@@ -206,7 +218,7 @@
                 @endforeach
             </tbody>
         </table>
-        <table id="energy">
+        <table class="energyReport" id="table2">
             <thead>
                 <tr>
                     {{-- <th>ТЗЭ</th> --}}
@@ -241,6 +253,50 @@
                     </td>
                     <td>
                         {{ $comp->total }}
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+        <table class="energyReport" id="table3">
+            <thead>
+                <tr>
+                    <th>Веб хуудас</th>
+                    <th>Утас</th>
+                    <th>Имэйл</th>
+                    <th>Биечлэн</th>
+                    <th>Гар утас апп</th>
+                    <th>Бичгээр</th>
+                    <th>ЗГ-ын 11-11 төв</th>
+                    <th>Нийт</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($complaintsByChannel as $channel)
+                <tr>
+                    <td>
+                        {{ $channel->c_1 }}
+                    </td>
+                    <td>
+                        {{ $channel->c_2 }}
+                    </td>
+                    <td>
+                        {{ $channel->c_3 }}
+                    </td>
+                    <td>
+                        {{ $channel->c_4 }}
+                    </td>
+                    <td>
+                        {{ $channel->c_5 }}
+                    </td>
+                    <td>
+                        {{ $channel->c_6 }}
+                    </td>
+                    <td>
+                        {{ $channel->c_7 }}
+                    </td>
+                    <td>
+                        {{ $channel->total }}
                     </td>
                 </tr>
                 @endforeach
