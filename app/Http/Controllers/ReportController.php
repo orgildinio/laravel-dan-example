@@ -99,44 +99,6 @@ class ReportController extends Controller
         // If end_date is null, set it to the current date
         $endDate = $end_date != null ? $end_date : Carbon::now()->toDateString();
 
-        // $complaints = DB::table('complaints as c')
-        //     ->join('organizations as org', 'c.second_org_id', '=', 'org.id')
-        //     ->join('complaint_type_summaries as cts', 'cts.id', '=', 'c.complaint_type_summary_id')
-        //     ->select(
-        //         'org.name as organization_name',
-        //         DB::raw('SUM(CASE WHEN c.complaint_type_summary_id = 1 THEN 1 ELSE 0 END) as c1_cnt'),
-        //         DB::raw('SUM(CASE WHEN c.complaint_type_summary_id = 9 THEN 1 ELSE 0 END) as c9_cnt'),
-        //         DB::raw('SUM(CASE WHEN c.complaint_type_summary_id = 10 THEN 1 ELSE 0 END) as c10_cnt'),
-        //         DB::raw('SUM(CASE WHEN c.complaint_type_summary_id = 11 THEN 1 ELSE 0 END) as c11_cnt'),
-        //         DB::raw('SUM(CASE WHEN c.complaint_type_summary_id = 12 THEN 1 ELSE 0 END) as c12_cnt'),
-        //         DB::raw('SUM(CASE WHEN c.complaint_type_summary_id = 13 THEN 1 ELSE 0 END) as c13_cnt'),
-        //         DB::raw('SUM(CASE WHEN c.complaint_type_summary_id = 14 THEN 1 ELSE 0 END) as c14_cnt'),
-        //         DB::raw('SUM(CASE WHEN c.complaint_type_summary_id = 15 THEN 1 ELSE 0 END) as c15_cnt'),
-        //         DB::raw('SUM(CASE WHEN c.complaint_type_summary_id = 29 THEN 1 ELSE 0 END) as c29_cnt'),
-        //         DB::raw('SUM(CASE WHEN c.complaint_type_summary_id = 30 THEN 1 ELSE 0 END) as c30_cnt'),
-        //         DB::raw('SUM(CASE WHEN c.complaint_type_summary_id = 31 THEN 1 ELSE 0 END) as c31_cnt'),
-        //         DB::raw('SUM(CASE WHEN c.complaint_type_summary_id = 32 THEN 1 ELSE 0 END) as c32_cnt'),
-        //         DB::raw('SUM(CASE WHEN c.complaint_type_summary_id = 33 THEN 1 ELSE 0 END) as c33_cnt'),
-        //         DB::raw('SUM(CASE WHEN c.complaint_type_summary_id = 34 THEN 1 ELSE 0 END) as c34_cnt'),
-        //         DB::raw('SUM(CASE WHEN c.complaint_type_summary_id = 39 THEN 1 ELSE 0 END) as c39_cnt'),
-        //         DB::raw('SUM(CASE WHEN c.complaint_type_summary_id = 40 THEN 1 ELSE 0 END) as c40_cnt'),
-        //         DB::raw('SUM(CASE WHEN c.complaint_type_summary_id = 42 THEN 1 ELSE 0 END) as c42_cnt'),
-        //         DB::raw('SUM(CASE WHEN c.complaint_type_summary_id = 78 THEN 1 ELSE 0 END) as c78_cnt'),
-        //         DB::raw('SUM(CASE WHEN c.complaint_type_summary_id = 79 THEN 1 ELSE 0 END) as c79_cnt'),
-        //         DB::raw('SUM(CASE WHEN c.complaint_type_summary_id = 80 THEN 1 ELSE 0 END) as c80_cnt'),
-        //         DB::raw('SUM(CASE WHEN c.complaint_type_summary_id = 81 THEN 1 ELSE 0 END) as c81_cnt'),
-        //         DB::raw('SUM(CASE WHEN c.complaint_type_summary_id = 82 THEN 1 ELSE 0 END) as c82_cnt'),
-        //         DB::raw('SUM(CASE WHEN c.complaint_type_summary_id = 83 THEN 1 ELSE 0 END) as c83_cnt'),
-        //         DB::raw('SUM(CASE WHEN c.complaint_type_summary_id = 84 THEN 1 ELSE 0 END) as c84_cnt'),
-        //         DB::raw('COUNT(c.id) as total_complaints')
-        //     )
-        //     ->where('c.energy_type_id', 1) // Цахилгаан
-        //     ->where('c.complaint_type_id', 2) // Чанар хангамж
-        //     ->whereBetween('c.complaint_date', [$startDate, $endDate])
-        //     ->groupBy('org.name')
-        //     ->orderBy('org.name')
-        //     ->get();
-
         $complaints = DB::table('organizations as org')
             ->select(
                 'org.name as organization_name',
@@ -169,7 +131,7 @@ class ReportController extends Controller
             ->leftJoin('complaints as c', function ($join) use ($startDate, $endDate) {
                 $join->on('c.second_org_id', '=', 'org.id')
                     ->where('c.complaint_type_id', '=', 2)
-                    ->whereBetween('c.created_at', [$startDate, $endDate]); // Add whereBetween here
+                    ->whereBetween('c.complaint_date', [$startDate, $endDate]); // Add whereBetween here
             })
             ->leftJoin('complaint_type_summaries as cts', 'cts.id', '=', 'c.complaint_type_summary_id')
             ->where('org.plant_id', '=', 1)
@@ -190,7 +152,7 @@ class ReportController extends Controller
             // ->leftJoin('complaints as c', 'c.second_org_id', '=', 'org.id')
             ->leftJoin('complaints as c', function ($join) use ($startDate, $endDate) {
                 $join->on('c.second_org_id', '=', 'org.id')
-                    ->whereBetween('c.created_at', [$startDate, $endDate]); // Add whereBetween here
+                    ->whereBetween('c.complaint_date', [$startDate, $endDate]); // Add whereBetween here
             })
             ->where('org.plant_id', '=', 1)
             ->groupBy('org.name')
@@ -212,7 +174,7 @@ class ReportController extends Controller
             // ->leftJoin('complaints as c', 'c.second_org_id', '=', 'org.id')
             ->leftJoin('complaints as c', function ($join) use ($startDate, $endDate) {
                 $join->on('c.second_org_id', '=', 'org.id')
-                    ->whereBetween('c.created_at', [$startDate, $endDate]); // Add whereBetween here
+                    ->whereBetween('c.complaint_date', [$startDate, $endDate]); // Add whereBetween here
             })
             ->where('org.plant_id', '=', 1)
             ->groupBy('org.name')
