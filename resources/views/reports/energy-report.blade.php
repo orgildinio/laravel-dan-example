@@ -37,6 +37,10 @@
         text-align: center;
     }
 
+    .energyReport tfoot {
+        font-weight: bold;
+    }
+
     .energyReport td:last-child {
         font-weight: bold;
     }
@@ -217,11 +221,41 @@
                     </tr>
                 @endforeach
             </tbody>
+            <tfoot>
+                <tr>
+                    <td></td>
+                    <td>Нийт</td>
+                    <td id="sum1"></td>
+                    <td id="sum2"></td>
+                    <td id="sum3"></td>
+                    <td id="sum4"></td>
+                    <td id="sum5"></td>
+                    <td id="sum6"></td>
+                    <td id="sum7"></td>
+                    <td id="sum8"></td>
+                    <td id="sum9"></td>
+                    <td id="sum10"></td>
+                    <td id="sum11"></td>
+                    <td id="sum12"></td>
+                    <td id="sum13"></td>
+                    <td id="sum14"></td>
+                    <td id="sum15"></td>
+                    <td id="sum16"></td>
+                    <td id="sum17"></td>
+                    <td id="sum18"></td>
+                    <td id="sum19"></td>
+                    <td id="sum20"></td>
+                    <td id="sum21"></td>
+                    <td id="sum22"></td>
+                    <td id="sum23"></td>
+                    <td id="sum24"></td>
+                    <td id="sum25"></td>
+                </tr>
+            </tfoot>
         </table>
         <table class="energyReport" id="table2">
             <thead>
                 <tr>
-                    {{-- <th>ТЗЭ</th> --}}
                     <th>Төлбөр тооцоо</th>
                     <th>Чанар хангамж</th>
                     <th>Хэмжих хэрэгсэл</th>
@@ -233,9 +267,6 @@
             <tbody>
                 @foreach ($complaintsByType as $comp)
                 <tr>
-                    {{-- <td>
-                        {{ $comp->organization_name }}
-                    </td> --}}
                     <td>
                         {{ $comp->c_1 }}
                     </td>
@@ -257,6 +288,16 @@
                 </tr>
                 @endforeach
             </tbody>
+            <tfoot>
+                <tr>
+                    <td id="sumType1"></td>
+                    <td id="sumType2"></td>
+                    <td id="sumType3"></td>
+                    <td id="sumType4"></td>
+                    <td id="sumType5"></td>
+                    <td id="sumType6"></td>
+                </tr>
+            </tfoot>
         </table>
         <table class="energyReport" id="table3">
             <thead>
@@ -301,6 +342,18 @@
                 </tr>
                 @endforeach
             </tbody>
+            <tfoot>
+                <tr>
+                    <td id="sumChannel1"></td>
+                    <td id="sumChannel2"></td>
+                    <td id="sumChannel3"></td>
+                    <td id="sumChannel4"></td>
+                    <td id="sumChannel5"></td>
+                    <td id="sumChannel6"></td>
+                    <td id="sumChannel7"></td>
+                    <td id="sumChannel8"></td>
+                </tr>
+            </tfoot>
         </table>
         </div>
     </div>
@@ -333,6 +386,65 @@
                 formattedEndDate, // Use Laravel variable or fallback
                 dateFormat: "Y-m-d"
             });
+
+            // Function to calculate the sum for each column in a table
+            function calculateColumnSum(tableId, columnIndex, resultCellId) {
+                let sum = 0;
+
+                // Loop through each row (excluding the header and footer)
+                $(`#${tableId} tbody tr`).each(function() {
+                    let cellValue = $(this).find(`td:eq(${columnIndex})`).text().trim();
+                    cellValue = parseFloat(cellValue) || 0; // Convert to float, or 0 if invalid
+                    sum += cellValue;
+                });
+
+                // Display the sum in the corresponding footer cell
+                $(`#${resultCellId}`).text(sum.toFixed(0)); // Rounded to 2 decimal places
+            }
+
+            // Calculate sums for each table and column
+            calculateColumnSum('table1', 2, 'sum1'); // For column 2 in table1, store result in #sum1
+            calculateColumnSum('table1', 3, 'sum2'); // For column 3 in table1, store result in #sum2
+            calculateColumnSum('table1', 4, 'sum3');
+            calculateColumnSum('table1', 5, 'sum4');
+            calculateColumnSum('table1', 6, 'sum5');
+            calculateColumnSum('table1', 7, 'sum6');
+            calculateColumnSum('table1', 8, 'sum7');
+            calculateColumnSum('table1', 9, 'sum8');
+            calculateColumnSum('table1', 10, 'sum9');
+            calculateColumnSum('table1', 11, 'sum10');
+            calculateColumnSum('table1', 12, 'sum11');
+            calculateColumnSum('table1', 13, 'sum12');
+            calculateColumnSum('table1', 14, 'sum13');
+            calculateColumnSum('table1', 15, 'sum14');
+            calculateColumnSum('table1', 16, 'sum15');
+            calculateColumnSum('table1', 17, 'sum16');
+            calculateColumnSum('table1', 18, 'sum17');
+            calculateColumnSum('table1', 19, 'sum18');
+            calculateColumnSum('table1', 20, 'sum19');
+            calculateColumnSum('table1', 21, 'sum20');
+            calculateColumnSum('table1', 22, 'sum21');
+            calculateColumnSum('table1', 23, 'sum22');
+            calculateColumnSum('table1', 24, 'sum23');
+            calculateColumnSum('table1', 25, 'sum24');
+            calculateColumnSum('table1', 26, 'sum25');
+
+            // Repeat for other tables if needed
+            calculateColumnSum('table2', 0, 'sumType1');
+            calculateColumnSum('table2', 1, 'sumType2');
+            calculateColumnSum('table2', 2, 'sumType3');
+            calculateColumnSum('table2', 3, 'sumType4');
+            calculateColumnSum('table2', 4, 'sumType5');
+            calculateColumnSum('table2', 5, 'sumType6');
+
+            calculateColumnSum('table3', 0, 'sumChannel1');
+            calculateColumnSum('table3', 1, 'sumChannel2');
+            calculateColumnSum('table3', 2, 'sumChannel3');
+            calculateColumnSum('table3', 3, 'sumChannel4');
+            calculateColumnSum('table3', 4, 'sumChannel5');
+            calculateColumnSum('table3', 5, 'sumChannel6');
+            calculateColumnSum('table3', 6, 'sumChannel7');
+            calculateColumnSum('table3', 7, 'sumChannel8');
 
         });
     </script>
