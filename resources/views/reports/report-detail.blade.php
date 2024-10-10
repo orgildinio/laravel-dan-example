@@ -87,7 +87,7 @@
                 <tr>
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $data->complaint_date }}</td>
-                    <td>{{ $data->firstname . " " . $data->phone }}</td>
+                    <td>{{ $data->lastname . " " . $data->firstname . " " . $data->phone }}</td>
                     <td>{{ $data->t1 }}</td>
                     <td>{{ $data->t2 }}</td>
                     <td>{{ $data->t3 }}</td>

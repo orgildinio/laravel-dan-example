@@ -249,7 +249,6 @@ class ReportController extends Controller
             ')
             ->where('energy_type_id', $energyTypeId)
             ->orderByDesc('complaint_date')
-            ->limit(10)
             ->orderByDesc('complaint_date')
             ->get();
 
