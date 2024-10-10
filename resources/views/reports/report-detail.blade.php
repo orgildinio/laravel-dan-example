@@ -1,72 +1,26 @@
 <style>
-    html {
-        font-family: sans-serif;
+    #report-detail {
+      font-family: Arial, Helvetica, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+      font-size: 12px;
     }
-
-    table {
-        border-collapse: collapse;
-        border: 2px solid rgb(200, 200, 200);
-        letter-spacing: 1px;
-        font-size: 0.8rem;
+    
+    #report-detail td, #report-detail th {
+      border: 1px solid #ddd;
+      padding: 8px;
     }
-
-    td,
-    th {
-        border: 1px solid rgb(190, 190, 190);
-        /* padding: 10px 20px; */
-    }
-
-    th {
-        background-color: rgb(235, 235, 235);
-    }
-
-    td {
-        text-align: center;
-    }
-
-    tr:nth-child(even) td {
-        background-color: rgb(250, 250, 250);
-    }
-
-    tr:nth-child(odd) td {
-        background-color: rgb(245, 245, 245);
-    }
-
-    caption {
-        padding: 10px;
-    }
-
-    .vertical-text {
-        transform: rotate(-90deg);
-        /* margin: 30px 0px;
-    padding: 0px; */
-        /* padding: 10px; */
-        width: 30px;
-    }
-
-    .v-header {
-        height: 120px;
-        /* width: 20px; */
-    }
-
-    .tulbur {
-        background-color: lightgreen;
-    }
-
-    .chanar {
-        background-color: lightpink
-    }
-
-    .hemjih {
-        background-color: lightyellow
-    }
-
-    .hariltsaa {
-        background-color: lightblue
-    }
-
-    .busad {
-        background-color: lightsteelblue
+    
+    #report-detail tr:nth-child(even){background-color: #f2f2f2;}
+    
+    #report-detail tr:hover {background-color: #ddd;}
+    
+    #report-detail th {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      text-align: left;
+      background-color: blueviolet;
+      color: white;
     }
 </style>
 <x-admin-layout>
@@ -105,28 +59,27 @@
             </div>
         </form>
     </div>
-    <table>
+    <table id="report-detail">
         <thead>
             <tr>
                 <th>№</th>
                 <th>Мэргэжилтэнд цохогдсон огноо</th>
                 <th>Өргөдөл гаргагчийн нэр</th>
-                <th>Төлбөр</th>
-                <th>Чанар хангамж</th>
-                <th>Хэмжих хэрэгсэл</th>
-                <th>Харилцаа, ёс зүй</th>
-                <th>Бусад</th>
-                <th>Нийт</th>
-                <th>Веб хуудас</th>
-                <th>Утас</th>
-                <th>И-мэйл</th>
-                <th>Биечлэн</th>
-                <th>Гар утасны апп</th>
-                <th>Бичгээр</th>
-                <th>11-11 төвөөс</th>
+                <th style="background-color: blue;">Төлбөр тооцоо</th>
+                <th style="background-color: blue;">Чанар хангамж</th>
+                <th style="background-color: blue;">Хэмжих хэрэгсэл</th>
+                <th style="background-color: blue;">Харилцаа, ёс зүй</th>
+                <th style="background-color: blue;">Бусад</th>
+                <th style="background-color: green;">Веб хуудас</th>
+                <th style="background-color: green;">Утас</th>
+                <th style="background-color: green;">И-мэйл</th>
+                <th style="background-color: green;">Биечлэн</th>
+                <th style="background-color: green;">Гар утасны апп</th>
+                <th style="background-color: green;">Бичгээр</th>
+                <th style="background-color: green;">11-11 төвөөс</th>
                 <th>Холбогдох байгууллага</th>
-                <th>Товч утга</th>
-                <th>Шийдвэрлэсэн байдал</th>
+                <th style="width: 300px;">Товч утга</th>
+                <th style="width: 300px;">Шийдвэрлэсэн байдал</th>
             </tr>
         </thead>
         <tbody>
@@ -140,7 +93,6 @@
                     <td>{{ $data->t3 }}</td>
                     <td>{{ $data->t5 }}</td>
                     <td>{{ $data->t6 }}</td>
-                    <td></td>
                     <td>{{ $data->ch1 }}</td>
                     <td>{{ $data->ch2 }}</td>
                     <td>{{ $data->ch3 }}</td>
@@ -148,12 +100,11 @@
                     <td>{{ $data->ch5 }}</td>
                     <td>{{ $data->ch6 }}</td>
                     <td>{{ $data->ch7 }}</td>
-                    <td>{{ $data->organization }}</td>
+                    <td>{{ $data->organization?->name }}</td>
                     <td>{{ $data->complaint }}</td>
-                    <td>
+                    <td style="text-align: left;">
                         @foreach ($data->complaintSteps as $step)
-                            {{ $step->desc }}
-                            {{-- {{ '(' . $step->created_at->format('Y-m-d') . ') ' . $lastStep->desc }} --}}
+                            {{ '(' . $step->created_at->format('Y-m-d') . ') ' . $step->desc }}<br>
                         @endforeach
                     </td>
                 </tr>
