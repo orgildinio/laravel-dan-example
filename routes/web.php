@@ -102,6 +102,7 @@ Route::middleware([
     Route::resource('/organization', OrganizationController::class);
     Route::get('/report1', [ReportController::class, 'showReport'])->name('report1.show');
     Route::get('/energyReport', [ReportController::class, 'energyReport'])->name('energyReport');
+    Route::get('/reportDetail', [ReportController::class, 'reportDetail'])->name('reportDetail');
 
     // 1111 ээс санал хүсэлт авах
     Route::resource('/sourceComplaint', SourceComplaintController::class);

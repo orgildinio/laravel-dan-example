@@ -6,7 +6,7 @@
                     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded">Тайлан 1</a>
                 <a href="{{ route('energyReport') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded">Тайлан
                     2</a>
-                <a href="#" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded">Тайлан
+                <a href="{{ route('reportDetail') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded">Тайлан
                     3</a>
             </div>
         @endif
