@@ -16,7 +16,10 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
-        $schedule->command('command:fetch-source-complaint')->daily();
+        // $schedule->command('command:fetch-source-complaint')->daily();
+
+        // Schedule the command to run every day at 12:00 AM and 12:00 PM
+        $schedule->command('api:fetch-data')->twiceDaily(0, 12);
     }
 
     /**
