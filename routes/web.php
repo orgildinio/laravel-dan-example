@@ -108,6 +108,7 @@ Route::middleware([
     Route::resource('/sourceComplaint', SourceComplaintController::class);
     Route::get('/fetchComplaints', [SourceComplaintController::class, 'fetchComplaints'])->name('fetchComplaints');
     Route::get('/unreceipt/{id}', [SourceComplaintController::class, 'unreceipt'])->name('unreceipt');
+    Route::get('/create/{id}', [SourceComplaintController::class, 'create'])->name('create');
 
     Route::get('/tze-guide', function () {
         return view('tze-guide');

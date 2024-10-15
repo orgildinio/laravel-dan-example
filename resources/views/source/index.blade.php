@@ -179,7 +179,8 @@
                                     {{ $complaint->type }}</div>
                             </div>
                             <div class="ml-3 p-1 bg-gray-100 rounded text-xs">
-                                <a class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onclick="event.stopPropagation(); return confirm('1111-рүү Өргөдөл, гомдол буцаах уу?')" href="{{route('unreceipt', $complaint->id)}}">Буцаах</a>
+                                {{-- <a class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onclick="event.stopPropagation(); return confirm('1111-рүү Өргөдөл, гомдол буцаах уу?')" href="{{route('unreceipt', $complaint->id)}}">Буцаах</a> --}}
+                                <a class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onclick="event.stopPropagation();" href="{{ route('create', $complaint->id) }}">Буцаах</a>
                             </div>
                         </div>
                     </div>
