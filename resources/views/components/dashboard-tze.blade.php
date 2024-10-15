@@ -593,6 +593,8 @@
     var channelTogDatas = compTogChannelsCount.map(function(obj) {
         return obj[Object.keys(obj)[1]];
     });
+    console.log("chTogLabel", compTogChannelsCount);
+    console.log("chTog", channelTogDatas);
 
     var compDulaanChannelsCount = <?php echo $compDulaanChannelsCount; ?>;
     var channelDulaanLabels = compDulaanChannelsCount.map(function(obj) {

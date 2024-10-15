@@ -36,7 +36,7 @@ class DashboardTzeShow extends Component
         $ctl_comp = Complaint::where('status_id', 3)->where('organization_id', $org_id)->count();
         $slv_comp = Complaint::where('status_id', 6)->where('organization_id', $org_id)->count();
         $cnc_comp = Complaint::where('status_id', 4)->where('organization_id', $org_id)->count();
-        $exp_comp = Complaint::where('expire_date', '<=', Carbon::now())->where('organization_id', $org_id)->count();
+        $exp_comp = Complaint::where('expire_date', '<=', Carbon::now())->where('status_id', '!=', 6)->where('organization_id', $org_id)->count();
 
         $tze_tog_count = Complaint::where('energy_type_id', 1)->where('organization_id', $org_id)->count();
         $tze_dulaan_count = Complaint::where('energy_type_id', 2)->where('organization_id', $org_id)->count();

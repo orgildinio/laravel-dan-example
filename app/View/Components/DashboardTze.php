@@ -102,22 +102,30 @@ class DashboardTze extends Component
             ->get();
         $compMakerDulaanCount = json_encode($compTypeMakersDulaan);
 
-        $compTogChannels = Complaint::from('complaints as c')
-            ->select('ct.name', DB::raw('COUNT(c.id) as y'))
-            ->leftJoin('channels as ct', 'c.channel_id', '=', 'ct.id')
-            ->where('c.energy_type_id', '=', 1)
-            ->whereNotIn('c.organization_id', [99])
+        $compTogChannels = DB::table('channels as ct')
+            ->leftJoin('complaints as c', function ($join) {
+                $join->on('ct.id', '=', 'c.channel_id')
+                    ->where('c.organization_id', '<>', 99)
+                    ->where('c.energy_type_id', '=', 1);
+            })
+            ->selectRaw('ct.name, COUNT(c.id) as y')
             ->groupBy('ct.name')
+            ->orderBy('ct.name', 'asc')
             ->get();
+
         $compTogChannelsCount = json_encode($compTogChannels);
 
-        $compDulaanChannels = Complaint::from('complaints as c')
-            ->select('ct.name', DB::raw('COUNT(c.id) as y'))
-            ->leftJoin('channels as ct', 'c.channel_id', '=', 'ct.id')
-            ->where('c.energy_type_id', '=', 2)
-            ->whereNotIn('c.organization_id', [99])
+        $compDulaanChannels = DB::table('channels as ct')
+            ->leftJoin('complaints as c', function ($join) {
+                $join->on('ct.id', '=', 'c.channel_id')
+                    ->where('c.organization_id', '<>', 99)
+                    ->where('c.energy_type_id', '=', 2);
+            })
+            ->selectRaw('ct.name, COUNT(c.id) as y')
             ->groupBy('ct.name')
+            ->orderBy('ct.name', 'asc')
             ->get();
+
         $compDulaanChannelsCount = json_encode($compDulaanChannels);
 
         $statusExpireTog = Complaint::where('expire_date', '<=', Carbon::now())
