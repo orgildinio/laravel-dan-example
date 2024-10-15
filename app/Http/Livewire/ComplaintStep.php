@@ -459,6 +459,7 @@ class ComplaintStep extends Component
                 } else {
                     if (Auth::user()->org_id == 99) {
                         $complaint->status_id = 6;
+                        $complaint->second_status_id = 6;
                         $complaint->save();
                         ModelsComplaintStep::create([
                             'org_id' => $complaint->organization_id,
