@@ -241,7 +241,11 @@ class ComplaintController extends Controller
             $dates = explode(' to ', $daterange);
             $start_date = $dates[0];
             $end_date = $dates[1];
-            $query->whereBetween('complaint_date', [$start_date, $end_date]);
+            // $query->whereBetween('complaint_date', [$start_date, $end_date]);
+            $query->whereBetween('complaint_date', [
+                \Carbon\Carbon::parse($dates[0])->startOfDay(),
+                \Carbon\Carbon::parse($dates[1])->endOfDay()
+            ]);
         }
 
         if ($search_text !== null) {
