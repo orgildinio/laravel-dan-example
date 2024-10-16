@@ -25,10 +25,10 @@ class ReportController extends Controller
         $endDate = $end_date != null ? $end_date : Carbon::now()->toDateString();
 
         $reportData = DB::table('complaints as c')
-            ->join('organizations as o', 'c.organization_id', '=', 'o.id')
+            ->join('organizations as o', 'c.second_org_id', '=', 'o.id')
             ->join('complaint_types as ct', 'c.complaint_type_id', '=', 'ct.id')
             ->select(
-                'o.id as organization_id',
+                'o.id as second_org_id',
                 'o.name',
                 DB::raw("COUNT(CASE WHEN ct.name = 'Төлбөр тооцоо' AND c.channel_id = 1 THEN 1 END) AS type1_channel1_count"),
                 DB::raw("COUNT(CASE WHEN ct.name = 'Төлбөр тооцоо' AND c.channel_id = 2 THEN 1 END) AS type1_channel2_count"),
