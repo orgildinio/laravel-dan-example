@@ -209,6 +209,7 @@
                         <th
                             class="p-2 w-[100px] text-xs font-medium leading-4 tracking-wider text-left text-gray-800 uppercase border-b border-gray-300 bg-gray-50">
                             Үлдсэн хугацаа</th>
+                            <th></th>
                     </tr>
                 </thead>
                 <tbody class="bg-white">
@@ -321,6 +322,24 @@
                                         <span>{{ now()->diffInHours($complaint->expire_date) > 24 ? now()->diffInDays($complaint->expire_date) . ' өдөр' : now()->diffInHours($complaint->expire_date) . ' цаг' }}</span>
                                     @endif
                                 </td>
+                            @endif
+                            @if (Auth::user()->role?->name == 'admin')
+                            <td
+                                class="text-sm font-medium leading-5 whitespace-no-wrap border-b border-gray-200 ">
+                                <form action="{{ route('complaint.destroy',$complaint->id) }}"
+                                    method="Post">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger"><svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            class="w-6 h-6 text-red-600 hover:text-red-800" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                stroke-width="2"
+                                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                        </svg></button>
+                                </form>
+                            </td>
                             @endif
                         </tr>
                     @endforeach
