@@ -25,6 +25,7 @@ class CdrController extends Controller
             $query->whereIn('src', $org_numbers)
                 ->orWhereIn('dst', $org_numbers);
         })
+            ->where('disposition', 'ANSWERED')
             ->orderBy('calldate', 'desc')
             ->paginate(15);
         // dd($cdrRecords);
