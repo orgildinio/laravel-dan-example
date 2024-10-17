@@ -70,6 +70,7 @@
                 <th style="background-color: blue;">Цуцалсан</th>
                 <th style="background-color: blue;">Шийдвэрлэсэн</th>
                 <th style="background-color: blue;">Нийт</th>
+                <th style="background-color: red;">Хугацаа хэтэрсэн</th>
             </tr>
         </thead>
         <tbody>
@@ -83,6 +84,7 @@
                     <td>{{ $data->s_4_cnt }}</td>
                     <td>{{ $data->s_6_cnt }}</td>
                     <td>{{ $data->total_count }}</td>
+                    <td>{{ $data->expired_count }}</td>
                 </tr>
             @endforeach
         </tbody>
