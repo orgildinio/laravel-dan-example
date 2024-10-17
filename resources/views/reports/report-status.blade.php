@@ -24,7 +24,7 @@
     }
 </style>
 <x-admin-layout>
-    <h3 class="text-xl font-bold">ХЭРЭГЛЭГЧИЙН ӨРГӨДӨЛ, ГОМДЛЫН ШИЙДВЭРЛЭЛТИЙН МЭДЭЭ </h3>
+    <h3 class="text-xl font-bold">ЭХЗХ-оос ТЗЭ нарт шилжүүлсэн өргөдөл, гомдлын шийдвэрлэлтийн мэдээ</h3>
     <div class="w-full">
         <form method="GET" autocomplete="off">
             @csrf
