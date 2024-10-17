@@ -38,6 +38,7 @@ class ReportController extends Controller
                 DB::raw("COUNT(CASE WHEN ct.name = 'Төлбөр тооцоо' AND c.channel_id = 6 THEN 1 END) AS type1_channel6_count"),
                 DB::raw("COUNT(CASE WHEN ct.name = 'Төлбөр тооцоо' AND c.channel_id = 7 THEN 1 END) AS type1_channel7_count"),
                 DB::raw("COUNT(CASE WHEN ct.name = 'Төлбөр тооцоо' THEN 1 END) AS type1_count_all"),
+
                 DB::raw("COUNT(CASE WHEN ct.name = 'Чанар, хангамж' AND c.channel_id = 1 THEN 1 END) AS type2_channel1_count"),
                 DB::raw("COUNT(CASE WHEN ct.name = 'Чанар, хангамж' AND c.channel_id = 2 THEN 1 END) AS type2_channel2_count"),
                 DB::raw("COUNT(CASE WHEN ct.name = 'Чанар, хангамж' AND c.channel_id = 3 THEN 1 END) AS type2_channel3_count"),
@@ -46,6 +47,7 @@ class ReportController extends Controller
                 DB::raw("COUNT(CASE WHEN ct.name = 'Чанар, хангамж' AND c.channel_id = 6 THEN 1 END) AS type2_channel6_count"),
                 DB::raw("COUNT(CASE WHEN ct.name = 'Чанар, хангамж' AND c.channel_id = 7 THEN 1 END) AS type2_channel7_count"),
                 DB::raw("COUNT(CASE WHEN ct.name = 'Чанар, хангамж' THEN 1 END) AS type2_count_all"),
+
                 DB::raw("COUNT(CASE WHEN ct.name = 'Хэмжих хэрэгсэл' AND c.channel_id = 1 THEN 1 END) AS type3_channel1_count"),
                 DB::raw("COUNT(CASE WHEN ct.name = 'Хэмжих хэрэгсэл' AND c.channel_id = 2 THEN 1 END) AS type3_channel2_count"),
                 DB::raw("COUNT(CASE WHEN ct.name = 'Хэмжих хэрэгсэл' AND c.channel_id = 3 THEN 1 END) AS type3_channel3_count"),
@@ -54,6 +56,7 @@ class ReportController extends Controller
                 DB::raw("COUNT(CASE WHEN ct.name = 'Хэмжих хэрэгсэл' AND c.channel_id = 6 THEN 1 END) AS type3_channel6_count"),
                 DB::raw("COUNT(CASE WHEN ct.name = 'Хэмжих хэрэгсэл' AND c.channel_id = 7 THEN 1 END) AS type3_channel7_count"),
                 DB::raw("COUNT(CASE WHEN ct.name = 'Хэмжих хэрэгсэл' THEN 1 END) AS type3_count_all"),
+
                 DB::raw("COUNT(CASE WHEN ct.name = 'Харилцаа, ёс зүй' AND c.channel_id = 1 THEN 1 END) AS type4_channel1_count"),
                 DB::raw("COUNT(CASE WHEN ct.name = 'Харилцаа, ёс зүй' AND c.channel_id = 2 THEN 1 END) AS type4_channel2_count"),
                 DB::raw("COUNT(CASE WHEN ct.name = 'Харилцаа, ёс зүй' AND c.channel_id = 3 THEN 1 END) AS type4_channel3_count"),
@@ -62,6 +65,7 @@ class ReportController extends Controller
                 DB::raw("COUNT(CASE WHEN ct.name = 'Харилцаа, ёс зүй' AND c.channel_id = 6 THEN 1 END) AS type4_channel6_count"),
                 DB::raw("COUNT(CASE WHEN ct.name = 'Харилцаа, ёс зүй' AND c.channel_id = 7 THEN 1 END) AS type4_channel7_count"),
                 DB::raw("COUNT(CASE WHEN ct.name = 'Харилцаа, ёс зүй' THEN 1 END) AS type4_count_all"),
+
                 DB::raw("COUNT(CASE WHEN ct.name = 'Бусад' AND c.channel_id = 1 THEN 1 END) AS type5_channel1_count"),
                 DB::raw("COUNT(CASE WHEN ct.name = 'Бусад' AND c.channel_id = 2 THEN 1 END) AS type5_channel2_count"),
                 DB::raw("COUNT(CASE WHEN ct.name = 'Бусад' AND c.channel_id = 3 THEN 1 END) AS type5_channel3_count"),
@@ -70,6 +74,25 @@ class ReportController extends Controller
                 DB::raw("COUNT(CASE WHEN ct.name = 'Бусад' AND c.channel_id = 6 THEN 1 END) AS type5_channel6_count"),
                 DB::raw("COUNT(CASE WHEN ct.name = 'Бусад' AND c.channel_id = 7 THEN 1 END) AS type5_channel7_count"),
                 DB::raw("COUNT(CASE WHEN ct.name = 'Бусад' THEN 1 END) AS type5_count_all"),
+
+                DB::raw("COUNT(CASE WHEN ct.name = 'Халаалт' AND c.channel_id = 1 THEN 1 END) AS type6_channel1_count"),
+                DB::raw("COUNT(CASE WHEN ct.name = 'Халаалт' AND c.channel_id = 2 THEN 1 END) AS type6_channel2_count"),
+                DB::raw("COUNT(CASE WHEN ct.name = 'Халаалт' AND c.channel_id = 3 THEN 1 END) AS type6_channel3_count"),
+                DB::raw("COUNT(CASE WHEN ct.name = 'Халаалт' AND c.channel_id = 4 THEN 1 END) AS type6_channel4_count"),
+                DB::raw("COUNT(CASE WHEN ct.name = 'Халаалт' AND c.channel_id = 5 THEN 1 END) AS type6_channel5_count"),
+                DB::raw("COUNT(CASE WHEN ct.name = 'Халаалт' AND c.channel_id = 6 THEN 1 END) AS type6_channel6_count"),
+                DB::raw("COUNT(CASE WHEN ct.name = 'Халаалт' AND c.channel_id = 7 THEN 1 END) AS type6_channel7_count"),
+                DB::raw("COUNT(CASE WHEN ct.name = 'Халаалт' THEN 1 END) AS type6_count_all"),
+
+                DB::raw("COUNT(CASE WHEN ct.name = 'Халуун ус' AND c.channel_id = 1 THEN 1 END) AS type7_channel1_count"),
+                DB::raw("COUNT(CASE WHEN ct.name = 'Халуун ус' AND c.channel_id = 2 THEN 1 END) AS type7_channel2_count"),
+                DB::raw("COUNT(CASE WHEN ct.name = 'Халуун ус' AND c.channel_id = 3 THEN 1 END) AS type7_channel3_count"),
+                DB::raw("COUNT(CASE WHEN ct.name = 'Халуун ус' AND c.channel_id = 4 THEN 1 END) AS type7_channel4_count"),
+                DB::raw("COUNT(CASE WHEN ct.name = 'Халуун ус' AND c.channel_id = 5 THEN 1 END) AS type7_channel5_count"),
+                DB::raw("COUNT(CASE WHEN ct.name = 'Халуун ус' AND c.channel_id = 6 THEN 1 END) AS type7_channel6_count"),
+                DB::raw("COUNT(CASE WHEN ct.name = 'Халуун ус' AND c.channel_id = 7 THEN 1 END) AS type7_channel7_count"),
+                DB::raw("COUNT(CASE WHEN ct.name = 'Халуун ус' THEN 1 END) AS type7_count_all"),
+
                 DB::raw("COUNT(CASE WHEN c.channel_id = 1 THEN 1 END) AS channel1_all"),
                 DB::raw("COUNT(CASE WHEN c.channel_id = 2 THEN 1 END) AS channel2_all"),
                 DB::raw("COUNT(CASE WHEN c.channel_id = 3 THEN 1 END) AS channel3_all"),
