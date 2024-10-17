@@ -277,7 +277,14 @@ class ReportController extends Controller
                 DB::raw('COUNT(CASE WHEN c.second_status_id = 3 THEN 1 END) AS s_3_cnt'),
                 DB::raw('COUNT(CASE WHEN c.second_status_id = 4 THEN 1 END) AS s_4_cnt'),
                 DB::raw('COUNT(CASE WHEN c.second_status_id = 6 THEN 1 END) AS s_6_cnt'),
-                DB::raw('COUNT(*) AS total_count'),
+                // DB::raw('COUNT(*) AS total_count'),
+                DB::raw('(
+                    COUNT(CASE WHEN c.second_status_id = 0 THEN 1 END) +
+                    COUNT(CASE WHEN c.second_status_id = 2 THEN 1 END) +
+                    COUNT(CASE WHEN c.second_status_id = 3 THEN 1 END) +
+                    COUNT(CASE WHEN c.second_status_id = 4 THEN 1 END) +
+                    COUNT(CASE WHEN c.second_status_id = 6 THEN 1 END)
+                ) AS total_count'),
                 DB::raw('COUNT(CASE WHEN c.expire_date < CURRENT_DATE AND c.second_status_id != 6 AND c.status_id != 6 THEN 1 END) AS expired_count')
             )
             ->where('c.energy_type_id', $energyTypeId)
