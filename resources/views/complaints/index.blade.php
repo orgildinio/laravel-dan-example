@@ -8,6 +8,8 @@
                     2</a>
                 <a href="{{ route('reportDetail') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded">Тайлан
                     3</a>
+                <a href="{{ route('reportStatus') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded">Тайлан
+                    4</a>
             </div>
         @endif
         <div class="">

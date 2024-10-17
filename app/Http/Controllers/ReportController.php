@@ -201,36 +201,6 @@ class ReportController extends Controller
         // If end_date is null, set it to the current date
         $endDate = $end_date != null ? $end_date : Carbon::now()->toDateString();
 
-        // $complaints = Complaint::with('complaintSteps')
-        //     ->selectRaw('
-        //         complaints.serial_number, 
-        //         complaints.complaint_date, 
-        //         complaints.lastname, 
-        //         complaints.firstname, 
-        //         complaints.phone, 
-        //         organizations.name as organization,
-        //         complaints.complaint,
-        //         CASE WHEN complaint_types.id = 1 THEN 1 ELSE 0 END AS t1,
-        //         CASE WHEN complaint_types.id = 2 THEN 1 ELSE 0 END AS t2,
-        //         CASE WHEN complaint_types.id = 3 THEN 1 ELSE 0 END AS t3,
-        //         CASE WHEN complaint_types.id = 5 THEN 1 ELSE 0 END AS t5,
-        //         CASE WHEN complaint_types.id = 6 THEN 1 ELSE 0 END AS t6,
-        //         CASE WHEN channels.id = 1 THEN 1 ELSE 0 END AS ch1,
-        //         CASE WHEN channels.id = 2 THEN 1 ELSE 0 END AS ch2,
-        //         CASE WHEN channels.id = 3 THEN 1 ELSE 0 END AS ch3,
-        //         CASE WHEN channels.id = 4 THEN 1 ELSE 0 END AS ch4,
-        //         CASE WHEN channels.id = 5 THEN 1 ELSE 0 END AS ch5,
-        //         CASE WHEN channels.id = 6 THEN 1 ELSE 0 END AS ch6,
-        //         CASE WHEN channels.id = 7 THEN 1 ELSE 0 END AS ch7
-        //     ')
-        //     ->join('complaint_types', 'complaint_types.id', '=', 'complaints.complaint_type_id')
-        //     ->join('channels', 'channels.id', '=', 'complaints.channel_id')
-        //     ->join('organizations', 'organizations.id', '=', 'complaints.second_org_id')
-        //     ->whereBetween('complaint_date', [$startDate, $endDate])
-        //     ->where('energy_type_id', $energyTypeId)
-        //     ->orderByDesc('complaints.complaint_date')
-        //     ->get();
-
         // $complaints = Complaint::with('complaintSteps')->first();
         $complaints = Complaint::with(['complaintSteps'])->selectRaw('
                 *,
@@ -248,6 +218,7 @@ class ReportController extends Controller
                 CASE WHEN channel_id = 7 THEN 1 ELSE 0 END AS ch7
             ')
             ->where('energy_type_id', $energyTypeId)
+            // ->whereBetween('complaint_date', [$startDate, $endDate])
             ->orderByDesc('complaint_date')
             ->orderByDesc('complaint_date')
             ->get();
@@ -257,5 +228,44 @@ class ReportController extends Controller
         $energy_types = EnergyType::all();
 
         return view('reports.report-detail', ['complaints' => $complaints, 'energy_types' => $energy_types, 'energy_type_id' => $energy_type_id, 'start_date' => $start_date, 'end_date' => $end_date]);
+    }
+
+    public function reportStatus(Request $request)
+    {
+        $energy_type_id = $request->query('energy_type_id');
+        $start_date = $request->query('startdate');
+        $end_date = $request->query('enddate');
+
+        $energyTypeId = $energy_type_id != null ? $energy_type_id : 1;
+
+        // If start_date is null, set it to 1 month before the current date
+        $startDate = $start_date != null ? $start_date : Carbon::now()->subMonth()->toDateString();
+
+        // If end_date is null, set it to the current date
+        $endDate = $end_date != null ? $end_date : Carbon::now()->toDateString();
+
+        // $complaints = Complaint::with('complaintSteps')->first();
+        $complaints = DB::table('complaints as c')
+            ->join('organizations as o', 'o.id', '=', 'c.second_org_id')
+            ->select(
+                'o.name as organization_name',
+                DB::raw('COUNT(CASE WHEN c.second_status_id = 0 THEN 1 END) AS s_0_cnt'),
+                DB::raw('COUNT(CASE WHEN c.second_status_id = 2 THEN 1 END) AS s_2_cnt'),
+                DB::raw('COUNT(CASE WHEN c.second_status_id = 3 THEN 1 END) AS s_3_cnt'),
+                DB::raw('COUNT(CASE WHEN c.second_status_id = 4 THEN 1 END) AS s_4_cnt'),
+                DB::raw('COUNT(CASE WHEN c.second_status_id = 6 THEN 1 END) AS s_6_cnt'),
+                DB::raw('COUNT(*) AS total_count')
+            )
+            ->where('c.energy_type_id', $energyTypeId)
+            ->whereBetween('c.complaint_date', [$startDate, $endDate])
+            ->groupBy('o.name')
+            ->orderBy('total_count', 'DESC')
+            ->get();
+
+        // dd($complaints);
+
+        $energy_types = EnergyType::all();
+
+        return view('reports.report-status', ['complaints' => $complaints, 'energy_types' => $energy_types, 'energy_type_id' => $energy_type_id, 'start_date' => $start_date, 'end_date' => $end_date]);
     }
 }

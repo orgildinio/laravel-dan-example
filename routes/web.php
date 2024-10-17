@@ -103,6 +103,7 @@ Route::middleware([
     Route::get('/report1', [ReportController::class, 'showReport'])->name('report1.show');
     Route::get('/energyReport', [ReportController::class, 'energyReport'])->name('energyReport');
     Route::get('/reportDetail', [ReportController::class, 'reportDetail'])->name('reportDetail');
+    Route::get('/reportStatus', [ReportController::class, 'reportStatus'])->name('reportStatus');
 
     // 1111 ээс санал хүсэлт авах
     Route::resource('/sourceComplaint', SourceComplaintController::class);
