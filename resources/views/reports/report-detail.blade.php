@@ -113,7 +113,7 @@
                     <td>{{ $data->ch5 }}</td>
                     <td>{{ $data->ch6 }}</td>
                     <td>{{ $data->ch7 }}</td>
-                    <td>{{ $data->organization?->name }}</td>
+                    <td>{{ $data->secondOrg?->name }}</td>
                     <td style="width: 300px;">{{ $data->complaint }}</td>
                     <td style="width: 300px; text-align: left;">
                         @foreach ($data->complaintSteps as $step)
