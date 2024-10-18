@@ -4,6 +4,7 @@
       border-collapse: collapse;
       width: 100%;
       font-size: 12px;
+      /* table-layout: fixed; */
     }
     
     #report-detail td, #report-detail th {
@@ -21,6 +22,11 @@
       text-align: left;
       background-color: blueviolet;
       color: white;
+    }
+    .vertical-text {
+        writing-mode: vertical-rl;  /* Rotate text vertically */
+        text-orientation: upright;  /* Make the text orientation upright */
+        padding: 10px;              /* Add padding to improve readability */
     }
 </style>
 <x-admin-layout>
@@ -64,22 +70,22 @@
                 <th>№</th>
                 <th>Мэргэжилтэнд цохогдсон огноо</th>
                 <th>Өргөдөл гаргагчийн нэр</th>
-                <th style="background-color: blue;">Төлбөр тооцоо</th>
-                <th style="background-color: blue;">Чанар хангамж</th>
-                <th style="background-color: blue;">Хэмжих хэрэгсэл</th>
-                <th style="background-color: blue;">Харилцаа, ёс зүй</th>
-                <th style="background-color: blue;">Бусад</th>
+                <th class="vertical-text" style="background-color: blue;">Төлбөр тооцоо</th>
+                <th class="vertical-text" style="background-color: blue;">Чанар хангамж</th>
+                <th class="vertical-text" style="background-color: blue;">Хэмжих хэрэгсэл</th>
+                <th class="vertical-text" style="background-color: blue;">Харилцаа, ёс зүй</th>
+                <th class="vertical-text" style="background-color: blue;">Бусад</th>
                 @if ($energy_type_id == 2)    
-                <th style="background-color: blue;">Халаалт</th>
-                <th style="background-color: blue;">Халуун ус</th>
+                <th class="vertical-text" style="background-color: blue;">Халаалт</th>
+                <th class="vertical-text" style="background-color: blue;">Халуун ус</th>
                 @endif
-                <th style="background-color: green;">Веб хуудас</th>
-                <th style="background-color: green;">Утас</th>
-                <th style="background-color: green;">И-мэйл</th>
-                <th style="background-color: green;">Биечлэн</th>
-                <th style="background-color: green;">Гар утасны апп</th>
-                <th style="background-color: green;">Бичгээр</th>
-                <th style="background-color: green;">11-11 төвөөс</th>
+                <th class="vertical-text" style="background-color: green;">Веб хуудас</th>
+                <th class="vertical-text" style="background-color: green;">Утас</th>
+                <th class="vertical-text" style="background-color: green;">И-мэйл</th>
+                <th class="vertical-text" style="background-color: green;">Биечлэн</th>
+                <th class="vertical-text" style="background-color: green;">Гар утасны апп</th>
+                <th class="vertical-text" style="background-color: green;">Бичгээр</th>
+                <th class="vertical-text" style="background-color: green;">11-11 төвөөс</th>
                 <th>Холбогдох байгууллага</th>
                 <th style="width: 300px;">Товч утга</th>
                 <th style="width: 300px;">Шийдвэрлэсэн байдал</th>
@@ -108,8 +114,8 @@
                     <td>{{ $data->ch6 }}</td>
                     <td>{{ $data->ch7 }}</td>
                     <td>{{ $data->organization?->name }}</td>
-                    <td>{{ $data->complaint }}</td>
-                    <td style="text-align: left;">
+                    <td style="width: 300px;">{{ $data->complaint }}</td>
+                    <td style="width: 300px; text-align: left;">
                         @foreach ($data->complaintSteps as $step)
                             {{ '(' . $step->created_at->format('Y-m-d') . ') ' . $step->desc }}<br>
                         @endforeach
