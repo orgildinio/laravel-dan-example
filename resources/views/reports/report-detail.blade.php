@@ -69,6 +69,10 @@
                 <th style="background-color: blue;">Хэмжих хэрэгсэл</th>
                 <th style="background-color: blue;">Харилцаа, ёс зүй</th>
                 <th style="background-color: blue;">Бусад</th>
+                @if ($energy_type_id == 2)    
+                <th style="background-color: blue;">Халаалт</th>
+                <th style="background-color: blue;">Халуун ус</th>
+                @endif
                 <th style="background-color: green;">Веб хуудас</th>
                 <th style="background-color: green;">Утас</th>
                 <th style="background-color: green;">И-мэйл</th>
@@ -92,6 +96,10 @@
                     <td>{{ $data->t3 }}</td>
                     <td>{{ $data->t5 }}</td>
                     <td>{{ $data->t6 }}</td>
+                    @if ($energy_type_id == 2)    
+                    <td>{{ $data->t7 }}</td>
+                    <td>{{ $data->t8 }}</td>
+                    @endif
                     <td>{{ $data->ch1 }}</td>
                     <td>{{ $data->ch2 }}</td>
                     <td>{{ $data->ch3 }}</td>

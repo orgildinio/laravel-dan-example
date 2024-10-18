@@ -232,6 +232,8 @@ class ReportController extends Controller
                 CASE WHEN complaint_type_id = 3 THEN 1 ELSE 0 END AS t3,
                 CASE WHEN complaint_type_id = 5 THEN 1 ELSE 0 END AS t5,
                 CASE WHEN complaint_type_id = 6 THEN 1 ELSE 0 END AS t6,
+                CASE WHEN complaint_type_id = 7 THEN 1 ELSE 0 END AS t7,
+                CASE WHEN complaint_type_id = 8 THEN 1 ELSE 0 END AS t8,
                 CASE WHEN channel_id = 1 THEN 1 ELSE 0 END AS ch1,
                 CASE WHEN channel_id = 2 THEN 1 ELSE 0 END AS ch2,
                 CASE WHEN channel_id = 3 THEN 1 ELSE 0 END AS ch3,
