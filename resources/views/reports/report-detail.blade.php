@@ -42,7 +42,6 @@
                 <div class="mr-1">
                     <select name="energy_type_id" id="energy_type_id"
                         class="w-32 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
-                        <option>Сонгох</option>
                         @foreach ($energy_types as $type)
                             <option value="{{ $type->id }}"
                                 {{ old('energy_type_id', $energy_type_id) == $type->id ? 'selected' : '' }}>

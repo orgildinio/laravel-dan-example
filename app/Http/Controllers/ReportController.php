@@ -241,7 +241,7 @@ class ReportController extends Controller
                 CASE WHEN channel_id = 7 THEN 1 ELSE 0 END AS ch7
             ')
             ->where('energy_type_id', $energyTypeId)
-            // ->whereBetween('complaint_date', [$startDate, $endDate])
+            ->whereBetween('complaint_date', [$startDate, $endDate])
             ->orderByDesc('complaint_date')
             ->orderByDesc('complaint_date')
             ->get();
