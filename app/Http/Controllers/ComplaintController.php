@@ -212,6 +212,7 @@ class ComplaintController extends Controller
         // dd($request);
         $daterange = $request->query('daterange');
         $search_text = $request->query('search_text');
+        $serial_number = $request->query('serial_number');
         $status_id = $request->query('status_id');
         $org_id = $request->query('org_id');
         $second_org_id = $request->query('second_org_id');
@@ -230,6 +231,7 @@ class ComplaintController extends Controller
         $relatedComplaintIds = $request->query('related_complaints', []);
 
         $query = Complaint::query();
+        // $query->with('complaintSteps');
         $query->orderBy('complaint_date', 'desc');
 
         // Fetch complaints based on the provided IDs
@@ -246,6 +248,10 @@ class ComplaintController extends Controller
                 \Carbon\Carbon::parse($dates[0])->startOfDay(),
                 \Carbon\Carbon::parse($dates[1])->endOfDay()
             ]);
+        }
+
+        if ($serial_number !== null) {
+            $query->where('serial_number', $serial_number);
         }
 
         if ($search_text !== null) {
@@ -314,7 +320,7 @@ class ComplaintController extends Controller
         $complaint_types = ComplaintType::all();
         $complaint_type_summaries = ComplaintTypeSummary::all();
 
-        return view('complaints.index', compact('complaints', 'daterange', 'search_text', 'statuses', 'status_id', 'org_id', 'orgs', 'energy_type_id', 'energy_types', 'channel_id', 'channels', 'controlled_user_id', 'controlled_users', 'second_org_id', 'phone', 'user_code', 'expire_status', 'complaint_types', 'complaint_type_id', 'complaint_type_summaries', 'complaint_type_summary_id', 'relatedComplaintIds'));
+        return view('complaints.index', compact('complaints', 'daterange', 'search_text', 'statuses', 'status_id', 'org_id', 'orgs', 'energy_type_id', 'energy_types', 'channel_id', 'channels', 'controlled_user_id', 'controlled_users', 'second_org_id', 'phone', 'user_code', 'expire_status', 'complaint_types', 'complaint_type_id', 'complaint_type_summaries', 'complaint_type_summary_id', 'relatedComplaintIds', 'serial_number'));
     }
 
     public function ExportReportExcel(Request $request)

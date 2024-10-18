@@ -31,27 +31,6 @@ class ComplaintController extends Controller
         return ComplaintResource::collection($complaints);
     }
 
-    // public function search(Request $request)
-    // {
-    //     $query = Complaint::query();
-
-    //     if ($request->has('serial_number')) {
-    //         $query->where('serial_number', 'like', '%' . $request->input('serial_number') . '%');
-    //     }
-
-    //     if ($request->has('complaint')) {
-    //         $query->where('complaint', 'like', '%' . $request->input('complaint') . '%');
-    //     }
-
-    //     if ($request->has('organization')) {
-    //         $query->where('organization', 'like', '%' . $request->input('organization') . '%');
-    //     }
-
-    //     $complaints = $query->get();
-
-    //     return response()->json($complaints);
-    // }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -64,17 +43,6 @@ class ComplaintController extends Controller
 
     public function upload(Request $request, $complaint_id)
     {
-        // $customMessages = [
-        //     'file.required' => 'A file is required.',
-        //     'file.image' => 'The file must be an image.',
-        //     'file.mimes' => 'The file must be a type of jpeg, png, jpg, or gif.',
-        //     'file.max' => 'The file must not be greater than 2048 kilobytes.',
-        // ];
-
-        // $validatedData = $request->validate([
-        //     'file' => 'required|image|mimes:jpeg,png,jpg,gif|max:4096',
-        // ], $customMessages);
-
         // Find the complaint
         $complaint = Complaint::find($complaint_id);
 

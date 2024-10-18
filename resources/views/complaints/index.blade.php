@@ -21,6 +21,11 @@
                     @csrf
                     <div class="flex flex-wrap items-center gap-2">
                         <div class="mr-1">
+                            <input type="text" id="serial_number"
+                                class="w-32 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block p-2"
+                                placeholder="Дугаар" name="serial_number" value="{{ $serial_number }}">
+                        </div>
+                        <div class="mr-1">
                             <input type="text" id="simple-search"
                                 class="w-32 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block p-2"
                                 placeholder="Хайх" name="search_text" value="{{ $search_text }}">
@@ -174,7 +179,10 @@
                     <tr>
                         <th
                             class="p-2 w-[5px] text-xs font-medium leading-4 tracking-wider text-left text-gray-800 uppercase border-b border-gray-300 bg-gray-50">
-                            ID</th>
+                            №</th>
+                        <th
+                            class="p-2 w-[5px] text-xs font-medium leading-4 tracking-wider text-left text-gray-800 uppercase border-b border-gray-300 bg-gray-50">
+                            Дугаар</th>
                         <th
                             class="p-2 w-[100px] text-xs font-medium leading-4 tracking-wider text-left text-gray-800 uppercase border-b border-gray-300 bg-gray-50">
                             Төрөл</th>
@@ -207,7 +215,10 @@
                             Санал, хүсэлт</th>
                         <th
                             class="p-2 w-[150px] text-xs font-medium leading-4 tracking-wider text-left text-gray-800 uppercase border-b border-gray-300 bg-gray-50">
-                            Огноо</th>
+                            Бүртгэсэн огноо</th>
+                        <th
+                            class="p-2 w-[150px] text-xs font-medium leading-4 tracking-wider text-left text-gray-800 uppercase border-b border-gray-300 bg-gray-50">
+                            Шийдвэрлэсэн огноо</th>
                         <th
                             class="p-2 w-[100px] text-xs font-medium leading-4 tracking-wider text-left text-gray-800 uppercase border-b border-gray-300 bg-gray-50">
                             Үлдсэн хугацаа</th>
@@ -220,6 +231,11 @@
                             <td class="p-2 whitespace-no-wrap border-b border-gray-300">
                                 <div class="flex items-center">
                                     {{ $key + $complaints->firstItem() }}
+                                </div>
+                            </td>
+
+                            <td class="p-2 whitespace-no-wrap border-b border-gray-300">
+                                <div class="text-sm leading-5 text-gray-900">{{ $complaint->serial_number }}
                                 </div>
                             </td>
 
@@ -312,6 +328,10 @@
                             <td
                                 class="p-2 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-300">
                                 <span>{{ date('Y-m-d H:i', strtotime($complaint->complaint_date)) }}</span>
+                            </td>
+                            <td
+                                class="p-2 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-300">
+                                <span>{{ $complaint->status_id == 6 ? date('Y-m-d H:i', strtotime($complaint->updated_at)) : '' }}</span>
                             </td>
                             @if ($complaint->status_id == 6)
                                 <td class="p-2 whitespace-no-wrap border-b border-gray-300"></td>
