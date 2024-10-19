@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\LoginApiRequest;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
@@ -154,6 +155,63 @@ class AuthController extends Controller
         return response()->json([
             'token' => $token,
             'user' => $user,
+        ]);
+    }
+
+    public function loginTze(Request $request)
+    {
+        // Validate request
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        // Check if validation fails
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Validation errors',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        $credentials = $request->only('email', 'password');
+
+        // Validate request
+        // $request->validate([
+        //     'email' => 'required|email',
+        //     'password' => 'required',
+        // ]);
+
+        // Check if the email and password match any user
+        if (!Auth::attempt($credentials)) {
+            // Check if email exists
+            $user = User::where('email', $request->email)->first();
+            if ($user && !Hash::check($request->password, $user->password)) {
+                return response()->json(['error' => 'Нууц үг буруу'], 401);
+            }
+
+            return response()->json(['error' => 'Мэйл хаяг эсвэл нууц үг буруу байна.'], 401);
+        }
+
+        // Generate token and return response
+        $user = Auth::user();
+
+        $token = $user->createToken('Personal Access Token')->plainTextToken;
+
+        return response()->json([
+            'message' => 'Амжилттай нэвтэрлээ!',
+            'token' => $token,
+            'user' => [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'division' => $user->division,
+                'phone' => $user->phone,
+                'organization' => $user->org?->name,
+                'created_at' => $user->created_at,
+                'updated_at' => $user->updated_at,
+            ]
         ]);
     }
 }
