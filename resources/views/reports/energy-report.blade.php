@@ -24,7 +24,7 @@
         background-color: #ddd;
     }
 
-    .energyReport th {
+    /* .energyReport th {
         padding-top: 12px;
         padding-bottom: 12px;
         text-align: left;
@@ -35,7 +35,7 @@
         height: 550px;
         width: 40px;
         text-align: center;
-    }
+    } */
 
     .energyReport tfoot {
         font-weight: bold;
@@ -45,14 +45,9 @@
         font-weight: bold;
     }
 
-    #table1 th {
-        background-color: lightcyan;
-    }
-    #table2 th {
-        background-color: lightyellow;
-    }
-    #table3 th {
-        background-color: lightgray;
+    #table-energy th {
+        background-color: lightgreen;
+        /* color: deepskyblue */
     }
 </style>
 <x-admin-layout>
@@ -71,20 +66,28 @@
                         class="w-32 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2"
                         name="enddate" placeholder="Дуусах" value="{{ $end_date }}">
                 </div>
-                <div>
+                <div class="flex flex-row items-center space-x-2">
                     <button type="submit"
                         class="flex items-center justify-center text-white bg-primary hover:bg-primaryHover focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2">
                         Хайх
                     </button>
+                    <button type="button" onclick="exportToExcel(event, 'table-energy', 'Tailan-energy')" class="flex items-center justify-center text-white bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 ml-4">Export</button>
                 </div>
             </div>
         </form>
         <div class="table-container">
-        <table class="energyReport" id="table1">
+        <table class="energyReport" id="table-energy">
             <thead>
+                <tr style="height: 20px;">
+                    <th style="background-color: white;" rowspan="2">№</th>
+                    <th style="background-color: white;" rowspan="2">Байгууллага</th>
+                    <th colspan="25">Чанар хангамж</th>
+                    <th style="background-color: yellow;" colspan="6">Өргөдөл, гомдлын төрөл</th>
+                    <th style="background-color: deepskyblue;" colspan="8">Хүлээн авсан суваг</th>
+                </tr>
                 <tr>
-                    <th style="background-color: white;">Д/д</th>
-                    <th style="background-color: white;">Байгууллага</th>
+                    {{-- <th style="background-color: white;" rowspan="2">Д/д</th>
+                    <th style="background-color: white;">Байгууллага</th> --}}
                     <th>Хүчдэлгүй</th>
                     <th>Хүчдэлийн түвшин муу
                     </th>
@@ -132,6 +135,22 @@
                     </th>
                     <th>Шинэ холболттой холбоотой</th>
                     <th>Нийт</th>
+                    {{-- complaint type --}}
+                    <th style="background-color: yellow;">Төлбөр тооцоо</th>
+                    <th style="background-color: yellow;">Чанар хангамж</th>
+                    <th style="background-color: yellow;">Хэмжих хэрэгсэл</th>
+                    <th style="background-color: yellow;">Харилцаа ёс зүй</th>
+                    <th style="background-color: yellow;">Бусад</th>
+                    <th style="background-color: yellow;">Нийт</th>
+                    {{-- complaint channel --}}
+                    <th style="background-color: deepskyblue;">Веб хуудас</th>
+                    <th style="background-color: deepskyblue;">Утас</th>
+                    <th style="background-color: deepskyblue;">Имэйл</th>
+                    <th style="background-color: deepskyblue;">Биечлэн</th>
+                    <th style="background-color: deepskyblue;">Гар утас апп</th>
+                    <th style="background-color: deepskyblue;">Бичгээр</th>
+                    <th style="background-color: deepskyblue;">ЗГ-ын 11-11 төв</th>
+                    <th style="background-color: deepskyblue;">Нийт</th>
                 </tr>
             </thead>
             <tbody>
@@ -215,8 +234,50 @@
                         <td>
                             {{ $item->c84_cnt }}
                         </td>
-                        <td class="">
+                        <td style="font-weight: bold;">
                             {{ $item->total_complaints }}
+                        </td>
+                        <td>
+                            {{ $item->c_1 }}
+                        </td>
+                        <td>
+                            {{ $item->c_2 }}
+                        </td>
+                        <td>
+                            {{ $item->c_3 }}
+                        </td>
+                        <td>
+                            {{ $item->c_5 }}
+                        </td>
+                        <td>
+                            {{ $item->c_6 }}
+                        </td>
+                        <td style="font-weight: bold;">
+                            {{ $item->total_type }}
+                        </td>
+                        <td>
+                            {{ $item->c_1 }}
+                        </td>
+                        <td>
+                            {{ $item->c_2 }}
+                        </td>
+                        <td>
+                            {{ $item->c_3 }}
+                        </td>
+                        <td>
+                            {{ $item->c_4 }}
+                        </td>
+                        <td>
+                            {{ $item->c_5 }}
+                        </td>
+                        <td>
+                            {{ $item->c_6 }}
+                        </td>
+                        <td>
+                            {{ $item->c_7 }}
+                        </td>
+                        <td style="font-weight: bold;">
+                            {{ $item->total_channel }}
                         </td>
                     </tr>
                 @endforeach
@@ -250,108 +311,20 @@
                     <td id="sum23"></td>
                     <td id="sum24"></td>
                     <td id="sum25"></td>
-                </tr>
-            </tfoot>
-        </table>
-        <table class="energyReport" id="table2">
-            <thead>
-                <tr>
-                    <th>Төлбөр тооцоо</th>
-                    <th>Чанар хангамж</th>
-                    <th>Хэмжих хэрэгсэл</th>
-                    <th>Харилцаа ёс зүй</th>
-                    <th>Бусад</th>
-                    <th>Нийт</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($complaintsByType as $comp)
-                <tr>
-                    <td>
-                        {{ $comp->c_1 }}
-                    </td>
-                    <td>
-                        {{ $comp->c_2 }}
-                    </td>
-                    <td>
-                        {{ $comp->c_3 }}
-                    </td>
-                    <td>
-                        {{ $comp->c_5 }}
-                    </td>
-                    <td>
-                        {{ $comp->c_6 }}
-                    </td>
-                    <td>
-                        {{ $comp->total }}
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-            <tfoot>
-                <tr>
-                    <td id="sumType1"></td>
-                    <td id="sumType2"></td>
-                    <td id="sumType3"></td>
-                    <td id="sumType4"></td>
-                    <td id="sumType5"></td>
-                    <td id="sumType6"></td>
-                </tr>
-            </tfoot>
-        </table>
-        <table class="energyReport" id="table3">
-            <thead>
-                <tr>
-                    <th>Веб хуудас</th>
-                    <th>Утас</th>
-                    <th>Имэйл</th>
-                    <th>Биечлэн</th>
-                    <th>Гар утас апп</th>
-                    <th>Бичгээр</th>
-                    <th>ЗГ-ын 11-11 төв</th>
-                    <th>Нийт</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($complaintsByChannel as $channel)
-                <tr>
-                    <td>
-                        {{ $channel->c_1 }}
-                    </td>
-                    <td>
-                        {{ $channel->c_2 }}
-                    </td>
-                    <td>
-                        {{ $channel->c_3 }}
-                    </td>
-                    <td>
-                        {{ $channel->c_4 }}
-                    </td>
-                    <td>
-                        {{ $channel->c_5 }}
-                    </td>
-                    <td>
-                        {{ $channel->c_6 }}
-                    </td>
-                    <td>
-                        {{ $channel->c_7 }}
-                    </td>
-                    <td>
-                        {{ $channel->total }}
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-            <tfoot>
-                <tr>
-                    <td id="sumChannel1"></td>
-                    <td id="sumChannel2"></td>
-                    <td id="sumChannel3"></td>
-                    <td id="sumChannel4"></td>
-                    <td id="sumChannel5"></td>
-                    <td id="sumChannel6"></td>
-                    <td id="sumChannel7"></td>
-                    <td id="sumChannel8"></td>
+                    <td id="sum26"></td>
+                    <td id="sum27"></td>
+                    <td id="sum28"></td>
+                    <td id="sum29"></td>
+                    <td id="sum30"></td>
+                    <td id="sum31"></td>
+                    <td id="sum32"></td>
+                    <td id="sum33"></td>
+                    <td id="sum34"></td>
+                    <td id="sum35"></td>
+                    <td id="sum36"></td>
+                    <td id="sum37"></td>
+                    <td id="sum38"></td>
+                    <td id="sum39"></td>
                 </tr>
             </tfoot>
         </table>
@@ -403,48 +376,53 @@
             }
 
             // Calculate sums for each table and column
-            calculateColumnSum('table1', 2, 'sum1'); // For column 2 in table1, store result in #sum1
-            calculateColumnSum('table1', 3, 'sum2'); // For column 3 in table1, store result in #sum2
-            calculateColumnSum('table1', 4, 'sum3');
-            calculateColumnSum('table1', 5, 'sum4');
-            calculateColumnSum('table1', 6, 'sum5');
-            calculateColumnSum('table1', 7, 'sum6');
-            calculateColumnSum('table1', 8, 'sum7');
-            calculateColumnSum('table1', 9, 'sum8');
-            calculateColumnSum('table1', 10, 'sum9');
-            calculateColumnSum('table1', 11, 'sum10');
-            calculateColumnSum('table1', 12, 'sum11');
-            calculateColumnSum('table1', 13, 'sum12');
-            calculateColumnSum('table1', 14, 'sum13');
-            calculateColumnSum('table1', 15, 'sum14');
-            calculateColumnSum('table1', 16, 'sum15');
-            calculateColumnSum('table1', 17, 'sum16');
-            calculateColumnSum('table1', 18, 'sum17');
-            calculateColumnSum('table1', 19, 'sum18');
-            calculateColumnSum('table1', 20, 'sum19');
-            calculateColumnSum('table1', 21, 'sum20');
-            calculateColumnSum('table1', 22, 'sum21');
-            calculateColumnSum('table1', 23, 'sum22');
-            calculateColumnSum('table1', 24, 'sum23');
-            calculateColumnSum('table1', 25, 'sum24');
-            calculateColumnSum('table1', 26, 'sum25');
+            calculateColumnSum('table-energy', 2, 'sum1'); // For column 2 in table1, store result in #sum1
+            calculateColumnSum('table-energy', 3, 'sum2'); // For column 3 in table1, store result in #sum2
+            calculateColumnSum('table-energy', 4, 'sum3');
+            calculateColumnSum('table-energy', 5, 'sum4');
+            calculateColumnSum('table-energy', 6, 'sum5');
+            calculateColumnSum('table-energy', 7, 'sum6');
+            calculateColumnSum('table-energy', 8, 'sum7');
+            calculateColumnSum('table-energy', 9, 'sum8');
+            calculateColumnSum('table-energy', 10, 'sum9');
+            calculateColumnSum('table-energy', 11, 'sum10');
+            calculateColumnSum('table-energy', 12, 'sum11');
+            calculateColumnSum('table-energy', 13, 'sum12');
+            calculateColumnSum('table-energy', 14, 'sum13');
+            calculateColumnSum('table-energy', 15, 'sum14');
+            calculateColumnSum('table-energy', 16, 'sum15');
+            calculateColumnSum('table-energy', 17, 'sum16');
+            calculateColumnSum('table-energy', 18, 'sum17');
+            calculateColumnSum('table-energy', 19, 'sum18');
+            calculateColumnSum('table-energy', 20, 'sum19');
+            calculateColumnSum('table-energy', 21, 'sum20');
+            calculateColumnSum('table-energy', 22, 'sum21');
+            calculateColumnSum('table-energy', 23, 'sum22');
+            calculateColumnSum('table-energy', 24, 'sum23');
+            calculateColumnSum('table-energy', 25, 'sum24');
+            calculateColumnSum('table-energy', 26, 'sum25');
+            calculateColumnSum('table-energy', 27, 'sum26');
+            calculateColumnSum('table-energy', 28, 'sum27');
+            calculateColumnSum('table-energy', 29, 'sum28');
+            calculateColumnSum('table-energy', 30, 'sum29');
+            calculateColumnSum('table-energy', 31, 'sum30');
+            calculateColumnSum('table-energy', 32, 'sum31');
+            calculateColumnSum('table-energy', 33, 'sum32');
+            calculateColumnSum('table-energy', 34, 'sum33');
+            calculateColumnSum('table-energy', 35, 'sum34');
+            calculateColumnSum('table-energy', 36, 'sum35');
+            calculateColumnSum('table-energy', 37, 'sum36');
+            calculateColumnSum('table-energy', 38, 'sum37');
+            calculateColumnSum('table-energy', 39, 'sum38');
+            calculateColumnSum('table-energy', 40, 'sum39');
 
-            // Repeat for other tables if needed
-            calculateColumnSum('table2', 0, 'sumType1');
-            calculateColumnSum('table2', 1, 'sumType2');
-            calculateColumnSum('table2', 2, 'sumType3');
-            calculateColumnSum('table2', 3, 'sumType4');
-            calculateColumnSum('table2', 4, 'sumType5');
-            calculateColumnSum('table2', 5, 'sumType6');
-
-            calculateColumnSum('table3', 0, 'sumChannel1');
-            calculateColumnSum('table3', 1, 'sumChannel2');
-            calculateColumnSum('table3', 2, 'sumChannel3');
-            calculateColumnSum('table3', 3, 'sumChannel4');
-            calculateColumnSum('table3', 4, 'sumChannel5');
-            calculateColumnSum('table3', 5, 'sumChannel6');
-            calculateColumnSum('table3', 6, 'sumChannel7');
-            calculateColumnSum('table3', 7, 'sumChannel8');
+            // export to excel
+            window.exportToExcel = function(event, tableID, filename = '') {
+                event.preventDefault();  // Prevent form submission
+                var table = document.getElementById(tableID);
+                var wb = XLSX.utils.table_to_book(table, {sheet: "Sheet1"});
+                XLSX.writeFile(wb, filename + ".xlsx");
+            }
 
         });
     </script>

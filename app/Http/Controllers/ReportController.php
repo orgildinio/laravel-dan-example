@@ -150,7 +150,23 @@ class ReportController extends Controller
                 DB::raw('SUM(CASE WHEN c.complaint_type_summary_id = 82 THEN 1 ELSE 0 END) AS c82_cnt'),
                 DB::raw('SUM(CASE WHEN c.complaint_type_summary_id = 83 THEN 1 ELSE 0 END) AS c83_cnt'),
                 DB::raw('SUM(CASE WHEN c.complaint_type_summary_id = 84 THEN 1 ELSE 0 END) AS c84_cnt'),
-                DB::raw('COUNT(c.id) as total_complaints')
+                DB::raw('COUNT(c.id) as total_complaints'),
+                // complaint type
+                DB::raw('SUM(CASE WHEN c.complaint_type_id = 1 THEN 1 ELSE 0 END) AS c_1'),
+                DB::raw('SUM(CASE WHEN c.complaint_type_id = 2 THEN 1 ELSE 0 END) AS c_2'),
+                DB::raw('SUM(CASE WHEN c.complaint_type_id = 3 THEN 1 ELSE 0 END) AS c_3'),
+                DB::raw('SUM(CASE WHEN c.complaint_type_id = 5 THEN 1 ELSE 0 END) AS c_5'),
+                DB::raw('SUM(CASE WHEN c.complaint_type_id = 6 THEN 1 ELSE 0 END) AS c_6'),
+                DB::raw('COUNT(c.id) AS total_type'),
+                // complaint channel
+                DB::raw('SUM(CASE WHEN c.channel_id = 1 THEN 1 ELSE 0 END) AS c_1'),
+                DB::raw('SUM(CASE WHEN c.channel_id = 2 THEN 1 ELSE 0 END) AS c_2'),
+                DB::raw('SUM(CASE WHEN c.channel_id = 3 THEN 1 ELSE 0 END) AS c_3'),
+                DB::raw('SUM(CASE WHEN c.channel_id = 4 THEN 1 ELSE 0 END) AS c_4'),
+                DB::raw('SUM(CASE WHEN c.channel_id = 5 THEN 1 ELSE 0 END) AS c_5'),
+                DB::raw('SUM(CASE WHEN c.channel_id = 6 THEN 1 ELSE 0 END) AS c_6'),
+                DB::raw('SUM(CASE WHEN c.channel_id = 7 THEN 1 ELSE 0 END) AS c_7'),
+                DB::raw('COUNT(c.id) AS total_channel')
             )
             ->leftJoin('complaints as c', function ($join) use ($startDate, $endDate) {
                 $join->on('c.second_org_id', '=', 'org.id')

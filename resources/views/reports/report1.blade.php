@@ -13,7 +13,7 @@
 
     th, td {
         border: 1px solid rgb(190, 190, 190);
-        padding: 10px;
+        /* padding: 10px; */
         text-align: center;
     }
 
@@ -105,16 +105,17 @@
                         @endforeach
                     </select>
                 </div>
-                <div>
+                <div class="flex flex-row items-center space-x-2">
                     <button type="submit"
                         class="flex items-center justify-center text-white bg-primary hover:bg-primaryHover focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2">
                         Хайх
                     </button>
+                    <button type="button" onclick="exportToExcel(event, 'report1', 'Tailan-1')" class="flex items-center justify-center text-white bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 ml-4">Export</button>
                 </div>
             </div>
         </form>
     </div>
-    <table>
+    <table id="report1">
         <thead>
             <tr>
                 <th rowspan="3">№</th>
@@ -445,5 +446,13 @@
             dateFormat: "Y-m-d"
         });
 
+        window.exportToExcel = function(event, tableID, filename = '') {
+            event.preventDefault();  // Prevent form submission
+            var table = document.getElementById(tableID);
+            var wb = XLSX.utils.table_to_book(table, {sheet: "Sheet1"});
+            XLSX.writeFile(wb, filename + ".xlsx");
+        }
+
+        
     });
 </script>

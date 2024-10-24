@@ -55,11 +55,12 @@
                         @endforeach
                     </select>
                 </div>
-                <div>
+                <div class="flex flex-row items-center space-x-2">
                     <button type="submit"
                         class="flex items-center justify-center text-white bg-primary hover:bg-primaryHover focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2">
                         Хайх
                     </button>
+                    <button type="button" onclick="exportToExcel(event, 'report-detail', 'Tailan-dulaan')" class="flex items-center justify-center text-white bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 ml-4">Export</button>
                 </div>
             </div>
         </form>
@@ -151,6 +152,14 @@
             defaultDate: "{{ $end_date ?? '' }}" || formattedEndDate,  // Use Laravel variable or fallback
             dateFormat: "Y-m-d"
         });
+
+        // export to excel
+        window.exportToExcel = function(event, tableID, filename = '') {
+            event.preventDefault();  // Prevent form submission
+            var table = document.getElementById(tableID);
+            var wb = XLSX.utils.table_to_book(table, {sheet: "Sheet1"});
+            XLSX.writeFile(wb, filename + ".xlsx");
+        }
 
     });
 </script>
