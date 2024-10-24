@@ -13,7 +13,7 @@
 
     th, td {
         border: 1px solid rgb(190, 190, 190);
-        /* padding: 10px; */
+        padding: 10px;
         text-align: center;
     }
 
