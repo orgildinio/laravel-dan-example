@@ -20,6 +20,10 @@ class AuthController extends Controller
             'regnum' => 'required|string',
             'firstname' => 'required|string|max:255',
             'lastname' => 'required|string|max:255'
+        ], [
+            'regnum.required' => 'Registration number is required.',
+            'firstname.required' => 'First name is required.',
+            'lastname.required' => 'Last name is required.',
         ]);
 
         // $user = User::where('danRegnum', $request->regnum)->first();
