@@ -15,6 +15,12 @@ class AuthController extends Controller
 {
     public function login(Request $request)
     {
+        // Validate request data
+        $request->validate([
+            'regnum' => 'required|string',
+            'firstname' => 'required|string|max:255',
+            'lastname' => 'required|string|max:255'
+        ]);
 
         // $user = User::where('danRegnum', $request->regnum)->first();
         $user = User::where('danRegnum', $request->regnum)
