@@ -31,9 +31,14 @@ class DanAuthController extends Controller
     }
 
 
-    public function handleDanCallback()
+    public function handleDanCallback(Request $request)
     {
-        dd(Socialite::driver('dan'));
+        // dd(Socialite::driver('dan'));
+
+        if ($request->has('error')) {
+            // Handle the error case (user refused the authentication)
+            return redirect()->route('login')->withErrors(['message' => 'Authentication was canceled. Please try again.']);
+        }
 
         $danUser = Socialite::driver('dan')->user();
 
