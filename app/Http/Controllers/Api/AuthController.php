@@ -18,9 +18,9 @@ class AuthController extends Controller
 
         // $user = User::where('danRegnum', $request->regnum)->first();
         $user = User::where('danRegnum', $request->regnum)
-            ->where('danFirstname', $request->firstname)
-            ->where('danLastname', $request->lastname)
-            ->where('role_id', 5)
+            // ->where('danFirstname', $request->firstname)
+            // ->where('danLastname', $request->lastname)
+            // ->where('role_id', 5)
             ->first();
 
         // If user does not exist, create a new user
