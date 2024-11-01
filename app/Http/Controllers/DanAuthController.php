@@ -33,7 +33,7 @@ class DanAuthController extends Controller
 
     public function handleDanCallback()
     {
-        dd(Socialite::driver('dan'));
+        dd(Socialite::driver('dan')->user());
 
         $danUser = Socialite::driver('dan')->user();
 
