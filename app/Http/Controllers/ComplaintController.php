@@ -484,18 +484,10 @@ class ComplaintController extends Controller
     public function store(ComplaintStoreRequest $request)
     {
         $input = $request->all();
-
+        // dd($input);
 
         $user = Auth::user();
 
-        if ($file = $request->file('file')) {
-            $name = time() . $file->getClientOriginalName();
-
-            $file->move('files', $name);
-            $filename = File::create(['filename' => $name]);
-
-            $input['file_id'] = $filename->id;
-        }
         if ($audio_file = $request->file('audio_file')) {
             $name = time() . $audio_file->getClientOriginalName();
 
@@ -551,12 +543,32 @@ class ComplaintController extends Controller
 
         // Дуусах хугацаа
         if (empty($input['expire_date'])) {
-            $complaint->setExpireDate($input['complaint_type_id'], $input['channel_id']);
+            $complaint->setExpireDate($input['complaint_type_id'], $input['channel_id'], $input['category_id']);
         }
+
+
 
         //$complaint = Complaint::create($input);
         $complaint->save();
 
+
+        // file upload
+        if ($request->hasFile('files')) {
+            foreach ($request->file('files') as $file) {
+                $name = time() . '_' . $file->getClientOriginalName();
+
+                // Move each file and store in 'files' directory
+                $file->move(public_path('files'), $name);
+
+                // Save file record with associated complaint_id
+                File::create([
+                    'filename' => $name,
+                    'complaint_id' => $complaint->id,
+                ]);
+            }
+        }
+
+        // Create complaint step about received
         if ($complaint->status_id == 2) {
             ComplaintStep::create([
                 'org_id' => $user->org_id,

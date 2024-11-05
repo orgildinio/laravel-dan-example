@@ -10,7 +10,7 @@ class File extends Model
     use HasFactory;
     protected $uploads = '/files/';
 
-    protected $fillable = ['filename'];
+    protected $fillable = ['filename', 'complaint_id'];
 
     public function getFileAttribute($file)
     {

@@ -65,8 +65,16 @@ class Complaint extends Model
     }
 
     // Өргөдөл, гомдлын шийдвэрлэх хугацааг өргөдлийн ангилал болон сувгаас хамаарч өгөх
-    public function setExpireDate($complaintTypeId, $channelId)
+    public function setExpireDate($complaintTypeId, $channelId, $categoryId)
     {
+        // Check if category_id is 8, set expire_date to 30 days from now
+        // category_id = 8 дуудлага
+        if ($categoryId == 8) {
+            $this->expire_date = now()->addDays(30);
+            return;
+        }
+
+
         $expireTimes = [
             2 => [7 => 24, 3 => 48, 6 => 48, 1 => 0.5, 5 => 0.5, 2 => 0.5, 4 => 0.5],
             1 => [7 => 24, 3 => 48, 6 => 48, 1 => 24, 5 => 24, 2 => 24, 4 => 24],
@@ -90,9 +98,9 @@ class Complaint extends Model
         }
     }
 
-    public function file()
+    public function files()
     {
-        return $this->belongsTo(File::class);
+        return $this->hasMany(File::class, 'complaint_id');
     }
 
     public function audioFile()

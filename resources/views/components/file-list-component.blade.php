@@ -31,7 +31,7 @@
             </div>
             <div class="w-48 ml-2 flex flex-col">
                 <a href="#"
-                    class="text-sm text-gray-700 font-bold truncate">{{ substr($fileName, 0, 10) }}.{{$fileExt}}</a>
+                    class="text-sm text-gray-700 font-bold truncate">{{ substr($fileName, 0, 30) }}.{{$fileExt}}</a>
                 <span class="text-gray-500 text-xs">{{$fileSizeInKilobytes}} KB</span>
             </div>
         </div>

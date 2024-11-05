@@ -126,61 +126,64 @@
                             <dt class="font-medium text-gray-900">Үнэлгээ</dt>
                             <dd class="text-gray-700 text-right sm:col-span-2">
                                 @if (isset($rating->rating))
-                                    
-                                <div class="flex justify-end rating">
-                                    <label for="star1">
-                                        <input class="hidden" type="radio" id="star1" name="rating"
-                                            value="1" />
-                                        <svg class="cursor-pointer block w-6 h-6 @if ($rating->rating >= 1) text-yellow-300 @else text-grey @endif "
-                                            fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                            <path
-                                                d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
-                                        </svg>
-                                    </label>
-                                    <label for="star2">
-                                        <input class="hidden" type="radio" id="star2" name="rating"
-                                            value="2" />
-                                        <svg class="cursor-pointer block w-6 h-6 @if ($rating->rating >= 2) text-yellow-300 @else text-grey @endif "
-                                            fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                            <path
-                                                d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
-                                        </svg>
-                                    </label>
-                                    <label for="star3">
-                                        <input class="hidden" type="radio" id="star3" name="rating"
-                                            value="3" />
-                                        <svg class="cursor-pointer block w-6 h-6 @if ($rating->rating >= 3) text-yellow-300 @else text-grey @endif "
-                                            fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                            <path
-                                                d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
-                                        </svg>
-                                    </label>
-                                    <label for="star4">
-                                        <input class="hidden" type="radio" id="star4" name="rating"
-                                            value="4" />
-                                        <svg class="cursor-pointer block w-6 h-6 @if ($rating->rating >= 4) text-yellow-300 @else text-grey @endif "
-                                            fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                            <path
-                                                d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
-                                        </svg>
-                                    </label>
-                                    <label for="star5">
-                                        <input class="hidden" type="radio" id="star5" name="rating"
-                                            value="5" />
-                                        <svg class="cursor-pointer block w-6 h-6 @if ($rating->rating >= 5) text-yellow-300 @else text-grey @endif "
-                                            fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                            <path
-                                                d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
-                                        </svg>
-                                    </label>
-                                </div>
+                                    <div class="flex justify-end rating">
+                                        <label for="star1">
+                                            <input class="hidden" type="radio" id="star1" name="rating"
+                                                value="1" />
+                                            <svg class="cursor-pointer block w-6 h-6 @if ($rating->rating >= 1) text-yellow-300 @else text-grey @endif "
+                                                fill="currentColor" xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 20 20">
+                                                <path
+                                                    d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+                                            </svg>
+                                        </label>
+                                        <label for="star2">
+                                            <input class="hidden" type="radio" id="star2" name="rating"
+                                                value="2" />
+                                            <svg class="cursor-pointer block w-6 h-6 @if ($rating->rating >= 2) text-yellow-300 @else text-grey @endif "
+                                                fill="currentColor" xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 20 20">
+                                                <path
+                                                    d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+                                            </svg>
+                                        </label>
+                                        <label for="star3">
+                                            <input class="hidden" type="radio" id="star3" name="rating"
+                                                value="3" />
+                                            <svg class="cursor-pointer block w-6 h-6 @if ($rating->rating >= 3) text-yellow-300 @else text-grey @endif "
+                                                fill="currentColor" xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 20 20">
+                                                <path
+                                                    d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+                                            </svg>
+                                        </label>
+                                        <label for="star4">
+                                            <input class="hidden" type="radio" id="star4" name="rating"
+                                                value="4" />
+                                            <svg class="cursor-pointer block w-6 h-6 @if ($rating->rating >= 4) text-yellow-300 @else text-grey @endif "
+                                                fill="currentColor" xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 20 20">
+                                                <path
+                                                    d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+                                            </svg>
+                                        </label>
+                                        <label for="star5">
+                                            <input class="hidden" type="radio" id="star5" name="rating"
+                                                value="5" />
+                                            <svg class="cursor-pointer block w-6 h-6 @if ($rating->rating >= 5) text-yellow-300 @else text-grey @endif "
+                                                fill="currentColor" xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 20 20">
+                                                <path
+                                                    d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+                                            </svg>
+                                        </label>
+                                    </div>
                                 @endif
                             </dd>
                         </div>
                         <div class="p-3 even:bg-gray-50 sm:grid-cols-3 sm:gap-4">
                             @if (isset($rating->comment))
-                                
-                            {{ $rating->comment }}
+                                {{ $rating->comment }}
                             @endif
                         </div>
                         <div class="grid grid-cols-1 gap-1 p-3 even:bg-gray-50 sm:grid-cols-3 sm:gap-4">
@@ -188,8 +191,8 @@
                             <dd class="text-gray-700 text-right sm:col-span-2">
                                 <a href="{{ route('complaint.index', ['related_complaints' => $related_complaints->pluck('id')->toArray()]) }}"
                                     class="text-blue-500 hover:underline">
-                                     {{ count($related_complaints) }} гомдлууд
-                                 </a>
+                                    {{ count($related_complaints) }} гомдлууд
+                                </a>
                             </dd>
                         </div>
                     </dl>
@@ -225,10 +228,11 @@
 
                     <div>
                         @if ($complaint->cdr_id != null)
-                            <div  class="text-sm px-2 mb-2">
+                            <div class="text-sm px-2 mb-2">
                                 <p>Яриа бичлэг</p>
                                 <audio controls class="w-full">
-                                    <source src="{{ asset('records/' . $complaint->cdr?->record_name) }}.wav" type="audio/mpeg">
+                                    <source src="{{ asset('records/' . $complaint->cdr?->record_name) }}.wav"
+                                        type="audio/mpeg">
                                     Your browser does not support the audio element.
                                 </audio>
                             </div>
@@ -248,6 +252,17 @@
                                 <x-file-list-component :$fileName :$fileExt :$fileUrl :$fileSizeInKilobytes />
                             </div>
                         @endif
+                        @if ($complaint->files->isNotEmpty())
+                            <div class="flex flex-row flex-wrap">
+                                @foreach ($complaint->files as $file)
+                                <div class="m-2">
+                                        <x-file-list-component :fileName="$file->filename" :fileExt="pathinfo($file->filename, PATHINFO_EXTENSION)" :fileUrl="url('files/' . $file->filename)"
+                                            :fileSizeInKilobytes="10" />
+                                        </div>
+                                    @endforeach
+                            </div>
+                        @endif
+
                     </div>
 
                     <div role="img" aria-label="bookmark">
