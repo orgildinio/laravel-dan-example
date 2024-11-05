@@ -29,10 +29,10 @@
                             alt="png">
                 @endswitch
             </div>
-            <div class="w-48 ml-2 flex flex-col">
+            <div class="w-16 ml-2 flex flex-col">
                 <a href="#"
-                    class="text-sm text-gray-700 font-bold truncate">{{ substr($fileName, 0, 30) }}.{{$fileExt}}</a>
-                <span class="text-gray-500 text-xs">{{$fileSizeInKilobytes}} KB</span>
+                    class="text-xs text-gray-700 font-bold truncate">{{ $fileName }}.{{$fileExt}}</a>
+                {{-- <span class="text-gray-500 text-xs">{{$fileSizeInKilobytes}} KB</span> --}}
             </div>
         </div>
         <a href="/files/{{ $fileName }}" download
