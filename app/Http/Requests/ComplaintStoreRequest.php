@@ -29,6 +29,7 @@ class ComplaintStoreRequest extends FormRequest
             'complaint_type_id' => 'required',
             'complaint_type_summary_id' => 'required',
             'complaint' => 'required',
+            'files' => 'array|max:5',
             'files.*' => 'file|max:20480|mimes:jpg,jpeg,png,pdf',
         ];
     }
@@ -41,6 +42,9 @@ class ComplaintStoreRequest extends FormRequest
             'complaint_type_id.required' => 'Заавал бөглөнө үү!',
             'complaint_type_summary_id.required' => 'Заавал бөглөнө үү!',
             'complaint.required' => 'Заавал бөглөнө үү!',
+            'files.max' => 'Дээд тал нь 5 файл хавсаргах боломжтой.',
+            'files.*.max' => '1 файлын хэмжээ дээд тал нь 20MB хэмжээтэй байна.',
+            'files.*.mimes' => 'Зөвхөн JPG, JPEG, PNG, эсвэл PDF өргөтгөлтэй файл хуулах боломжтой',
         ];
     }
 }

@@ -412,7 +412,7 @@
                                 <div id="fileList" class="mt-2 space-y-1"></div>
 
                                 <!-- Error Message for Max File Limit -->
-                                <p id="errorMessage" class="text-sm text-red-500 mt-1 hidden">You can only upload up to 5 files.</p>
+                                <p id="errorMessage" class="text-sm text-red-500 mt-1 hidden">Дээд тал нь 5 файл хавсаргах боломжтой.</p>
                                 @error('files.*')
                                     <div class="text-red-500 text-sm mt-1 mb-1">{{ $message }}</div>
                                 @enderror
@@ -578,7 +578,7 @@
 
                 // Check if file count exceeds max limit
                 if (files.length > maxFiles) {
-                    errorMessage.text('You can only upload up to 5 files.').removeClass('hidden');
+                    errorMessage.text('Дээд тал нь 5 файл хавсаргах боломжтой.').removeClass('hidden');
                     this.value = ''; // Reset file input
                 } else {
                     // Display selected file names

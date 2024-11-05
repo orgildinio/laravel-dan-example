@@ -707,16 +707,23 @@ class ComplaintController extends Controller
             $input['file_id'] = $filename->id;
         }
 
-        // if ($request->second_org_id != null) {
-        //     $input['status_id'] = 1;
-        //     $input['second_status_id'] = 0;
-        // }
+        // file upload
+        if ($request->hasFile('files')) {
+            foreach ($request->file('files') as $file) {
+                $name = time() . '_' . $file->getClientOriginalName();
 
+                // Move each file and store in 'files' directory
+                $file->move(public_path('files'), $name);
 
-        // $input['status_id'] = 0;
+                // Save file record with associated complaint_id
+                File::create([
+                    'filename' => $name,
+                    'complaint_id' => $complaint->id,
+                ]);
+            }
+        }
+
         $input['updated_user_id'] = $user->id;
-
-        // dd($input);
 
         $complaint->update($input);
 
