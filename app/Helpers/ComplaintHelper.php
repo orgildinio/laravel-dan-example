@@ -1,11 +1,14 @@
 <?php
 
+namespace App\Helpers;
+
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 
-if (!function_exists('sendTo1111API')) {
-    function sendTo1111API($complaint, $isClose, $comment)
+class ComplaintHelper
+{
+    public static function send1111API($complaint, $isClose, $comment)
     {
         if ($complaint->channel_id == 7 && $complaint->source_number != null) {
             $params = [

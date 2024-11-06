@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Response;
 use App\Models\ComplaintStep as ModelsComplaintStep;
+use App\Helpers\ComplaintHelper;
 
 class ComplaintStep extends Component
 {
@@ -165,7 +166,7 @@ class ComplaintStep extends Component
                 $stepData['org_id'] = $complaint->second_org_id ?? $complaint->organization_id;
 
                 //Хэрвээ 1111-ээс ирсэн гомдол байвал 1111 рүү мэдээлэл дамжуулах
-                $this->send1111API($complaint, $this->desc);
+                ComplaintHelper::send1111API($complaint, false, $this->desc);
                 // if ($complaint->channel_id == 7 && $complaint->source_number != null) {
                 //     $params = [
                 //         'action' => 'create-log',
@@ -199,7 +200,7 @@ class ComplaintStep extends Component
 
                 // Хэрвээ 1111-ээс ирсэн гомдол байвал 1111 рүү мэдээлэл дамжуулах
                 $comment = 'Мэргэжилтэн ' . $complaint->controlledUser?->name . ' рүү шилжүүлэв. Тайлбар: ' . $this->desc;
-                $this->send1111API($complaint, $comment);
+                ComplaintHelper::send1111API($complaint, false, $comment);
                 // if ($complaint->channel_id == 7 && $complaint->source_number != null) {
                 //     $params = [
                 //         'action' => 'create-log',
@@ -238,7 +239,8 @@ class ComplaintStep extends Component
                 }
 
                 // Хэрвээ 1111-ээс ирсэн гомдол байвал 1111 рүү мэдээлэл дамжуулах
-                $this->send1111API($complaint, $complaint->secondOrg?->name . ' рүү шилжүүлэв. Тайлбар: ' . $this->desc);
+                $comment = $complaint->secondOrg?->name . ' рүү шилжүүлэв. Тайлбар: ' . $this->desc;
+                ComplaintHelper::send1111API($complaint, false, $comment);
                 // if ($complaint->channel_id == 7 && $complaint->source_number != null) {
                 //     $params = [
                 //         'action' => 'create-log',
@@ -278,7 +280,7 @@ class ComplaintStep extends Component
                 }
 
                 // Хэрвээ 1111-ээс ирсэн гомдол байвал 1111 рүү мэдээлэл дамжуулах
-                $this->send1111API($complaint, $this->desc);
+                ComplaintHelper::send1111API($complaint, false, $this->desc);
                 // if ($complaint->channel_id == 7 && $complaint->source_number != null) {
                 //     $params = [
                 //         'action' => 'create-log',
@@ -315,7 +317,7 @@ class ComplaintStep extends Component
                 }
 
                 // Хэрвээ 1111-ээс ирсэн гомдол байвал 1111 рүү мэдээлэл дамжуулах
-                $this->send1111API($complaint, $this->desc);
+                ComplaintHelper::send1111API($complaint, false, $this->desc);
                 // if ($complaint->channel_id == 7 && $complaint->source_number != null) {
                 //     $params = [
                 //         'action' => 'create-log',
@@ -353,7 +355,7 @@ class ComplaintStep extends Component
 
                     // Хэрвээ 1111-ээс ирсэн гомдол байвал 1111 рүү мэдээлэл дамжуулах
                     $isClose = true;
-                    $this->send1111API($complaint, $this->desc, $isClose);
+                    ComplaintHelper::send1111API($complaint, $isClose, $this->desc);
                     // if ($complaint->channel_id == 7 && $complaint->source_number != null) {
                     //     $params = [
                     //         'action' => 'create-log',
@@ -389,7 +391,7 @@ class ComplaintStep extends Component
 
                         // Хэрвээ 1111-ээс ирсэн гомдол байвал 1111 рүү мэдээлэл дамжуулах
                         $isClose = true;
-                        $this->send1111API($complaint, $this->desc, $isClose);
+                        ComplaintHelper::send1111API($complaint, $isClose, $this->desc);
                         // if ($complaint->channel_id == 7 && $complaint->source_number != null) {
                         //     $params = [
                         //         'action' => 'create-log',
@@ -422,7 +424,7 @@ class ComplaintStep extends Component
                         }
 
                         // Хэрвээ 1111-ээс ирсэн гомдол байвал 1111 рүү мэдээлэл дамжуулах
-                        $this->send1111API($complaint, $this->desc);
+                        ComplaintHelper::send1111API($complaint, false, $this->desc);
                         // if ($complaint->channel_id == 7 && $complaint->source_number != null) {
                         //     $params = [
                         //         'action' => 'create-log',
