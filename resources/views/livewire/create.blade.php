@@ -108,10 +108,28 @@
                         </label>
                     </div>
                     <div class="md:w-2/3">
-                        <input wire:model="file"
+                        {{-- <input wire:model="file"
                             class=""
                             id="inline-full-name" type="file" name="file">
-                        @error('file') <span class="text-red-500">{{ $message }}</span> @enderror
+                        @error('file') <span class="text-red-500">{{ $message }}</span> @enderror --}}
+
+
+                        <!-- Multi-file input -->
+                        <input type="file" wire:model="files" multiple>
+
+                        <!-- Display error if validation fails -->
+                        @error('files.*') <span class="text-red-500">{{ $message }}</span> @enderror
+
+                        <!-- Show selected files -->
+                        <div class="mt-3">
+                            @if ($files)
+                                <ul>
+                                    @foreach ($files as $file)
+                                        <li>{{ $file->getClientOriginalName() }}</li>
+                                    @endforeach
+                                </ul>
+                            @endif
+                        </div>
                     </div>
                 </div>
                 @endif

@@ -698,15 +698,6 @@ class ComplaintController extends Controller
         $user = Auth::user();
         $input = $request->all();
 
-        if ($file = $request->file('file')) {
-            $name = time() . $file->getClientOriginalName();
-
-            $file->move('files', $name);
-            $filename = File::create(['filename' => $name]);
-
-            $input['file_id'] = $filename->id;
-        }
-
         // file upload
         if ($request->hasFile('files')) {
             foreach ($request->file('files') as $file) {

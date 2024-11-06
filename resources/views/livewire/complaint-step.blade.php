@@ -115,6 +115,16 @@
                             <x-file-list-component :$fileName :$fileExt :$fileUrl :$fileSizeInKilobytes />
                         </div>
                     @endif
+                    @if ($step->files->isNotEmpty())
+                        <div class="flex flex-row flex-wrap">
+                            @foreach ($step->files as $file)
+                                <div class="m-2">
+                                    <x-file-list-component :fileName="$file->filename" :fileExt="pathinfo($file->filename, PATHINFO_EXTENSION)" :fileUrl="url('files/' . $file->filename)"
+                                        :fileSizeInKilobytes="10" />
+                                </div>
+                            @endforeach
+                        </div>
+                    @endif
 
                     <!-- Edit and Delete Buttons -->
                     @if (Auth::user()->role->name == "ehzh")    

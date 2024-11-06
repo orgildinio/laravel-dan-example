@@ -28,6 +28,11 @@ class ComplaintStep extends Model
         return $this->belongsTo(File::class);
     }
 
+    public function files()
+    {
+        return $this->hasMany(File::class, 'step_id');
+    }
+
     public function sentUser()
     {
         return $this->belongsTo(User::class);

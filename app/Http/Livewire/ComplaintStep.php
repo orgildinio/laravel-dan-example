@@ -22,10 +22,11 @@ class ComplaintStep extends Component
 {
     use WithFileUploads;
 
-    public $complaint_steps, $org_id, $status_id, $complaint_id, $recieved_user_id, $sent_user_id, $recieved_date, $sent_date, $desc, $orgs, $all_status, $actions, $selectedAction, $controlled_user_id, $employees, $selected_user_id, $second_user_id, $file, $step_id, $expire_date, $is_expired, $complaint_type_id, $complaint_type_summary_id, $amount, $selected_date;
+    public $complaint_steps, $org_id, $status_id, $complaint_id, $recieved_user_id, $sent_user_id, $recieved_date, $sent_date, $desc, $orgs, $all_status, $actions, $selectedAction, $controlled_user_id, $employees, $selected_user_id, $second_user_id, $file, $step_id, $expire_date, $is_expired, $complaint_type_id, $complaint_type_summary_id, $amount, $selected_date, $complaint_step;
     public $isOpen = 0;
     public $showPermissionWarning = false;
     public $isEditMode = false;
+    public $files = [];
 
 
     public function mount($complaint)
@@ -130,6 +131,7 @@ class ComplaintStep extends Component
     private function resetInputFields()
     {
         $this->desc = '';
+        $this->files = null;
     }
 
     public function download($path)
@@ -142,132 +144,93 @@ class ComplaintStep extends Component
     {
         $this->validate([
             'desc' => 'required',
-            'file' => 'nullable|mimes:jpeg,png,jpg,pdf|max:25600', // 100MB Max
+            'files.*' => 'nullable|mimes:jpeg,png,jpg,pdf|max:20480', // 20MB Max
         ]);
 
-        if ($this->file) {
-
-            $filename = $this->file->getClientOriginalName();
-            $randomName = time() . $filename;
-            $this->file->storeAs('files', $randomName, 'public');
-
-            $filename = File::create([
-                'filename' => $randomName // Associate with the existing model
-            ]);
-        }
-
-
         $complaint = Complaint::findOrFail($this->complaint_id);
+        $action = $this->selectedAction;
+        $stepData = [
+            'complaint_id' => $this->complaint_id,
+            'sent_user_id' => Auth::user()->id,
+            'desc' => $this->desc,
+            'action_taken' => $action,
+            'sent_date' => Carbon::now()->toDateTimeString(),
+            'amount' => $this->amount,
+        ];
 
         switch ($this->selectedAction) {
             case 'Тайлбар':
                 // Тайлбар бичихэд төлөв өөрчлөгдөхгүй
-                $complaint->save();
-                if ($complaint->second_org_id == null) {
-                    ModelsComplaintStep::create([
-                        'org_id' => $complaint->organization_id,
-                        'complaint_id' => $this->complaint_id,
-                        'sent_user_id' => Auth::user()->id,
-                        'status_id' => 8,
-                        'sent_date' => Carbon::now()->toDateTimeString(),
-                        'desc' => $this->desc,
-                        'action_taken' => $this->selectedAction,
-                        'file_id' => isset($filename) ? $filename->id : null,
-                    ]);
-                } else {
-                    ModelsComplaintStep::create([
-                        'org_id' => $complaint->second_org_id,
-                        'complaint_id' => $this->complaint_id,
-                        'sent_user_id' => Auth::user()->id,
-                        'status_id' => 8,
-                        'sent_date' => Carbon::now()->toDateTimeString(),
-                        'desc' => $this->desc,
-                        'action_taken' => $this->selectedAction,
-                        'file_id' => isset($filename) ? $filename->id : null,
-                    ]);
-                }
-                // Хэрвээ 1111-ээс ирсэн гомдол байвал 1111 рүү мэдээлэл дамжуулах
-                if ($complaint->channel_id == 7 && $complaint->source_number != null) {
-                    $params = [
-                        'action' => 'create-log',
-                        'u' => env('1111_API_USERNAME'),
-                        'p' => env('1111_API_PASSWORD'),
-                        'api_key' => '-',
-                        'number' => $complaint->source_number,
-                        'is_close' => 'false',
-                        'created_by' => Auth::user()->name,
-                        'comment' => $this->desc,
-                    ];
-                    $response = Http::get('https://www.11-11.mn/GStest/APIa', $params);
-                    $result = $response->json();
+                $stepData['status_id'] = 8;
+                $stepData['org_id'] = $complaint->second_org_id ?? $complaint->organization_id;
 
-                    if ($result['isValid'] && $result['smart']['isValid']) {
-                        // 1111 API request success
-                        Log::channel('1111_log')->info('1111 рүү тайлбар амжилттай илгээлээ. user_id: ' . Auth::user()->id . ' complaint_serial_number: ' . $complaint->serial_number);
-                    } else {
-                        // 1111 API request failed
-                        Log::channel('1111_log')->error('Failed create-log action.');
-                    }
-                }
+                //Хэрвээ 1111-ээс ирсэн гомдол байвал 1111 рүү мэдээлэл дамжуулах
+                $this->send1111API($complaint, $this->desc);
+                // if ($complaint->channel_id == 7 && $complaint->source_number != null) {
+                //     $params = [
+                //         'action' => 'create-log',
+                //         'u' => env('1111_API_USERNAME'),
+                //         'p' => env('1111_API_PASSWORD'),
+                //         'api_key' => '-',
+                //         'number' => $complaint->source_number,
+                //         'is_close' => 'false',
+                //         'created_by' => Auth::user()->name,
+                //         'comment' => $this->desc,
+                //     ];
+                //     $response = Http::get('https://www.11-11.mn/GStest/APIa', $params);
+                //     $result = $response->json();
+
+                //     if ($result['isValid'] && $result['smart']['isValid']) {
+                //         // 1111 API request success
+                //         Log::channel('1111_log')->info('1111 рүү тайлбар амжилттай илгээлээ. user_id: ' . Auth::user()->id . ' complaint_serial_number: ' . $complaint->serial_number);
+                //     } else {
+                //         // 1111 API request failed
+                //         Log::channel('1111_log')->error('Failed create-log action.');
+                //     }
+                // }
 
                 break;
             case 'Шилжүүлэх':
                 // Байгууллага дотроо өөр хүнд шилжүүлэхэд төлөв тухайн хүн хүлээн авсан болно
-                $complaint->status_id = 2;
-                $complaint->controlled_user_id = $this->selected_user_id; // Шилжүүлсэн ажилтны id-г өгөх
-                $complaint->save();
-                ModelsComplaintStep::create([
-                    'org_id' => $this->org_id,
-                    'complaint_id' => $this->complaint_id,
-                    'sent_user_id' => Auth::user()->id,
-                    'status_id' => 1,
-                    'sent_date' => Carbon::now()->toDateTimeString(),
-                    'desc' => $this->desc,
-                    'action_taken' => $this->selectedAction,
-                ]);
+
+                $complaint->update(['status_id' => 2, 'controlled_user_id' => $this->selected_user_id]);
+                $stepData['status_id'] = 1;
+                $stepData['org_id'] = $this->org_id;
 
                 // Хэрвээ 1111-ээс ирсэн гомдол байвал 1111 рүү мэдээлэл дамжуулах
-                if ($complaint->channel_id == 7 && $complaint->source_number != null) {
-                    $params = [
-                        'action' => 'create-log',
-                        'u' => env('1111_API_USERNAME'),
-                        'p' => env('1111_API_PASSWORD'),
-                        'api_key' => '-',
-                        'number' => $complaint->source_number,
-                        'is_close' => 'false',
-                        'created_by' => Auth::user()->name,
-                        'comment' => 'Мэргэжилтэн ' . $complaint->controlledUser?->name . 'рүү шилжүүлэв. Тайлбар: ' . $this->desc,
-                    ];
-                    $response = Http::get('https://www.11-11.mn/GStest/APIa', $params);
-                    $result = $response->json();
+                $comment = 'Мэргэжилтэн ' . $complaint->controlledUser?->name . ' рүү шилжүүлэв. Тайлбар: ' . $this->desc;
+                $this->send1111API($complaint, $comment);
+                // if ($complaint->channel_id == 7 && $complaint->source_number != null) {
+                //     $params = [
+                //         'action' => 'create-log',
+                //         'u' => env('1111_API_USERNAME'),
+                //         'p' => env('1111_API_PASSWORD'),
+                //         'api_key' => '-',
+                //         'number' => $complaint->source_number,
+                //         'is_close' => 'false',
+                //         'created_by' => Auth::user()->name,
+                //         'comment' => 'Мэргэжилтэн ' . $complaint->controlledUser?->name . 'рүү шилжүүлэв. Тайлбар: ' . $this->desc,
+                //     ];
+                //     $response = Http::get('https://www.11-11.mn/GStest/APIa', $params);
+                //     $result = $response->json();
 
-                    if ($result['isValid'] && $result['smart']['isValid']) {
-                        // 1111 API request success
-                        Log::channel('1111_log')->info('1111 рүү байгууллага доторх шилжүүлгийн мэдээлэл амжилттай илгээлээ. user_id: ' . Auth::user()->id . ' complaint_serial_number: ' . $complaint->serial_number);
-                    } else {
-                        // 1111 API request failed
-                        Log::channel('1111_log')->error('Failed create-log action.');
-                    }
-                }
+                //     if ($result['isValid'] && $result['smart']['isValid']) {
+                //         // 1111 API request success
+                //         Log::channel('1111_log')->info('1111 рүү байгууллага доторх шилжүүлгийн мэдээлэл амжилттай илгээлээ. user_id: ' . Auth::user()->id . ' complaint_serial_number: ' . $complaint->serial_number);
+                //     } else {
+                //         // 1111 API request failed
+                //         Log::channel('1111_log')->error('Failed create-log action.');
+                //     }
+                // }
 
                 break;
             case 'ТЗЭ-рүү шилжүүлэх':
                 // ТЗЭ рүү шилжүүлэхэд төлөв хянаж байгаа төлөвтэй болно
-                $complaint->status_id = 1;
-                $complaint->second_org_id = $this->org_id;
-                $complaint->second_status_id = 0;
-                $complaint->save();
-                ModelsComplaintStep::create([
-                    'org_id' => $complaint->organization_id,
-                    'complaint_id' => $this->complaint_id,
-                    'sent_user_id' => Auth::user()->id,
-                    'status_id' => 1,
-                    'sent_date' => Carbon::now()->toDateTimeString(),
-                    'desc' => $this->desc,
-                    'action_taken' => $this->selectedAction,
-                ]);
+                $complaint->update(['status_id' => 1, 'second_org_id' => $this->org_id, 'second_status_id' => 0]);
+                $stepData['status_id'] = 1;
+                $stepData['org_id'] = $complaint->organization_id;
 
-                // Хүлээн авч буй ТЗЭ байгууллагын хэрэглэгч
+                // Хүлээн авч буй ТЗЭ байгууллагын хэрэглэгчид мэйлээр мэдэгдэх
                 $recvUser = User::where('org_id', $this->org_id)->first();
                 // Send email about new complaint recieved
                 if ($recvUser != null) {
@@ -275,59 +238,39 @@ class ComplaintStep extends Component
                 }
 
                 // Хэрвээ 1111-ээс ирсэн гомдол байвал 1111 рүү мэдээлэл дамжуулах
-                if ($complaint->channel_id == 7 && $complaint->source_number != null) {
-                    $params = [
-                        'action' => 'create-log',
-                        'u' => env('1111_API_USERNAME'),
-                        'p' => env('1111_API_PASSWORD'),
-                        'api_key' => '-',
-                        'number' => $complaint->source_number,
-                        'is_close' => 'false',
-                        'created_by' => Auth::user()->name,
-                        'comment' => $complaint->secondOrg?->name . ' рүү шилжүүлэв. Тайлбар: ' . $this->desc,
-                    ];
-                    $response = Http::get('https://www.11-11.mn/GStest/APIa', $params);
-                    $result = $response->json();
+                $this->send1111API($complaint, $complaint->secondOrg?->name . ' рүү шилжүүлэв. Тайлбар: ' . $this->desc);
+                // if ($complaint->channel_id == 7 && $complaint->source_number != null) {
+                //     $params = [
+                //         'action' => 'create-log',
+                //         'u' => env('1111_API_USERNAME'),
+                //         'p' => env('1111_API_PASSWORD'),
+                //         'api_key' => '-',
+                //         'number' => $complaint->source_number,
+                //         'is_close' => 'false',
+                //         'created_by' => Auth::user()->name,
+                //         'comment' => $complaint->secondOrg?->name . ' рүү шилжүүлэв. Тайлбар: ' . $this->desc,
+                //     ];
+                //     $response = Http::get('https://www.11-11.mn/GStest/APIa', $params);
+                //     $result = $response->json();
 
-                    if ($result['isValid'] && $result['smart']['isValid']) {
-                        // 1111 API request success
-                        Log::channel('1111_log')->info('1111 рүү ТЗЭ-ийн шилжүүлгийн мэдээлэл амжилттай илгээлээ. user_id: ' . Auth::user()->id . ' complaint_serial_number: ' . $complaint->serial_number);
-                    } else {
-                        // 1111 API request failed
-                        Log::channel('1111_log')->error('Failed create-log action.');
-                    }
-                }
+                //     if ($result['isValid'] && $result['smart']['isValid']) {
+                //         // 1111 API request success
+                //         Log::channel('1111_log')->info('1111 рүү ТЗЭ-ийн шилжүүлгийн мэдээлэл амжилттай илгээлээ. user_id: ' . Auth::user()->id . ' complaint_serial_number: ' . $complaint->serial_number);
+                //     } else {
+                //         // 1111 API request failed
+                //         Log::channel('1111_log')->error('Failed create-log action.');
+                //     }
+                // }
 
                 break;
             case 'Хянаж байгаа':
                 // Төлөв хянаж байгаа болно
-                if ($complaint->second_org_id == null) {
-                    $complaint->status_id = 3;
-                    $complaint->save();
-                    ModelsComplaintStep::create([
-                        'org_id' => $complaint->organization_id,
-                        'complaint_id' => $this->complaint_id,
-                        'sent_user_id' => Auth::user()->id,
-                        'status_id' => 3,
-                        'sent_date' => Carbon::now()->toDateTimeString(),
-                        'desc' => $this->desc,
-                        'action_taken' => $this->selectedAction,
-                        'file_id' => isset($filename) ? $filename->id : null,
-                    ]);
-                } else {
-                    $complaint->second_status_id = 3;
-                    $complaint->save();
-                    ModelsComplaintStep::create([
-                        'org_id' => $complaint->second_org_id,
-                        'complaint_id' => $this->complaint_id,
-                        'sent_user_id' => Auth::user()->id,
-                        'status_id' => 3,
-                        'sent_date' => Carbon::now()->toDateTimeString(),
-                        'desc' => $this->desc,
-                        'action_taken' => $this->selectedAction,
-                        'file_id' => isset($filename) ? $filename->id : null,
-                    ]);
-                }
+                $complaint->update([
+                    $complaint->second_org_id ? 'second_status_id' : 'status_id' => 3
+                ]);
+
+                $stepData['status_id'] = 3;
+                $stepData['org_id'] = $complaint->second_org_id ?? $complaint->organization_id;
 
                 // Send email about complaint recieved
                 if ($complaint->email != null) {
@@ -335,44 +278,36 @@ class ComplaintStep extends Component
                 }
 
                 // Хэрвээ 1111-ээс ирсэн гомдол байвал 1111 рүү мэдээлэл дамжуулах
-                if ($complaint->channel_id == 7 && $complaint->source_number != null) {
-                    $params = [
-                        'action' => 'create-log',
-                        'u' => env('1111_API_USERNAME'),
-                        'p' => env('1111_API_PASSWORD'),
-                        'api_key' => '-',
-                        'number' => $complaint->source_number,
-                        'is_close' => 'false',
-                        'created_by' => Auth::user()->name,
-                        'comment' => $this->desc,
-                    ];
-                    $response = Http::get('https://www.11-11.mn/GStest/APIa', $params);
-                    $result = $response->json();
+                $this->send1111API($complaint, $this->desc);
+                // if ($complaint->channel_id == 7 && $complaint->source_number != null) {
+                //     $params = [
+                //         'action' => 'create-log',
+                //         'u' => env('1111_API_USERNAME'),
+                //         'p' => env('1111_API_PASSWORD'),
+                //         'api_key' => '-',
+                //         'number' => $complaint->source_number,
+                //         'is_close' => 'false',
+                //         'created_by' => Auth::user()->name,
+                //         'comment' => $this->desc,
+                //     ];
+                //     $response = Http::get('https://www.11-11.mn/GStest/APIa', $params);
+                //     $result = $response->json();
 
-                    if ($result['isValid'] && $result['smart']['isValid']) {
-                        // 1111 API request success
-                        Log::channel('1111_log')->info('1111 рүү Хянаж байгаа мэдээлэл амжилттай илгээлээ. user_id: ' . Auth::user()->id . ' complaint_serial_number: ' . $complaint->serial_number);
-                    } else {
-                        // 1111 API request failed
-                        Log::channel('1111_log')->error('Failed create-log action.');
-                    }
-                }
+                //     if ($result['isValid'] && $result['smart']['isValid']) {
+                //         // 1111 API request success
+                //         Log::channel('1111_log')->info('1111 рүү Хянаж байгаа мэдээлэл амжилттай илгээлээ. user_id: ' . Auth::user()->id . ' complaint_serial_number: ' . $complaint->serial_number);
+                //     } else {
+                //         // 1111 API request failed
+                //         Log::channel('1111_log')->error('Failed create-log action.');
+                //     }
+                // }
 
                 break;
             case 'Цуцлах':
                 // Төлөв цуцалсан болно
-                $complaint->status_id = 4;
-                $complaint->save();
-                ModelsComplaintStep::create([
-                    'org_id' => $this->org_id,
-                    'complaint_id' => $this->complaint_id,
-                    'sent_user_id' => Auth::user()->id,
-                    'status_id' => 4,
-                    'sent_date' => Carbon::now()->toDateTimeString(),
-                    'desc' => $this->desc,
-                    'action_taken' => $this->selectedAction,
-                    'file_id' => isset($filename) ? $filename->id : null,
-                ]);
+                $complaint->update(['status_id' => 4]);
+                $stepData['status_id'] = 4;
+                $stepData['org_id'] = $this->org_id;
 
                 // Send email about complaint recieved
                 if ($complaint->email != null) {
@@ -380,53 +315,36 @@ class ComplaintStep extends Component
                 }
 
                 // Хэрвээ 1111-ээс ирсэн гомдол байвал 1111 рүү мэдээлэл дамжуулах
-                if ($complaint->channel_id == 7 && $complaint->source_number != null) {
-                    $params = [
-                        'action' => 'create-log',
-                        'u' => env('1111_API_USERNAME'),
-                        'p' => env('1111_API_PASSWORD'),
-                        'api_key' => '-',
-                        'number' => $complaint->source_number,
-                        'is_close' => 'false',
-                        'created_by' => Auth::user()->name,
-                        'comment' => $this->desc,
-                    ];
-                    $response = Http::get('https://www.11-11.mn/GStest/APIa', $params);
-                    $result = $response->json();
+                $this->send1111API($complaint, $this->desc);
+                // if ($complaint->channel_id == 7 && $complaint->source_number != null) {
+                //     $params = [
+                //         'action' => 'create-log',
+                //         'u' => env('1111_API_USERNAME'),
+                //         'p' => env('1111_API_PASSWORD'),
+                //         'api_key' => '-',
+                //         'number' => $complaint->source_number,
+                //         'is_close' => 'false',
+                //         'created_by' => Auth::user()->name,
+                //         'comment' => $this->desc,
+                //     ];
+                //     $response = Http::get('https://www.11-11.mn/GStest/APIa', $params);
+                //     $result = $response->json();
 
-                    if ($result['isValid'] && $result['smart']['isValid']) {
-                        // 1111 API request success
-                        Log::channel('1111_log')->info('1111 рүү Цуцалсан мэдээлэл амжилттай илгээлээ. user_id: ' . Auth::user()->id . ' complaint_serial_number: ' . $complaint->serial_number);
-                    } else {
-                        // 1111 API request failed
-                        Log::channel('1111_log')->error('Failed create-log action.');
-                    }
-                }
+                //     if ($result['isValid'] && $result['smart']['isValid']) {
+                //         // 1111 API request success
+                //         Log::channel('1111_log')->info('1111 рүү Цуцалсан мэдээлэл амжилттай илгээлээ. user_id: ' . Auth::user()->id . ' complaint_serial_number: ' . $complaint->serial_number);
+                //     } else {
+                //         // 1111 API request failed
+                //         Log::channel('1111_log')->error('Failed create-log action.');
+                //     }
+                // }
 
                 break;
-                // case 'Буцаах':
-                //     // Буцаах үед төлөв шинээр ирсэн төлөвт орох эсэх!!!
-                //     $complaint->status_id = 0;
-                //     $complaint->organization_id = 1; //  ЭХЗХ руу буцаана
-                //     $complaint->save();
-                //     break;
             case 'Шийдвэрлэх':
                 // Төлөв шийдвэрлэсэн болно
                 if ($complaint->second_org_id == null) {
-
                     $complaint->status_id = 6;
-                    $complaint->save();
-                    ModelsComplaintStep::create([
-                        'org_id' => $this->org_id,
-                        'complaint_id' => $this->complaint_id,
-                        'sent_user_id' => Auth::user()->id,
-                        'status_id' => 6,
-                        'sent_date' => Carbon::now()->toDateTimeString(),
-                        'desc' => $this->desc,
-                        'action_taken' => $this->selectedAction,
-                        'amount' => $this->amount,
-                        'file_id' => isset($filename) ? $filename->id : null,
-                    ]);
+                    $stepData['org_id'] = $this->org_id;
 
                     // Send email about complaint recieved
                     if ($complaint->email != null) {
@@ -434,44 +352,35 @@ class ComplaintStep extends Component
                     }
 
                     // Хэрвээ 1111-ээс ирсэн гомдол байвал 1111 рүү мэдээлэл дамжуулах
-                    if ($complaint->channel_id == 7 && $complaint->source_number != null) {
-                        $params = [
-                            'action' => 'create-log',
-                            'u' => env('1111_API_USERNAME'),
-                            'p' => env('1111_API_PASSWORD'),
-                            'api_key' => '-',
-                            'number' => $complaint->source_number,
-                            'is_close' => 'true',
-                            'created_by' => Auth::user()->name,
-                            'comment' => $this->desc,
-                        ];
-                        $response = Http::get('https://www.11-11.mn/GStest/APIa', $params);
-                        $result = $response->json();
+                    $isClose = true;
+                    $this->send1111API($complaint, $this->desc, $isClose);
+                    // if ($complaint->channel_id == 7 && $complaint->source_number != null) {
+                    //     $params = [
+                    //         'action' => 'create-log',
+                    //         'u' => env('1111_API_USERNAME'),
+                    //         'p' => env('1111_API_PASSWORD'),
+                    //         'api_key' => '-',
+                    //         'number' => $complaint->source_number,
+                    //         'is_close' => 'true',
+                    //         'created_by' => Auth::user()->name,
+                    //         'comment' => $this->desc,
+                    //     ];
+                    //     $response = Http::get('https://www.11-11.mn/GStest/APIa', $params);
+                    //     $result = $response->json();
 
-                        if ($result['isValid'] && $result['smart']['isValid']) {
-                            // 1111 API request success
-                            Log::channel('1111_log')->info('1111 рүү Шийдвэрлэсэн мэдээлэл амжилттай илгээлээ. user_id: ' . Auth::user()->id . ' complaint_serial_number: ' . $complaint->serial_number);
-                        } else {
-                            // 1111 API request failed
-                            Log::channel('1111_log')->error('Failed create-log action.');
-                        }
-                    }
+                    //     if ($result['isValid'] && $result['smart']['isValid']) {
+                    //         // 1111 API request success
+                    //         Log::channel('1111_log')->info('1111 рүү Шийдвэрлэсэн мэдээлэл амжилттай илгээлээ. user_id: ' . Auth::user()->id . ' complaint_serial_number: ' . $complaint->serial_number);
+                    //     } else {
+                    //         // 1111 API request failed
+                    //         Log::channel('1111_log')->error('Failed create-log action.');
+                    //     }
+                    // }
                 } else {
                     if (Auth::user()->org_id == 99) {
                         $complaint->status_id = 6;
                         $complaint->second_status_id = 6;
-                        $complaint->save();
-                        ModelsComplaintStep::create([
-                            'org_id' => $complaint->organization_id,
-                            'complaint_id' => $this->complaint_id,
-                            'sent_user_id' => Auth::user()->id,
-                            'status_id' => 6,
-                            'sent_date' => Carbon::now()->toDateTimeString(),
-                            'desc' => $this->desc,
-                            'action_taken' => $this->selectedAction,
-                            'amount' => $this->amount,
-                            'file_id' => isset($filename) ? $filename->id : null,
-                        ]);
+                        $stepData['org_id'] = $complaint->organization_id;
 
                         // Send email about complaint recieved
                         if ($complaint->email != null) {
@@ -479,42 +388,33 @@ class ComplaintStep extends Component
                         }
 
                         // Хэрвээ 1111-ээс ирсэн гомдол байвал 1111 рүү мэдээлэл дамжуулах
-                        if ($complaint->channel_id == 7 && $complaint->source_number != null) {
-                            $params = [
-                                'action' => 'create-log',
-                                'u' => env('1111_API_USERNAME'),
-                                'p' => env('1111_API_PASSWORD'),
-                                'api_key' => '-',
-                                'number' => $complaint->source_number,
-                                'is_close' => 'true',
-                                'created_by' => Auth::user()->name,
-                                'comment' => $this->desc,
-                            ];
-                            $response = Http::get('https://www.11-11.mn/GStest/APIa', $params);
-                            $result = $response->json();
+                        $isClose = true;
+                        $this->send1111API($complaint, $this->desc, $isClose);
+                        // if ($complaint->channel_id == 7 && $complaint->source_number != null) {
+                        //     $params = [
+                        //         'action' => 'create-log',
+                        //         'u' => env('1111_API_USERNAME'),
+                        //         'p' => env('1111_API_PASSWORD'),
+                        //         'api_key' => '-',
+                        //         'number' => $complaint->source_number,
+                        //         'is_close' => 'true',
+                        //         'created_by' => Auth::user()->name,
+                        //         'comment' => $this->desc,
+                        //     ];
+                        //     $response = Http::get('https://www.11-11.mn/GStest/APIa', $params);
+                        //     $result = $response->json();
 
-                            if ($result['isValid'] && $result['smart']['isValid']) {
-                                // 1111 API request success
-                                Log::channel('1111_log')->info('1111 рүү Шийдвэрлэсэн мэдээлэл амжилттай илгээлээ. user_id: ' . Auth::user()->id . ' complaint_serial_number: ' . $complaint->serial_number);
-                            } else {
-                                // 1111 API request failed
-                                Log::channel('1111_log')->error('Failed create-log action.');
-                            }
-                        }
+                        //     if ($result['isValid'] && $result['smart']['isValid']) {
+                        //         // 1111 API request success
+                        //         Log::channel('1111_log')->info('1111 рүү Шийдвэрлэсэн мэдээлэл амжилттай илгээлээ. user_id: ' . Auth::user()->id . ' complaint_serial_number: ' . $complaint->serial_number);
+                        //     } else {
+                        //         // 1111 API request failed
+                        //         Log::channel('1111_log')->error('Failed create-log action.');
+                        //     }
+                        // }
                     } else {
                         $complaint->second_status_id = 6;
-                        $complaint->save();
-                        ModelsComplaintStep::create([
-                            'org_id' => $complaint->second_org_id,
-                            'complaint_id' => $this->complaint_id,
-                            'sent_user_id' => Auth::user()->id,
-                            'status_id' => 6,
-                            'sent_date' => Carbon::now()->toDateTimeString(),
-                            'desc' => $this->desc,
-                            'action_taken' => $this->selectedAction,
-                            'amount' => $this->amount,
-                            'file_id' => isset($filename) ? $filename->id : null,
-                        ]);
+                        $stepData['org_id'] = $complaint->second_org_id;
 
                         // Send email about complaint recieved
                         if ($complaint->email != null) {
@@ -522,46 +422,41 @@ class ComplaintStep extends Component
                         }
 
                         // Хэрвээ 1111-ээс ирсэн гомдол байвал 1111 рүү мэдээлэл дамжуулах
-                        if ($complaint->channel_id == 7 && $complaint->source_number != null) {
-                            $params = [
-                                'action' => 'create-log',
-                                'u' => env('1111_API_USERNAME'),
-                                'p' => env('1111_API_PASSWORD'),
-                                'api_key' => '-',
-                                'number' => $complaint->source_number,
-                                'is_close' => 'false',
-                                'created_by' => Auth::user()->name,
-                                'comment' => $this->desc,
-                            ];
-                            $response = Http::get('https://www.11-11.mn/GStest/APIa', $params);
-                            $result = $response->json();
+                        $this->send1111API($complaint, $this->desc);
+                        // if ($complaint->channel_id == 7 && $complaint->source_number != null) {
+                        //     $params = [
+                        //         'action' => 'create-log',
+                        //         'u' => env('1111_API_USERNAME'),
+                        //         'p' => env('1111_API_PASSWORD'),
+                        //         'api_key' => '-',
+                        //         'number' => $complaint->source_number,
+                        //         'is_close' => 'false',
+                        //         'created_by' => Auth::user()->name,
+                        //         'comment' => $this->desc,
+                        //     ];
+                        //     $response = Http::get('https://www.11-11.mn/GStest/APIa', $params);
+                        //     $result = $response->json();
 
-                            if ($result['isValid'] && $result['smart']['isValid']) {
-                                // 1111 API request success
-                                Log::channel('1111_log')->info('1111 рүү Шийдвэрлэсэн мэдээлэл амжилттай илгээлээ. user_id: ' . Auth::user()->id . ' complaint_serial_number: ' . $complaint->serial_number);
-                            } else {
-                                // 1111 API request failed
-                                Log::channel('1111_log')->error('Failed create-log action.');
-                            }
-                        }
+                        //     if ($result['isValid'] && $result['smart']['isValid']) {
+                        //         // 1111 API request success
+                        //         Log::channel('1111_log')->info('1111 рүү Шийдвэрлэсэн мэдээлэл амжилттай илгээлээ. user_id: ' . Auth::user()->id . ' complaint_serial_number: ' . $complaint->serial_number);
+                        //     } else {
+                        //         // 1111 API request failed
+                        //         Log::channel('1111_log')->error('Failed create-log action.');
+                        //     }
+                        // }
                     }
                 }
+
+                $complaint->save();
+                $stepData['status_id'] = 6;
+
                 break;
             case 'Сунгах':
                 // Шийдвэрлэх хугацааг 48 цагаар сунгах, төлөв өөрчлөгдөхгүй
-                // $expire_date = Carbon::parse($complaint->expire_date);
-                // $complaint->expire_date = $expire_date->addHours(48);
-                $complaint->expire_date = $this->selected_date;
-                $complaint->save();
-                ModelsComplaintStep::create([
-                    'org_id' => $this->org_id,
-                    'complaint_id' => $this->complaint_id,
-                    'sent_user_id' => Auth::user()->id,
-                    'status_id' => 7,
-                    'sent_date' => Carbon::now()->toDateTimeString(),
-                    'desc' => $this->desc,
-                    'action_taken' => $this->selectedAction,
-                ]);
+                $complaint->update(['expire_date' => $this->selected_date]);
+                $stepData['status_id'] = 7;
+                $stepData['org_id'] = $this->org_id;
 
                 // Send email about complaint recieved
                 if ($complaint->email != null) {
@@ -569,11 +464,25 @@ class ComplaintStep extends Component
                 }
 
                 break;
-
             default:
                 // Handle the default case or show an error
-                // $complaint->save();
                 break;
+        }
+
+        // Create the ComplaintStep
+        $complaint_step = ModelsComplaintStep::create($stepData);
+
+        // Handle file uploads if present
+        if ($this->files) {
+            foreach ($this->files as $file) {
+                $filename = time() . '_' . $file->getClientOriginalName();
+                $file->storeAs('files', $filename, 'public');
+
+                File::create([
+                    'filename' => $filename,
+                    'step_id' => $complaint_step->id, // Link file to the complaint step
+                ]);
+            }
         }
 
         session()->flash('success', 'Амжилттай хадгаллаа.');
