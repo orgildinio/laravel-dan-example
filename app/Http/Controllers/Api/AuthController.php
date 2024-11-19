@@ -85,10 +85,10 @@ class AuthController extends Controller
         $user = auth()->user();
 
         $validated = $request->validate([
-            'aimagCityName' => 'required|string|max:255',
-            'soumDistrictName' => 'required|string|max:255',
-            'bagKhorooName' => 'required|string|max:255',
-            'passportAddress' => 'required|string|max:255',
+            'danAimagCityName' => 'required|string|max:255',
+            'danSoumDistrictName' => 'required|string|max:255',
+            'danBagKhorooName' => 'required|string|max:255',
+            'danPassportAddress' => 'required|string|max:255',
             'email' => 'required|email',
             'phone' => 'nullable|string|max:20',
         ]);
