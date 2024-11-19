@@ -83,6 +83,7 @@ class AuthController extends Controller
     public function update(Request $request)
     {
         $user = auth()->user();
+        $input = $request->all();
 
         $validated = $request->validate([
             'danAimagCityName' => 'required|string|max:255',
@@ -93,7 +94,7 @@ class AuthController extends Controller
             'phone' => 'nullable|string|max:20',
         ]);
 
-        $user->update($validated);
+        $user->update($input);
 
         return response()->json([
             'message' => 'Профайл мэдээлэл амжилттэй хадгалагдлаа',
