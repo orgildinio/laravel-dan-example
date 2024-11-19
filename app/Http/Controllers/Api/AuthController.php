@@ -80,6 +80,28 @@ class AuthController extends Controller
         return $request->user();
     }
 
+    public function update(Request $request)
+    {
+        $user = auth()->user();
+
+        $validated = $request->validate([
+            'aimagCityName' => 'required|string|max:255',
+            'soumDistrictName' => 'required|string|max:255',
+            'bagKhorooName' => 'required|string|max:255',
+            'passportAddress' => 'required|string|max:255',
+            'email' => 'required|email',
+            'phone' => 'nullable|string|max:20',
+        ]);
+
+        $user->update($validated);
+
+        return response()->json([
+            'message' => 'Профайл мэдээлэл амжилттэй хадгалагдлаа',
+            'user' => $user,
+        ]);
+    }
+
+
     public function loginEmail(Request $request)
     {
         $credentials = $request->only('email', 'password');

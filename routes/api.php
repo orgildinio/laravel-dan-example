@@ -33,6 +33,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('user', [AuthController::class, 'user']);
     Route::apiResource('complaints', ComplaintController::class);
     Route::post('/upload/{complaint_id}', [ComplaintController::class, 'upload']);
+    Route::post('/update', [AuthController::class, 'update']);
     Route::post('/create-complaint', [ComplaintController::class, 'storeTze']);
     Route::get('/complaintsByUser/{regnum}', [ComplaintController::class, 'getComplaintByUser']);
     Route::apiResource('complaintSteps', ComplaintStepController::class);
