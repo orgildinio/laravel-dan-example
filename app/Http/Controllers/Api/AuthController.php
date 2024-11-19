@@ -94,7 +94,7 @@ class AuthController extends Controller
         //     'phone' => 'nullable|string|max:20',
         // ]);
 
-        // $user->update($input);
+        $user->update($input);
 
         return response()->json([
             'message' => 'Профайл мэдээлэл амжилттэй хадгалагдлаа',
