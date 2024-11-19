@@ -82,7 +82,7 @@ class AuthController extends Controller
 
     public function update(Request $request)
     {
-        // $user = auth()->user();
+        $user = auth()->user();
         $input = $request->all();
 
         // $validated = $request->validate([
@@ -98,7 +98,8 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => 'Профайл мэдээлэл амжилттэй хадгалагдлаа',
-            'user' => $input,
+            'user' => $user,
+            'input' => $input,
         ]);
     }
 
