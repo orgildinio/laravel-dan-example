@@ -83,31 +83,23 @@ class AuthController extends Controller
     public function update(Request $request)
     {
         $user = auth()->user();
+        $input = $request->all();
 
-        // Validate inputs
-        $validated = $request->validate([
+        $request->validate([
             'danAimagCityName' => 'required|string|max:255',
             'danSoumDistrictName' => 'required|string|max:255',
             'danBagKhorooName' => 'required|string|max:255',
             'danPassportAddress' => 'required|string|max:255',
+            'email' => 'required|email',
             'phone' => 'nullable|string|max:20',
-            'email' => 'nullable|email|unique:users,email,' . $user->id,
-            'password' => 'nullable|string|min:8|confirmed',
         ]);
 
-        // Update user details
-        $user->fill($validated);
-
-        // Hash password if provided
-        if (!empty($validated['password'])) {
-            $user->password = bcrypt($validated['password']);
-        }
-
-        $user->save();
+        $user->update($input);
 
         return response()->json([
-            'message' => 'Профайл мэдээлэл амжилттай хадгалагдлаа',
+            'message' => 'Профайл мэдээлэл амжилттэй хадгалагдлаа',
             'user' => $user,
+            'input' => $input,
         ]);
     }
 
