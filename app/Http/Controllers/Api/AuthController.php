@@ -102,7 +102,10 @@ class AuthController extends Controller
 
             // Hash password if provided
             if (!empty($validated['password'])) {
-                $user->password = bcrypt($validated['password']);
+                $validated['password'] = bcrypt($validated['password']);
+            } else {
+                // Remove password field from validation if not provided
+                unset($validated['password']);
             }
 
             // Save updated user details
