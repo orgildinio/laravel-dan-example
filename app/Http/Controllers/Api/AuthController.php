@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -82,32 +83,42 @@ class AuthController extends Controller
 
     public function update(Request $request)
     {
-        $user = auth()->user();
-        // Validate input
-        $validated = $request->validate([
-            'danAimagCityName' => 'required|string|max:255',
-            'danSoumDistrictName' => 'required|string|max:255',
-            'danBagKhorooName' => 'required|string|max:255',
-            'danPassportAddress' => 'required|string|max:255',
-            'email' => 'nullable|email|max:255', // Make email nullable
-            'phone' => 'nullable|string|max:20',
-            'password' => 'nullable|string|min:8|confirmed', // Password validation
-        ]);
+        try {
+            $user = auth()->user();
 
-        // Update only validated fields
-        $user->fill($validated);
+            // Validate request inputs
+            $validated = $request->validate([
+                'danAimagCityName' => 'required|string|max:255',
+                'danSoumDistrictName' => 'required|string|max:255',
+                'danBagKhorooName' => 'required|string|max:255',
+                'danPassportAddress' => 'required|string|max:255',
+                'email' => 'nullable|email|max:255', // Email is now optional
+                'phone' => 'nullable|string|max:20',
+                'password' => 'nullable|string|min:8', // Password with confirmation
+            ]);
 
-        // Hash and save the password if provided
-        if (!empty($validated['password'])) {
-            $user->password = bcrypt($validated['password']);
+            // Assign validated data to the user model
+            $user->fill($validated);
+
+            // Hash password if provided
+            if (!empty($validated['password'])) {
+                $user->password = bcrypt($validated['password']);
+            }
+
+            // Save updated user details
+            $user->save();
+
+            return response()->json([
+                'message' => 'Профайл мэдээлэл амжилттай хадгалагдлаа',
+                'user' => $user,
+            ]);
+        } catch (\Exception $e) {
+            // Log and return error response
+            Log::error('User update error: ' . $e->getMessage());
+            return response()->json([
+                'message' => 'Шинэчлэх явцад алдаа гарлаа: ' . $e->getMessage(),
+            ], 500);
         }
-
-        $user->save();
-
-        return response()->json([
-            'message' => 'Профайл мэдээлэл амжилттай хадгалагдлаа',
-            'user' => $user,
-        ]);
     }
 
 
