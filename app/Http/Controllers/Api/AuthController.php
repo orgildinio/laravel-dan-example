@@ -17,15 +17,15 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         // Validate request data
-        $request->validate([
-            'regnum' => 'required|string',
-            'firstname' => 'required|string|max:255',
-            'lastname' => 'required|string|max:255'
-        ], [
-            'regnum.required' => 'Registration number is required.',
-            'firstname.required' => 'First name is required.',
-            'lastname.required' => 'Last name is required.',
-        ]);
+        // $request->validate([
+        //     'regnum' => 'required|string',
+        //     'firstname' => 'required|string|max:255',
+        //     'lastname' => 'required|string|max:255'
+        // ], [
+        //     'regnum.required' => 'Registration number is required.',
+        //     'firstname.required' => 'First name is required.',
+        //     'lastname.required' => 'Last name is required.',
+        // ]);
 
         // $user = User::where('danRegnum', $request->regnum)->first();
         $user = User::where('danRegnum', $request->regnum)
