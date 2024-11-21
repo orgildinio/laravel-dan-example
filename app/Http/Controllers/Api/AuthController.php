@@ -94,6 +94,11 @@ class AuthController extends Controller
             'phone' => 'nullable|string|max:20',
         ]);
 
+        // Hash password if provided
+        if (!empty($request->password)) {
+            $user->password = Hash::make($request->password);
+        }
+
         $user->update($input);
 
         return response()->json([
