@@ -92,7 +92,7 @@ class AuthController extends Controller
                 'danSoumDistrictName' => 'required|string|max:255',
                 'danBagKhorooName' => 'required|string|max:255',
                 'danPassportAddress' => 'required|string|max:255',
-                'email' => 'nullable|email|max:255', // Email is now optional
+                'email' => 'nullable|required|email:rfc,dns|unique:users,email', // Email is now optiona
                 'phone' => 'nullable|string|max:20',
                 'password' => 'nullable|string|min:8', // Password with confirmation
             ]);
