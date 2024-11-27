@@ -6,6 +6,7 @@
         Таны өргөдөл, гомдлыг дуудлага, мессеж, гар утас зэрэг нийт <span class="font-bold text-primary">6</span> төрлөөр хүлээн авч байна.
     </h3>
     <div class="grid grid-cols-1 gap-6 pt-10 sm:grid-cols-2 md:gap-10 md:pt-12 lg:grid-cols-3">
+      <a href="{{ route('addComplaint') }}" class="block">
       <div class="group rounded px-8 py-12 shadow hover:bg-primary">
         <div class="mx-auto h-24 w-24 text-center xl:h-28 xl:w-28">
           <div class="hidden group-hover:block">
@@ -24,6 +25,8 @@
           </p>
         </div>
       </div>
+      </a>
+      <a href="{{ route('download-app') }}" class="block">
       <div class="group rounded px-8 py-12 shadow hover:bg-primary">
         <div class="mx-auto h-24 w-24 text-center xl:h-28 xl:w-28">
           <div class="hidden group-hover:block">
@@ -42,24 +45,28 @@
           </p>
         </div>
       </div>
-      <div class="group rounded px-8 py-12 shadow hover:bg-primary">
-        <div class="mx-auto h-24 w-24 text-center xl:h-28 xl:w-28">
-          <div class="hidden group-hover:block">
-            <img src="{{asset('image/telephone-white.svg')}}" alt="Email Marketing icon">
+      </a>
+      <a href="{{ route('tze-contacts') }}" class="block">
+        <div class="group rounded px-8 py-12 shadow hover:bg-primary">
+          <div class="mx-auto h-24 w-24 text-center xl:h-28 xl:w-28">
+            <div class="hidden group-hover:block">
+              <img src="{{asset('image/telephone-white.svg')}}" alt="Email Marketing icon">
+            </div>
+            <div class="block group-hover:hidden">
+              <img src="{{asset('image/telephone-black.svg')}}" alt="Email Marketing icon">
+            </div>
           </div>
-          <div class="block group-hover:hidden">
-            <img src="{{asset('image/telephone-black.svg')}}" alt="Email Marketing icon">
+          <div class="text-center">
+            <h3 class="pt-8 text-lg font-semibold uppercase text-primary group-hover:text-yellow-200 lg:text-xl">
+              Утсаар
+            </h3>
+            <p class="text-grey pt-4 text-sm group-hover:text-white md:text-base">
+              Утасны дугаарт залгаж өргөдөл, гомдол өгөх
+            </p>
           </div>
         </div>
-        <div class="text-center">
-          <h3 class="pt-8 text-lg font-semibold uppercase text-primary group-hover:text-yellow-200 lg:text-xl">
-            Утсаар
-          </h3>
-          <p class="text-grey pt-4 text-sm group-hover:text-white md:text-base">
-            312313 дугаарт залгаж өргөдөл, гомдол өгөх
-          </p>
-        </div>
-      </div>
+      </a>
+      <a href="{{ route('tze-contacts') }}" class="block">
       <div class="group rounded px-8 py-12 shadow hover:bg-primary">
         <div class="mx-auto h-24 w-24 text-center xl:h-28 xl:w-28">
           <div class="hidden group-hover:block">
@@ -78,6 +85,8 @@
           </p>
         </div>
       </div>
+      </a>
+      <a href="{{ route('tze-contacts') }}" class="block">
       <div class="group rounded px-8 py-12 shadow hover:bg-primary">
         <div class="mx-auto h-24 w-24 text-center xl:h-28 xl:w-28">
           <div class="hidden group-hover:block">
@@ -96,6 +105,8 @@
           </p>
         </div>
       </div>
+      </a>
+      <a href="{{ route('tze-contacts') }}" class="block">
       <div class="group rounded px-8 py-12 shadow hover:bg-primary">
         <div class="mx-auto h-24 w-24 text-center xl:h-28 xl:w-28">
           <div class="hidden group-hover:block">
@@ -110,9 +121,10 @@
             И-МЭЙЛ
           </h3>
           <p class="text-grey pt-4 text-sm group-hover:text-white md:text-base">
-            ТЗЭ нарт имэйл явуулах
+            Имэйл хаягаар өргөдөл, гомдол гаргах
           </p>
         </div>
       </div>
+      </a>
     </div>
 </div>

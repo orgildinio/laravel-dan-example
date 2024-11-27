@@ -11,6 +11,7 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\DanAuthController;
 use App\Http\Controllers\ComplaintController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrgNumberController;
 use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\SourceComplaintController;
@@ -29,6 +30,9 @@ use App\Http\Controllers\SourceComplaintController;
 Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
+
+Route::get('/tze-contacts', [HomeController::class, 'showTable'])->name('tze-contacts');
+Route::get('/download-app', [HomeController::class, 'showQrCode'])->name('download-app');
 
 Route::get('/privacy', function () {
     return view('privacy');

@@ -45,7 +45,7 @@
                 <thead>
                     <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
                         <th class="p-3 text-left">№</th>
-                        <th class="p-3 text-left">Байгууллагын</th>
+                        <th class="p-3 text-left">Байгууллагын нэр</th>
                         <th class="p-3 text-left">Төрөл</th>
                         <th class="p-3 text-left">Дугаар</th>
                         <th class="py-3 px-6 text-center">Үйлдэл</th>
