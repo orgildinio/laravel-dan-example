@@ -10,8 +10,17 @@ class HomeController extends Controller
 {
     public function showTable()
     {
-        // Retrieve the JSON file contents
-        $json = Storage::get('files/tze-contacts.json');
+        // Define the path to the JSON file in the public/images folder
+        $filePath = public_path('image/tze-contacts.json');
+
+        // Check if the file exists
+        if (!file_exists($filePath)) {
+            // Handle file not found error
+            return response()->json(['error' => 'File not found'], 404);
+        }
+
+        // Retrieve the contents of the JSON file
+        $json = file_get_contents($filePath);
 
         // Decode the JSON data into an associative array
         $contacts = json_decode($json, true);
