@@ -27,24 +27,6 @@
       <div class="group rounded px-8 py-12 shadow hover:bg-primary">
         <div class="mx-auto h-24 w-24 text-center xl:h-28 xl:w-28">
           <div class="hidden group-hover:block">
-            <img src="{{asset('image/icon-email-white.svg')}}" alt="content marketing icon">
-          </div>
-          <div class="block group-hover:hidden">
-            <img src="{{asset('image/icon-email-black.svg')}}" alt="content marketing icon">
-          </div>
-        </div>
-        <div class="text-center">
-          <h3 class="pt-8 text-lg font-semibold uppercase text-primary group-hover:text-yellow-200 lg:text-xl">
-            И-МЭЙЛ
-          </h3>
-          <p class="text-grey pt-4 text-sm group-hover:text-white md:text-base">
-            info@erc.mn хаягруу мэйл явуулах
-          </p>
-        </div>
-      </div>
-      <div class="group rounded px-8 py-12 shadow hover:bg-primary">
-        <div class="mx-auto h-24 w-24 text-center xl:h-28 xl:w-28">
-          <div class="hidden group-hover:block">
             <img src="{{asset('image/icon-mobile-white.svg')}}" alt="Mobile Application icon">
           </div>
           <div class="block group-hover:hidden">
@@ -111,6 +93,24 @@
           </h3>
           <p class="text-grey pt-4 text-sm group-hover:text-white md:text-base">
             Албан бичгээр өргөдөл, гомдол өгөх
+          </p>
+        </div>
+      </div>
+      <div class="group rounded px-8 py-12 shadow hover:bg-primary">
+        <div class="mx-auto h-24 w-24 text-center xl:h-28 xl:w-28">
+          <div class="hidden group-hover:block">
+            <img src="{{asset('image/icon-email-white.svg')}}" alt="content marketing icon">
+          </div>
+          <div class="block group-hover:hidden">
+            <img src="{{asset('image/icon-email-black.svg')}}" alt="content marketing icon">
+          </div>
+        </div>
+        <div class="text-center">
+          <h3 class="pt-8 text-lg font-semibold uppercase text-primary group-hover:text-yellow-200 lg:text-xl">
+            И-МЭЙЛ
+          </h3>
+          <p class="text-grey pt-4 text-sm group-hover:text-white md:text-base">
+            ТЗЭ нарт имэйл явуулах
           </p>
         </div>
       </div>

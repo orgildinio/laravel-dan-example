@@ -15,6 +15,31 @@
                 class="px-4 py-2 rounded-md bg-black text-sky-100 hover:bg-gray-600">Нэмэх</a>
         </div>
 
+        <form method="GET" action="{{ route('organization.index') }}">
+            <div class="flex flex-wrap mb-6">
+                <div class="w-full md:w-1/5 px-2 mb-4 md:mb-0">
+                    <select name="org_id"
+                        class="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 text-gray-500">
+                        <option value="">Байгууллага</option>
+                        @foreach ($orgs as $org)
+                        <option value="{{ $org->id }}" {{ request('org_id') == $org->id ? 'selected' : '' }}>{{ $org->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="w-full md:w-1/5 px-2 mb-4 md:mb-0">
+                    <select name="plant_id"
+                        class="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 text-gray-500">
+                        <option value="">Төрөл</option>
+                        <option value="1" {{ request('plant_id') == '1' ? 'selected' : '' }}>Цахилгаан</option>
+                        <option value="2" {{ request('plant_id') == '2' ? 'selected' : '' }}>Дулаан</option>
+                    </select>
+                </div>
+                <div class="w-full md:w-1/5 px-2 mb-4 md:mb-0">
+                    <button type="submit" class="w-full px-3 py-2 bg-indigo-600 text-white rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring focus:ring-indigo-200">Хайх</button>
+                </div>
+            </div>
+        </form>
+
         <div class="bg-white shadow-md rounded my-2">
             <table class="w-full table-auto">
                 <thead>
@@ -29,13 +54,21 @@
                 <tbody class="text-gray-600 text-sm font-light">
                     @foreach ($orgs as $org)
                         <tr class="border-b border-gray-200 hover:bg-gray-100">
-                            <td class="p-3 text-left">{{ $loop->iteration }}</td>
+                            <td class="p-3 text-left">
+                                {{-- {{ $loop->iteration }} --}}
+
+                                {{ ($orgs->currentPage() - 1) * $orgs->perPage() + $loop->iteration }}
+                            </td>
                             <td class="p-3 text-left">{{ $org->name }}</td>
                             <td class="p-3 text-left">{{ $org->plant_id == 1 ? "Цахилгаан" : "Дулаан" }}</td>
                             <td class="p-3 text-left">
-                                @foreach ($org->orgNumber as $item)
-                                    <p>{{$item->phone_number}}</p>    
-                                @endforeach
+                                @if ($org->orgNumber->isNotEmpty())
+                                    @foreach ($org->orgNumber as $item)
+                                        <p>{{$item->phone_number}}</p>    
+                                    @endforeach
+                                @else
+                                    N/A
+                                @endif
                             </td>
                             <td class="py-3 px-6 text-center">
                                 <div x-data="{ open: false }">
@@ -88,7 +121,8 @@
                 </tbody>
             </table>
             <div class="p-2">
-                {!! $orgs->links() !!}
+                {{-- {!! $orgs->links() !!} --}}
+                {!! $orgs->appends(request()->query())->links() !!}
             </div>
         </div>
     </div>

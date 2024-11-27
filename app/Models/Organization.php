@@ -21,7 +21,8 @@ class Organization extends Model
 
     public function orgNumber()
     {
-        return $this->hasMany(OrganizationNumbers::class);
+        // return $this->hasMany(OrganizationNumbers::class);
+        return $this->hasMany(OrganizationNumbers::class, 'organization_id', 'id');
     }
 
     public function serviceAreas()

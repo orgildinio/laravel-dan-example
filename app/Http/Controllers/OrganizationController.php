@@ -12,13 +12,23 @@ class OrganizationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $orgs = Organization::orderBy('name', 'asc')->with('orgNumber')->paginate(15);
-        // dd($orgs->orgNumber);
+        $query = Organization::query();
+
+        if ($request->filled('org_id')) {
+            $query->where('id', $request->org_id);
+        }
+
+        // Filter by plant_id
+        if ($request->filled('plant_id')) {
+            $query->where('plant_id', $request->plant_id);
+        }
+
+        $orgs = $query->with('orgNumber')->orderBy('name', 'asc')->paginate(15)->appends($request->query());
 
         return view('organizations.index', compact('orgs'))
-            ->with('i', (request()->input('page', 1) - 1) * 5);
+            ->with('i', (request()->input('page', 1) - 1) * 15);
     }
 
     /**
