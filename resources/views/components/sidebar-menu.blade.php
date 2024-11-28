@@ -5,16 +5,6 @@
       <div class="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
          <div class="flex-1 px-3 bg-white divide-y space-y-1">
             <ul class="space-y-2 pb-2">
-               {{-- <li class="bg-purple-50">
-                  <div class="rounded-lg font-bold text-sm p-2 text-primary">{{ Auth::user()->org?->name }}</div>
-               </li> --}}
-               {{-- <li>
-                  <a href="{{ route('dashboard') }}"
-                     class="text-base text-gray-900 rounded-lg flex items-center p-2 hover:bg-gray-100 group {{ Request::routeIs('dashboard') ? 'bg-gray-100 text-primary font-medium' : '' }}">
-                     <img src="{{ asset('/image/dashboard-layout.svg')}}" class="w-[24px] h-[24px] shrink-0 inline-block" alt="dashboard">
-                     <span class="ml-3">Хянах самбар</span>
-                  </a>
-               </li> --}}
                <li x-data="{ subMenuOpen: false }">
                   <button x-on:click="subMenuOpen = !subMenuOpen" type="button" class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 {{ (Request::routeIs('dashboardEhzh') || Request::routeIs('dashboardTze') || Request::routeIs('dashboardEhs')) ? 'bg-gray-100 text-primary font-medium' : '' }}">
                         <img src="{{ asset('/image/dashboard-layout.svg')}}" class="w-[24px] h-[24px] shrink-0 inline-block" alt="dashboard">
@@ -24,7 +14,7 @@
                         </svg>
                   </button>
                   <ul x-show="subMenuOpen" class="py-2 space-y-2 ml-4">
-                     @if (Auth::user()->org_id == 99)   
+                     @if (Auth::user()->role->name == 'ehzh')   
                      <li>
                         <a href="{{ route('dashboardEhzh') }}" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-6 group hover:bg-gray-100 {{ Request::routeIs('dashboardEhzh') ? 'bg-gray-100 text-primary font-medium' : '' }}">
                            ЭХЗХ
@@ -46,7 +36,7 @@
                      @endif
                   </ul>
                </li>
-               @if (Auth::user()->org_id == 99)   
+               @if (Auth::user()->role->name == 'ehzh')   
                <li>
                   <a href="{{ route('sourceComplaint.index') }}"
                      class="text-base text-gray-900 rounded-lg hover:bg-gray-100 flex items-center p-2 group {{ Request::routeIs('sourceComplaint.index') ? 'bg-gray-100 text-primary font-medium' : '' }}">
@@ -59,6 +49,8 @@
                   </a>
                </li>
                @endif
+
+               @if (Auth::user()->role->name == 'tze' || Auth::user()->role->name == 'ehzh')
                <li>
                   <a href="{{ route('complaintStatus', ['id' => 0]) }}"
                      class="text-base text-gray-900 rounded-lg hover:bg-gray-100 flex items-center p-2 group {{ request()->is('complaintStatus/0') ? 'bg-gray-100 text-primary font-medium' : '' }}">
@@ -93,7 +85,7 @@
                      @endif
                   </a>
                </li>
-               @if (Auth::user()->org_id == 99)
+               @if (Auth::user()->role->name == 'ehzh')
                <li>
                   <a href="{{ route('complaintStatus', ['id' => 1]) }}"
                      class="text-base text-gray-900 rounded-lg hover:bg-gray-100 flex items-center p-2 group {{ request()->is('complaintStatus/1') ? 'bg-gray-100 text-primary font-medium' : '' }}">
@@ -128,6 +120,7 @@
                      @endif
                   </a>
                </li>
+               @endif
                
                <li>
                   <a href="{{ route('complaint.index') }}"

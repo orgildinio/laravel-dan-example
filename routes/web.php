@@ -66,6 +66,7 @@ Route::middleware([
     })->name('user-guide');
 });
 
+// Энгийн хэрэглэгчид
 Route::middleware([
     'auth:sanctum',
     'role:dan',
@@ -80,9 +81,10 @@ Route::middleware([
     Route::get('complaintSteps', ComplaintStep::class);
 });
 
+// ЭХЗХ, ТЗЭ
 Route::middleware([
     'auth:sanctum',
-    'role:admin,ehzh,tze',
+    'role:admin,udirdlaga,ehzh,tze',
     config('jetstream.auth_session'),
     'verified'
 ])->group(function () {
