@@ -1,6 +1,6 @@
 <x-admin-layout>
     <div class="bg-white shadow rounded-lg p-4 2xl:col-span-1">
-        @if (Auth::user()->role?->name == 'ehzh' || Auth::user()->role?->name == 'admin')
+        @if (Auth::user()->role?->name == 'ehzh' || Auth::user()->role?->name == 'admin' || Auth::user()->role?->name == 'udirdlaga')
             <div class="flex justify-end space-x-2">
                 <a href="{{ route('report1.show') }}"
                     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded">Тайлан 1</a>
