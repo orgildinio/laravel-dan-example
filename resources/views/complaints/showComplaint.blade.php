@@ -51,6 +51,10 @@
                                         @if ($complaint->file_id != null)
                                         <x-file-list-component :$fileName :$fileExt :$fileUrl :$fileSizeInKilobytes />
                                         @endif
+                                        <p>file name {{ $fileName }}</p>
+                                        <p>file ext {{ $fileExt }}</p>
+                                        <p>file fileUrl {{ $fileUrl }}</p>
+                                        <p>file fileSizeInKilobytes {{ $fileSizeInKilobytes }}</p>
 
                                         @if ($complaint->audio_file_id != null)
                                             <div class="text-sm px-2">
