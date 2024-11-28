@@ -98,6 +98,10 @@ class Complaint extends Model
         }
     }
 
+    public function file()
+    {
+        return $this->belongsTo(File::class);
+    }
     public function files()
     {
         return $this->hasMany(File::class, 'complaint_id');
