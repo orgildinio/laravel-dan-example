@@ -215,7 +215,7 @@ class UserController extends Controller
         $request->validate([
             'phone' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:users,email,' . $user->id,
-            'photo' => 'sometimes|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'photo' => 'sometimes|image|mimes:jpeg,png,jpg,gif|max:4096',
             // 'password' => 'required|string|min:8|confirmed'
         ]);
 
