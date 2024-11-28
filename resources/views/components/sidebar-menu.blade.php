@@ -14,7 +14,7 @@
                         </svg>
                   </button>
                   <ul x-show="subMenuOpen" class="py-2 space-y-2 ml-4">
-                     @if (Auth::user()->role->name == 'ehzh')   
+                     @if (Auth::user()->role->name == 'ehzh' || Auth::user()->role->name == 'udirdlaga')   
                      <li>
                         <a href="{{ route('dashboardEhzh') }}" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-6 group hover:bg-gray-100 {{ Request::routeIs('dashboardEhzh') ? 'bg-gray-100 text-primary font-medium' : '' }}">
                            ЭХЗХ
@@ -36,7 +36,7 @@
                      @endif
                   </ul>
                </li>
-               @if (Auth::user()->role->name == 'ehzh')   
+               @if (Auth::user()->role->name == 'ehzh' || Auth::user()->role->name == 'udirdlaga')   
                <li>
                   <a href="{{ route('sourceComplaint.index') }}"
                      class="text-base text-gray-900 rounded-lg hover:bg-gray-100 flex items-center p-2 group {{ Request::routeIs('sourceComplaint.index') ? 'bg-gray-100 text-primary font-medium' : '' }}">
