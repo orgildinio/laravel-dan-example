@@ -11,32 +11,44 @@ class HomeController extends Controller
     public function showTable()
     {
         // Define the path to the JSON file in the public/images folder
-        $filePath = public_path('image/tze-contacts.json');
+        $filePathDulaan = public_path('image/tze-dulaan.json');
+        $filePathTsahilgaan = public_path('image/tze-tsahilgaan.json');
 
         // Check if the file exists
-        if (!file_exists($filePath)) {
+        if (!file_exists($filePathDulaan) && !file_exists($filePathTsahilgaan)) {
             // Handle file not found error
             return response()->json(['error' => 'File not found'], 404);
         }
 
         // Retrieve the contents of the JSON file
-        $json = file_get_contents($filePath);
+        $jsonDulaan = file_get_contents($filePathDulaan);
+        $jsonTsahilgaan = file_get_contents($filePathTsahilgaan);
 
         // Decode the JSON data into an associative array
-        $contacts = json_decode($json, true);
+        $contactsDulaan = json_decode($jsonDulaan, true);
+        $contactsTog = json_decode($jsonTsahilgaan, true);
 
         // Ensure each contact has all required keys
-        $contacts = array_map(function ($contact) {
+        $contactsDulaan = array_map(function ($contact) {
             return array_merge([
                 'org_name' => 'N/A',
                 'phone_number' => 'N/A',
                 'email' => 'N/A',
                 'address' => 'N/A',
             ], $contact);
-        }, $contacts);
+        }, $contactsDulaan);
+
+        $contactsTog = array_map(function ($contact) {
+            return array_merge([
+                'org_name' => 'N/A',
+                'phone_number' => 'N/A',
+                'email' => 'N/A',
+                'address' => 'N/A',
+            ], $contact);
+        }, $contactsTog);
 
         // Pass data to the view
-        return view('tze-contacts', compact('contacts'));
+        return view('tze-contacts', compact('contactsDulaan', 'contactsTog'));
     }
 
     public function showQrCode()

@@ -21,7 +21,7 @@
             ВЕБ ХУУДАС
           </h3>
           <p class="text-grey pt-4 text-sm group-hover:text-white md:text-base">
-            Вебээр орж өргөдөл, гомдол өгөх
+            Веб програмд нэвтрэн орж өргөдөл, гомдол илгээх
           </p>
         </div>
       </div>
