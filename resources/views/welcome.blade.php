@@ -19,7 +19,7 @@
                 </div>
             </div>
 
-            <div class="w-full bg-red-500">
+            <div class="w-full my-16">
                 <x-faq></x-faq>
             </div>
 
