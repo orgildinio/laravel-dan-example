@@ -240,12 +240,12 @@
                             </td>
 
                             <td class="p-2 whitespace-no-wrap border-b border-gray-300">
-                                <div class="text-sm leading-5 text-gray-900">{{ $complaint->category->name }}
+                                <div class="text-sm leading-5 text-gray-900">{{ $complaint->category?->name }}
                                 </div>
                             </td>
 
                             <td class="p-2 whitespace-no-wrap border-b border-gray-300">
-                                <div class="text-sm leading-5 text-gray-900">{{ $complaint->channel->name }}
+                                <div class="text-sm leading-5 text-gray-900">{{ $complaint->channel?->name }}
                                 </div>
                             </td>
 
