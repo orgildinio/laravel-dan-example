@@ -220,6 +220,9 @@
                             class="p-2 w-[150px] text-xs font-medium leading-4 tracking-wider text-left text-gray-800 uppercase border-b border-gray-300 bg-gray-50">
                             Шийдвэрлэсэн огноо</th>
                         <th
+                            class="p-2 w-[150px] text-xs font-medium leading-4 tracking-wider text-left text-gray-800 uppercase border-b border-gray-300 bg-gray-50">
+                            Шийдвэрлэсэн хоног</th>
+                        <th
                             class="p-2 w-[100px] text-xs font-medium leading-4 tracking-wider text-left text-gray-800 uppercase border-b border-gray-300 bg-gray-50">
                             Үлдсэн хугацаа</th>
                             <th></th>
@@ -332,6 +335,16 @@
                             <td
                                 class="p-2 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-300">
                                 <span>{{ $complaint->status_id == 6 ? date('Y-m-d H:i', strtotime($complaint->updated_at)) : '' }}</span>
+                            </td>
+                            <td
+                                class="p-2 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-300">
+                                @if($complaint->status_id == 6)
+                                    <span>
+                                        {{ \Carbon\Carbon::parse($complaint->complaint_date)->diffInDays($complaint->updated_at) }} хоног
+                                    </span>
+                                @else
+                                    <span>-</span>
+                                @endif
                             </td>
                             @if ($complaint->status_id == 6)
                                 <td class="p-2 whitespace-no-wrap border-b border-gray-300"></td>
