@@ -13,10 +13,15 @@
             @endif
         </div>
 
-        <!-- Post Image -->
+        <!-- Post Image with Zoom Feature -->
         @if($post->post_image)
             <div class="mb-6 text-center">
-                <img src="{{ asset($post->post_image) }}" alt="{{ $post->title }}" class="rounded-lg shadow-md max-w-full h-auto">
+                <img 
+                    src="{{ asset($post->post_image) }}" 
+                    alt="{{ $post->title }}" 
+                    class="rounded-lg shadow-md max-w-full h-auto cursor-pointer"
+                    data-zoom-image
+                />
             </div>
         @endif
 
