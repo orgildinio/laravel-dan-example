@@ -18,6 +18,12 @@
                     <x-welcome />
                 </div>
             </div>
+            <div class="bg-gray-50 mb-10">
+                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                    <x-post-home-page></x-post-home-page>
+                </div>
+            </div>
+
 
             <div class="w-full my-16">
                 <x-faq></x-faq>

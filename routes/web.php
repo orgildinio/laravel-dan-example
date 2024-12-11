@@ -5,13 +5,13 @@ use App\Http\Livewire\ComplaintStep;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CdrController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
-use Laravel\Socialite\Facades\Socialite;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\DanAuthController;
 use App\Http\Controllers\ComplaintController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrgNumberController;
 use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\SourceComplaintController;
@@ -34,6 +34,8 @@ Route::get('/', function () {
 Route::get('/tze-contacts', [HomeController::class, 'showTable'])->name('tze-contacts');
 Route::get('/download-app', [HomeController::class, 'showQrCode'])->name('download-app');
 
+// Route::get('posts/{post}', [PostController::class, 'show'])->name('posts.show');
+
 Route::get('/privacy', function () {
     return view('privacy');
 })->name('privacy');
@@ -49,6 +51,8 @@ Route::get('auth/callback', [DanAuthController::class, 'handleDanCallback']);
 Route::get('auth/redirectOrg', [DanAuthController::class, 'redirectToDanOrg'])->name('orglogin');
 // Route::get('auth/callbackOrg', [DanAuthController::class, 'handleDanOrgCallback']);
 
+Route::get('/postDetail/{post}', [PostController::class, 'detail'])->name('postDetail');
+Route::get('/postList', [PostController::class, 'list'])->name('postList');
 
 Route::middleware([
     'auth:sanctum',
@@ -120,4 +124,6 @@ Route::middleware([
     Route::get('/tze-guide', function () {
         return view('tze-guide');
     })->name('tze-guide');
+
+    Route::resource('posts', PostController::class);
 });

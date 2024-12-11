@@ -16,6 +16,7 @@
                         {{ __('Нүүр') }}
                     </x-nav-link>
                 </div>
+                
                 @guest
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-nav-link href="{{ route('addComplaint') }}" :active="request()->routeIs('addComplaint')">
@@ -23,6 +24,13 @@
                         </x-nav-link>
                     </div>
                 @endguest
+
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link href="{{ route('postList') }}" :active="request()->routeIs('postList')">
+                        {{ __('Мэдээ, мэдээлэл') }}
+                    </x-nav-link>
+                </div>
+
                 @auth
                     @if (Auth::user()->role?->name === 'dan' || Auth::user()->role?->name === 'admin')
                         <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">

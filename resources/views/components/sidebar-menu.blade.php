@@ -150,6 +150,13 @@
                      <span class="ml-3 flex-1 whitespace-nowrap">Байгууллага</span>
                   </a>
                </li>
+               <li>
+                  <a href="{{ route('posts.index') }}"
+                     class="text-base text-gray-900 rounded-lg hover:bg-gray-100 flex items-center p-2 group {{ Request::routeIs('posts.index') ? 'bg-gray-100 text-primary font-medium' : '' }}">
+                     <img src="{{ asset('/image/post.svg')}}" class="w-[24px] h-[24px] shrink-0 inline-block" alt="posts">
+                     <span class="ml-3 flex-1 whitespace-nowrap">Мэдээ</span>
+                  </a>
+               </li>
                @endif
                <li>
                   <a href="{{ route('cdr.index') }}"
