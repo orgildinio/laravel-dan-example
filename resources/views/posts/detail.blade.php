@@ -13,6 +13,13 @@
             @endif
         </div>
 
+        <!-- Post Image -->
+        @if($post->post_image)
+            <div class="mb-6 text-center">
+                <img src="{{ asset($post->post_image) }}" alt="{{ $post->title }}" class="rounded-lg shadow-md max-w-full h-auto">
+            </div>
+        @endif
+
         <!-- Post Content -->
         <div class="prose prose-lg dark:prose-dark max-w-none">
             {!! $post->content !!}
