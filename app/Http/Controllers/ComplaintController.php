@@ -543,7 +543,7 @@ class ComplaintController extends Controller
 
         // Дуусах хугацаа
         if (empty($input['expire_date'])) {
-            $complaint->setExpireDate($input['complaint_type_id'], $input['channel_id'], $input['category_id']);
+            $complaint->setExpireDate($input['channel_id'], $input['category_id']);
         }
 
 

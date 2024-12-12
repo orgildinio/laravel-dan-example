@@ -14,6 +14,7 @@ use App\Http\Controllers\ComplaintController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\OrgNumberController;
 use App\Http\Controllers\OrganizationController;
+use App\Http\Controllers\OrgUserDataImportController;
 use App\Http\Controllers\SourceComplaintController;
 
 /*
@@ -126,4 +127,6 @@ Route::middleware([
     })->name('tze-guide');
 
     Route::resource('posts', PostController::class);
+    Route::get('/orguserdata', [OrgUserDataImportController::class, 'index'])->name('orguserdata.index');
+    Route::post('/orguserdata/import', [OrgUserDataImportController::class, 'import'])->name('orguserdata.import');
 });

@@ -65,36 +65,44 @@ class Complaint extends Model
     }
 
     // Өргөдөл, гомдлын шийдвэрлэх хугацааг өргөдлийн ангилал болон сувгаас хамаарч өгөх
-    public function setExpireDate($complaintTypeId, $channelId, $categoryId)
+    public function setExpireDate($channelId, $categoryId)
     {
         // Check if category_id is 8, set expire_date to 30 days from now
         // category_id = 8 дуудлага
-        if ($categoryId == 8) {
+        // if ($categoryId == 8) {
+        //     $this->expire_date = now()->addDays(30);
+        //     return;
+        // }
+
+
+        // $expireTimes = [
+        //     2 => [7 => 24, 3 => 48, 6 => 48, 1 => 0.5, 5 => 0.5, 2 => 0.5, 4 => 0.5],
+        //     1 => [7 => 24, 3 => 48, 6 => 48, 1 => 24, 5 => 24, 2 => 24, 4 => 24],
+        //     3 => [7 => 24, 3 => 48, 6 => 48, 1 => 24, 5 => 24, 2 => 24, 4 => 24],
+        //     5 => [7 => 24, 3 => 48, 6 => 48, 1 => 0.5, 5 => 12, 2 => 12, 4 => 12],
+        //     6 => [7 => 24, 3 => 48, 6 => 48, 1 => 0.5, 5 => 12, 2 => 12, 4 => 12],
+        // ];
+
+        // $now = now();
+        // $register_date = Carbon::parse($now);
+
+        // if (isset($expireTimes[$complaintTypeId][$channelId])) {
+        //     $expire_time = $expireTimes[$complaintTypeId][$channelId];
+        //     if ($expire_time > 1) {
+        //         $this->expire_date = $register_date->addHours($expire_time);
+        //     } else {
+        //         $this->expire_date = $register_date->addMinutes($expire_time * 60);
+        //     }
+        // } else {
+        //     $this->expire_date = $register_date->addHours(48);
+        // }
+
+        // Check if category_id is 8 or channel_id is 6, set expire_date to 30 days from now
+        if ($categoryId == 8 || $channelId == 6) {
             $this->expire_date = now()->addDays(30);
-            return;
-        }
-
-
-        $expireTimes = [
-            2 => [7 => 24, 3 => 48, 6 => 48, 1 => 0.5, 5 => 0.5, 2 => 0.5, 4 => 0.5],
-            1 => [7 => 24, 3 => 48, 6 => 48, 1 => 24, 5 => 24, 2 => 24, 4 => 24],
-            3 => [7 => 24, 3 => 48, 6 => 48, 1 => 24, 5 => 24, 2 => 24, 4 => 24],
-            5 => [7 => 24, 3 => 48, 6 => 48, 1 => 0.5, 5 => 12, 2 => 12, 4 => 12],
-            6 => [7 => 24, 3 => 48, 6 => 48, 1 => 0.5, 5 => 12, 2 => 12, 4 => 12],
-        ];
-
-        $now = now();
-        $register_date = Carbon::parse($now);
-
-        if (isset($expireTimes[$complaintTypeId][$channelId])) {
-            $expire_time = $expireTimes[$complaintTypeId][$channelId];
-            if ($expire_time > 1) {
-                $this->expire_date = $register_date->addHours($expire_time);
-            } else {
-                $this->expire_date = $register_date->addMinutes($expire_time * 60);
-            }
         } else {
-            $this->expire_date = $register_date->addHours(48);
+            // Otherwise, set expire_date to 7 days from now
+            $this->expire_date = now()->addDays(7);
         }
     }
 

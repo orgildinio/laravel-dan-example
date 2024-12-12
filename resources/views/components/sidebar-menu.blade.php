@@ -165,6 +165,13 @@
                      <span class="ml-3 flex-1 whitespace-nowrap">Яриа бичлэг</span>
                   </a>
                </li>
+               @if (Auth::user()->role?->name == 'admin')
+                  <a href="{{ route('orguserdata.index') }}"
+                  class="text-base text-gray-900 rounded-lg hover:bg-gray-100 flex items-center p-2 group {{ Request::routeIs('orguserdata.index') ? 'bg-gray-100 text-primary font-medium' : '' }}">
+                  <img src="{{ asset('/image/group-security.svg')}}" class="w-[24px] h-[24px] shrink-0 inline-block" alt="users">
+                  <span class="ml-3 flex-1 whitespace-nowrap">ТЗЭ Хэрэглэгч</span>
+               </a>
+               @endif
             </ul>
             @endauth
             

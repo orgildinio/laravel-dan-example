@@ -124,7 +124,7 @@ class ComplaintController extends Controller
             $input = $request->all();
             $input['complaint_date'] = Carbon::now();
             $register_date = Carbon::parse($input['complaint_date']);
-            $input['expire_date'] = $register_date->addHours(48);
+            $input['expire_date'] = $register_date->addDays(7);
 
             $complaint = Complaint::create($input);
 

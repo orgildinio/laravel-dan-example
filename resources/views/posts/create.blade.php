@@ -82,7 +82,8 @@
 
                     /* call the callback and populate the Title field with the file name */
                     cb(blobInfo.blobUri(), {
-                        title: file.name
+                        title: file.name,
+                        'data-zoom-image': blobInfo.blobUri() // Adds custom attribute
                     });
                 };
                 reader.readAsDataURL(file);
