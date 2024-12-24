@@ -144,6 +144,7 @@ class ExportComplaint implements FromCollection, WithHeadings, ShouldAutoSize, W
             $row->phone,
             $row->complaint,
             $row->complaint_date,
+            \Carbon\Carbon::parse($row->complaint_date)->diffInDays($row->updated_at),
             $complaintSteps
         ];
 
@@ -188,6 +189,7 @@ class ExportComplaint implements FromCollection, WithHeadings, ShouldAutoSize, W
                 'Утас',
                 'Санал хүсэлт',
                 'Бүртгэсэн огноо',
+                'Шийдвэрлэсэн хоног',
                 'Шийдвэрлэлт'
             ];
         } else {
