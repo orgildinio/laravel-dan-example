@@ -448,7 +448,7 @@ class ComplaintController extends Controller
         $currentYear = date('Y');
         $years = range($currentYear, $currentYear - 5, -1);
 
-        return view('complaints.indexDetail', compact('complaints', 'serial_number', 'selected_year', 'daterange', 'search_text', 'status_id', 'years'))->with('i', (request()->input('page', 1) - 1) * 5);
+        return view('complaints.indexDetail', compact('complaints', 'serial_number', 'selected_year', 'daterange', 'search_text', 'status_id', 'years'))->with('i', (request()->input('page', 1) - 1) * 10);
     }
 
     /**

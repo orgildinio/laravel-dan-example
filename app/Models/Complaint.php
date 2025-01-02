@@ -57,6 +57,12 @@ class Complaint extends Model
     // Өргөдөл гомдол шийдвэрлэх хугацаа дууссан эсэхийг шалгах функц
     public function hasExpired()
     {
+
+        // If no expiration date is set, consider it not expired
+        if (!$this->expire_date) {
+            return false;
+        }
+
         // Parse the expire_date attribute as a Carbon instance
         $expireDate = Carbon::parse($this->expire_date);
 
@@ -64,47 +70,41 @@ class Complaint extends Model
         return $expireDate->isPast();
     }
 
-    // Өргөдөл, гомдлын шийдвэрлэх хугацааг өргөдлийн ангилал болон сувгаас хамаарч өгөх
+    // Set the resolution expiration date based on the channel and category
     public function setExpireDate($channelId, $categoryId)
     {
-        // Check if category_id is 8, set expire_date to 30 days from now
-        // category_id = 8 дуудлага
-        // if ($categoryId == 8) {
-        //     $this->expire_date = now()->addDays(30);
-        //     return;
-        // }
+        // Define categories that do not require an expiration date
+        $noExpireCategories = [1, 3]; // Category 1 (Талархал), Category 3 (Санал)
 
+        // If the category is in the no-expiration list, skip setting expire_date
+        if (in_array($categoryId, $noExpireCategories)) {
+            $this->expire_date = null;
+            return;
+        }
 
-        // $expireTimes = [
-        //     2 => [7 => 24, 3 => 48, 6 => 48, 1 => 0.5, 5 => 0.5, 2 => 0.5, 4 => 0.5],
-        //     1 => [7 => 24, 3 => 48, 6 => 48, 1 => 24, 5 => 24, 2 => 24, 4 => 24],
-        //     3 => [7 => 24, 3 => 48, 6 => 48, 1 => 24, 5 => 24, 2 => 24, 4 => 24],
-        //     5 => [7 => 24, 3 => 48, 6 => 48, 1 => 0.5, 5 => 12, 2 => 12, 4 => 12],
-        //     6 => [7 => 24, 3 => 48, 6 => 48, 1 => 0.5, 5 => 12, 2 => 12, 4 => 12],
-        // ];
+        // Define expiration rules
+        $defaultExpireDays = 7; // Default expiration period
+        $longExpireDays = 30;  // Extended expiration period for specific cases
 
-        // $now = now();
-        // $register_date = Carbon::parse($now);
-
-        // if (isset($expireTimes[$complaintTypeId][$channelId])) {
-        //     $expire_time = $expireTimes[$complaintTypeId][$channelId];
-        //     if ($expire_time > 1) {
-        //         $this->expire_date = $register_date->addHours($expire_time);
-        //     } else {
-        //         $this->expire_date = $register_date->addMinutes($expire_time * 60);
-        //     }
-        // } else {
-        //     $this->expire_date = $register_date->addHours(48);
-        // }
-
-        // Check if category_id is 8 or channel_id is 6, set expire_date to 30 days from now
+        // Set expiration date based on category and channel
         if ($categoryId == 8 || $channelId == 6) {
-            $this->expire_date = now()->addDays(30);
+            $this->expire_date = now()->addDays($longExpireDays);
         } else {
-            // Otherwise, set expire_date to 7 days from now
-            $this->expire_date = now()->addDays(7);
+            $this->expire_date = now()->addDays($defaultExpireDays);
         }
     }
+
+    // Өргөдөл, гомдлын шийдвэрлэх хугацааг өргөдлийн ангилал болон сувгаас хамаарч өгөх
+    // public function setExpireDate($channelId, $categoryId)
+    // {
+    //     // Check if category_id is 8 or channel_id is 6, set expire_date to 30 days from now
+    //     if ($categoryId == 8 || $channelId == 6) {
+    //         $this->expire_date = now()->addDays(30);
+    //     } else {
+    //         // Otherwise, set expire_date to 7 days from now
+    //         $this->expire_date = now()->addDays(7);
+    //     }
+    // }
 
     public function file()
     {
