@@ -48,7 +48,7 @@
                     <!-- Styled Links -->
                     <div class="text-left mb-6">
                         <p class="text-lg font-semibold text-gray-800 mb-2">Дулаан хангамж</p>
-                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSc48605p-O1Ap6XUwDK3ojTXYHdL9blY46t-7SsHp5uxQzJug/viewform?vc=0&c=0&w=1&flr=0"
+                        <a href="https://docs.google.com/forms/d/1wEk3Uc04eU3EBwOCTA2he3xkTyKT3YQlM6crtnH6ea0/viewform?edit_requested=true"
                             class="text-blue-600 underline hover:text-blue-800 transition">
                             Дулаан хангамжтай холбоотой санал, асуулга (google.com)
                         </a>
@@ -56,7 +56,7 @@
             
                     <div class="text-left">
                         <p class="text-lg font-semibold text-gray-800 mb-2">Цахилгаан хангамж</p>
-                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSexAhe3lA9Gzbs71dd05yEfrFJ7lguZ__lHkLGDi2iaYg6PDg/viewform?vc=0&c=0&w=1&flr=0"
+                        <a href="https://docs.google.com/forms/u/1/d/1eGXuyMr-KJqW8kjbNrYPnnhoU3RHERt4_wKCzahSCb8/viewform?edit_requested=true"
                             class="text-blue-600 underline hover:text-blue-800 transition">
                             Цахилгаан хангамжтай холбоотой санал, асуулга (google.com)
                         </a>
