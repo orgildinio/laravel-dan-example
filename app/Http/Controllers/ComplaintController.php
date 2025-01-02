@@ -443,7 +443,12 @@ class ComplaintController extends Controller
                 break;
         }
 
-        $complaints = $query->orderBy('complaints.created_at', 'desc')->paginate(10);
+        $complaints = $query->orderBy('complaints.created_at', 'desc')->paginate(10)->appends([
+            'search_text' => $search_text,
+            'serial_number' => $serial_number,
+            'year' => $selected_year,
+            'daterange' => $daterange,
+        ]);
 
         $currentYear = date('Y');
         $years = range($currentYear, $currentYear - 5, -1);
