@@ -239,7 +239,7 @@ class ComplaintController extends Controller
 
 
             if (empty($input['complaint_maker_type_id'])) {
-                $input['complaint_maker_type_id'] = 0; // Иргэн
+                $input['complaint_maker_type_id'] = 1; // Иргэн
             }
 
             $complaint = Complaint::create($input);
