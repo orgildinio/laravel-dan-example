@@ -230,13 +230,17 @@ class ComplaintController extends Controller
             // Continue with the rest of the logic
             $input = $request->all();
             $input['complaint_date'] = Carbon::now();
-            $input['expire_date'] = Carbon::now()->addHours(48);
+            $input['expire_date'] = Carbon::now()->addDays(7);
             $input['created_user_id'] = $user->id;
             $input['organization_id'] = $user->org->id;
             $input['energy_tyoe_id'] = $user->org->plant_id;
             $input['status_id'] = 0; // Шинээр ирсэн
             $input['channel_id'] = 1; // Веб
-            $input['complaint_maker_type_id'] = 0; // Иргэн
+
+
+            if (empty($input['complaint_maker_type_id'])) {
+                $input['complaint_maker_type_id'] = 0; // Иргэн
+            }
 
             $complaint = Complaint::create($input);
 

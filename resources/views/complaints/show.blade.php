@@ -105,7 +105,7 @@
                                 <div class="mb-2">
                                     @if ($complaint->complaintMakerType)
                                         <span
-                                            class="text-blue-900 bg-blue-100 text-sm py-1 px-2 rounded-md">{{ $complaint->complaintMakerType?->name }}</span>
+                                            class="text-blue-900 bg-blue-100 text-sm py-1 px-2 rounded-md">{{ $complaint->complaintMakerType->name }}</span>
                                     @endif
                                 </div>
                                 <div class="mb-2">
