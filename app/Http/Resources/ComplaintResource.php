@@ -16,15 +16,8 @@ class ComplaintResource extends JsonResource
      */
     public function toArray($request)
     {
-        // return parent::toArray($request);
-
         // Retrieve the base resource data
         $data = parent::toArray($request);
-
-        // Add additional fields based on conditions
-        // if ($this->status == 'active') {
-        //     $data['discounted_price'] = $this->price - $this->discount;
-        // }
 
         $data['status'] = $this->status?->name;
         $data['category'] = $this->category?->name;
@@ -37,6 +30,23 @@ class ComplaintResource extends JsonResource
         $data['audioName'] = $this->audioFile?->filename;
         $data['fileUrl'] = $this->file_id ? URL::to('files/' . $this->file?->filename) : null;
         $data['audioUrl'] = $this->audio_file_id ? URL::to('files/' . $this->audioFile?->filename) : null;
+
+        // Include associated files
+        $data['files'] = $this->files->map(function ($file) {
+            return [
+                'id' => $file->id,
+                'filename' => $file->filename,
+                'url' => URL::to('files/' . $file->filename),
+                'created_at' => $file->created_at->toDateTimeString(),
+            ];
+        });
+
+        // Include audio information if needed
+        $data['audio'] = $this->audioFile ? [
+            'id' => $this->audioFile->id,
+            'filename' => $this->audioFile->filename,
+            'url' => URL::to('files/' . $this->audioFile->filename),
+        ] : null;
 
         return $data;
     }
