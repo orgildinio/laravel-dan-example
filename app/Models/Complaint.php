@@ -165,6 +165,10 @@ class Complaint extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function secondUser()
+    {
+        return $this->belongsTo(User::class);
+    }
     public function complaintMakerType()
     {
         return $this->belongsTo(ComplaintMakerType::class);

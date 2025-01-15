@@ -178,7 +178,7 @@ class ComplaintStep extends Component
                     $stepData['org_id'] = $this->org_id;
 
                     // Хэрвээ 1111-ээс ирсэн гомдол байвал 1111 рүү мэдээлэл дамжуулах
-                    $comment = 'Мэргэжилтэн ' . $complaint->controlledUser?->name . ' рүү шилжүүлэв. Тайлбар: ' . $this->desc;
+                    $comment = 'Мэргэжилтэн ' . $complaint->secondUser?->name . ' рүү шилжүүлэв. Тайлбар: ' . $this->desc;
                     ComplaintHelper::send1111API($complaint, false, $comment);
                 } else { // Хороо дотроо шилжүүлсэн тохиолдолд
                     $complaint->update(['status_id' => 2, 'controlled_user_id' => $this->selected_user_id]);
