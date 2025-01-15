@@ -76,7 +76,12 @@ class ComplaintStep extends Component
                     $this->actions = ['Тайлбар', 'Шилжүүлэх', 'Цуцлах', 'Шийдвэрлэх'];
             }
         }
-        $this->employees = User::where('org_id', $this->org_id)->where('id', '!=', Auth::user()->id)->orderBy('name', 'asc')->get();
+
+        if ($complaint->status_id == 1) {
+            $this->employees = User::where('org_id', $this->second_org_id)->where('id', '!=', Auth::user()->id)->orderBy('name', 'asc')->get();
+        } else {
+            $this->employees = User::where('org_id', $this->org_id)->where('id', '!=', Auth::user()->id)->orderBy('name', 'asc')->get();
+        }
 
         // $this->complaint_steps = ModelsComplaintStep::where('complaint_id', $this->complaint_id)->get();
     }
