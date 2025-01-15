@@ -175,6 +175,7 @@ class ComplaintStep extends Component
                 {
                     $complaint->update(['second_status_id' => 2, 'second_user_id' => $this->selected_user_id]);
                     $stepData['status_id'] = 1;
+                    $stepData['org_id'] = $this->org_id;
 
                     // Хэрвээ 1111-ээс ирсэн гомдол байвал 1111 рүү мэдээлэл дамжуулах
                     $comment = 'Мэргэжилтэн ' . $complaint->controlledUser?->name . ' рүү шилжүүлэв. Тайлбар: ' . $this->desc;
@@ -182,6 +183,7 @@ class ComplaintStep extends Component
                 } else { // Хороо дотроо шилжүүлсэн тохиолдолд
                     $complaint->update(['status_id' => 2, 'controlled_user_id' => $this->selected_user_id]);
                     $stepData['status_id'] = 1;
+                    $stepData['org_id'] = $this->org_id;
 
                     // Хэрвээ 1111-ээс ирсэн гомдол байвал 1111 рүү мэдээлэл дамжуулах
                     $comment = 'Мэргэжилтэн ' . $complaint->controlledUser?->name . ' рүү шилжүүлэв. Тайлбар: ' . $this->desc;
