@@ -27,8 +27,9 @@ class ExportComplaint implements FromCollection, WithHeadings, ShouldAutoSize, W
     public function columnWidths(): array
     {
         return [
-            'N' => 55,
-            'L' => 20,
+            'J' => 20,
+            'P' => 60,
+            'S' => 60,
         ];
     }
 
@@ -41,7 +42,12 @@ class ExportComplaint implements FromCollection, WithHeadings, ShouldAutoSize, W
                 'vertical' => Alignment::VERTICAL_CENTER,
                 'wrapText' => true,
             ]],
-            'L' => ['alignment' => [
+            'P' => ['alignment' => [
+                // 'horizontal' => Alignment::HORIZONTAL_CENTER,
+                'vertical' => Alignment::VERTICAL_CENTER,
+                'wrapText' => true,
+            ]],
+            'S' => ['alignment' => [
                 // 'horizontal' => Alignment::HORIZONTAL_CENTER,
                 'vertical' => Alignment::VERTICAL_CENTER,
                 'wrapText' => true,
