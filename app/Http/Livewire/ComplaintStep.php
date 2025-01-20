@@ -154,7 +154,8 @@ class ComplaintStep extends Component
             'sent_user_id' => Auth::user()->id,
             'desc' => $this->desc,
             'action_taken' => $action,
-            'sent_date' => Carbon::now()->toDateTimeString(),
+            // 'sent_date' => Carbon::now()->toDateTimeString(),
+            'sent_date' => now(),
             'amount' => $this->amount,
         ];
 
