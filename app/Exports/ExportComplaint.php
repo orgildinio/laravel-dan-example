@@ -27,7 +27,6 @@ class ExportComplaint implements FromCollection, WithHeadings, ShouldAutoSize, W
     public function columnWidths(): array
     {
         return [
-            'J' => 20,
             'P' => 60,
             'S' => 60,
         ];
@@ -38,10 +37,6 @@ class ExportComplaint implements FromCollection, WithHeadings, ShouldAutoSize, W
         return [
             // Style the first row as bold text.
             1 => ['font' => ['bold' => true]],
-            'J' => ['alignment' => [
-                'vertical' => Alignment::VERTICAL_CENTER,
-                'wrapText' => true,
-            ]],
             'P' => ['alignment' => [
                 // 'horizontal' => Alignment::HORIZONTAL_CENTER,
                 'vertical' => Alignment::VERTICAL_CENTER,
@@ -221,7 +216,7 @@ class ExportComplaint implements FromCollection, WithHeadings, ShouldAutoSize, W
         return [
             AfterSheet::class => function (AfterSheet $event) {
 
-                $cellRange = 'A1:R1'; // All headers
+                $cellRange = 'A1:S1'; // All headers
                 $event->sheet->getDelegate()->getStyle($cellRange)->getFont()->setSize(12);
                 $event->sheet->getDelegate()->getStyle($cellRange)
                     ->getFill()
