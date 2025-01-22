@@ -27,6 +27,9 @@ class ExportComplaint implements FromCollection, WithHeadings, ShouldAutoSize, W
     public function columnWidths(): array
     {
         return [
+            'F' => 30,
+            'G' => 30,
+            'N' => 30,
             'P' => 60,
             'S' => 60,
         ];
@@ -149,6 +152,12 @@ class ExportComplaint implements FromCollection, WithHeadings, ShouldAutoSize, W
             $complaintSteps
         ];
 
+        // Add `amount_pay` and `amount_receive` if `complaint_type_id` equals 1
+        if ($row->complaint_type_id == 1) {
+            $mappedData[] = $lastStep?->amount_pay ?? '';  // Add amount_pay or N/A
+            $mappedData[] = $lastStep?->amount_recieve ?? '';  // Add amount_receive or N/A
+        }
+
         if (Auth::user()->org_id == 99) {
             return $mappedData; // Return all data if org_id is 99
         } else {
@@ -171,29 +180,33 @@ class ExportComplaint implements FromCollection, WithHeadings, ShouldAutoSize, W
 
     public function headings(): array
     {
-        if (Auth::user()->org_id == 99) {
-            return [
-                'Дугаар',
-                'Төрөл',
-                'Суваг',
-                'Төлөв',
-                'Хариуцсан мэргэжилтэн',
-                'Хариуцсан байгууллага',
-                'Холбогдох ТЗЭ',
-                'Энергийн төрөл',
-                'Гомдлын төрөл',
-                'Өргөдлийн товч утга',
-                'Өргөдөл гаргагчийн төрөл',
-                'Овог',
-                'Нэр',
-                'ААН-н нэр',
-                'Утас',
-                'Санал хүсэлт',
-                'Бүртгэсэн огноо',
-                'Шийдвэрлэсэн хоног',
-                'Шийдвэрлэлт'
-            ];
-        } else {
+        // Base headings for all users
+        $headings = [
+            'Дугаар',
+            'Төрөл',
+            'Суваг',
+            'Төлөв',
+            'Хариуцсан мэргэжилтэн',
+            'Хариуцсан байгууллага',
+            'Холбогдох ТЗЭ',
+            'Энергийн төрөл',
+            'Гомдлын төрөл',
+            'Өргөдлийн товч утга',
+            'Өргөдөл гаргагчийн төрөл',
+            'Овог',
+            'Нэр',
+            'ААН-н нэр',
+            'Утас',
+            'Санал хүсэлт',
+            'Бүртгэсэн огноо',
+            'Шийдвэрлэсэн хоног',
+            'Шийдвэрлэлт',
+            'Хэрэглэгч төлөх дүн',
+            'Хэрэглэгчид буцаах дүн'
+        ];
+
+        // For users with org_id != 99, simplified headings
+        if (Auth::user()->org_id != 99) {
             return [
                 'Дугаар',
                 'Төрөл',
@@ -209,14 +222,17 @@ class ExportComplaint implements FromCollection, WithHeadings, ShouldAutoSize, W
                 'Бүртгэсэн огноо'
             ];
         }
+
+        return $headings;
     }
+
 
     public function registerEvents(): array
     {
         return [
             AfterSheet::class => function (AfterSheet $event) {
 
-                $cellRange = 'A1:S1'; // All headers
+                $cellRange = 'A1:U1'; // All headers
                 $event->sheet->getDelegate()->getStyle($cellRange)->getFont()->setSize(12);
                 $event->sheet->getDelegate()->getStyle($cellRange)
                     ->getFill()

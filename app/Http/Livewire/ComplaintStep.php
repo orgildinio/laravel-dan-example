@@ -23,7 +23,7 @@ class ComplaintStep extends Component
 {
     use WithFileUploads;
 
-    public $complaint_steps, $org_id, $status_id, $complaint_id, $recieved_user_id, $sent_user_id, $recieved_date, $sent_date, $desc, $orgs, $all_status, $actions, $selectedAction, $controlled_user_id, $employees, $selected_user_id, $second_user_id, $file, $step_id, $expire_date, $is_expired, $complaint_type_id, $complaint_type_summary_id, $amount, $selected_date, $complaint_step;
+    public $complaint_steps, $org_id, $status_id, $complaint_id, $recieved_user_id, $sent_user_id, $recieved_date, $sent_date, $desc, $orgs, $all_status, $actions, $selectedAction, $controlled_user_id, $employees, $selected_user_id, $second_user_id, $file, $step_id, $expire_date, $is_expired, $complaint_type_id, $complaint_type_summary_id, $amount, $selected_date, $complaint_step, $amount_pay, $amount_recieve;
     public $isOpen = 0;
     public $showPermissionWarning = false;
     public $isEditMode = false;
@@ -44,6 +44,9 @@ class ComplaintStep extends Component
         $this->complaint_type_summary_id = $complaint->complaint_type_summary_id;
         $this->orgs = Organization::orderBy('name', 'asc')->get();
         $this->all_status = Status::all();
+
+        $this->amount_pay = 0;
+        $this->amount_recieve = 0;
 
         if (Auth::user()->role->name == "admin" || Auth::user()->role->name == "ehzh") {
 
@@ -156,7 +159,8 @@ class ComplaintStep extends Component
             'action_taken' => $action,
             // 'sent_date' => Carbon::now()->toDateTimeString(),
             'sent_date' => now(),
-            'amount' => $this->amount,
+            'amount_pay' => $this->amount_pay,
+            'amount_recieve' => $this->amount_recieve,
         ];
 
         switch ($this->selectedAction) {
@@ -343,6 +347,8 @@ class ComplaintStep extends Component
         $this->org_id = $complaint_step->org_id;
         $this->complaint_id = $complaint_step->complaint_id;
         $this->desc = $complaint_step->desc;
+        $this->amount_pay = $complaint_step->amount_pay;
+        $this->amount_recieve = $complaint_step->amount_recieve;
 
         $this->selectedAction = $complaint_step->action_taken;
 
@@ -363,6 +369,8 @@ class ComplaintStep extends Component
 
         // Update the description
         $complaintStep->desc = $this->desc;
+        $complaintStep->amount_pay = $this->amount_pay;
+        $complaintStep->amount_recieve = $this->amount_recieve;
 
         // Save the updated complaint step
         $complaintStep->save();

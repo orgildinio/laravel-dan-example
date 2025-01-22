@@ -174,56 +174,56 @@
             </div>
         </div>
         <div class="overflow-x-auto border border-t-2 border-l-2 border-r-2 border-gray-300 rounded-lg">
-            <table class="min-w-full table-fixed" id="complaint-report">
+            <table class="min-w-full table-fixed text-small" id="complaint-report">
                 <thead>
                     <tr>
                         <th
-                            class="p-2 w-[5px] text-xs font-medium leading-4 tracking-wider text-left text-gray-800 uppercase border-b border-gray-300 bg-gray-50">
+                            class="p-2 w-[5px] font-medium leading-4 tracking-wider text-center text-gray-800 uppercase border bg-gray-50">
                             №</th>
                         <th
-                            class="p-2 w-[5px] text-xs font-medium leading-4 tracking-wider text-left text-gray-800 uppercase border-b border-gray-300 bg-gray-50">
+                            class="p-2 w-[5px] font-medium leading-4 tracking-wider text-center text-gray-800 uppercase border bg-gray-50">
                             Дугаар</th>
                         <th
-                            class="p-2 w-[100px] text-xs font-medium leading-4 tracking-wider text-left text-gray-800 uppercase border-b border-gray-300 bg-gray-50">
+                            class="p-2 w-[100px] font-medium leading-4 tracking-wider text-center text-gray-800 uppercase border bg-gray-50">
                             Төрөл</th>
                         <th
-                            class="p-2 w-[100px] text-xs font-medium leading-4 tracking-wider text-left text-gray-800 uppercase border-b border-gray-300 bg-gray-50">
+                            class="p-2 w-[100px] font-medium leading-4 tracking-wider text-center text-gray-800 uppercase border bg-gray-50">
                             Суваг</th>
                         <th
-                            class="p-2 w-[150px] text-xs font-medium leading-4 tracking-wider text-left text-gray-800 uppercase border-b border-gray-300 bg-gray-50">
+                            class="p-2 w-[500px] font-medium leading-4 tracking-wider text-center text-gray-800 uppercase border bg-gray-50">
                             Төлөв</th>
                         <th
-                            class="p-2 text-xs font-medium leading-4 tracking-wider text-left text-gray-800 uppercase border-b border-gray-300 bg-gray-50">
+                            class="p-2 font-medium leading-4 tracking-wider text-center text-gray-800 uppercase border bg-gray-50">
                             Мэргэжилтэн</th>
                         @if (Auth::user()->org_id == 99)
                             <th
-                                class="p-2 w-[200px] text-xs font-medium leading-4 tracking-wider text-left text-gray-800 uppercase border-b border-gray-300 bg-gray-50">
+                                class="p-2 w-[200px] font-medium leading-4 tracking-wider text-center text-gray-800 uppercase border bg-gray-50">
                                 Байгууллага</th>
                             <th
-                                class="p-2 w-[150px] text-xs font-medium leading-4 tracking-wider text-left text-gray-800 uppercase border-b border-gray-300 bg-gray-50">
+                                class="p-2 w-[150px] font-medium leading-4 tracking-wider text-center text-gray-800 uppercase border bg-gray-50">
                                 Холбогдох ТЗЭ</th>
                             <th
-                                class="p-2 text-xs font-medium leading-4 tracking-wider text-left text-gray-800 uppercase border-b border-gray-300 bg-gray-50">
+                                class="p-2 font-medium leading-4 tracking-wider text-center text-gray-800 uppercase border bg-gray-50">
                                 Төрөл</th>
                         @endif
                         <th
-                            class="p-2 text-xs font-medium leading-4 tracking-wider text-left text-gray-800 uppercase border-b border-gray-300 bg-gray-50">
+                            class="p-2 font-medium leading-4 tracking-wider text-center text-gray-800 uppercase border bg-gray-50">
                             Овог, нэр / ААН</th>
 
                         <th
-                            class="p-2 w-[500px] text-xs font-medium leading-4 tracking-wider text-left text-gray-800 uppercase border-b border-gray-300 bg-gray-50">
+                            class="p-2 w-[500px] font-medium leading-4 tracking-wider text-center text-gray-800 uppercase border bg-gray-50">
                             Санал, хүсэлт</th>
                         <th
-                            class="p-2 w-[150px] text-xs font-medium leading-4 tracking-wider text-left text-gray-800 uppercase border-b border-gray-300 bg-gray-50">
+                            class="p-2 w-[150px] font-medium leading-4 tracking-wider text-center text-gray-800 uppercase border bg-gray-50">
                             Бүртгэсэн огноо</th>
                         <th
-                            class="p-2 w-[150px] text-xs font-medium leading-4 tracking-wider text-left text-gray-800 uppercase border-b border-gray-300 bg-gray-50">
+                            class="p-2 w-[150px] font-medium leading-4 tracking-wider text-center text-gray-800 uppercase border bg-gray-50">
                             Шийдвэрлэсэн огноо</th>
                         <th
-                            class="p-2 w-[150px] text-xs font-medium leading-4 tracking-wider text-left text-gray-800 uppercase border-b border-gray-300 bg-gray-50">
+                            class="p-2 w-[150px] font-medium leading-4 tracking-wider text-center text-gray-800 uppercase border bg-gray-50">
                             Шийдвэрлэсэн хоног</th>
                         <th
-                            class="p-2 w-[100px] text-xs font-medium leading-4 tracking-wider text-left text-gray-800 uppercase border-b border-gray-300 bg-gray-50">
+                            class="p-2 w-[100px] font-medium leading-4 tracking-wider text-center text-gray-800 uppercase border bg-gray-50">
                             Үлдсэн хугацаа</th>
                             <th></th>
                     </tr>
@@ -231,113 +231,112 @@
                 <tbody class="bg-white">
                     @foreach ($complaints as $key => $complaint)
                         <tr class="table-row hover:bg-gray-100 cursor-pointer" data-id="{{ $complaint->id }}">
-                            <td class="p-2 whitespace-no-wrap border-b border-gray-300">
+                            <td class="p-2 whitespace-no-wrap border">
                                 <div class="flex items-center">
                                     {{ $key + $complaints->firstItem() }}
                                 </div>
                             </td>
 
-                            <td class="p-2 whitespace-no-wrap border-b border-gray-300">
-                                <div class="text-sm leading-5 text-gray-900">{{ $complaint->serial_number }}
+                            <td class="p-2 whitespace-no-wrap border">
+                                <div class="leading-5 text-gray-900">{{ $complaint->serial_number }}
                                 </div>
                             </td>
 
-                            <td class="p-2 whitespace-no-wrap border-b border-gray-300">
-                                <div class="text-sm leading-5 text-gray-900">{{ $complaint->category?->name }}
+                            <td class="p-2 whitespace-no-wrap border">
+                                <div class="leading-5 text-gray-900">{{ $complaint->category?->name }}
                                 </div>
                             </td>
 
-                            <td class="p-2 whitespace-no-wrap border-b border-gray-300">
-                                <div class="text-sm leading-5 text-gray-900">{{ $complaint->channel?->name }}
+                            <td class="p-2 whitespace-no-wrap border">
+                                <div class="leading-5 text-gray-900">{{ $complaint->channel?->name }}
                                 </div>
                             </td>
 
-                            <td class="p-2 whitespace-no-wrap border-b border-gray-300">
-                                <div class="text-sm leading-5 text-gray-900">
+                            <td class="p-2 whitespace-no-wrap border">
+                                <div class="leading-5 text-gray-900">
                                     @if ($complaint->status_id !== null)
                                         @switch($complaint->status_id)
                                             @case('0')
-                                                <div class="bg-gray-100 p-1 text-center rounded text-xs">Шинээр ирсэн</div>
+                                                <div class="bg-gray-100 p-1 text-center rounded ">Шинээр ирсэн</div>
                                             @break
 
                                             @case('1')
                                                 <div
-                                                    class="bg-cyan-100 text-cyan-900 p-1 text-center rounded text-xs whitespace-nowrap">
+                                                    class="bg-cyan-100 text-cyan-900 p-1 text-center rounded whitespace-nowrap">
                                                     Шилжүүлсэн</div>
                                             @break
 
                                             @case('2')
-                                                <div class="bg-orange-100 text-orange-900 p-1 text-center rounded text-xs">
-                                                    Хүлээн
-                                                    авсан</div>
+                                                <div class="bg-orange-100 text-orange-900 p-1 text-center rounded">
+                                                    Хүлээн авсан</div>
                                             @break
 
                                             @case('3')
-                                                <div class="bg-blue-100 text-blue-900 p-1 text-center rounded text-xs">Хянаж
+                                                <div class="bg-blue-100 text-blue-900 p-1 text-center rounded">Хянаж
                                                     байгаа</div>
                                             @break
 
                                             @case('4')
-                                                <div class="bg-red-100 text-red-900 p-1 text-center rounded text-xs">Цуцалсан
+                                                <div class="bg-red-100 text-red-900 p-1 text-center rounded">Цуцалсан
                                                 </div>
                                             @break
 
                                             @case('6')
-                                                <div class="bg-green-100 text-green-900 p-1 text-center rounded text-xs">
+                                                <div class="bg-green-100 text-green-900 p-1 text-center rounded">
                                                     Шийдвэрлэсэн</div>
                                             @break
 
                                             @default
-                                                <div class="bg-gray-100 p-1 text-center rounded text-xs">Шинээр ирсэн</div>
+                                                <div class="bg-gray-100 p-1 text-center rounded">Шинээр ирсэн</div>
                                         @endswitch
                                     @endif
                                     {{-- {{$complaint->status_id}} --}}
                                 </div>
                             </td>
 
-                            <td class="p-2 whitespace-no-wrap border-b border-gray-300">
-                                <div class="text-sm leading-5 text-gray-900">{{ $complaint->controlledUser?->name }}
+                            <td class="p-2 whitespace-no-wrap border">
+                                <div class="leading-5 text-gray-900">{{ $complaint->controlledUser?->name }}
                                 </div>
                             </td>
 
                             @if (Auth::user()->org_id == 99)
-                                <td class="p-2 whitespace-no-wrap border-b border-gray-300">
-                                    <div class="text-sm leading-5 text-gray-900">{{ $complaint->organization?->name }}
+                                <td class="p-2 whitespace-no-wrap border">
+                                    <div class="leading-5 text-gray-900">{{ Str::limit($complaint->organization?->name, 20) }}
                                     </div>
                                 </td>
 
-                                <td class="p-2 whitespace-no-wrap border-b border-gray-300">
-                                    <div class="text-sm leading-5 text-gray-900">{{ $complaint->secondOrg?->name }}
+                                <td class="p-2 whitespace-no-wrap border">
+                                    <div class="leading-5 text-gray-900">{{ Str::limit($complaint->secondOrg?->name, 20) }}
                                     </div>
                                 </td>
 
-                                <td class="p-2 whitespace-no-wrap border-b border-gray-300">
-                                    <div class="text-sm leading-5 text-gray-900">{{ $complaint->energyType?->name }}
+                                <td class="p-2 whitespace-no-wrap border">
+                                    <div class="leading-5 text-gray-900">{{ $complaint->energyType?->name }}
                                     </div>
                                 </td>
                             @endif
 
-                            <td class="p-2 whitespace-no-wrap border-b border-gray-300">
-                                <div class="text-sm leading-5 text-gray-900">
-                                    {{ $complaint->complaint_maker_type_id == 1 ? $complaint->lastname . ' ' . $complaint->firstname : $complaint->complaint_maker_org_name }}
+                            <td class="p-2 whitespace-no-wrap border lowercase">
+                                <div class="leading-5 text-gray-900">
+                                    {{ $complaint->complaint_maker_type_id == 1 ? Str::limit($complaint->lastname . ' ' . $complaint->firstname, 15) : Str::limit($complaint->complaint_maker_org_name, 20) }}
                                 </div>
                             </td>
 
-                            <td class="p-2 whitespace-no-wrap border-b border-gray-300 text-sm">
-                                <p>{{ Str::limit($complaint->complaint, 150) }}
+                            <td class="p-2 whitespace-no-wrap border">
+                                <p>{{ Str::limit($complaint->complaint, 50) }}
                                 </p>
                             </td>
 
                             <td
-                                class="p-2 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-300">
-                                <span>{{ date('Y-m-d H:i', strtotime($complaint->complaint_date)) }}</span>
+                                class="p-2 text-center  leading-5 text-gray-500 whitespace-no-wrap border">
+                                <span>{{ date('Y-m-d', strtotime($complaint->complaint_date)) }}</span>
                             </td>
                             <td
-                                class="p-2 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-300">
-                                <span>{{ $complaint->status_id == 6 ? date('Y-m-d H:i', strtotime($complaint->updated_at)) : '' }}</span>
+                                class="p-2 text-center  leading-5 text-gray-500 whitespace-no-wrap border">
+                                <span>{{ $complaint->status_id == 6 ? date('Y-m-d', strtotime($complaint->updated_at)) : '' }}</span>
                             </td>
                             <td
-                                class="p-2 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-300">
+                                class="p-2 text-center  leading-5 text-gray-500 whitespace-no-wrap border">
                                 @if($complaint->status_id == 6)
                                     <span>
                                         {{ \Carbon\Carbon::parse($complaint->complaint_date)->diffInDays($complaint->updated_at) }} хоног
@@ -347,10 +346,10 @@
                                 @endif
                             </td>
                             @if ($complaint->status_id == 6)
-                                <td class="p-2 whitespace-no-wrap border-b border-gray-300"></td>
+                                <td class="p-2 whitespace-no-wrap border"></td>
                             @else
                                 <td
-                                    class="p-2 text-xs text-center leading-5 whitespace-no-wrap border-b border-gray-300">
+                                    class="p-2 text-center leading-5 whitespace-no-wrap border">
                                     @if ($complaint->hasExpired())
                                         <span class="text-red-500 text-xs">Хугацаа хэтэрсэн</span>
                                     @else
@@ -360,7 +359,7 @@
                             @endif
                             @if (Auth::user()->role?->name == 'admin')
                             <td
-                                class="text-sm font-medium leading-5 whitespace-no-wrap border-b border-gray-200 ">
+                                class="font-medium leading-5 whitespace-no-wrap border">
                                 <form action="{{ route('complaint.destroy',$complaint->id) }}"
                                     method="Post">
                                     @csrf

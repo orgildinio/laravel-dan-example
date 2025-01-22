@@ -95,9 +95,18 @@
                             {{ $step->desc }}
                         </div> 
                         @if (isset($step->amount))
-                            
                         <div class="text-sm text-gray-700 mt-2 font-bold">
                             Үнийн дүн: {{ number_format((float)$step->amount) }}₮
+                        </div>
+                        @endif
+                        @if (isset($step->amount_pay))
+                        <div class="text-sm text-gray-700 mt-2 font-bold">
+                            Хэрэглэгч төлөх дүн: {{ number_format((float)$step->amount_pay) }}₮
+                        </div>
+                        @endif
+                        @if (isset($step->amount_recieve))
+                        <div class="text-sm text-gray-700 mt-2 font-bold">
+                            Хэрэглэгчид буцаах дүн: {{ number_format((float)$step->amount_recieve) }}₮
                         </div>
                         @endif
                     </div>

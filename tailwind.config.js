@@ -19,6 +19,9 @@ module.exports = {
                 primary: "#3e4095",
                 primaryHover: "#2f3171",
             },
+            fontSize: {
+                small: ".75rem",
+            },
         },
     },
 
