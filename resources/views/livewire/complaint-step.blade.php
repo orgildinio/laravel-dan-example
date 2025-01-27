@@ -99,12 +99,12 @@
                             Үнийн дүн: {{ number_format((float)$step->amount) }}₮
                         </div>
                         @endif
-                        @if (isset($step->amount_pay))
+                        @if (isset($step->amount_pay) && $step->amount_pay != 0)
                         <div class="text-sm text-gray-700 mt-2 font-bold">
                             Хэрэглэгч төлөх дүн: {{ number_format((float)$step->amount_pay) }}₮
                         </div>
                         @endif
-                        @if (isset($step->amount_recieve))
+                        @if (isset($step->amount_recieve) && $step->amount_recieve != 0)
                         <div class="text-sm text-gray-700 mt-2 font-bold">
                             Хэрэглэгчид буцаах дүн: {{ number_format((float)$step->amount_recieve) }}₮
                         </div>
