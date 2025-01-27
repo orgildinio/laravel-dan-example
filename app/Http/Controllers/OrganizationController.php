@@ -14,21 +14,35 @@ class OrganizationController extends Controller
      */
     public function index(Request $request)
     {
+        $name = $request->query('name');
+        $plant_id = $request->query('plant_id');
+        $phone = $request->query('phone');
+
         $query = Organization::query();
 
-        if ($request->filled('org_id')) {
-            $query->where('id', $request->org_id);
+        if ($request->filled('name')) {
+            $query->where('name', 'LIKE', '%' . $name . '%');
         }
 
         // Filter by plant_id
         if ($request->filled('plant_id')) {
-            $query->where('plant_id', $request->plant_id);
+            $query->where('plant_id', $plant_id);
+        }
+
+        // Filter by phone number in the orgNumber relationship
+        if ($request->filled('phone')) {
+            $query->whereHas('orgNumber', function ($q) use ($phone) {
+                $q->where('phone_number', 'LIKE', '%' . $phone . '%');
+            });
         }
 
         $orgs = $query->with('orgNumber')->orderBy('name', 'asc')->paginate(15)->appends($request->query());
 
-        return view('organizations.index', compact('orgs'))
-            ->with('i', (request()->input('page', 1) - 1) * 15);
+        return view('organizations.index', compact('orgs'))->with([
+            'name' => $request->name,
+            'plant_id' => $request->plant_id,
+            'phone' => $request->phone,
+        ]);
     }
 
     /**
