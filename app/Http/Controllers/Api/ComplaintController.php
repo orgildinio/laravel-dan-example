@@ -235,7 +235,11 @@ class ComplaintController extends Controller
             $input['organization_id'] = $user->org->id;
             $input['energy_tyoe_id'] = $user->org->plant_id;
             $input['status_id'] = 0; // Шинээр ирсэн
-            $input['channel_id'] = 1; // Веб
+            $input['channel_id'] = 2; // Утас
+
+            if (empty($input['complaint_maker_type_id'])) {
+                $input['complaint_maker_type_id'] = 1; // Иргэн
+            }
 
 
             if (empty($input['complaint_maker_type_id'])) {

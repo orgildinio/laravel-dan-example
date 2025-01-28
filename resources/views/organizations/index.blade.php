@@ -1,16 +1,16 @@
 <x-admin-layout>
-    <div class="bg-white shadow rounded-lg p-4 2xl:col-span-1">
-        <h1 class="text-2xl font-bold mb-4">Байгууллагын мэдээлэл</h1>
+    <div class="bg-white shadow rounded-lg p-6">
+        <h1 class="text-2xl font-bold mb-6">Байгууллагын мэдээлэл</h1>
 
         @if ($message = Session::get('success'))
-            <div class="bg-green-100 border-l-4 border-green-500 text-green-700 text-sm p-2 mb-4" role="alert">
+            <div class="bg-green-100 border-l-4 border-green-500 text-green-700 text-sm p-4 mb-6 rounded" role="alert">
                 <p>{{ $message }}</p>
             </div>
         @endif
 
-        <div class="mb-4">
+        <div class="mb-6">
             <a href="{{ route('organization.create') }}"
-                class="px-4 py-2 rounded-md bg-black text-sky-100 hover:bg-gray-600">
+                class="px-4 py-2 rounded-md bg-blue-500 text-white hover:bg-blue-600 transition duration-200">
                 Нэмэх
             </a>
         </div>
@@ -20,16 +20,15 @@
             <input type="hidden" name="plant_id" :value="plant_id">
             <input type="hidden" name="phone" :value="phone">
 
-
-            <div class="bg-white shadow-md rounded my-2">
-                <table class="w-full border border-gray-300 rounded-lg shadow-md overflow-hidden">
-                    <thead class="bg-gray-200 text-gray-700">
-                        <tr class="text-left text-sm uppercase font-semibold">
-                            <th class="p-3">№</th>
-                            <th class="p-3">Байгууллагын нэр</th>
-                            <th class="p-3">Төрөл</th>
-                            <th class="p-3">Дугаар</th>
-                            <th class="p-3 text-center">Үйлдэл</th>
+            <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                <table class="w-full border-collapse">
+                    <thead class="bg-gray-100">
+                        <tr class="text-left text-sm uppercase font-semibold text-gray-700">
+                            <th class="p-4">№</th>
+                            <th class="p-4">Байгууллагын нэр</th>
+                            <th class="p-4">Төрөл</th>
+                            <th class="p-4">Дугаар</th>
+                            <th class="p-4 text-center">Үйлдэл</th>
                         </tr>
                         <tr>
                             <th class="p-2"></th>
@@ -61,13 +60,13 @@
                             </th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-gray-200 bg-white text-sm">
+                    <tbody class="divide-y divide-gray-200">
                         @foreach ($orgs as $org)
-                            <tr class="hover:bg-gray-100 transition duration-200">
-                                <td class="p-3">{{ ($orgs->currentPage() - 1) * $orgs->perPage() + $loop->iteration }}</td>
-                                <td class="p-3">{{ $org->name }}</td>
-                                <td class="p-3">{{ $org->plant_id == 1 ? 'Цахилгаан' : 'Дулаан' }}</td>
-                                <td class="p-3">
+                            <tr class="hover:bg-gray-50 transition duration-200">
+                                <td class="p-4">{{ ($orgs->currentPage() - 1) * $orgs->perPage() + $loop->iteration }}</td>
+                                <td class="p-4">{{ $org->name }}</td>
+                                <td class="p-4">{{ $org->plant_id == 1 ? 'Цахилгаан' : 'Дулаан' }}</td>
+                                <td class="p-4">
                                     @if ($org->orgNumber->isNotEmpty())
                                         @foreach ($org->orgNumber as $item)
                                             <p>{{ $item->phone_number }}</p>
@@ -76,8 +75,8 @@
                                         <span class="text-gray-400 italic">N/A</span>
                                     @endif
                                 </td>
-                                <td class="p-3 text-center">
-                                    <div class="flex items-center justify-center space-x-2">
+                                <td class="p-4 text-center">
+                                    <div class="flex items-center justify-center space-x-4">
                                         <div x-data="{ open: false }">
                                             <button @click="open = true" class="text-blue-500 hover:text-blue-700 transition">
                                                 <i class="fa-solid fa-square-phone-flip fa-lg"></i>
@@ -128,7 +127,7 @@
                     </tbody>
                 </table>
                 
-                <div class="p-2">
+                <div class="p-4">
                     {!! $orgs->appends(request()->query())->links() !!}
                 </div>
             </div>
