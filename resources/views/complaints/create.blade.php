@@ -186,80 +186,108 @@
                             @enderror
                         </div>
                     </div>
-                    <div class="md:flex md:items-center mb-2">
-                        <div class="md:w-1/4">
-                            <label class="block text-gray-500 text-sm font-bold md:text-right mb-1 md:mb-0 pr-4"
-                                for="inline-full-name">
-                                УБ/орон нутаг
-                            </label>
-                        </div>
-                        <div class="md:w-3/4">
-                            {{-- <input id="capitalProvince"
-                                class="bg-gray-100 appearance-none rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight @if ($errors->has('country')) border border-red-500 @else border-1 border-gray-200 @endif"
-                                type="text" name="country" value="{{ request('city') }}">
+                    @if (!empty(request('city')))
+                        <div class="md:flex md:items-center mb-2">
+                            <div class="md:w-1/4">
+                                <label class="block text-gray-500 text-sm font-bold md:text-right mb-1 md:mb-0 pr-4"
+                                    for="inline-full-name">
+                                    УБ/орон нутаг
+                                </label>
+                            </div>
+                            <div class="md:w-3/4">
+                                <input id="capitalProvince"
+                                    class="bg-gray-100 appearance-none rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight @if ($errors->has('country')) border border-red-500 @else border-1 border-gray-200 @endif"
+                                    type="text" name="country" value="{{ request('city') }}">
                                 @error('country')
                                     <div class="text-red-500 text-sm mt-1 mb-1">{{ $message }}</div>
-                                @enderror --}}
-                            <select name="country_id" id="country_id"
-                                class="bg-gray-100 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500">
-                                <option value="">-- Сонгох --</option>
-                                @foreach ($countries as $country)
-                                    {{-- <option value="{{ $country->id }}">{{ $country->name }}</option> --}}
-                                    <option value="{{ $country->id }}"
-                                        {{ old('country_id') == $country->id || request('city') == $country->name ? 'selected' : '' }}>
-                                        {{ $country->name }}
-                                    </option>
-                                @endforeach
-                            </select>
+                                @enderror
+                            </div>
                         </div>
-                    </div>
-                    <div class="md:flex md:items-center mb-2">
-                        <div class="md:w-1/4">
-                            <label class="block text-gray-500 text-sm font-bold md:text-right mb-1 md:mb-0 pr-4"
-                                for="inline-full-name">
-                                Сум/дүүрэг
-                            </label>
+                    @endif
+                    @if (!empty(request('district')))
+                        <div class="md:flex md:items-center mb-2">
+                            <div class="md:w-1/4">
+                                <label class="block text-gray-500 text-sm font-bold md:text-right mb-1 md:mb-0 pr-4"
+                                    for="inline-full-name">
+                                    Сум/дүүрэг
+                                </label>
+                            </div>
+                            <div class="md:w-3/4">
+                                <input id="districtsum"
+                                    class="bg-gray-100 appearance-none rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight @if ($errors->has('district')) border border-red-500 @else border-1 border-gray-200 @endif"
+                                    type="text" name="district" value="{{ request('district') }}">
+                            </div>
                         </div>
-                        <div class="md:w-3/4">
-                            {{-- <input id="districtsum"
-                                class="bg-gray-100 appearance-none rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight @if ($errors->has('district')) border border-red-500 @else border-1 border-gray-200 @endif"
-                                type="text" name="district" value="{{ request('district') }}"> --}}
-                            {{-- <select name="soum_district_id" id="soum_district_id"
-                                class="bg-gray-100 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500">
-                                <option value="">-- Сонгох --</option>
-                            </select> --}}
-                            <select name="country_id" id="country_id"
-                                class="bg-gray-100 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500">
-                                <option value="">-- Сонгох --</option>
-                                @foreach ($soumDistricts as $district)
-                                    <option value="{{ $district->id }}"
-                                        {{ old('soum_district_id') == $district->id || (isset($selectedSoumId) && $selectedSoumId == $district->id) ? 'selected' : '' }}>
-                                        {{ $district->name }}
-                                    </option>
-                                @endforeach
-                            </select>
+                    @endif
+                    @if (!empty(request('quarter')))
+                        <div class="md:flex md:items-center mb-2">
+                            <div class="md:w-1/4">
+                                <label class="block text-gray-500 text-sm font-bold md:text-right mb-1 md:mb-0 pr-4"
+                                    for="inline-full-name">
+                                    Баг/хороо
+                                </label>
+                            </div>
+                            <div class="md:w-3/4">
+                                <input id="khorooBag"
+                                    class="bg-gray-100 appearance-none rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight @if ($errors->has('khoroo')) border border-red-500 @else border-1 border-gray-200 @endif"
+                                    type="text" name="khoroo" value="{{ request('quarter') }}">
+                                @error('khoroo')
+                                    <div class="text-red-500 text-sm mt-1 mb-1">{{ $message }}</div>
+                                @enderror
+                            </div>
                         </div>
-                    </div>
-                    <div class="md:flex md:items-center mb-2">
-                        <div class="md:w-1/4">
-                            <label class="block text-gray-500 text-sm font-bold md:text-right mb-1 md:mb-0 pr-4"
-                                for="inline-full-name">
-                                Баг/хороо
-                            </label>
+                    @endif
+                    @if (empty(request('city')))
+                        <div class="md:flex md:items-center mb-2">
+                            <div class="md:w-1/4">
+                                <label class="block text-gray-500 text-sm font-bold md:text-right mb-1 md:mb-0 pr-4"
+                                    for="inline-full-name">
+                                    УБ/орон нутаг
+                                </label>
+                            </div>
+                            <div class="md:w-3/4">
+                                <select name="country_id" id="country_id"
+                                    class="bg-gray-100 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500">
+                                    <option value="">-- Сонгох --</option>
+                                    @foreach ($countries as $country)
+                                        {{-- <option value="{{ $country->id }}">{{ $country->name }}</option> --}}
+                                        <option value="{{ $country->id }}"
+                                            {{ old('country_id') == $country->id || request('city') == $country->name ? 'selected' : '' }}>
+                                            {{ $country->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
-                        <div class="md:w-3/4">
-                            {{-- <input id="khorooBag"
-                                class="bg-gray-100 appearance-none rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight @if ($errors->has('khoroo')) border border-red-500 @else border-1 border-gray-200 @endif"
-                                type="text" name="khoroo" value="{{ request('quarter') }}">
-                            @error('khoroo')
-                                <div class="text-red-500 text-sm mt-1 mb-1">{{ $message }}</div>
-                            @enderror --}}
-                            <select name="bag_khoroo_id" id="bag_khoroo_id"
-                                class="bg-gray-100 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500">
-                                <option value="">-- Сонгох --</option>
-                            </select>
+                        <div class="md:flex md:items-center mb-2">
+                            <div class="md:w-1/4">
+                                <label class="block text-gray-500 text-sm font-bold md:text-right mb-1 md:mb-0 pr-4"
+                                    for="inline-full-name">
+                                    Сум/дүүрэг
+                                </label>
+                            </div>
+                            <div class="md:w-3/4">
+                                <select name="soum_district_id" id="soum_district_id"
+                                    class="bg-gray-100 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500">
+                                    <option value="">-- Сонгох --</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
+                        <div class="md:flex md:items-center mb-2">
+                            <div class="md:w-1/4">
+                                <label class="block text-gray-500 text-sm font-bold md:text-right mb-1 md:mb-0 pr-4"
+                                    for="inline-full-name">
+                                    Баг/хороо
+                                </label>
+                            </div>
+                            <div class="md:w-3/4">
+                                <select name="bag_khoroo_id" id="bag_khoroo_id"
+                                    class="bg-gray-100 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500">
+                                    <option value="">-- Сонгох --</option>
+                                </select>
+                            </div>
+                        </div>
+                    @endif
                     <div class="md:flex md:items-center mb-2">
                         <div class="md:w-1/4">
                             <label class="block text-gray-500 text-sm font-bold md:text-right mb-1 md:mb-0 pr-4"
@@ -617,9 +645,7 @@
 
             $('#country_id').change(function() {
                 var country_id = $(this).val();
-                var district_name = '{{ request('district') }}'; // Get district from URL if exists
                 var soumDropdown = $('#soum_district_id');
-                console.log("====", district_name);
 
                 soumDropdown.empty().append('<option value="">-- Сонгох --</option>');
 
@@ -628,16 +654,12 @@
                         url: '/soum-districts',
                         type: 'GET',
                         data: {
-                            country_id: country_id,
-                            district: district_name
+                            country_id: country_id
                         },
                         success: function(response) {
-                            $.each(response.soums, function(key, soum) {
-                                let isSelected = (soum.id == response.selectedSoumId) ?
-                                    "selected" : "";
-                                soumDropdown.append(
-                                    `<option value="${soum.id}" ${isSelected}>${soum.name}</option>`
-                                );
+                            $.each(response, function(key, soum) {
+                                soumDropdown.append('<option value="' + soum.id + '">' +
+                                    soum.name + '</option>');
                             });
                         },
                         error: function() {
@@ -645,29 +667,6 @@
                         }
                     });
                 }
-                // var country_id = $(this).val();
-                // var soumDropdown = $('#soum_district_id');
-
-                // soumDropdown.empty().append('<option value="">-- Сонгох --</option>');
-
-                // if (country_id) {
-                //     $.ajax({
-                //         url: '/soum-districts',
-                //         type: 'GET',
-                //         data: {
-                //             country_id: country_id
-                //         },
-                //         success: function(response) {
-                //             $.each(response, function(key, soum) {
-                //                 soumDropdown.append('<option value="' + soum.id + '">' +
-                //                     soum.name + '</option>');
-                //             });
-                //         },
-                //         error: function() {
-                //             alert('Алдаа гарлаа, дахин оролдоно уу!');
-                //         }
-                //     });
-                // }
             });
             $(document).ready(function() {
                 // When a soum/district is selected

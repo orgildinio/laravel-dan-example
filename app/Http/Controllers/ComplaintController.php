@@ -815,22 +815,8 @@ class ComplaintController extends Controller
 
     public function getSoumDistricts(Request $request)
     {
-        // $soumDistricts = SoumDistrict::where('country_id', $request->country_id)->get();
-        // return response()->json($soumDistricts);
-
-        $countryId = $request->input('country_id');
-        $districtName = $request->input('district');
-
-        $soumDistricts = SoumDistrict::where('country_id', $countryId)->get();
-
-        $selectedSoum = SoumDistrict::where('name', $districtName)
-            ->where('country_id', $countryId)
-            ->first();
-
-        return response()->json([
-            'soumDistricts' => $soumDistricts,
-            'selectedSoumId' => $selectedSoum ? $selectedSoum->id : null
-        ]);
+        $soumDistricts = SoumDistrict::where('country_id', $request->country_id)->get();
+        return response()->json($soumDistricts);
     }
     public function getBagKhoroos(Request $request)
     {
