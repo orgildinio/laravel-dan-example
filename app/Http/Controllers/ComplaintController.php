@@ -543,9 +543,36 @@ class ComplaintController extends Controller
 
             $input['lastname'] = $user->danLastname ? $user->danLastname : '';
             $input['firstname'] = $user->danFirstname ? $user->danFirstname : '';
-            $input['country'] = $user->danAimagCityName ? $user->danAimagCityName : '';
-            $input['district'] = $user->danSoumDistrictName ? $user->danSoumDistrictName : '';
-            $input['khoroo'] = $user->danBagKhorooName ? $user->danBagKhorooName : '';
+
+            // Find country_id, soum_district_id, bag_khoroo_id based on names
+            $country = Country::where('name', $user->danAimagCityName)->first();
+
+            // Find district_id only if country exists
+            $district = $country ? SoumDistrict::where('name', $user->danSoumDistrictName)
+                ->where('country_id', $country->id)
+                ->first()
+                : null;
+
+            // Find bag_khoroo_id only if district exists
+            $khoroo = $district ? BagKhoroo::where('name', $user->danBagKhorooName)
+                ->where('soum_district_id', $district->id)
+                ->first()
+                : null;
+
+            // Store IDs
+            $input['country_id'] = $country ? $country->id : null;
+            $input['soum_district_id'] = $district ? $district->id : null;
+            $input['bag_khoroo_id'] = $khoroo ? $khoroo->id : null;
+
+            // Store names as fallback
+            $input['country'] = $country ? $country->name : ($user->danAimagCityName ?: '');
+            $input['district'] = $district ? $district->name : ($user->danSoumDistrictName ?: '');
+            $input['khoroo'] = $khoroo ? $khoroo->name : ($user->danBagKhorooName ?: '');
+
+
+            // $input['country'] = $user->danAimagCityName ? $user->danAimagCityName : '';
+            // $input['district'] = $user->danSoumDistrictName ? $user->danSoumDistrictName : '';
+            // $input['khoroo'] = $user->danBagKhorooName ? $user->danBagKhorooName : '';
 
             // Өргөдлийн мэдээлэл хадгалах
             $input['status_id'] = 0; // Шинээр ирсэн төлөвт орно
