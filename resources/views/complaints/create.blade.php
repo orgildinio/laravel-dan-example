@@ -224,9 +224,19 @@
                             {{-- <input id="districtsum"
                                 class="bg-gray-100 appearance-none rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight @if ($errors->has('district')) border border-red-500 @else border-1 border-gray-200 @endif"
                                 type="text" name="district" value="{{ request('district') }}"> --}}
-                            <select name="soum_district_id" id="soum_district_id"
+                            {{-- <select name="soum_district_id" id="soum_district_id"
                                 class="bg-gray-100 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500">
                                 <option value="">-- Сонгох --</option>
+                            </select> --}}
+                            <select name="country_id" id="country_id"
+                                class="bg-gray-100 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500">
+                                <option value="">-- Сонгох --</option>
+                                @foreach ($soumDistricts as $district)
+                                    <option value="{{ $district->id }}"
+                                        {{ old('soum_district_id') == $district->id || (isset($selectedSoumId) && $selectedSoumId == $district->id) ? 'selected' : '' }}>
+                                        {{ $district->name }}
+                                    </option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
@@ -607,7 +617,9 @@
 
             $('#country_id').change(function() {
                 var country_id = $(this).val();
+                var district_name = '{{ request('district') }}'; // Get district from URL if exists
                 var soumDropdown = $('#soum_district_id');
+                console.log("====", district_name);
 
                 soumDropdown.empty().append('<option value="">-- Сонгох --</option>');
 
@@ -616,12 +628,16 @@
                         url: '/soum-districts',
                         type: 'GET',
                         data: {
-                            country_id: country_id
+                            country_id: country_id,
+                            district: district_name
                         },
                         success: function(response) {
-                            $.each(response, function(key, soum) {
-                                soumDropdown.append('<option value="' + soum.id + '">' +
-                                    soum.name + '</option>');
+                            $.each(response.soums, function(key, soum) {
+                                let isSelected = (soum.id == response.selectedSoumId) ?
+                                    "selected" : "";
+                                soumDropdown.append(
+                                    `<option value="${soum.id}" ${isSelected}>${soum.name}</option>`
+                                );
                             });
                         },
                         error: function() {
@@ -629,6 +645,29 @@
                         }
                     });
                 }
+                // var country_id = $(this).val();
+                // var soumDropdown = $('#soum_district_id');
+
+                // soumDropdown.empty().append('<option value="">-- Сонгох --</option>');
+
+                // if (country_id) {
+                //     $.ajax({
+                //         url: '/soum-districts',
+                //         type: 'GET',
+                //         data: {
+                //             country_id: country_id
+                //         },
+                //         success: function(response) {
+                //             $.each(response, function(key, soum) {
+                //                 soumDropdown.append('<option value="' + soum.id + '">' +
+                //                     soum.name + '</option>');
+                //             });
+                //         },
+                //         error: function() {
+                //             alert('Алдаа гарлаа, дахин оролдоно уу!');
+                //         }
+                //     });
+                // }
             });
             $(document).ready(function() {
                 // When a soum/district is selected
