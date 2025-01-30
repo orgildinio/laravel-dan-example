@@ -12,6 +12,7 @@
         "laravel/sanctum": "^3.0",
         "laravel/socialite": "^5.11",
         "laravel/tinker": "^2.7",
+        "league/csv": "^9.21",
         "livewire-ui/modal": "^1.0",
         "livewire/livewire": "^2.11",
         "maatwebsite/excel": "^3.1",

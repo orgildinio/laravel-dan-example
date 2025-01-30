@@ -23,7 +23,7 @@ class Complaint extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['lastname', 'firstname', 'registerNumber', 'phone', 'country', 'district', 'khoroo', 'addressDetail', 'complaint', 'file_id', 'category_id', 'status_id', 'channel_id', 'organization_id', 'created_user_id', 'updated_user_id', 'email', 'audio_file_id', 'complaint_type_id', 'energy_type_id', 'complaint_maker_type_id', 'complaint_date', 'complaint_maker_org_name', 'complaint_type_summary_id', 'controlled_user_id', 'expire_date', 'second_org_id', 'second_status_id', 'second_user_id', 'serial_number', 'source_number', 'cdr_id'];
+    protected $fillable = ['lastname', 'firstname', 'registerNumber', 'phone', 'country', 'district', 'khoroo', 'addressDetail', 'complaint', 'file_id', 'category_id', 'status_id', 'channel_id', 'organization_id', 'created_user_id', 'updated_user_id', 'email', 'audio_file_id', 'complaint_type_id', 'energy_type_id', 'complaint_maker_type_id', 'complaint_date', 'complaint_maker_org_name', 'complaint_type_summary_id', 'controlled_user_id', 'expire_date', 'second_org_id', 'second_status_id', 'second_user_id', 'serial_number', 'source_number', 'cdr_id', 'country_id', 'soum_district_id', 'bag_khoroo_id'];
     // protected $guarded = ['consumer_code'];
 
     protected static function boot()
@@ -181,13 +181,17 @@ class Complaint extends Model
     {
         return $this->hasMany(ComplaintStep::class);
     }
-    public function aimag()
+    public function country()
     {
-        return $this->belongsTo(Aimag::class);
+        return $this->belongsTo(Country::class);
     }
-    public function soum()
+    public function soumDistrict()
     {
-        return $this->belongsTo(Soum::class);
+        return $this->belongsTo(SoumDistrict::class);
+    }
+    public function bagKhoroo()
+    {
+        return $this->belongsTo(BagKhoroo::class);
     }
     public function ratings()
     {

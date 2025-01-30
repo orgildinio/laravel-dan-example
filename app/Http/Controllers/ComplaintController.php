@@ -38,7 +38,10 @@ use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Redis;
 use Symfony\Component\Console\Input\Input;
 use App\Http\Requests\ComplaintStoreRequest;
+use App\Models\BagKhoroo;
 use App\Models\ComplaintStep as ModelsComplaintStep;
+use App\Models\Country;
+use App\Models\SoumDistrict;
 
 class ComplaintController extends Controller
 {
@@ -477,11 +480,15 @@ class ComplaintController extends Controller
         $complaint_type_summaries = ComplaintTypeSummary::all();
         $complaint_maker_types = ComplaintMakerType::all();
 
+        $countries = Country::orderBy('name')->get();
+        $soumDistricts = SoumDistrict::orderBy('name')->get();
+        $bagKhoroos = BagKhoroo::orderBy('name')->get();
+
         // Fetch the last 10 phone audio calls from the database
         $org_numbers = OrganizationNumbers::where('organization_id', $org_id)->pluck('phone_number')->toArray();
         $audio_calls = Cdr::whereIn('dst', $org_numbers)->where('disposition', 'ANSWERED')->orderBy('calldate', 'desc')->latest()->take(10)->get();
 
-        return view('complaints.create', compact('categories', 'orgs', 'channels', 'complaint_types', 'energy_types', 'complaint_type_summaries', 'complaint_maker_types', 'audio_calls'));
+        return view('complaints.create', compact('categories', 'orgs', 'channels', 'complaint_types', 'energy_types', 'complaint_type_summaries', 'complaint_maker_types', 'audio_calls', 'countries', 'soumDistricts', 'bagKhoroos'));
     }
 
     /**
@@ -513,6 +520,16 @@ class ComplaintController extends Controller
         if ($user->org_id != null) {
             $input['controlled_user_id'] = $user->id;
             $input['status_id'] = 2; // Хүлээн авсан төлөвт орно
+
+            // Fetch names from the database based on selected IDs
+            $country = Country::find($request->country_id);
+            $district = SoumDistrict::find($request->soum_district_id);
+            $khoroo = BagKhoroo::find($request->bag_khoroo_id);
+
+            // Store names instead of IDs
+            $input['country'] = $country ? $country->name : '';
+            $input['district'] = $district ? $district->name : '';
+            $input['khoroo'] = $khoroo ? $khoroo->name : '';
         } else {
             // Хэрэглэгчийн мэдээлэл хадгалах
             if ($user->companyName) {
@@ -614,7 +631,7 @@ class ComplaintController extends Controller
                     'p' => env('1111_API_PASSWORD'),
                     'api_key' => '-'
                 ];
-                $response = Http::get('https://www.11-11.mn/GStest/APIa', $params);
+                $response = Http::withoutVerifying()->get('https://www.11-11.mn/GStest/APIa', $params);
                 $result = $response->json();
 
                 if ($result['isValid'] && $result['smart']['isValid']) {
@@ -794,5 +811,16 @@ class ComplaintController extends Controller
 
         // return redirect()->route('complaint.index')->with('success', 'Амжилттай устгалаа.');
         return redirect()->route('complaint.create')->with('success', 'Амжилттай устгалаа.');
+    }
+
+    public function getSoumDistricts(Request $request)
+    {
+        $soumDistricts = SoumDistrict::where('country_id', $request->country_id)->get();
+        return response()->json($soumDistricts);
+    }
+    public function getBagKhoroos(Request $request)
+    {
+        $bagKhoroos = BagKhoroo::where('soum_district_id', $request->soum_district_id)->get();
+        return response()->json($bagKhoroos);
     }
 }

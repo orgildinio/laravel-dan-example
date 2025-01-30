@@ -38,7 +38,7 @@ class FetchSourceComplaints extends Command
             'p' => env('1111_API_PASSWORD'),
             'api_key' => 0
         ];
-        $response = Http::get('https://www.11-11.mn/GStest/APIa', $params);
+        $response = Http::withoutVerifying()->get('https://www.11-11.mn/GStest/APIa', $params);
         $result = $response->json();
 
         // Check if API request was successful (status code 200)
