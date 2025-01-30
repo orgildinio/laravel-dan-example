@@ -194,12 +194,19 @@
                             </label>
                         </div>
                         <div class="md:w-3/4">
-                            <input id="capitalProvince"
+                            {{-- <input id="capitalProvince"
                                 class="bg-gray-100 appearance-none rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight @if ($errors->has('country')) border border-red-500 @else border-1 border-gray-200 @endif"
                                 type="text" name="country" value="{{ request('city') }}">
-                            @error('country')
-                                <div class="text-red-500 text-sm mt-1 mb-1">{{ $message }}</div>
-                            @enderror
+                                @error('country')
+                                    <div class="text-red-500 text-sm mt-1 mb-1">{{ $message }}</div>
+                                @enderror --}}
+                            <select name="country_id" id="country_id"
+                                class="bg-gray-100 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500">
+                                <option value="">-- Сонгох --</option>
+                                @foreach ($countries as $country)
+                                    <option value="{{ $country->id }}">{{ $country->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="md:flex md:items-center mb-2">
@@ -210,12 +217,13 @@
                             </label>
                         </div>
                         <div class="md:w-3/4">
-                            <input id="districtsum"
+                            {{-- <input id="districtsum"
                                 class="bg-gray-100 appearance-none rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight @if ($errors->has('district')) border border-red-500 @else border-1 border-gray-200 @endif"
-                                type="text" name="district" value="{{ request('district') }}">
-                            @error('district')
-                                <div class="text-red-500 text-sm mt-1 mb-1">{{ $message }}</div>
-                            @enderror
+                                type="text" name="district" value="{{ request('district') }}"> --}}
+                            <select name="soum_district_id" id="soum_district_id"
+                                class="bg-gray-100 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500">
+                                <option value="">-- Сонгох --</option>
+                            </select>
                         </div>
                     </div>
                     <div class="md:flex md:items-center mb-2">
@@ -226,12 +234,16 @@
                             </label>
                         </div>
                         <div class="md:w-3/4">
-                            <input id="khorooBag"
+                            {{-- <input id="khorooBag"
                                 class="bg-gray-100 appearance-none rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight @if ($errors->has('khoroo')) border border-red-500 @else border-1 border-gray-200 @endif"
                                 type="text" name="khoroo" value="{{ request('quarter') }}">
                             @error('khoroo')
                                 <div class="text-red-500 text-sm mt-1 mb-1">{{ $message }}</div>
-                            @enderror
+                            @enderror --}}
+                            <select name="bag_khoroo_id" id="bag_khoroo_id"
+                                class="bg-gray-100 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500">
+                                <option value="">-- Сонгох --</option>
+                            </select>
                         </div>
                     </div>
                     <div class="md:flex md:items-center mb-2">
@@ -407,12 +419,13 @@
                                 <input type="file" name="files[]" id="files" multiple
                                     class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0
                                             file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
-                                
+
                                 <!-- Display Selected Files -->
                                 <div id="fileList" class="mt-2 space-y-1"></div>
 
                                 <!-- Error Message for Max File Limit -->
-                                <p id="errorMessage" class="text-sm text-red-500 mt-1 hidden">Дээд тал нь 5 файл хавсаргах боломжтой.</p>
+                                <p id="errorMessage" class="text-sm text-red-500 mt-1 hidden">Дээд тал нь 5 файл
+                                    хавсаргах боломжтой.</p>
                                 @error('files.*')
                                     <div class="text-red-500 text-sm mt-1 mb-1">{{ $message }}</div>
                                 @enderror
@@ -420,7 +433,7 @@
 
                         </div>
                     </div>
-                    
+
                     {{-- 1111-н гомдлын дугаар давхар request-р илгээх --}}
                     <input type="hidden" name="source_number" value="{{ request('number') }}">
                     <div class="md:flex md:items-center mb-6">
@@ -588,6 +601,61 @@
                 }
             });
 
+            $('#country_id').change(function() {
+                var country_id = $(this).val();
+                var soumDropdown = $('#soum_district_id');
+
+                soumDropdown.empty().append('<option value="">-- Сонгох --</option>');
+
+                if (country_id) {
+                    $.ajax({
+                        url: '/soum-districts',
+                        type: 'GET',
+                        data: {
+                            country_id: country_id
+                        },
+                        success: function(response) {
+                            $.each(response, function(key, soum) {
+                                soumDropdown.append('<option value="' + soum.id + '">' +
+                                    soum.name + '</option>');
+                            });
+                        },
+                        error: function() {
+                            alert('Алдаа гарлаа, дахин оролдоно уу!');
+                        }
+                    });
+                }
+            });
+            $(document).ready(function() {
+                // When a soum/district is selected
+                $('#soum_district_id').change(function() {
+                    let soum_district_id = $(this).val();
+
+                    if (soum_district_id) {
+                        $.ajax({
+                            url: "/bag-khoroos", // Route for fetching bag_khoroos
+                            type: "GET",
+                            data: {
+                                soum_district_id: soum_district_id
+                            },
+                            success: function(data) {
+                                $('#bag_khoroo_id').empty();
+                                $('#bag_khoroo_id').append(
+                                    '<option value="">-- Сонгох --</option>');
+                                $.each(data, function(key, value) {
+                                    $('#bag_khoroo_id').append(
+                                        '<option value="' + value.id +
+                                        '">' + value.name + '</option>');
+                                });
+                            }
+                        });
+                    } else {
+                        $('#bag_khoroo_id').empty().append(
+                            '<option value="">-- Сонгох --</option>');
+                    }
+                });
+            });
+
         });
 
         // Сонгогдсон өргөдөл гаргагчийг шалгах функц
@@ -606,6 +674,4 @@
                 $('#conditionalInput3').removeClass('hidden');
             }
         }
-
-
     </script>

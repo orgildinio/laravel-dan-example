@@ -21,7 +21,7 @@ class SourceComplaintController extends Controller
             'p' => env('1111_API_PASSWORD'),
             'api_key' => 0
         ];
-        $response = Http::get('https://www.11-11.mn/GStest/APIa', $params);
+        $response = Http::withoutVerifying()->get('https://www.11-11.mn/GStest/APIa', $params);
         $result = $response->json();
         // dd($result);
 
@@ -136,67 +136,6 @@ class SourceComplaintController extends Controller
         return view('source.unreceipt', compact('sourceComplaint'));
     }
 
-    // 1111-ээс ирсэн хамааралгүй гомдлыг 1111-рүү буцаах
-    // public function unreceipt(Request $request, $id)
-    // {
-    //     $desc = $request->desc;
-
-    //     $sourceComplaint = SourceComplaint::findOrFail($id);
-
-    //     // Буцаахаас өмнө тайлбар илгээх
-    //     if ($sourceComplaint) {
-
-    //         $params = [
-    //             'action' => 'create-log',
-    //             'u' => env('1111_API_USERNAME'),
-    //             'p' => env('1111_API_PASSWORD'),
-    //             'api_key' => '-',
-    //             'number' => $sourceComplaint->number,
-    //             'is_close' => 'false',
-    //             'created_by' => Auth::user()->name,
-    //             'comment' => $desc,
-    //         ];
-    //         $response = Http::get('https://www.11-11.mn/GStest/APIa', $params);
-    //         $result = $response->json();
-
-    //         if ($result['isValid'] && $result['smart']['isValid']) {
-    //             // API request success
-    //             Log::channel('1111_log')->info('create-log action successfully. 1111 ээс ирсэн гомдолд тайлбар илгээлээ. UserId: ' . Auth::user()->id . ' complaint_serial_number: ' . $sourceComplaint->number);
-    //         } else {
-    //             // API request failed
-    //             Log::channel('1111_log')->error('Failed create-log action. 1111 ээс ирсэн гомдолд тайлбар илгээхэд алдаа гарлаа.');
-    //         }
-    //     }
-
-    //     // Тайлбар илгээсний дараа буцаалт хийх
-    //     if ($sourceComplaint) {
-    //         // Update the record
-    //         $sourceComplaint->is_modified = true;
-    //         $sourceComplaint->save();
-
-    //         // 1111 төвийн гомдлыг хүлээн авсан төлөвт шилжүүлэх
-    //         $params = [
-    //             'action' => 'un-receipt',
-    //             'number' => $sourceComplaint->number,
-    //             'u' => env('1111_API_USERNAME'),
-    //             'p' => env('1111_API_PASSWORD'),
-    //             'api_key' => '-'
-    //         ];
-    //         $response = Http::get('https://www.11-11.mn/GStest/APIa', $params);
-    //         $result = $response->json();
-
-    //         if ($result['isValid'] && $result['smart']['isValid']) {
-    //             // API request success
-    //             Log::channel('1111_log')->info('un-reciept action successfully. 1111 ээс ирсэн гомдлыг амжилттай буцаав. UserId: ' . Auth::user()->id . ' sourceComplaint_number: ' . $sourceComplaint->number);
-
-    //             return redirect()->route('sourceComplaint.index')->with('success', '1111 ээс ирсэн гомдлыг амжилттай буцаав.');
-    //         } else {
-    //             // API request failed
-    //             Log::channel('1111_log')->error('Failed un-reciept action. 1111 ээс ирсэн гомдлыг буцаахад алдаа гарлаа.');
-    //             return redirect()->route('sourceComplaint.index')->with('error', '1111 ээс ирсэн гомдлыг буцаахад алдаа гарлаа.');
-    //         }
-    //     }
-    // }
     public function unreceipt(Request $request, $id)
     {
         // Validate that 'desc' is provided
@@ -219,7 +158,7 @@ class SourceComplaintController extends Controller
         $sendApiRequest = function ($action, $params) use ($apiCredentials) {
             try {
                 $params = array_merge($params, $apiCredentials, ['action' => $action]);
-                $response = Http::get('https://www.11-11.mn/GStest/APIa', $params);
+                $response = Http::withoutVerifying()->get('https://www.11-11.mn/GStest/APIa', $params);
                 return $response->json();
             } catch (\Exception $e) {
                 Log::channel('1111_log')->error("API request failed: {$e->getMessage()}");
