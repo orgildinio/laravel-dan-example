@@ -204,7 +204,11 @@
                                 class="bg-gray-100 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500">
                                 <option value="">-- Сонгох --</option>
                                 @foreach ($countries as $country)
-                                    <option value="{{ $country->id }}">{{ $country->name }}</option>
+                                    {{-- <option value="{{ $country->id }}">{{ $country->name }}</option> --}}
+                                    <option value="{{ $country->id }}"
+                                        {{ old('country_id') == $country->id || request('city') == $country->name ? 'selected' : '' }}>
+                                        {{ $country->name }}
+                                    </option>
                                 @endforeach
                             </select>
                         </div>
