@@ -566,14 +566,14 @@ class ComplaintController extends Controller
             $input['bag_khoroo_id'] = $khoroo ? $khoroo->id : null;
 
             // Store names as fallback
-            $input['country'] = $country ? $country->name : ($user->danAimagCityName ?: '');
-            $input['district'] = $district ? $district->name : ($user->danSoumDistrictName ?: '');
-            $input['khoroo'] = $khoroo ? $khoroo->name : ($user->danBagKhorooName ?: '');
+            // $input['country'] = $country ? $country->name : ($user->danAimagCityName ?: '');
+            // $input['district'] = $district ? $district->name : ($user->danSoumDistrictName ?: '');
+            // $input['khoroo'] = $khoroo ? $khoroo->name : ($user->danBagKhorooName ?: '');
 
 
-            // $input['country'] = $user->danAimagCityName ? $user->danAimagCityName : '';
-            // $input['district'] = $user->danSoumDistrictName ? $user->danSoumDistrictName : '';
-            // $input['khoroo'] = $user->danBagKhorooName ? $user->danBagKhorooName : '';
+            $input['country'] = $user->danAimagCityName ? $user->danAimagCityName : '';
+            $input['district'] = $user->danSoumDistrictName ? $user->danSoumDistrictName : '';
+            $input['khoroo'] = $user->danBagKhorooName ? $user->danBagKhorooName : '';
 
             // Өргөдлийн мэдээлэл хадгалах
             $input['status_id'] = 0; // Шинээр ирсэн төлөвт орно
