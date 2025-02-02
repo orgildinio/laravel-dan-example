@@ -470,7 +470,8 @@ class ComplaintController extends Controller
      */
     public function create()
     {
-        $org_id = Auth::user()->org_id;
+        $user = Auth::user();
+        $org_id = $user->org_id;
 
         $categories = Category::orderBy('name', 'asc')->get();
         $orgs = Organization::orderBy('name', 'asc')->get();
