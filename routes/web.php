@@ -67,6 +67,7 @@ Route::middleware([
     Route::get('/getOrgByEnergyTypeId', [ComplaintController::class, 'getOrgByEnergyTypeId']);
     Route::get('/soum-districts', [ComplaintController::class, 'getSoumDistricts'])->name('soum.districts');
     Route::get('/bag-khoroos', [ComplaintController::class, 'getBagKhoroos'])->name('bag.khoroos');
+    Route::get('/complaint', [ComplaintController::class, 'index'])->name('complaint.index');
     Route::resource('/complaint', ComplaintController::class);
 
     Route::get('/user-guide', function () {

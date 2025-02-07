@@ -109,7 +109,16 @@ class ExportComplaint implements FromCollection, WithHeadings, ShouldAutoSize, W
                     $query->where('expire_date', '>', now());
                 }
             })
-            ->orderBy('complaint_date', 'desc')
+            ->when(isset($_GET['category_id']), function ($query) {
+                $query->where('category_id', $_GET['category_id']);
+            })
+            ->when(isset($_GET['complaint_date']), function ($query) {
+                $query->whereDate('complaint_date', $_GET['complaint_date']);
+            })
+            ->when(isset($_GET['created_at']), function ($query) {
+                $query->whereDate('created_at', $_GET['created_at']);
+            })
+            ->orderBy('created_at', 'desc')
             ->get();
 
 
@@ -118,11 +127,6 @@ class ExportComplaint implements FromCollection, WithHeadings, ShouldAutoSize, W
 
     public function map($row): array
     {
-        // Format complaint steps, you can adjust the format as needed
-        // $complaintSteps = $row->complaintSteps->map(function ($step) {
-        //     return ' (' . $step->created_at->format('Y-m-d') . ')' . $step->desc;  // Example format
-        // })->implode(', ');  // Join all steps into a single string with commas separating them
-
         // Get only the last complaint step, if available
         $lastStep = $row->complaintSteps->last();
 
@@ -148,7 +152,8 @@ class ExportComplaint implements FromCollection, WithHeadings, ShouldAutoSize, W
             $row->phone,
             $row->complaint,
             $row->complaint_date,
-            \Carbon\Carbon::parse($row->complaint_date)->diffInDays($row->updated_at),
+            $row->created_at,
+            \Carbon\Carbon::parse($row->created_at)->diffInDays($row->updated_at),
             $complaintSteps
         ];
 
@@ -174,6 +179,7 @@ class ExportComplaint implements FromCollection, WithHeadings, ShouldAutoSize, W
                 $row->phone,
                 $row->complaint,
                 $row->complaint_date,
+                $row->created_at,
             ];
         }
     }
@@ -198,6 +204,7 @@ class ExportComplaint implements FromCollection, WithHeadings, ShouldAutoSize, W
             'ААН-н нэр',
             'Утас',
             'Санал хүсэлт',
+            'Өргөдөл гомдол гаргасан огноо',
             'Бүртгэсэн огноо',
             'Шийдвэрлэсэн хоног',
             'Шийдвэрлэлт',
@@ -219,6 +226,7 @@ class ExportComplaint implements FromCollection, WithHeadings, ShouldAutoSize, W
                 'ААН-н нэр',
                 'Утас',
                 'Санал хүсэлт',
+                'Өргөдөл гомдол гаргасан огноо',
                 'Бүртгэсэн огноо'
             ];
         }

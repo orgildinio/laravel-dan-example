@@ -222,6 +222,10 @@ class ComplaintController extends Controller
         $energy_type_id = $request->query('energy_type_id');
         $controlled_user_id = $request->query('controlled_user_id');
         $channel_id = $request->query('channel_id');
+        $category_id = $request->query('category_id');
+        $complaintDate = $request->query('complaint_date');
+        $createdAt = $request->query('created_at');
+        $updatedAt = $request->query('updated_at');
 
         $user_code = $request->query('user_code');
         $phone = $request->query('phone');
@@ -235,7 +239,7 @@ class ComplaintController extends Controller
 
         $query = Complaint::query();
         // $query->with('complaintSteps');
-        $query->orderBy('complaint_date', 'desc');
+        $query->orderBy('created_at', 'desc');
 
         // Fetch complaints based on the provided IDs
         if ($relatedComplaintIds !== null && !empty($relatedComplaintIds)) {
@@ -247,7 +251,7 @@ class ComplaintController extends Controller
             $start_date = $dates[0];
             $end_date = $dates[1];
             // $query->whereBetween('complaint_date', [$start_date, $end_date]);
-            $query->whereBetween('complaint_date', [
+            $query->whereBetween('created_at', [
                 \Carbon\Carbon::parse($dates[0])->startOfDay(),
                 \Carbon\Carbon::parse($dates[1])->endOfDay()
             ]);
@@ -316,6 +320,19 @@ class ComplaintController extends Controller
         if ($complaint_type_summary_id !== null) {
             $query->where('complaint_type_summary_id', $complaint_type_summary_id);
         }
+        if ($category_id !== null) {
+            $query->where('category_id', $category_id);
+        }
+
+        if ($complaintDate != null) {
+            $query->whereDate('complaint_date', $complaintDate);
+        }
+        if ($createdAt != null) {
+            $query->whereDate('created_at', $createdAt);
+        }
+        if ($updatedAt != null) {
+            $query->whereDate('updated_at', $updatedAt);
+        }
 
         $complaints = $query->paginate(15);
 
@@ -326,8 +343,9 @@ class ComplaintController extends Controller
         $controlled_users = User::where('org_id', Auth::user()->org_id)->orderBy('name', 'asc')->get();
         $complaint_types = ComplaintType::all();
         $complaint_type_summaries = ComplaintTypeSummary::all();
+        $categories = Category::all();
 
-        return view('complaints.index', compact('complaints', 'daterange', 'search_text', 'statuses', 'status_id', 'org_id', 'orgs', 'energy_type_id', 'energy_types', 'channel_id', 'channels', 'controlled_user_id', 'controlled_users', 'second_org_id', 'phone', 'user_code', 'expire_status', 'complaint_types', 'complaint_type_id', 'complaint_type_summaries', 'complaint_type_summary_id', 'relatedComplaintIds', 'serial_number'));
+        return view('complaints.index', compact('complaints', 'daterange', 'search_text', 'statuses', 'status_id', 'org_id', 'orgs', 'energy_type_id', 'energy_types', 'channel_id', 'channels', 'controlled_user_id', 'controlled_users', 'second_org_id', 'phone', 'user_code', 'expire_status', 'complaint_types', 'complaint_type_id', 'complaint_type_summaries', 'complaint_type_summary_id', 'relatedComplaintIds', 'serial_number', 'categories', 'category_id', 'complaintDate', 'createdAt', 'updatedAt'));
     }
 
     public function ExportReportExcel(Request $request)
