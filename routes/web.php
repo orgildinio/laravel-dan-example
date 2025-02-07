@@ -14,8 +14,9 @@ use App\Http\Controllers\ComplaintController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\OrgNumberController;
 use App\Http\Controllers\OrganizationController;
-use App\Http\Controllers\OrgUserDataImportController;
 use App\Http\Controllers\SourceComplaintController;
+use App\Http\Controllers\OrgUserDataImportController;
+use App\Http\Controllers\OrganizationServiceAreaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -131,4 +132,12 @@ Route::middleware([
     Route::resource('posts', PostController::class);
     Route::get('/orguserdata', [OrgUserDataImportController::class, 'index'])->name('orguserdata.index');
     Route::post('/orguserdata/import', [OrgUserDataImportController::class, 'import'])->name('orguserdata.import');
+
+    Route::get('organizations/{id}/service-area', [OrganizationServiceAreaController::class, 'add'])->name('organization.service-area.create');
+    Route::post('organizations/{id}/service-area', [OrganizationServiceAreaController::class, 'save'])->name('organization.service-area.store');
+
+    // Route::get('organization-service-area', [OrganizationServiceAreaController::class, 'index'])->name('organization.service-area.index');
+    // Route::delete('organization-service-area/{id}', [OrganizationServiceAreaController::class, 'destroy'])->name('organization-service-area.destroy');
+    Route::resource('organizationServiceArea', OrganizationServiceAreaController::class);
+    Route::get('/organizations', [OrganizationController::class, 'getOrganizations']);
 });

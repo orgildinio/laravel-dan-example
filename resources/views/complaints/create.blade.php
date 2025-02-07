@@ -1,4 +1,174 @@
 <x-admin-layout>
+    {{-- <div class="bg-white border border-4 rounded-lg shadow relative m-10">
+
+        <div class="flex items-start justify-between p-5 border-b rounded-t">
+            <h3 class="text-xl font-semibold">
+                Өргөдөл, гомдол шинээр бүртгэх
+            </h3>
+            <div
+                class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"">
+                <input type="text" name="product-name" id="product-name"
+                    class="shadow-sm bg-yellow-50 border border-yellow-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
+                    placeholder="Хэрэглэгчийн код">
+            </div>
+        </div>
+
+        <div class="p-6 space-y-6">
+            <div class="grid grid-cols-6 gap-6">
+                <div class="col-span-6 sm:col-span-3">
+                    <label for="product-name" class="text-sm font-medium text-gray-900 block mb-2">Овог</label>
+                    <input type="text" name="product-name" id="product-name"
+                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
+                        placeholder="Apple Imac 27”" required="">
+                </div>
+                <div class="col-span-6 sm:col-span-3">
+                    <label for="category" class="text-sm font-medium text-gray-900 block mb-2">Нэр</label>
+                    <input type="text" name="category" id="category"
+                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
+                        placeholder="Electronics" required="">
+                </div>
+                <div class="col-span-6 sm:col-span-3">
+                    <label for="brand" class="text-sm font-medium text-gray-900 block mb-2">Холбогдох утас
+                    </label>
+                    <input type="text" name="brand" id="brand"
+                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
+                        placeholder="Apple" required="">
+                </div>
+                <div class="col-span-6 sm:col-span-3">
+                    <label for="price" class="text-sm font-medium text-gray-900 block mb-2">И-мэйл хаяг</label>
+                    <input type="number" name="price" id="price"
+                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
+                        placeholder="$2300" required="">
+                </div>
+                <div class="col-span-6 sm:col-span-2">
+                    <label for="brand" class="text-sm font-medium text-gray-900 block mb-2">УБ/орон нутаг
+                    </label>
+                    <input type="text" name="brand" id="brand"
+                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
+                        placeholder="Apple" required="">
+                </div>
+                <div class="col-span-6 sm:col-span-2">
+                    <label for="brand" class="text-sm font-medium text-gray-900 block mb-2">Сум/дүүрэг
+                    </label>
+                    <input type="text" name="brand" id="brand"
+                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
+                        placeholder="Apple" required="">
+                </div>
+                <div class="col-span-6 sm:col-span-2">
+                    <label for="brand" class="text-sm font-medium text-gray-900 block mb-2">Баг/хороо
+                    </label>
+                    <input type="text" name="brand" id="brand"
+                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
+                        placeholder="Apple" required="">
+                </div>
+                <div class="col-span-full">
+                    <label for="product-details" class="text-sm font-medium text-gray-900 block mb-2">Дэлгэрэнгүй
+                        хаяг</label>
+                    <textarea id="product-details" rows="2"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-4"
+                        placeholder="Details"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="border-t border-gray-200">
+        </div>
+
+        <div class="p-6 space-y-6">
+            <div class="grid grid-cols-6 gap-6">
+                <div class="col-span-6 sm:col-span-3">
+                    <label for="product-name" class="text-sm font-medium text-gray-900 block mb-2">Өргөдөл гаргасан
+                        огноо</label>
+                    <input type="date" name="product-name" id="product-name"
+                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
+                        placeholder="Apple Imac 27”" required="">
+                </div>
+                <div class="col-span-6 sm:col-span-3">
+                    <label for="category" class="text-sm font-medium text-gray-900 block mb-2">Шийдвэрлэх огноо</label>
+                    <input type="date" name="category" id="category"
+                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
+                        placeholder="Electronics" required="">
+                </div>
+                <div class="col-span-6 sm:col-span-2">
+                    <label for="brand" class="text-sm font-medium text-gray-900 block mb-2">Гомдол гаргагчийн төрөл
+                    </label>
+                    <input type="text" name="brand" id="brand"
+                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
+                        placeholder="Apple" required="">
+                </div>
+                <div class="col-span-6 sm:col-span-2">
+                    <label for="brand" class="text-sm font-medium text-gray-900 block mb-2">Төрөл
+                    </label>
+                    <input type="text" name="brand" id="brand"
+                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
+                        placeholder="Apple" required="">
+                </div>
+                <div class="col-span-6 sm:col-span-2">
+                    <label for="brand" class="text-sm font-medium text-gray-900 block mb-2">Суваг
+                    </label>
+                    <input type="text" name="brand" id="brand"
+                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
+                        placeholder="Apple" required="">
+                </div>
+
+
+
+                <div class="col-span-6 sm:col-span-2">
+                    <label for="brand" class="text-sm font-medium text-gray-900 block mb-2">Гомдлын төрөл
+                    </label>
+                    <input type="text" name="brand" id="brand"
+                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
+                        placeholder="Apple" required="">
+                </div>
+                <div class="col-span-6 sm:col-span-2">
+                    <label for="brand" class="text-sm font-medium text-gray-900 block mb-2">Өргөдлийн товч утга
+                    </label>
+                    <input type="text" name="brand" id="brand"
+                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
+                        placeholder="Apple" required="">
+                </div>
+                <div class="col-span-6 sm:col-span-2">
+                    <label for="brand" class="text-sm font-medium text-gray-900 block mb-2">Холбогдох ТЗЭ
+                    </label>
+                    <input type="text" name="brand" id="brand"
+                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
+                        placeholder="Apple" required="">
+                </div>
+                <div class="col-span-full">
+                    <label for="product-details" class="text-sm font-medium text-gray-900 block mb-2">Санал,
+                        хүсэлт</label>
+                    <textarea id="product-details" rows="2"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-4"
+                        placeholder="Details"></textarea>
+                </div>
+                <div class="col-span-full">
+                    <label for="product-details" class="text-sm font-medium text-gray-900 block mb-2">Файл хавсаргах
+                        (Max 5)</label>
+                    <input type="file" name="files[]" id="files" multiple
+                        class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0
+                                        file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+
+                    <!-- Display Selected Files -->
+                    <div id="fileList" class="mt-2 space-y-1"></div>
+
+                    <!-- Error Message for Max File Limit -->
+                    <p id="errorMessage" class="text-sm text-red-500 mt-1 hidden">Дээд тал нь 5 файл
+                        хавсаргах боломжтой.</p>
+                    @error('files.*')
+                        <div class="text-red-500 text-sm mt-1 mb-1">{{ $message }}</div>
+                    @enderror
+                </div>
+            </div>
+        </div>
+
+
+        <div class="p-6 border-t border-gray-200 rounded-b">
+            <button
+                class="text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                type="submit">Save all</button>
+        </div>
+
+    </div> --}}
     <div class="py-4">
         <div class="w-full mx-auto">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-5">
@@ -186,108 +356,92 @@
                             @enderror
                         </div>
                     </div>
-                    @if (!empty(request('city')))
-                        <div class="md:flex md:items-center mb-2">
-                            <div class="md:w-1/4">
-                                <label class="block text-gray-500 text-sm font-bold md:text-right mb-1 md:mb-0 pr-4"
-                                    for="inline-full-name">
-                                    УБ/орон нутаг
-                                </label>
-                            </div>
-                            <div class="md:w-3/4">
+                    <div class="md:flex md:items-center mb-2">
+                        <div class="md:w-1/4">
+                            <label class="block text-gray-500 text-sm font-bold md:text-right mb-1 md:mb-0 pr-4">
+                                УБ/орон нутаг
+                            </label>
+                        </div>
+                        <div class="md:w-3/4">
+                            @if (!empty(request('city')))
                                 <input id="capitalProvince"
-                                    class="bg-gray-100 appearance-none rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight @if ($errors->has('country')) border border-red-500 @else border-1 border-gray-200 @endif"
+                                    class="bg-gray-100 appearance-none rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight 
+                                              @error('country') border border-red-500 @else border-1 border-gray-200 @enderror"
                                     type="text" name="country" value="{{ request('city') }}">
                                 @error('country')
                                     <div class="text-red-500 text-sm mt-1 mb-1">{{ $message }}</div>
                                 @enderror
-                            </div>
-                        </div>
-                    @endif
-                    @if (!empty(request('district')))
-                        <div class="md:flex md:items-center mb-2">
-                            <div class="md:w-1/4">
-                                <label class="block text-gray-500 text-sm font-bold md:text-right mb-1 md:mb-0 pr-4"
-                                    for="inline-full-name">
-                                    Сум/дүүрэг
-                                </label>
-                            </div>
-                            <div class="md:w-3/4">
-                                <input id="districtsum"
-                                    class="bg-gray-100 appearance-none rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight @if ($errors->has('district')) border border-red-500 @else border-1 border-gray-200 @endif"
-                                    type="text" name="district" value="{{ request('district') }}">
-                            </div>
-                        </div>
-                    @endif
-                    @if (!empty(request('quarter')))
-                        <div class="md:flex md:items-center mb-2">
-                            <div class="md:w-1/4">
-                                <label class="block text-gray-500 text-sm font-bold md:text-right mb-1 md:mb-0 pr-4"
-                                    for="inline-full-name">
-                                    Баг/хороо
-                                </label>
-                            </div>
-                            <div class="md:w-3/4">
-                                <input id="khorooBag"
-                                    class="bg-gray-100 appearance-none rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight @if ($errors->has('khoroo')) border border-red-500 @else border-1 border-gray-200 @endif"
-                                    type="text" name="khoroo" value="{{ request('quarter') }}">
-                                @error('khoroo')
-                                    <div class="text-red-500 text-sm mt-1 mb-1">{{ $message }}</div>
-                                @enderror
-                            </div>
-                        </div>
-                    @endif
-                    @if (empty(request('city')))
-                        <div class="md:flex md:items-center mb-2">
-                            <div class="md:w-1/4">
-                                <label class="block text-gray-500 text-sm font-bold md:text-right mb-1 md:mb-0 pr-4"
-                                    for="inline-full-name">
-                                    УБ/орон нутаг
-                                </label>
-                            </div>
-                            <div class="md:w-3/4">
+                            @else
                                 <select name="country_id" id="country_id"
-                                    class="bg-gray-100 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500">
+                                    class="bg-gray-100 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight 
+                                               focus:outline-none focus:bg-white focus:border-indigo-500">
                                     <option value="">-- Сонгох --</option>
                                     @foreach ($countries as $country)
-                                        {{-- <option value="{{ $country->id }}">{{ $country->name }}</option> --}}
                                         <option value="{{ $country->id }}"
                                             {{ old('country_id') == $country->id || request('city') == $country->name ? 'selected' : '' }}>
                                             {{ $country->name }}
                                         </option>
                                     @endforeach
                                 </select>
-                            </div>
+                                @error('country_id')
+                                    <div class="text-red-500 text-sm mt-1 mb-1">{{ $message }}</div>
+                                @enderror
+                            @endif
                         </div>
-                        <div class="md:flex md:items-center mb-2">
-                            <div class="md:w-1/4">
-                                <label class="block text-gray-500 text-sm font-bold md:text-right mb-1 md:mb-0 pr-4"
-                                    for="inline-full-name">
-                                    Сум/дүүрэг
-                                </label>
-                            </div>
-                            <div class="md:w-3/4">
+                    </div>
+
+                    <!-- Sum/District -->
+                    <div class="md:flex md:items-center mb-2">
+                        <div class="md:w-1/4">
+                            <label class="block text-gray-500 text-sm font-bold md:text-right mb-1 md:mb-0 pr-4">
+                                Сум/дүүрэг
+                            </label>
+                        </div>
+                        <div class="md:w-3/4">
+                            @if (!empty(request('district')))
+                                <input id="districtsum"
+                                    class="bg-gray-100 appearance-none rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight 
+                                              @error('district') border border-red-500 @else border-1 border-gray-200 @enderror"
+                                    type="text" name="district" value="{{ request('district') }}">
+                            @else
                                 <select name="soum_district_id" id="soum_district_id"
-                                    class="bg-gray-100 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500">
+                                    class="bg-gray-100 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight 
+                                               focus:outline-none focus:bg-white focus:border-indigo-500">
                                     <option value="">-- Сонгох --</option>
                                 </select>
-                            </div>
+                            @endif
+                            @error('soum_district_id')
+                                <div class="text-red-500 text-sm mt-1 mb-1">{{ $message }}</div>
+                            @enderror
                         </div>
-                        <div class="md:flex md:items-center mb-2">
-                            <div class="md:w-1/4">
-                                <label class="block text-gray-500 text-sm font-bold md:text-right mb-1 md:mb-0 pr-4"
-                                    for="inline-full-name">
-                                    Баг/хороо
-                                </label>
-                            </div>
-                            <div class="md:w-3/4">
+                    </div>
+
+                    <!-- Khoroo/Bag -->
+                    <div class="md:flex md:items-center mb-2">
+                        <div class="md:w-1/4">
+                            <label class="block text-gray-500 text-sm font-bold md:text-right mb-1 md:mb-0 pr-4">
+                                Баг/хороо
+                            </label>
+                        </div>
+                        <div class="md:w-3/4">
+                            @if (!empty(request('quarter')))
+                                <input id="khorooBag"
+                                    class="bg-gray-100 appearance-none rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight 
+                                              @error('khoroo') border border-red-500 @else border-1 border-gray-200 @enderror"
+                                    type="text" name="khoroo" value="{{ request('quarter') }}">
+                            @else
                                 <select name="bag_khoroo_id" id="bag_khoroo_id"
-                                    class="bg-gray-100 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500">
+                                    class="bg-gray-100 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight 
+                                               focus:outline-none focus:bg-white focus:border-indigo-500">
                                     <option value="">-- Сонгох --</option>
                                 </select>
-                            </div>
+                            @endif
+                            @error('bag_khoroo_id')
+                                <div class="text-red-500 text-sm mt-1 mb-1">{{ $message }}</div>
+                            @enderror
                         </div>
-                    @endif
+                    </div>
+
                     <div class="md:flex md:items-center mb-2">
                         <div class="md:w-1/4">
                             <label class="block text-gray-500 text-sm font-bold md:text-right mb-1 md:mb-0 pr-4"
@@ -422,7 +576,7 @@
                                 </label>
                             </div>
                             <div class="md:w-3/4">
-                                <select name="second_org_id"
+                                <select id="organization_id" name="second_org_id"
                                     class="bg-gray-100 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500">
                                     <option value="">-- ТЗЭ сонгох --</option>
                                     @foreach ($orgs as $org)
@@ -668,35 +822,78 @@
                     });
                 }
             });
-            $(document).ready(function() {
-                // When a soum/district is selected
-                $('#soum_district_id').change(function() {
-                    let soum_district_id = $(this).val();
 
-                    if (soum_district_id) {
-                        $.ajax({
-                            url: "/bag-khoroos", // Route for fetching bag_khoroos
-                            type: "GET",
-                            data: {
-                                soum_district_id: soum_district_id
-                            },
-                            success: function(data) {
-                                $('#bag_khoroo_id').empty();
+            // When a soum/district is selected
+            $('#soum_district_id').change(function() {
+                let soum_district_id = $(this).val();
+
+                if (soum_district_id) {
+                    $.ajax({
+                        url: "/bag-khoroos", // Route for fetching bag_khoroos
+                        type: "GET",
+                        data: {
+                            soum_district_id: soum_district_id
+                        },
+                        success: function(data) {
+                            $('#bag_khoroo_id').empty();
+                            $('#bag_khoroo_id').append(
+                                '<option value="">-- Сонгох --</option>');
+                            $.each(data, function(key, value) {
                                 $('#bag_khoroo_id').append(
-                                    '<option value="">-- Сонгох --</option>');
-                                $.each(data, function(key, value) {
-                                    $('#bag_khoroo_id').append(
-                                        '<option value="' + value.id +
-                                        '">' + value.name + '</option>');
-                                });
-                            }
-                        });
-                    } else {
-                        $('#bag_khoroo_id').empty().append(
-                            '<option value="">-- Сонгох --</option>');
-                    }
-                });
+                                    '<option value="' + value.id +
+                                    '">' + value.name + '</option>');
+                            });
+                        }
+                    });
+                } else {
+                    $('#bag_khoroo_id').empty().append(
+                        '<option value="">-- Сонгох --</option>');
+                }
             });
+
+            // function loadOrganizations() {
+            //     let bagKhorooId = $('#bag_khoroo_id').val();
+            //     let soumDistrictId = $('#soum_district_id').val();
+            //     let countryId = $('#country_id').val();
+            //     console.log("countryId=", countryId);
+
+            //     // Show loading indicator
+            //     $('#loading').show();
+
+            //     $.ajax({
+            //         url: '/organizations',
+            //         type: 'GET',
+            //         data: {
+            //             bag_khoroo_id: bagKhorooId,
+            //             soum_district_id: soumDistrictId,
+            //             country_id: countryId
+            //         },
+            //         success: function(data) {
+            //             console.log("data ", data);
+            //             let organizationDropdown = $('#organization_id');
+            //             organizationDropdown.empty();
+            //             // organizationDropdown.append('<option value="">Байгууллага сонгох</option>');
+
+            //             $.each(data, function(key, organization) {
+            //                 organizationDropdown.append(
+            //                     '<option class="bg-gray-100 p-2" value="' +
+            //                     organization
+            //                     .id +
+            //                     '">' + organization.name + '</option>');
+            //             });
+            //         },
+            //         complete: function() {
+            //             // Hide loading indicator once request is complete
+            //             $('#loading').hide();
+            //         }
+            //     });
+            // }
+
+            // $('#bag_khoroo_id, #soum_district_id, #country_id').change(function() {
+            //     console.log("changed...");
+            //     loadOrganizations();
+            // });
+
 
         });
 

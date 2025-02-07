@@ -148,6 +148,9 @@ class ComplaintStep extends Component
         $this->validate([
             'desc' => 'required',
             'files.*' => 'nullable|mimes:jpeg,png,jpg,pdf|max:20480', // 20MB Max
+            'selected_user_id' => $this->selectedAction === 'Шилжүүлэх' ? 'required|exists:users,id' : 'nullable',
+        ], [
+            'selected_user_id.required' => 'Шилжүүлэх хэрэглэгч сонгох шаардлагатай.',
         ]);
 
         $complaint = Complaint::findOrFail($this->complaint_id);

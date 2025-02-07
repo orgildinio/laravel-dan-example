@@ -528,9 +528,9 @@ class ComplaintController extends Controller
             $khoroo = BagKhoroo::find($request->bag_khoroo_id);
 
             // Store names instead of IDs
-            $input['country'] = $country ? $country->name : '';
-            $input['district'] = $district ? $district->name : '';
-            $input['khoroo'] = $khoroo ? $khoroo->name : '';
+            $input['country'] = $country ? $country->name : $request->country;
+            $input['district'] = $district ? $district->name : $request->district;
+            $input['khoroo'] = $khoroo ? $khoroo->name : $request->khoroo;
         } else {
             // Хэрэглэгчийн мэдээлэл хадгалах
             if ($user->companyName) {
@@ -564,12 +564,6 @@ class ComplaintController extends Controller
             $input['country_id'] = $country ? $country->id : null;
             $input['soum_district_id'] = $district ? $district->id : null;
             $input['bag_khoroo_id'] = $khoroo ? $khoroo->id : null;
-
-            // Store names as fallback
-            // $input['country'] = $country ? $country->name : ($user->danAimagCityName ?: '');
-            // $input['district'] = $district ? $district->name : ($user->danSoumDistrictName ?: '');
-            // $input['khoroo'] = $khoroo ? $khoroo->name : ($user->danBagKhorooName ?: '');
-
 
             $input['country'] = $user->danAimagCityName ? $user->danAimagCityName : '';
             $input['district'] = $user->danSoumDistrictName ? $user->danSoumDistrictName : '';

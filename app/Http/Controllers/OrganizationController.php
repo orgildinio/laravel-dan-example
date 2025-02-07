@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Organization;
 use Illuminate\Http\Request;
+use App\Models\OrganizationServiceArea;
 
 class OrganizationController extends Controller
 {
@@ -128,5 +129,43 @@ class OrganizationController extends Controller
 
         return redirect()->route('organization.index')
             ->with('success', 'Байгууллага амжилттай устгагдлаа');
+    }
+
+    public function getOrganizations(Request $request)
+    {
+        // dd($request->all());
+        $countryId = intval($request->country_id);
+        // dd($countryId);
+        // $countryId = $request->country_id;
+
+        // Ensure country_id is always filtered
+        $query = OrganizationServiceArea::where('country_id', $countryId);
+
+        // SQL-г харах
+        // dd($query->toSql(), $query->getBindings());
+
+
+        if ($request->has('bag_khoroo_id') && $request->bag_khoroo_id != null) {
+            $query->where('bag_khoroo_id', $request->bag_khoroo_id);
+        } elseif ($request->has('soum_district_id')  && $request->soum_district_id != null) {
+            $query->where('soum_district_id', $request->soum_district_id);
+        }
+
+        // Debugging: Check what is returned before pluck()
+        $organizationServiceAreas = $query->get();
+        // dd($organizationServiceAreas);
+
+        if ($organizationServiceAreas->isEmpty()) {
+            return response()->json(['message' => 'No matching organizations found', 'countryId' => $countryId], 404);
+        }
+
+        // Get organization IDs
+        $organizationIds = $organizationServiceAreas->pluck('organization_id')->toArray();
+        // dd($organizationIds);
+
+        // Fetch matching organizations
+        $organizations = Organization::whereIn('id', $organizationIds)->get();
+
+        return response()->json($organizations);
     }
 }

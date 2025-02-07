@@ -13,9 +13,14 @@
                 class="px-4 py-2 rounded-md bg-blue-500 text-white hover:bg-blue-600 transition duration-200">
                 Нэмэх
             </a>
+            <a href="{{ route('organizationServiceArea.index') }}"
+                class="px-4 py-2 rounded-md bg-gray-500 text-white hover:bg-gray-600 transition duration-200">
+                Үйлчлэх хүрээ
+            </a>
         </div>
 
-        <form id="filterForm" method="GET" action="{{ route('organization.index') }}" x-ref="filterForm" x-data="{ phone: '{{ request('phone') }}' }">
+        <form id="filterForm" method="GET" action="{{ route('organization.index') }}" x-ref="filterForm"
+            x-data="{ phone: '{{ request('phone') }}' }">
             <input type="hidden" name="name" :value="name">
             <input type="hidden" name="plant_id" :value="plant_id">
             <input type="hidden" name="phone" :value="phone">
@@ -63,7 +68,8 @@
                     <tbody class="divide-y divide-gray-200">
                         @foreach ($orgs as $org)
                             <tr class="hover:bg-gray-50 transition duration-200">
-                                <td class="p-4">{{ ($orgs->currentPage() - 1) * $orgs->perPage() + $loop->iteration }}</td>
+                                <td class="p-4">
+                                    {{ ($orgs->currentPage() - 1) * $orgs->perPage() + $loop->iteration }}</td>
                                 <td class="p-4">{{ $org->name }}</td>
                                 <td class="p-4">{{ $org->plant_id == 1 ? 'Цахилгаан' : 'Дулаан' }}</td>
                                 <td class="p-4">
@@ -78,16 +84,19 @@
                                 <td class="p-4 text-center">
                                     <div class="flex items-center justify-center space-x-4">
                                         <div x-data="{ open: false }">
-                                            <button @click="open = true" class="text-blue-500 hover:text-blue-700 transition">
+                                            <button @click="open = true"
+                                                class="text-blue-500 hover:text-blue-700 transition">
                                                 <i class="fa-solid fa-square-phone-flip fa-lg"></i>
                                             </button>
-                
+
                                             <div x-show="open" @click.away="open = false"
                                                 class="fixed z-10 inset-0 flex items-center justify-center bg-black bg-opacity-50">
                                                 <div class="bg-white rounded-lg shadow-lg p-6 w-96">
-                                                    <form method="POST" action="{{ route('orgNumber.save', $org->id) }}">
+                                                    <form method="POST"
+                                                        action="{{ route('orgNumber.save', $org->id) }}">
                                                         @csrf
-                                                        <label for="phone_number" class="block text-gray-700 font-medium mb-2">
+                                                        <label for="phone_number"
+                                                            class="block text-gray-700 font-medium mb-2">
                                                             Дугаар
                                                         </label>
                                                         <input type="number" name="phone_number"
@@ -106,27 +115,29 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        @if (Auth::user()->role->name == 'admin')
-                                            <a href="{{ route('organization.edit', $org->id) }}"
-                                                class="text-gray-500 hover:text-gray-800 transition">
-                                                <i class="fa-solid fa-pen-to-square fa-lg"></i>
-                                            </a>
-                                            <form action="{{ route('organization.destroy', $org->id) }}" method="POST"
-                                                class="inline-block">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="text-red-500 hover:text-red-700 transition">
-                                                    <i class="fa-regular fa-trash-can fa-lg"></i>
-                                                </button>
-                                            </form>
-                                        @endif
+                                        {{-- @if (Auth::user()->role->name == 'admin') --}}
+                                        <a href="{{ route('organization.edit', $org->id) }}"
+                                            class="text-gray-500 hover:text-gray-800 transition">
+                                            <i class="fa-solid fa-pen-to-square fa-lg"></i>
+                                        </a>
+                                        <a href="{{ route('organization.service-area.create', $org->id) }}"
+                                            class="btn btn-sm btn-primary">Area</a>
+                                        <form action="{{ route('organization.destroy', $org->id) }}" method="POST"
+                                            class="inline-block">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="text-red-500 hover:text-red-700 transition">
+                                                <i class="fa-regular fa-trash-can fa-lg"></i>
+                                            </button>
+                                        </form>
+                                        {{-- @endif --}}
                                     </div>
                                 </td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
-                
+
                 <div class="p-4">
                     {!! $orgs->appends(request()->query())->links() !!}
                 </div>

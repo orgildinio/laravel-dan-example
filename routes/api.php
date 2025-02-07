@@ -4,8 +4,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\BagKhorooController;
 use App\Http\Controllers\Api\ComplaintController;
 use App\Http\Controllers\Api\OrganizationController;
+use App\Http\Controllers\Api\SoumDistrictController;
 use App\Http\Controllers\Api\ComplaintStepController;
 use App\Http\Controllers\Api\ComplaintTypeController;
 use App\Http\Controllers\Api\ComplaintTypeSummaryController;
@@ -28,6 +30,9 @@ use App\Http\Controllers\Api\ComplaintTypeSummaryController;
 Route::post('login', [AuthController::class, 'login']);
 Route::post('loginEmail', [AuthController::class, 'loginEmail']);
 Route::post('loginTze', [AuthController::class, 'loginTze']);
+
+Route::get('/soum_districts', [SoumDistrictController::class, 'getSoums']);
+Route::get('/bag_khoroos', [BagKhorooController::class, 'getBags']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('user', [AuthController::class, 'user']);

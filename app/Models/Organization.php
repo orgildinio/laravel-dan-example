@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Models\Complaint;
 use App\Models\OrganizationNumbers;
-use App\Models\OrganizationServiceArea;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
