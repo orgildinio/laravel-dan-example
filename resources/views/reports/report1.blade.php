@@ -39,7 +39,8 @@
                         class="flex items-center justify-center text-white bg-primary hover:bg-primaryHover focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2">
                         Хайх
                     </button>
-                    <button type="button" onclick="exportToExcel(event, 'report1', 'Tailan-1')" class="flex items-center justify-center text-white bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 ml-4">Export</button>
+                    <button type="button" onclick="exportToExcel(event, 'report1', 'Tailan-1')"
+                        class="flex items-center justify-center text-white bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 ml-4">Export</button>
                 </div>
             </div>
         </form>
@@ -50,11 +51,11 @@
                 <th class="border border-gray-300 px-4 py-2">№</th>
                 <th class="border border-gray-300 px-4 py-2">Тусгай зөвшөөрөл эзэмшигч</th>
                 <th class="border border-gray-300 px-4 py-2">Веб</th>
+                <th class="border border-gray-300 px-4 py-2">Утсаар</th>
                 <th class="border border-gray-300 px-4 py-2">Имэйл</th>
                 <th class="border border-gray-300 px-4 py-2">Биечлэн</th>
                 <th class="border border-gray-300 px-4 py-2">Гар утас</th>
                 <th class="border border-gray-300 px-4 py-2">Бичгээр</th>
-                <th class="border border-gray-300 px-4 py-2">Утсаар</th>
                 <th class="border border-gray-300 px-4 py-2">1111</th>
                 <th class="border border-gray-300 px-4 py-2">Нийт</th>
             </tr>
@@ -80,37 +81,41 @@
 
 @push('scripts')
 
-<script type="module">
-    $(document).ready(function() {
+    <script type="module">
+        $(document).ready(function() {
 
-        // Set default start date to 1 month earlier than today
-        var defaultStartDate = new Date();
-        defaultStartDate.setMonth(defaultStartDate.getMonth() - 1);
-        var formattedStartDate = defaultStartDate.toISOString().split('T')[0]; // Format to 'YYYY-MM-DD'
+            // Set default start date to 1 month earlier than today
+            var defaultStartDate = new Date();
+            defaultStartDate.setMonth(defaultStartDate.getMonth() - 1);
+            var formattedStartDate = defaultStartDate.toISOString().split('T')[0]; // Format to 'YYYY-MM-DD'
 
-        // Set default end date to today's date
-        var defaultEndDate = new Date();
-        var formattedEndDate = defaultEndDate.toISOString().split('T')[0]; // Format to 'YYYY-MM-DD'
+            // Set default end date to today's date
+            var defaultEndDate = new Date();
+            var formattedEndDate = defaultEndDate.toISOString().split('T')[0]; // Format to 'YYYY-MM-DD'
 
-        // Initialize Flatpickr for start date
-        flatpickr("#startdate", {
-            defaultDate: "{{ $start_date ?? '' }}" || formattedStartDate,  // Use Laravel variable or fallback
-            dateFormat: "Y-m-d"
+            // Initialize Flatpickr for start date
+            flatpickr("#startdate", {
+                defaultDate: "{{ $start_date ?? '' }}" ||
+                formattedStartDate, // Use Laravel variable or fallback
+                dateFormat: "Y-m-d"
+            });
+
+            // Initialize Flatpickr for end date
+            flatpickr("#enddate", {
+                defaultDate: "{{ $end_date ?? '' }}" ||
+                formattedEndDate, // Use Laravel variable or fallback
+                dateFormat: "Y-m-d"
+            });
+
+            window.exportToExcel = function(event, tableID, filename = '') {
+                event.preventDefault(); // Prevent form submission
+                var table = document.getElementById(tableID);
+                var wb = XLSX.utils.table_to_book(table, {
+                    sheet: "Sheet1"
+                });
+                XLSX.writeFile(wb, filename + ".xlsx");
+            }
+
+
         });
-
-        // Initialize Flatpickr for end date
-        flatpickr("#enddate", {
-            defaultDate: "{{ $end_date ?? '' }}" || formattedEndDate,  // Use Laravel variable or fallback
-            dateFormat: "Y-m-d"
-        });
-
-        window.exportToExcel = function(event, tableID, filename = '') {
-            event.preventDefault();  // Prevent form submission
-            var table = document.getElementById(tableID);
-            var wb = XLSX.utils.table_to_book(table, {sheet: "Sheet1"});
-            XLSX.writeFile(wb, filename + ".xlsx");
-        }
-
-        
-    });
-</script>
+    </script>

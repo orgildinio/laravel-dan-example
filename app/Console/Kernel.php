@@ -19,7 +19,8 @@ class Kernel extends ConsoleKernel
         // $schedule->command('command:fetch-source-complaint')->daily();
 
         // Schedule the command to run every day at 12:00 AM and 12:00 PM
-        $schedule->command('command:fetch-source-complaint')->twiceDaily(0, 12);
+        // $schedule->command('command:fetch-source-complaint')->twiceDaily(0, 12);
+        $schedule->command('command:fetch-source-complaint')->dailyAt('00:00');
     }
 
     /**

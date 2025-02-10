@@ -1,392 +1,209 @@
 <style>
-    .table-container {
-        display: flex;
-    }
-
-    .energyReport {
-        font-family: Arial, Helvetica, sans-serif;
-        font-size: 12px;
+    table {
         border-collapse: collapse;
-        /* width: 100%; */
+        background-color: white;
+        width: 100%;
+        font-size: 10px;
     }
 
-    .energyReport th,
-    .energyReport td {
-        border: 1px solid black;
-        padding: 4px;
-        height: 50px;
+    tbody th {
+        padding: 4px 15px 4px 0px;
+        text-align: right;
     }
 
-    .energyReport tr:nth-child(even) {
-        background-color: #f2f2f2;
-    }
-
-    .energyReport tr:hover {
-        background-color: #ddd;
-    }
-
-    /* .energyReport th {
-        padding-top: 12px;
-        padding-bottom: 12px;
-        text-align: left;
-        color: #030712;
-        writing-mode: vertical-rl;
-        transform: rotate(180deg);
-        white-space: nowrap;
-        height: 550px;
-        width: 40px;
+    tbody td {
+        border: 1px solid #cccccc;
+        padding: 8px 15px 8px 15px;
         text-align: center;
-    } */
-
-    .energyReport tfoot {
-        font-weight: bold;
     }
 
-    .energyReport td:last-child {
-        font-weight: bold;
+    th,
+    td {
+        padding: 5px;
     }
 
-    #table-energy th {
-        background-color: lightgreen;
-        /* color: deepskyblue */
+    th.rotate {
+        /* Something you can count on */
+        height: 140px;
+        white-space: nowrap;
+    }
+
+    th.rotate>div {
+        transform:
+            /* Magic Numbers */
+            translate(25px, 51px)
+            /* 45 is really 360 - 45 */
+            rotate(315deg);
+        width: 30px;
+    }
+
+    th.rotate>div>span {
+        border-bottom: 1px solid purple;
+        padding: 5px 10px;
     }
 </style>
 <x-admin-layout>
-    <h3 class="text-xl font-bold">Тайлан Цахилгаан</h3>
-    <div class="w-full">
-        <form method="GET" autocomplete="off">
-            @csrf
-            <div class="flex flex-row justify-start items-center">
-                <div class="mr-1">
-                    <input type="text" id="startdate"
-                        class="w-32 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2"
-                        name="startdate" placeholder="Эхлэх" value="{{ $start_date }}">
-                </div>
-                <div class="mr-1">
-                    <input type="text" id="enddate"
-                        class="w-32 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2"
-                        name="enddate" placeholder="Дуусах" value="{{ $end_date }}">
-                </div>
-                <div class="flex flex-row items-center space-x-2">
-                    <button type="submit"
-                        class="flex items-center justify-center text-white bg-primary hover:bg-primaryHover focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2">
-                        Хайх
-                    </button>
-                    <button type="button" onclick="exportToExcel(event, 'table-energy', 'Tailan-energy')"
-                        class="flex items-center justify-center text-white bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 ml-4">Export</button>
-                </div>
+    <h3 class="text-xl font-bold mb-4">Эрчим хүчний гомдлын тайлан</h3>
+
+    <!-- Search Form -->
+    <form method="GET" autocomplete="off" class="mb-4">
+        <div class="flex flex-row gap-2">
+            <div>
+                <label for="startdate" class="text-sm font-medium">Эхлэх огноо</label>
+                <input type="date" id="startdate" name="startdate"
+                    value="{{ request('startdate', now()->subMonth()->toDateString()) }}"
+                    class="w-36 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
             </div>
-        </form>
-        <div class="table-container">
-            <table class="energyReport" id="table-energy">
-                <thead>
-                    <tr style="height: 20px;">
-                        <th style="background-color: white;" rowspan="2">№</th>
-                        <th style="background-color: white;" rowspan="2">Байгууллага</th>
-                        <th colspan="25">Чанар хангамж</th>
-                        <th style="background-color: deepskyblue;" colspan="8">Хүлээн авсан суваг</th>
-                    </tr>
-                    <tr>
-                        <th>Хүчдэлгүй</th>
-                        <th>Хүчдэлийн түвшин муу
-                        </th>
-                        <th>Тулгууртай холбоотой
-                        </th>
-                        <th>ЦЭХ-ээр хязгаарласан
-                        </th>
-                        <th>Тасралт, гэмтэл
-                        </th>
-                        <th>Цахилгаан хэрэгсэл шатсан
-                        </th>
-                        <th>Дуудлагын төвийн утастай холбоотой
-                        </th>
-                        <th>Орон сууц хүлээж аваагүй
-                        </th>
-                        <th>Шугам, тоноглолтой холбоотой
-                        </th>
-                        <th>Щиттэй холбоотой
-                        </th>
-                        <th>Компанийн ажиллагсадтай холбоотой
-                        </th>
-                        <th>Хувийн эзэмшлийн шугамтай холбоотой
-                        </th>
-                        <th>Таслалт
-                        </th>
-                        <th>Бусад
-                        </th>
-                        <th>Төлбөр ороогүйтэй холбоотой
-                        </th>
-                        <th>Дотор монтажтай холбоотой
-                        </th>
-                        <th>Байгууллагын үйл ажиллагаа, үйлчилгээний хүнд суртал чирэгдэлтэй холбоотой
-                        </th>
-                        <th>Цахилгаан хангамжийг таслахад хэрэглэгчийн цахилгаан хэрэгсэл гэмтсэн тухай
-                        </th>
-                        <th>Тасласан хэрэглэгчийг дахин залгахтай холбоотой
-                        </th>
-                        <th>Төлбөр төлөх хугацаа болоогүй байхад тасласан тухай
-                        </th>
-                        <th>Хүн, мал амьтан хүчдэлд нэрвэгдсэн тухай
-                        </th>
-                        <th>Техникийн нөхцөлтэй холбоотой
-                        </th>
-                        <th>Газар шорооны ажилтай холбоотой
-                        </th>
-                        <th>Шинэ холболттой холбоотой</th>
-                        <th>Нийт</th>
-                        {{-- complaint channel --}}
-                        <th style="background-color: deepskyblue;">Веб хуудас</th>
-                        <th style="background-color: deepskyblue;">Утас</th>
-                        <th style="background-color: deepskyblue;">Имэйл</th>
-                        <th style="background-color: deepskyblue;">Биечлэн</th>
-                        <th style="background-color: deepskyblue;">Гар утас апп</th>
-                        <th style="background-color: deepskyblue;">Бичгээр</th>
-                        <th style="background-color: deepskyblue;">ЗГ-ын 11-11 төв</th>
-                        <th style="background-color: deepskyblue;">Нийт</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($complaints as $item)
-                        <tr>
-                            <td>
-                                {{ $loop->iteration }}
-                            </td>
-                            <td style="white-space: nowrap;">
-                                {{ $item->organization_name }}
-                            </td>
-                            <td>
-                                {{ $item->c1_cnt }}
-                            </td>
-                            <td>
-                                {{ $item->c9_cnt }}
-                            </td>
-                            <td>
-                                {{ $item->c10_cnt }}
-                            </td>
-                            <td>
-                                {{ $item->c11_cnt }}
-                            </td>
-                            <td>
-                                {{ $item->c12_cnt }}
-                            </td>
-                            <td>
-                                {{ $item->c13_cnt }}
-                            </td>
-                            <td>
-                                {{ $item->c14_cnt }}
-                            </td>
-                            <td>
-                                {{ $item->c15_cnt }}
-                            </td>
-                            <td>
-                                {{ $item->c29_cnt }}
-                            </td>
-                            <td>
-                                {{ $item->c30_cnt }}
-                            </td>
-                            <td>
-                                {{ $item->c31_cnt }}
-                            </td>
-                            <td>
-                                {{ $item->c32_cnt }}
-                            </td>
-                            <td>
-                                {{ $item->c33_cnt }}
-                            </td>
-                            <td>
-                                {{ $item->c34_cnt }}
-                            </td>
-                            <td>
-                                {{ $item->c39_cnt }}
-                            </td>
-                            <td>
-                                {{ $item->c40_cnt }}
-                            </td>
-                            <td>
-                                {{ $item->c42_cnt }}
-                            </td>
-                            <td>
-                                {{ $item->c78_cnt }}
-                            </td>
-                            <td>
-                                {{ $item->c79_cnt }}
-                            </td>
-                            <td>
-                                {{ $item->c80_cnt }}
-                            </td>
-                            <td>
-                                {{ $item->c81_cnt }}
-                            </td>
-                            <td>
-                                {{ $item->c82_cnt }}
-                            </td>
-                            <td>
-                                {{ $item->c83_cnt }}
-                            </td>
-                            <td>
-                                {{ $item->c84_cnt }}
-                            </td>
-                            <td style="font-weight: bold;">
-                                {{ $item->total_complaints }}
-                            </td>
-                            <td>
-                                {{ $item->c_1 }}
-                            </td>
-                            <td>
-                                {{ $item->c_2 }}
-                            </td>
-                            <td>
-                                {{ $item->c_3 }}
-                            </td>
-                            <td>
-                                {{ $item->c_4 }}
-                            </td>
-                            <td>
-                                {{ $item->c_5 }}
-                            </td>
-                            <td>
-                                {{ $item->c_6 }}
-                            </td>
-                            <td>
-                                {{ $item->c_7 }}
-                            </td>
-                            <td style="font-weight: bold;">
-                                {{ $item->total_channel }}
-                            </td>
-                        </tr>
+            <div>
+                <label for="enddate" class="text-sm font-medium">Дуусах огноо</label>
+                <input type="date" id="enddate" name="enddate"
+                    value="{{ request('enddate', now()->toDateString()) }}"
+                    class="w-36 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
+            </div>
+            <div>
+                <label for="energy_type_id" class="text-sm font-medium">Энергийн төрөл</label>
+                <select name="energy_type_id" id="energy_type_id"
+                    class="w-40 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
+                    <option value="">-- Сонгох --</option>
+                    @foreach ($energy_types as $type)
+                        <option value="{{ $type->id }}"
+                            {{ request('energy_type_id') == $type->id ? 'selected' : '' }}>
+                            {{ $type->name }}
+                        </option>
                     @endforeach
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td></td>
-                        <td>Нийт</td>
-                        <td id="sum1"></td>
-                        <td id="sum2"></td>
-                        <td id="sum3"></td>
-                        <td id="sum4"></td>
-                        <td id="sum5"></td>
-                        <td id="sum6"></td>
-                        <td id="sum7"></td>
-                        <td id="sum8"></td>
-                        <td id="sum9"></td>
-                        <td id="sum10"></td>
-                        <td id="sum11"></td>
-                        <td id="sum12"></td>
-                        <td id="sum13"></td>
-                        <td id="sum14"></td>
-                        <td id="sum15"></td>
-                        <td id="sum16"></td>
-                        <td id="sum17"></td>
-                        <td id="sum18"></td>
-                        <td id="sum19"></td>
-                        <td id="sum20"></td>
-                        <td id="sum21"></td>
-                        <td id="sum22"></td>
-                        <td id="sum23"></td>
-                        <td id="sum24"></td>
-                        <td id="sum25"></td>
-                        <td id="sum26"></td>
-                        <td id="sum27"></td>
-                        <td id="sum28"></td>
-                        <td id="sum29"></td>
-                        <td id="sum30"></td>
-                        <td id="sum31"></td>
-                        <td id="sum32"></td>
-                        <td id="sum33"></td>
-                    </tr>
-                </tfoot>
-            </table>
+                </select>
+            </div>
+            <div>
+                <label for="complaint_type_id" class="text-sm font-medium">Гомдлын төрөл</label>
+                <select name="complaint_type_id" id="complaint_type_id"
+                    class="w-40 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
+                    <option value="">-- Сонгох --</option>
+                    @foreach ($complaint_types as $type)
+                        <option value="{{ $type->id }}"
+                            {{ request('complaint_type_id') == $type->id ? 'selected' : '' }}>
+                            {{ $type->name }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="flex items-end">
+                <button type="submit"
+                    class="bg-primary hover:bg-primaryHover text-white font-medium rounded-lg px-4 py-2">
+                    Хайх
+                </button>
+            </div>
         </div>
+    </form>
+
+    <div class="table-container mt-20">
+        <table>
+            <thead>
+                <tr>
+                    <th><span>№</span></th>
+                    <th>
+                        <div><span>Байгууллага</span></div>
+                    </th>
+                    <th class="rotate">
+                        <div><span style="border-bottom: 1px solid blue;">Веб</span></div>
+                    </th>
+                    <th class="rotate">
+                        <div><span style="border-bottom: 1px solid blue;">Утсаар</span></div>
+                    </th>
+                    <th class="rotate">
+                        <div><span style="border-bottom: 1px solid blue;">И-мэйл</span></div>
+                    </th>
+                    <th class="rotate">
+                        <div><span style="border-bottom: 1px solid blue;">Биечлэн</span></div>
+                    </th>
+                    <th class="rotate">
+                        <div><span style="border-bottom: 1px solid blue;">Гар утас</span></div>
+                    </th>
+                    <th class="rotate">
+                        <div><span style="border-bottom: 1px solid blue;">Бичгээр</span></div>
+                    </th>
+                    <th class="rotate">
+                        <div><span style="border-bottom: 1px solid blue;">1111</span></div>
+                    </th>
+                    <th class="rotate">
+                        <div><span style="border-bottom: 1px solid blue;">Нийт</span></div>
+                    </th>
+                    @foreach ($complaint_type_summaries as $summary)
+                        <th class="rotate">
+                            <div><span>{{ $summary->name }}</span></div>
+                        </th>
+                    @endforeach
+                    <th class="rotate">
+                        <div><span>Нийт</span></div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @php
+                    $totals = [
+                        'c_1' => 0,
+                        'c_2' => 0,
+                        'c_3' => 0,
+                        'c_4' => 0,
+                        'c_5' => 0,
+                        'c_6' => 0,
+                        'c_7' => 0,
+                        'total_channel' => 0,
+                    ];
+                    $summary_totals = [];
+                @endphp
+                @foreach ($complaints as $index => $complaint)
+                    <tr>
+                        <td>{{ $index + 1 }}</td>
+                        <td>{{ $complaint->organization_name }}</td>
+                        <td>{{ $complaint->c_1 }}</td>
+                        <td>{{ $complaint->c_2 }}</td>
+                        <td>{{ $complaint->c_3 }}</td>
+                        <td>{{ $complaint->c_4 }}</td>
+                        <td>{{ $complaint->c_5 }}</td>
+                        <td>{{ $complaint->c_6 }}</td>
+                        <td>{{ $complaint->c_7 }}</td>
+                        <td style="font-weight: bold; background-color: lightgray;">{{ $complaint->total_channel }}
+                        </td>
+                        @foreach ($complaint_type_summaries as $summary)
+                            @php
+                                $columnName = 'c' . $summary->id . '_cnt';
+                            @endphp
+                            <td>{{ $complaint->$columnName ?? 0 }}</td>
+                        @endforeach
+                        <td style="font-weight: bold; background-color: lightgray;">
+                            @php
+                                $totalSummary = 0;
+                                foreach ($complaint_type_summaries as $summary) {
+                                    $columnName = 'c' . $summary->id . '_cnt';
+                                    $totalSummary += $complaint->$columnName ?? 0;
+                                }
+                            @endphp
+                            {{ $totalSummary }}
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+            <!-- Footer for totals -->
+            <tfoot>
+                <tr style="font-weight: bold; background-color: lightgray; text-align: center;">
+                    <td colspan="2">Нийт</td>
+                    <td>{{ $totals['c_1'] }}</td>
+                    <td>{{ $totals['c_2'] }}</td>
+                    <td>{{ $totals['c_3'] }}</td>
+                    <td>{{ $totals['c_4'] }}</td>
+                    <td>{{ $totals['c_5'] }}</td>
+                    <td>{{ $totals['c_6'] }}</td>
+                    <td>{{ $totals['c_7'] }}</td>
+                    <td>{{ $totals['total_channel'] }}</td>
+
+                    @foreach ($complaint_type_summaries as $summary)
+                        @php $columnName = 'c' . $summary->id . '_cnt'; @endphp
+                        <td>{{ $summary_totals[$columnName] ?? 0 }}</td>
+                    @endforeach
+
+                    <td>{{ array_sum($summary_totals) }}</td>
+                </tr>
+            </tfoot>
+        </table>
     </div>
 </x-admin-layout>
-
-@push('scripts')
-
-    <script type="module">
-        $(document).ready(function() {
-
-            // Set default start date to 1 month earlier than today
-            var defaultStartDate = new Date();
-            defaultStartDate.setMonth(defaultStartDate.getMonth() - 1);
-            var formattedStartDate = defaultStartDate.toISOString().split('T')[0]; // Format to 'YYYY-MM-DD'
-
-            // Set default end date to today's date
-            var defaultEndDate = new Date();
-            var formattedEndDate = defaultEndDate.toISOString().split('T')[0]; // Format to 'YYYY-MM-DD'
-
-            // Initialize Flatpickr for start date
-            flatpickr("#startdate", {
-                defaultDate: "{{ $start_date ?? '' }}" ||
-                    formattedStartDate, // Use Laravel variable or fallback
-                dateFormat: "Y-m-d"
-            });
-
-            // Initialize Flatpickr for end date
-            flatpickr("#enddate", {
-                defaultDate: "{{ $end_date ?? '' }}" ||
-                    formattedEndDate, // Use Laravel variable or fallback
-                dateFormat: "Y-m-d"
-            });
-
-            // Function to calculate the sum for each column in a table
-            function calculateColumnSum(tableId, columnIndex, resultCellId) {
-                let sum = 0;
-
-                // Loop through each row (excluding the header and footer)
-                $(`#${tableId} tbody tr`).each(function() {
-                    let cellValue = $(this).find(`td:eq(${columnIndex})`).text().trim();
-                    cellValue = parseFloat(cellValue) || 0; // Convert to float, or 0 if invalid
-                    sum += cellValue;
-                });
-
-                // Display the sum in the corresponding footer cell
-                $(`#${resultCellId}`).text(sum.toFixed(0)); // Rounded to 2 decimal places
-            }
-
-            // Calculate sums for each table and column
-            calculateColumnSum('table-energy', 2, 'sum1'); // For column 2 in table1, store result in #sum1
-            calculateColumnSum('table-energy', 3, 'sum2'); // For column 3 in table1, store result in #sum2
-            calculateColumnSum('table-energy', 4, 'sum3');
-            calculateColumnSum('table-energy', 5, 'sum4');
-            calculateColumnSum('table-energy', 6, 'sum5');
-            calculateColumnSum('table-energy', 7, 'sum6');
-            calculateColumnSum('table-energy', 8, 'sum7');
-            calculateColumnSum('table-energy', 9, 'sum8');
-            calculateColumnSum('table-energy', 10, 'sum9');
-            calculateColumnSum('table-energy', 11, 'sum10');
-            calculateColumnSum('table-energy', 12, 'sum11');
-            calculateColumnSum('table-energy', 13, 'sum12');
-            calculateColumnSum('table-energy', 14, 'sum13');
-            calculateColumnSum('table-energy', 15, 'sum14');
-            calculateColumnSum('table-energy', 16, 'sum15');
-            calculateColumnSum('table-energy', 17, 'sum16');
-            calculateColumnSum('table-energy', 18, 'sum17');
-            calculateColumnSum('table-energy', 19, 'sum18');
-            calculateColumnSum('table-energy', 20, 'sum19');
-            calculateColumnSum('table-energy', 21, 'sum20');
-            calculateColumnSum('table-energy', 22, 'sum21');
-            calculateColumnSum('table-energy', 23, 'sum22');
-            calculateColumnSum('table-energy', 24, 'sum23');
-            calculateColumnSum('table-energy', 25, 'sum24');
-            calculateColumnSum('table-energy', 26, 'sum25');
-            calculateColumnSum('table-energy', 27, 'sum26');
-            calculateColumnSum('table-energy', 28, 'sum27');
-            calculateColumnSum('table-energy', 29, 'sum28');
-            calculateColumnSum('table-energy', 30, 'sum29');
-            calculateColumnSum('table-energy', 31, 'sum30');
-            calculateColumnSum('table-energy', 32, 'sum31');
-            calculateColumnSum('table-energy', 33, 'sum32');
-            calculateColumnSum('table-energy', 34, 'sum33');
-
-            // export to excel
-            window.exportToExcel = function(event, tableID, filename = '') {
-                event.preventDefault(); // Prevent form submission
-                var table = document.getElementById(tableID);
-                var wb = XLSX.utils.table_to_book(table, {
-                    sheet: "Sheet1"
-                });
-                XLSX.writeFile(wb, filename + ".xlsx");
-            }
-
-        });
-    </script>
