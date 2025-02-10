@@ -190,7 +190,7 @@ class ReportController extends Controller
                     ->whereBetween('c.created_at', [$startDate, $endDate]);
             })
             ->leftJoin('complaint_type_summaries as cts', 'cts.id', '=', 'c.complaint_type_summary_id')
-            ->where('org.plant_id', '=', 1)
+            // ->where('org.plant_id', '=', 1)
             ->groupBy('org.name')
             ->orderBy('org.name')
             ->get();
