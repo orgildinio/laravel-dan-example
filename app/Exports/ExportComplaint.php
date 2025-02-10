@@ -64,7 +64,7 @@ class ExportComplaint implements FromCollection, WithHeadings, ShouldAutoSize, W
             ->select('complaints.*') // Select all fields from complaints
             ->when(isset($_GET['daterange']), function ($query) {
                 $date_range = explode(' to ', $_GET['daterange']);
-                $query->whereBetween('complaint_date', [
+                $query->whereBetween('created_at', [
                     \Carbon\Carbon::parse($date_range[0])->startOfDay(),
                     \Carbon\Carbon::parse($date_range[1])->endOfDay()
                 ]);

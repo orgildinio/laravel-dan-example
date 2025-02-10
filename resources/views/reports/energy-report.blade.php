@@ -10,7 +10,8 @@
         /* width: 100%; */
     }
 
-    .energyReport th, .energyReport td {
+    .energyReport th,
+    .energyReport td {
         border: 1px solid black;
         padding: 4px;
         height: 50px;
@@ -71,263 +72,230 @@
                         class="flex items-center justify-center text-white bg-primary hover:bg-primaryHover focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2">
                         Хайх
                     </button>
-                    <button type="button" onclick="exportToExcel(event, 'table-energy', 'Tailan-energy')" class="flex items-center justify-center text-white bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 ml-4">Export</button>
+                    <button type="button" onclick="exportToExcel(event, 'table-energy', 'Tailan-energy')"
+                        class="flex items-center justify-center text-white bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 ml-4">Export</button>
                 </div>
             </div>
         </form>
         <div class="table-container">
-        <table class="energyReport" id="table-energy">
-            <thead>
-                <tr style="height: 20px;">
-                    <th style="background-color: white;" rowspan="2">№</th>
-                    <th style="background-color: white;" rowspan="2">Байгууллага</th>
-                    <th colspan="25">Чанар хангамж</th>
-                    <th style="background-color: yellow;" colspan="6">Өргөдөл, гомдлын төрөл</th>
-                    <th style="background-color: deepskyblue;" colspan="8">Хүлээн авсан суваг</th>
-                </tr>
-                <tr>
-                    {{-- <th style="background-color: white;" rowspan="2">Д/д</th>
-                    <th style="background-color: white;">Байгууллага</th> --}}
-                    <th>Хүчдэлгүй</th>
-                    <th>Хүчдэлийн түвшин муу
-                    </th>
-                    <th>Тулгууртай холбоотой
-                    </th>
-                    <th>ЦЭХ-ээр хязгаарласан
-                    </th>
-                    <th>Тасралт, гэмтэл
-                    </th>
-                    <th>Цахилгаан хэрэгсэл шатсан
-                    </th>
-                    <th>Дуудлагын төвийн утастай холбоотой
-                    </th>
-                    <th>Орон сууц хүлээж аваагүй
-                    </th>
-                    <th>Шугам, тоноглолтой холбоотой
-                    </th>
-                    <th>Щиттэй холбоотой
-                    </th>
-                    <th>Компанийн ажиллагсадтай холбоотой
-                    </th>
-                    <th>Хувийн эзэмшлийн шугамтай холбоотой
-                    </th>
-                    <th>Таслалт
-                    </th>
-                    <th>Бусад
-                    </th>
-                    <th>Төлбөр ороогүйтэй холбоотой
-                    </th>
-                    <th>Дотор монтажтай холбоотой
-                    </th>
-                    <th>Байгууллагын үйл ажиллагаа, үйлчилгээний хүнд суртал чирэгдэлтэй холбоотой
-                    </th>
-                    <th>Цахилгаан хангамжийг таслахад хэрэглэгчийн цахилгаан хэрэгсэл гэмтсэн тухай
-                    </th>
-                    <th>Тасласан хэрэглэгчийг дахин залгахтай холбоотой
-                    </th>
-                    <th>Төлбөр төлөх хугацаа болоогүй байхад тасласан тухай
-                    </th>
-                    <th>Хүн, мал амьтан хүчдэлд нэрвэгдсэн тухай
-                    </th>
-                    <th>Техникийн нөхцөлтэй холбоотой
-                    </th>
-                    <th>Газар шорооны ажилтай холбоотой
-                    </th>
-                    <th>Шинэ холболттой холбоотой</th>
-                    <th>Нийт</th>
-                    {{-- complaint type --}}
-                    <th style="background-color: yellow;">Төлбөр тооцоо</th>
-                    <th style="background-color: yellow;">Чанар хангамж</th>
-                    <th style="background-color: yellow;">Хэмжих хэрэгсэл</th>
-                    <th style="background-color: yellow;">Харилцаа ёс зүй</th>
-                    <th style="background-color: yellow;">Бусад</th>
-                    <th style="background-color: yellow;">Нийт</th>
-                    {{-- complaint channel --}}
-                    <th style="background-color: deepskyblue;">Веб хуудас</th>
-                    <th style="background-color: deepskyblue;">Утас</th>
-                    <th style="background-color: deepskyblue;">Имэйл</th>
-                    <th style="background-color: deepskyblue;">Биечлэн</th>
-                    <th style="background-color: deepskyblue;">Гар утас апп</th>
-                    <th style="background-color: deepskyblue;">Бичгээр</th>
-                    <th style="background-color: deepskyblue;">ЗГ-ын 11-11 төв</th>
-                    <th style="background-color: deepskyblue;">Нийт</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($complaints as $item)
-                    <tr>
-                        <td>
-                            {{ $loop->iteration }}
-                        </td>
-                        <td style="white-space: nowrap;">
-                            {{ $item->organization_name }}
-                        </td>
-                        <td>
-                            {{ $item->c1_cnt }}
-                        </td>
-                        <td>
-                            {{ $item->c9_cnt }}
-                        </td>
-                        <td>
-                            {{ $item->c10_cnt }}
-                        </td>
-                        <td>
-                            {{ $item->c11_cnt }}
-                        </td>
-                        <td>
-                            {{ $item->c12_cnt }}
-                        </td>
-                        <td>
-                            {{ $item->c13_cnt }}
-                        </td>
-                        <td>
-                            {{ $item->c14_cnt }}
-                        </td>
-                        <td>
-                            {{ $item->c15_cnt }}
-                        </td>
-                        <td>
-                            {{ $item->c29_cnt }}
-                        </td>
-                        <td>
-                            {{ $item->c30_cnt }}
-                        </td>
-                        <td>
-                            {{ $item->c31_cnt }}
-                        </td>
-                        <td>
-                            {{ $item->c32_cnt }}
-                        </td>
-                        <td>
-                            {{ $item->c33_cnt }}
-                        </td>
-                        <td>
-                            {{ $item->c34_cnt }}
-                        </td>
-                        <td>
-                            {{ $item->c39_cnt }}
-                        </td>
-                        <td>
-                            {{ $item->c40_cnt }}
-                        </td>
-                        <td>
-                            {{ $item->c42_cnt }}
-                        </td>
-                        <td>
-                            {{ $item->c78_cnt }}
-                        </td>
-                        <td>
-                            {{ $item->c79_cnt }}
-                        </td>
-                        <td>
-                            {{ $item->c80_cnt }}
-                        </td>
-                        <td>
-                            {{ $item->c81_cnt }}
-                        </td>
-                        <td>
-                            {{ $item->c82_cnt }}
-                        </td>
-                        <td>
-                            {{ $item->c83_cnt }}
-                        </td>
-                        <td>
-                            {{ $item->c84_cnt }}
-                        </td>
-                        <td style="font-weight: bold;">
-                            {{ $item->total_complaints }}
-                        </td>
-                        <td>
-                            {{ $item->c_1 }}
-                        </td>
-                        <td>
-                            {{ $item->c_2 }}
-                        </td>
-                        <td>
-                            {{ $item->c_3 }}
-                        </td>
-                        <td>
-                            {{ $item->c_5 }}
-                        </td>
-                        <td>
-                            {{ $item->c_6 }}
-                        </td>
-                        <td style="font-weight: bold;">
-                            {{ $item->total_type }}
-                        </td>
-                        <td>
-                            {{ $item->c_1 }}
-                        </td>
-                        <td>
-                            {{ $item->c_2 }}
-                        </td>
-                        <td>
-                            {{ $item->c_3 }}
-                        </td>
-                        <td>
-                            {{ $item->c_4 }}
-                        </td>
-                        <td>
-                            {{ $item->c_5 }}
-                        </td>
-                        <td>
-                            {{ $item->c_6 }}
-                        </td>
-                        <td>
-                            {{ $item->c_7 }}
-                        </td>
-                        <td style="font-weight: bold;">
-                            {{ $item->total_channel }}
-                        </td>
+            <table class="energyReport" id="table-energy">
+                <thead>
+                    <tr style="height: 20px;">
+                        <th style="background-color: white;" rowspan="2">№</th>
+                        <th style="background-color: white;" rowspan="2">Байгууллага</th>
+                        <th colspan="25">Чанар хангамж</th>
+                        <th style="background-color: deepskyblue;" colspan="8">Хүлээн авсан суваг</th>
                     </tr>
-                @endforeach
-            </tbody>
-            <tfoot>
-                <tr>
-                    <td></td>
-                    <td>Нийт</td>
-                    <td id="sum1"></td>
-                    <td id="sum2"></td>
-                    <td id="sum3"></td>
-                    <td id="sum4"></td>
-                    <td id="sum5"></td>
-                    <td id="sum6"></td>
-                    <td id="sum7"></td>
-                    <td id="sum8"></td>
-                    <td id="sum9"></td>
-                    <td id="sum10"></td>
-                    <td id="sum11"></td>
-                    <td id="sum12"></td>
-                    <td id="sum13"></td>
-                    <td id="sum14"></td>
-                    <td id="sum15"></td>
-                    <td id="sum16"></td>
-                    <td id="sum17"></td>
-                    <td id="sum18"></td>
-                    <td id="sum19"></td>
-                    <td id="sum20"></td>
-                    <td id="sum21"></td>
-                    <td id="sum22"></td>
-                    <td id="sum23"></td>
-                    <td id="sum24"></td>
-                    <td id="sum25"></td>
-                    <td id="sum26"></td>
-                    <td id="sum27"></td>
-                    <td id="sum28"></td>
-                    <td id="sum29"></td>
-                    <td id="sum30"></td>
-                    <td id="sum31"></td>
-                    <td id="sum32"></td>
-                    <td id="sum33"></td>
-                    <td id="sum34"></td>
-                    <td id="sum35"></td>
-                    <td id="sum36"></td>
-                    <td id="sum37"></td>
-                    <td id="sum38"></td>
-                    <td id="sum39"></td>
-                </tr>
-            </tfoot>
-        </table>
+                    <tr>
+                        <th>Хүчдэлгүй</th>
+                        <th>Хүчдэлийн түвшин муу
+                        </th>
+                        <th>Тулгууртай холбоотой
+                        </th>
+                        <th>ЦЭХ-ээр хязгаарласан
+                        </th>
+                        <th>Тасралт, гэмтэл
+                        </th>
+                        <th>Цахилгаан хэрэгсэл шатсан
+                        </th>
+                        <th>Дуудлагын төвийн утастай холбоотой
+                        </th>
+                        <th>Орон сууц хүлээж аваагүй
+                        </th>
+                        <th>Шугам, тоноглолтой холбоотой
+                        </th>
+                        <th>Щиттэй холбоотой
+                        </th>
+                        <th>Компанийн ажиллагсадтай холбоотой
+                        </th>
+                        <th>Хувийн эзэмшлийн шугамтай холбоотой
+                        </th>
+                        <th>Таслалт
+                        </th>
+                        <th>Бусад
+                        </th>
+                        <th>Төлбөр ороогүйтэй холбоотой
+                        </th>
+                        <th>Дотор монтажтай холбоотой
+                        </th>
+                        <th>Байгууллагын үйл ажиллагаа, үйлчилгээний хүнд суртал чирэгдэлтэй холбоотой
+                        </th>
+                        <th>Цахилгаан хангамжийг таслахад хэрэглэгчийн цахилгаан хэрэгсэл гэмтсэн тухай
+                        </th>
+                        <th>Тасласан хэрэглэгчийг дахин залгахтай холбоотой
+                        </th>
+                        <th>Төлбөр төлөх хугацаа болоогүй байхад тасласан тухай
+                        </th>
+                        <th>Хүн, мал амьтан хүчдэлд нэрвэгдсэн тухай
+                        </th>
+                        <th>Техникийн нөхцөлтэй холбоотой
+                        </th>
+                        <th>Газар шорооны ажилтай холбоотой
+                        </th>
+                        <th>Шинэ холболттой холбоотой</th>
+                        <th>Нийт</th>
+                        {{-- complaint channel --}}
+                        <th style="background-color: deepskyblue;">Веб хуудас</th>
+                        <th style="background-color: deepskyblue;">Утас</th>
+                        <th style="background-color: deepskyblue;">Имэйл</th>
+                        <th style="background-color: deepskyblue;">Биечлэн</th>
+                        <th style="background-color: deepskyblue;">Гар утас апп</th>
+                        <th style="background-color: deepskyblue;">Бичгээр</th>
+                        <th style="background-color: deepskyblue;">ЗГ-ын 11-11 төв</th>
+                        <th style="background-color: deepskyblue;">Нийт</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($complaints as $item)
+                        <tr>
+                            <td>
+                                {{ $loop->iteration }}
+                            </td>
+                            <td style="white-space: nowrap;">
+                                {{ $item->organization_name }}
+                            </td>
+                            <td>
+                                {{ $item->c1_cnt }}
+                            </td>
+                            <td>
+                                {{ $item->c9_cnt }}
+                            </td>
+                            <td>
+                                {{ $item->c10_cnt }}
+                            </td>
+                            <td>
+                                {{ $item->c11_cnt }}
+                            </td>
+                            <td>
+                                {{ $item->c12_cnt }}
+                            </td>
+                            <td>
+                                {{ $item->c13_cnt }}
+                            </td>
+                            <td>
+                                {{ $item->c14_cnt }}
+                            </td>
+                            <td>
+                                {{ $item->c15_cnt }}
+                            </td>
+                            <td>
+                                {{ $item->c29_cnt }}
+                            </td>
+                            <td>
+                                {{ $item->c30_cnt }}
+                            </td>
+                            <td>
+                                {{ $item->c31_cnt }}
+                            </td>
+                            <td>
+                                {{ $item->c32_cnt }}
+                            </td>
+                            <td>
+                                {{ $item->c33_cnt }}
+                            </td>
+                            <td>
+                                {{ $item->c34_cnt }}
+                            </td>
+                            <td>
+                                {{ $item->c39_cnt }}
+                            </td>
+                            <td>
+                                {{ $item->c40_cnt }}
+                            </td>
+                            <td>
+                                {{ $item->c42_cnt }}
+                            </td>
+                            <td>
+                                {{ $item->c78_cnt }}
+                            </td>
+                            <td>
+                                {{ $item->c79_cnt }}
+                            </td>
+                            <td>
+                                {{ $item->c80_cnt }}
+                            </td>
+                            <td>
+                                {{ $item->c81_cnt }}
+                            </td>
+                            <td>
+                                {{ $item->c82_cnt }}
+                            </td>
+                            <td>
+                                {{ $item->c83_cnt }}
+                            </td>
+                            <td>
+                                {{ $item->c84_cnt }}
+                            </td>
+                            <td style="font-weight: bold;">
+                                {{ $item->total_complaints }}
+                            </td>
+                            <td>
+                                {{ $item->c_1 }}
+                            </td>
+                            <td>
+                                {{ $item->c_2 }}
+                            </td>
+                            <td>
+                                {{ $item->c_3 }}
+                            </td>
+                            <td>
+                                {{ $item->c_4 }}
+                            </td>
+                            <td>
+                                {{ $item->c_5 }}
+                            </td>
+                            <td>
+                                {{ $item->c_6 }}
+                            </td>
+                            <td>
+                                {{ $item->c_7 }}
+                            </td>
+                            <td style="font-weight: bold;">
+                                {{ $item->total_channel }}
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td></td>
+                        <td>Нийт</td>
+                        <td id="sum1"></td>
+                        <td id="sum2"></td>
+                        <td id="sum3"></td>
+                        <td id="sum4"></td>
+                        <td id="sum5"></td>
+                        <td id="sum6"></td>
+                        <td id="sum7"></td>
+                        <td id="sum8"></td>
+                        <td id="sum9"></td>
+                        <td id="sum10"></td>
+                        <td id="sum11"></td>
+                        <td id="sum12"></td>
+                        <td id="sum13"></td>
+                        <td id="sum14"></td>
+                        <td id="sum15"></td>
+                        <td id="sum16"></td>
+                        <td id="sum17"></td>
+                        <td id="sum18"></td>
+                        <td id="sum19"></td>
+                        <td id="sum20"></td>
+                        <td id="sum21"></td>
+                        <td id="sum22"></td>
+                        <td id="sum23"></td>
+                        <td id="sum24"></td>
+                        <td id="sum25"></td>
+                        <td id="sum26"></td>
+                        <td id="sum27"></td>
+                        <td id="sum28"></td>
+                        <td id="sum29"></td>
+                        <td id="sum30"></td>
+                        <td id="sum31"></td>
+                        <td id="sum32"></td>
+                        <td id="sum33"></td>
+                    </tr>
+                </tfoot>
+            </table>
         </div>
     </div>
 </x-admin-layout>
@@ -349,14 +317,14 @@
             // Initialize Flatpickr for start date
             flatpickr("#startdate", {
                 defaultDate: "{{ $start_date ?? '' }}" ||
-                formattedStartDate, // Use Laravel variable or fallback
+                    formattedStartDate, // Use Laravel variable or fallback
                 dateFormat: "Y-m-d"
             });
 
             // Initialize Flatpickr for end date
             flatpickr("#enddate", {
                 defaultDate: "{{ $end_date ?? '' }}" ||
-                formattedEndDate, // Use Laravel variable or fallback
+                    formattedEndDate, // Use Laravel variable or fallback
                 dateFormat: "Y-m-d"
             });
 
@@ -409,18 +377,14 @@
             calculateColumnSum('table-energy', 32, 'sum31');
             calculateColumnSum('table-energy', 33, 'sum32');
             calculateColumnSum('table-energy', 34, 'sum33');
-            calculateColumnSum('table-energy', 35, 'sum34');
-            calculateColumnSum('table-energy', 36, 'sum35');
-            calculateColumnSum('table-energy', 37, 'sum36');
-            calculateColumnSum('table-energy', 38, 'sum37');
-            calculateColumnSum('table-energy', 39, 'sum38');
-            calculateColumnSum('table-energy', 40, 'sum39');
 
             // export to excel
             window.exportToExcel = function(event, tableID, filename = '') {
-                event.preventDefault();  // Prevent form submission
+                event.preventDefault(); // Prevent form submission
                 var table = document.getElementById(tableID);
-                var wb = XLSX.utils.table_to_book(table, {sheet: "Sheet1"});
+                var wb = XLSX.utils.table_to_book(table, {
+                    sheet: "Sheet1"
+                });
                 XLSX.writeFile(wb, filename + ".xlsx");
             }
 
