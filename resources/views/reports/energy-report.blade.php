@@ -41,6 +41,11 @@
         border-bottom: 1px solid purple;
         padding: 5px 10px;
     }
+
+    /* Hover effect */
+    tbody tr:hover {
+        background-color: #f0f0f0;
+    }
 </style>
 <x-admin-layout>
     <h3 class="text-xl font-bold mb-4">Эрчим хүчний гомдлын тайлан</h3>
