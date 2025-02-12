@@ -3,7 +3,7 @@
         @if (session('success'))
             <div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50" role="alert">
                 {{ session('success') }}
-              </div>
+            </div>
         @endif
         {{-- @if (session('info'))
             <div class="p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50" role="alert">
@@ -13,11 +13,12 @@
         @if (session('warning'))
             <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50" role="alert">
                 {{ session('warning') }}
-              </div>
+            </div>
         @endif
         <div class="text-right">
-            <button wire:click="create()" class="bg-black hover:bg-gray-700 text-white text-right text-sm py-2 px-4 rounded my-3"><i
-                class="fa-solid fa-gear"></i> Удирдах<p></button>
+            <button wire:click="create()"
+                class="bg-black hover:bg-gray-700 text-white text-right text-sm py-2 px-4 rounded my-3"><i
+                    class="fa-solid fa-gear"></i> Удирдах<p></button>
         </div>
         @if ($isOpen)
             @include('livewire.create')
@@ -35,8 +36,7 @@
             <div class="border-b-2 border-neutral-100 px-6 py-3 font-semibold">
                 <span
                     class="py-1 px-2 rounded-lg text-sm 
-                    @if ($step->status_id == 0) 
-                    bg-gray-100
+                    @if ($step->status_id == 0) bg-gray-100
                     @elseif($step->status_id == 1)
                     bg-gray-200
                     @elseif($step->status_id == 2)
@@ -50,13 +50,11 @@
                     @elseif($step->status_id == 6)
                     bg-green-200
                     @else
-                    bg-gray-200 
-                    @endif">
-                    {{-- @if ($step->status_id == 1)
-                        {{$step->org->name . ' руу'}}
-                    @endif --}}
+                    bg-gray-200 @endif">
+
                     Өргөдөл
-                    гомдол {{ $step->status?->name }}</span>
+                    гомдол {{ $step->status?->name }}
+                </span>
             </div>
             <div class="p-4">
                 <div class="w-full mx-auto bg-white rounded-xl overflow-hidden">
@@ -67,7 +65,7 @@
                             {{-- <img src="user-avatar.jpg" alt="User Avatar" class="w-20 h-20 rounded-full mx-auto mb-4"> --}}
                             <div class="flex items-start">
                                 <img class="w-12 h-12 rounded-full object-cover mr-4 shadow"
-                                src="{{ $step->sentUser?->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
+                                    src="{{ $step->sentUser?->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
                                 <div class="text-sm ">
                                     <div class="flex items-center justify-between">
                                         <h2 class="font-semibold text-gray-900">
@@ -93,21 +91,21 @@
                     <div class="bg-slate-100 shadow-inner p-2">
                         <div class="text-sm text-gray-700">
                             {{ $step->desc }}
-                        </div> 
-                        @if (isset($step->amount))
-                        <div class="text-sm text-gray-700 mt-2 font-bold">
-                            Үнийн дүн: {{ number_format((float)$step->amount) }}₮
                         </div>
+                        @if (isset($step->amount))
+                            <div class="text-sm text-gray-700 mt-2 font-bold">
+                                Үнийн дүн: {{ number_format((float) $step->amount) }}₮
+                            </div>
                         @endif
                         @if (isset($step->amount_pay) && $step->amount_pay != 0)
-                        <div class="text-sm text-gray-700 mt-2 font-bold">
-                            Хэрэглэгч төлөх дүн: {{ number_format((float)$step->amount_pay) }}₮
-                        </div>
+                            <div class="text-sm text-gray-700 mt-2 font-bold">
+                                Хэрэглэгч төлөх дүн: {{ number_format((float) $step->amount_pay) }}₮
+                            </div>
                         @endif
                         @if (isset($step->amount_recieve) && $step->amount_recieve != 0)
-                        <div class="text-sm text-gray-700 mt-2 font-bold">
-                            Хэрэглэгчид буцаах дүн: {{ number_format((float)$step->amount_recieve) }}₮
-                        </div>
+                            <div class="text-sm text-gray-700 mt-2 font-bold">
+                                Хэрэглэгчид буцаах дүн: {{ number_format((float) $step->amount_recieve) }}₮
+                            </div>
                         @endif
                     </div>
                     @if ($step->file_id != null)
@@ -136,11 +134,12 @@
                     @endif
 
                     <!-- Edit and Delete Buttons -->
-                    @if (Auth::user()->role->name == "ehzh")    
-                    <div class="text-right mt-4">
-                        <button wire:click="edit({{ $step->id }})" class="bg-yellow-500 hover:bg-yellow-700 text-white py-1 px-3 rounded">Засах</button>
-                        {{-- <button wire:click="confirmDelete({{ $step->id }})" class="bg-red-500 hover:bg-red-700 text-white py-1 px-3 rounded">Устгах</button> --}}
-                    </div>
+                    @if (Auth::user()->role->name == 'ehzh')
+                        <div class="text-right mt-4">
+                            <button wire:click="edit({{ $step->id }})"
+                                class="bg-yellow-500 hover:bg-yellow-700 text-white py-1 px-3 rounded">Засах</button>
+                            {{-- <button wire:click="confirmDelete({{ $step->id }})" class="bg-red-500 hover:bg-red-700 text-white py-1 px-3 rounded">Устгах</button> --}}
+                        </div>
                     @endif
 
                 </div>

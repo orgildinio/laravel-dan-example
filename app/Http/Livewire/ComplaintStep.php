@@ -165,7 +165,7 @@ class ComplaintStep extends Component
             'amount_pay' => $this->amount_pay,
             'amount_recieve' => $this->amount_recieve,
         ];
-
+        $additionalDesc = '';
         switch ($this->selectedAction) {
             case 'Тайлбар':
                 // Тайлбар бичихэд төлөв өөрчлөгдөхгүй
@@ -184,6 +184,7 @@ class ComplaintStep extends Component
                     $complaint->update(['second_status_id' => 2, 'second_user_id' => $this->selected_user_id]);
                     $stepData['status_id'] = 1;
                     $stepData['org_id'] = $this->org_id;
+                    $additionalDesc = 'Мэргэжилтэн ' . $complaint->secondUser?->name . ' рүү шилжүүлэв.';
 
                     // Хэрвээ 1111-ээс ирсэн гомдол байвал 1111 рүү мэдээлэл дамжуулах
                     $comment = 'Мэргэжилтэн ' . $complaint->secondUser?->name . ' рүү шилжүүлэв. Тайлбар: ' . $this->desc;
@@ -192,6 +193,7 @@ class ComplaintStep extends Component
                     $complaint->update(['status_id' => 2, 'controlled_user_id' => $this->selected_user_id]);
                     $stepData['status_id'] = 1;
                     $stepData['org_id'] = $this->org_id;
+                    $additionalDesc = 'Мэргэжилтэн ' . $complaint->controlledUser?->name . ' рүү шилжүүлэв.';
 
                     // Хэрвээ 1111-ээс ирсэн гомдол байвал 1111 рүү мэдээлэл дамжуулах
                     $comment = 'Мэргэжилтэн ' . $complaint->controlledUser?->name . ' рүү шилжүүлэв. Тайлбар: ' . $this->desc;
@@ -204,13 +206,8 @@ class ComplaintStep extends Component
                 $complaint->update(['status_id' => 1, 'second_org_id' => $this->org_id, 'second_status_id' => 0]);
                 $stepData['status_id'] = 1;
                 $stepData['org_id'] = $complaint->organization_id;
+                $additionalDesc = $complaint->secondOrg?->name . ' рүү шилжүүлэв.';
 
-                // Хүлээн авч буй ТЗЭ байгууллагын хэрэглэгчид мэйлээр мэдэгдэх
-                // $recvUser = User::where('org_id', $this->org_id)->first();
-                // // Send email about new complaint recieved
-                // if ($recvUser != null) {
-                //     SendTzeEmailJob::dispatch($complaint, $recvUser);
-                // }
                 $recvUsers = User::where('org_id', $this->org_id)->get();
 
                 // Check if there are any users
@@ -321,6 +318,9 @@ class ComplaintStep extends Component
                 // Handle the default case or show an error
                 break;
         }
+
+        // Одоогийн desc утгыг шинэчлэн хадгалах
+        $stepData['desc'] = trim($this->desc) . ".\n" . trim($additionalDesc);
 
         // Create the ComplaintStep
         $complaint_step = ModelsComplaintStep::create($stepData);
