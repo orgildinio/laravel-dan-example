@@ -90,7 +90,12 @@
                     </div>
                     <div class="bg-slate-100 shadow-inner p-2">
                         <div class="text-sm text-gray-700">
-                            {{ $step->desc }}
+                            {{-- {!! $step->desc !!} --}}
+                            @foreach (explode("\n", $step->desc) as $index => $line)
+                                <div class="py-1 {{ $index % 2 == 0 ? '' : 'bg-blue-100 p-2 rounded' }}">
+                                    {{ $line }}
+                                </div>
+                            @endforeach
                         </div>
                         @if (isset($step->amount))
                             <div class="text-sm text-gray-700 mt-2 font-bold">

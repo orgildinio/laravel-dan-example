@@ -325,7 +325,7 @@ class ComplaintStep extends Component
         // Create the ComplaintStep
         $complaint_step = ModelsComplaintStep::create($stepData);
 
-        // Handle file uploads if present
+        // Handle file uploads if presentß
         if ($this->files) {
             foreach ($this->files as $file) {
                 $filename = time() . '_' . $file->getClientOriginalName();
