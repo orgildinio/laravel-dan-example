@@ -93,7 +93,7 @@
             </div>
             <div class="flex items-end">
                 <button type="submit"
-                    class="bg-primary hover:bg-primaryHover text-white font-medium rounded-lg px-4 py-2">
+                    class="bg-primary hover:bg-primaryHover text-white font-medium rounded-lg px-4 py-2 mr-2">
                     Хайх
                 </button>
                 <button type="button" onclick="exportToExcel(event, 'tailan2', 'Tailan-2')"
