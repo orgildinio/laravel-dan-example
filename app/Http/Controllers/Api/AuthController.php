@@ -161,7 +161,7 @@ class AuthController extends Controller
 
     public function loginTze(Request $request)
     {
-        // Validate request
+        // 1️⃣ Validate request
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required',
@@ -176,27 +176,36 @@ class AuthController extends Controller
             ], 422);
         }
 
-        $credentials = $request->only('email', 'password');
+        // $credentials = $request->only('email', 'password');
 
-        // Validate request
-        // $request->validate([
-        //     'email' => 'required|email',
-        //     'password' => 'required',
-        // ]);
+        // // Check if the email and password match any user
+        // if (!Auth::attempt($credentials)) {
+        //     // Check if email exists
+        //     $user = User::where('email', $request->email)->first();
+        //     if ($user && !Hash::check($request->password, $user->password)) {
+        //         return response()->json(['error' => 'Нууц үг буруу'], 401);
+        //     }
 
-        // Check if the email and password match any user
-        if (!Auth::attempt($credentials)) {
-            // Check if email exists
-            $user = User::where('email', $request->email)->first();
-            if ($user && !Hash::check($request->password, $user->password)) {
-                return response()->json(['error' => 'Нууц үг буруу'], 401);
-            }
+        //     return response()->json(['error' => 'Мэйл хаяг эсвэл нууц үг буруу байна.'], 401);
+        // }
 
-            return response()->json(['error' => 'Мэйл хаяг эсвэл нууц үг буруу байна.'], 401);
+        // // Generate token and return response
+        // $user = Auth::user();
+
+        // 2️⃣ Check if user exists
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user) {
+            return response()->json(['error' => 'Хэрэглэгчийн мэдээлэл олдсонгүй.'], 401);
         }
 
-        // Generate token and return response
-        $user = Auth::user();
+        // 3️⃣ Check password
+        if (!Hash::check($request->password, $user->password)) {
+            return response()->json(['error' => 'Нууц үг буруу байна.'], 401);
+        }
+
+        // 4️⃣ Authenticate the user
+        Auth::login($user); // Нэвтрэх хэрэглэгчийг session-д хадгалах
 
         $token = $user->createToken('Personal Access Token')->plainTextToken;
 

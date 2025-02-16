@@ -8,11 +8,12 @@ use Carbon\Carbon;
 use App\Models\File;
 use App\Models\Complaint;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Http\Resources\ComplaintResource;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
+use App\Models\ComplaintStep;
 use PhpParser\Node\Stmt\TryCatch;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\ComplaintResource;
+use Illuminate\Support\Facades\Validator;
 
 class ComplaintController extends Controller
 {
@@ -27,9 +28,28 @@ class ComplaintController extends Controller
         return ComplaintResource::collection($complaints);
     }
 
-    public function getComplaintByUser($regnum)
+    public function getComplaintsByUser($regnum)
     {
         $complaints = Complaint::where("registerNumber", $regnum)->orderBy("complaint_date", "desc")->get();
+        return ComplaintResource::collection($complaints);
+    }
+
+    public function getComplaintsByOrg($id)
+    {
+        // Нэвтэрсэн хэрэглэгчийг авах
+        $user = Auth::user();
+
+        // Хэрэв хэрэглэгч өөрийн байгууллагын бус ID-аар хүсэлт илгээвэл хандалт хориглох
+        if ($user->org_id != $id) {
+            return response()->json(['message' => 'Та зөвхөн өөрийн байгууллагын мэдээллийг авах боломжтой.'], 403);
+        }
+
+        // Өөрийн байгууллагын гомдлуудыг буцаах
+        $complaints = Complaint::where("organization_id", $id)
+            ->where('status_id', 0)
+            ->orderBy("created_at", "desc")
+            ->get();
+
         return ComplaintResource::collection($complaints);
     }
 
@@ -182,6 +202,40 @@ class ComplaintController extends Controller
 
         return new ComplaintResource($complaint);
     }
+
+    public function updateStatus(Request $request, Complaint $complaint)
+    {
+        // Validate request
+        $request->validate([
+            'status_id' => 'required|integer|in:2,3,4,6,8',
+            'desc' => 'required|string',
+        ]);
+
+        // Get authenticated user
+        $user = auth()->user();
+
+        $complaint->update([
+            'status_id' => $request->status_id,
+            'controlled_user_id' => $complaint->status_id == 0 ? $user->id : $complaint->controlled_user_id,
+        ]);
+
+        // Create a new ComplaintStep record
+        $complaintStep = ComplaintStep::create([
+            'org_id' => $complaint->organization_id,
+            'complaint_id' => $complaint->id,
+            'sent_user_id' => $user->id,
+            'sent_date' => now(),
+            'desc' => $request->desc,
+            'status_id' => $request->status_id,
+        ]);
+
+        return response()->json([
+            'message' => 'Гомдлын төлөв амжилттай шинэчлэгдлээ.',
+            'complaint' => new ComplaintResource($complaint),
+            'complaint_step' => $complaintStep,
+        ]);
+    }
+
 
     /**
      * Remove the specified resource from storage.

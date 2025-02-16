@@ -51,22 +51,22 @@
     <h3 class="text-xl font-bold mb-4">Эрчим хүчний гомдлын тайлан</h3>
 
     <!-- Search Form -->
-    <form method="GET" autocomplete="off" class="mb-4">
+    <form method="GET" autocomplete="off" class="">
         <div class="flex flex-row gap-2">
             <div>
-                <label for="startdate" class="text-sm font-medium">Эхлэх огноо</label>
+                {{-- <label for="startdate" class="text-sm font-medium">Эхлэх огноо</label> --}}
                 <input type="date" id="startdate" name="startdate"
                     value="{{ request('startdate', now()->subMonth()->toDateString()) }}"
                     class="w-36 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
             </div>
             <div>
-                <label for="enddate" class="text-sm font-medium">Дуусах огноо</label>
+                {{-- <label for="enddate" class="text-sm font-medium">Дуусах огноо</label> --}}
                 <input type="date" id="enddate" name="enddate"
                     value="{{ request('enddate', now()->toDateString()) }}"
                     class="w-36 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
             </div>
             <div>
-                <label for="energy_type_id" class="text-sm font-medium">Энергийн төрөл</label>
+                {{-- <label for="energy_type_id" class="text-sm font-medium">Энергийн төрөл</label> --}}
                 <select name="energy_type_id" id="energy_type_id"
                     class="w-40 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
                     <option value="">-- Сонгох --</option>
@@ -79,7 +79,7 @@
                 </select>
             </div>
             <div>
-                <label for="complaint_type_id" class="text-sm font-medium">Гомдлын төрөл</label>
+                {{-- <label for="complaint_type_id" class="text-sm font-medium">Гомдлын төрөл</label> --}}
                 <select name="complaint_type_id" id="complaint_type_id"
                     class="w-40 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
                     <option value="">-- Сонгох --</option>
@@ -96,12 +96,15 @@
                     class="bg-primary hover:bg-primaryHover text-white font-medium rounded-lg px-4 py-2">
                     Хайх
                 </button>
+                <button type="button" onclick="exportToExcel(event, 'tailan2', 'Tailan-2')"
+                    class="bg-blue-400 hover:bg-primaryHover text-white font-medium rounded-lg px-4 py-2">Export</button>
             </div>
+
         </div>
     </form>
 
-    <div class="table-container mt-20">
-        <table>
+    <div class="table-container">
+        <table id="tailan2">
             <thead>
                 <tr>
                     <th><span>№</span></th>
@@ -157,6 +160,22 @@
                     $summary_totals = [];
                 @endphp
                 @foreach ($complaints as $index => $complaint)
+                    @php
+                        $totals['c_1'] += $complaint->c_1;
+                        $totals['c_2'] += $complaint->c_2;
+                        $totals['c_3'] += $complaint->c_3;
+                        $totals['c_4'] += $complaint->c_4;
+                        $totals['c_5'] += $complaint->c_5;
+                        $totals['c_6'] += $complaint->c_6;
+                        $totals['c_7'] += $complaint->c_7;
+                        $totals['total_channel'] += $complaint->total_channel;
+
+                        foreach ($complaint_type_summaries as $summary) {
+                            $columnName = 'c' . $summary->id . '_cnt';
+                            $summary_totals[$columnName] =
+                                ($summary_totals[$columnName] ?? 0) + ($complaint->$columnName ?? 0);
+                        }
+                    @endphp
                     <tr>
                         <td>{{ $index + 1 }}</td>
                         <td>{{ $complaint->organization_name }}</td>
@@ -212,3 +231,21 @@
         </table>
     </div>
 </x-admin-layout>
+
+@push('scripts')
+
+    <script type="module">
+        $(document).ready(function() {
+
+            // export to excel
+            window.exportToExcel = function(event, tableID, filename = '') {
+                event.preventDefault(); // Prevent form submission
+                var table = document.getElementById(tableID);
+                var wb = XLSX.utils.table_to_book(table, {
+                    sheet: "Sheet1"
+                });
+                XLSX.writeFile(wb, filename + ".xlsx");
+            }
+
+        });
+    </script>

@@ -40,11 +40,14 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/upload/{complaint_id}', [ComplaintController::class, 'upload']);
     Route::post('/update', [AuthController::class, 'update']);
     Route::post('/create-complaint', [ComplaintController::class, 'storeTze']);
-    Route::get('/complaintsByUser/{regnum}', [ComplaintController::class, 'getComplaintByUser']);
+    Route::get('/complaintsByUser/{regnum}', [ComplaintController::class, 'getComplaintsByUser']);
+
     Route::apiResource('complaintSteps', ComplaintStepController::class);
     Route::get('/steps/{complaint_id}', [ComplaintStepController::class, 'getStepsByComplaintId']);
     Route::get('categories', [CategoryController::class, 'index']);
     Route::get('organizations', [OrganizationController::class, 'index']);
     Route::get('complaintTypes', [ComplaintTypeController::class, 'index']);
     Route::get('complaintTypeSummaries', [ComplaintTypeSummaryController::class, 'index']);
+    Route::get('/complaintsByOrg/{id}', [ComplaintController::class, 'getComplaintsByOrg']);
+    Route::patch('/complaints/{complaint}/status', [ComplaintController::class, 'updateStatus']);
 });
