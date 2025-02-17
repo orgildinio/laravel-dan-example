@@ -41,7 +41,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/update', [AuthController::class, 'update']);
     Route::post('/create-complaint', [ComplaintController::class, 'storeTze']);
     Route::get('/complaintsByUser/{regnum}', [ComplaintController::class, 'getComplaintsByUser']);
-
     Route::apiResource('complaintSteps', ComplaintStepController::class);
     Route::get('/steps/{complaint_id}', [ComplaintStepController::class, 'getStepsByComplaintId']);
     Route::get('categories', [CategoryController::class, 'index']);

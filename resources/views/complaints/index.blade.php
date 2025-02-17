@@ -81,6 +81,17 @@
                             </select>
                         </div>
                         <div class="mr-1">
+                            <select name="complaint_maker_type_id" id="complaint_maker_type_id"
+                                class="w-32 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
+                                <option value="">Хүсэлт гаргагч</option>
+                                @foreach ($complaint_maker_types as $type)
+                                    <option value="{{ $type->id }}"
+                                        {{ old('complaint_maker_type_id', $complaint_maker_type_id) == $type->id ? 'selected' : '' }}>
+                                        {{ $type->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mr-1">
                             <a href="{{ url()->current() }}"
                                 class="flex items-center justify-center bg-gray-300 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2">
                                 Цэвэрлэх

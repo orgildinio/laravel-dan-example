@@ -112,6 +112,9 @@ class ExportComplaint implements FromCollection, WithHeadings, ShouldAutoSize, W
             ->when(isset($_GET['category_id']), function ($query) {
                 $query->where('category_id', $_GET['category_id']);
             })
+            ->when(isset($_GET['complaint_maker_type_id']), function ($query) {
+                $query->where('complaint_maker_type_id', $_GET['complaint_maker_type_id']);
+            })
             ->when(isset($_GET['complaint_date']), function ($query) {
                 $query->whereDate('complaint_date', $_GET['complaint_date']);
             })

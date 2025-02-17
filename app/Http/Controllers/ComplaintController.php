@@ -226,6 +226,7 @@ class ComplaintController extends Controller
         $complaintDate = $request->query('complaint_date');
         $createdAt = $request->query('created_at');
         $updatedAt = $request->query('updated_at');
+        $complaint_maker_type_id = $request->query('complaint_maker_type_id');
 
         $user_code = $request->query('user_code');
         $phone = $request->query('phone');
@@ -334,6 +335,10 @@ class ComplaintController extends Controller
             $query->whereDate('updated_at', $updatedAt);
         }
 
+        if ($complaint_maker_type_id !== null) {
+            $query->where('complaint_maker_type_id', $complaint_maker_type_id);
+        }
+
         $complaints = $query->paginate(15);
 
         $statuses = Status::all();
@@ -344,8 +349,9 @@ class ComplaintController extends Controller
         $complaint_types = ComplaintType::all();
         $complaint_type_summaries = ComplaintTypeSummary::all();
         $categories = Category::all();
+        $complaint_maker_types = ComplaintMakerType::all();
 
-        return view('complaints.index', compact('complaints', 'daterange', 'search_text', 'statuses', 'status_id', 'org_id', 'orgs', 'energy_type_id', 'energy_types', 'channel_id', 'channels', 'controlled_user_id', 'controlled_users', 'second_org_id', 'phone', 'user_code', 'expire_status', 'complaint_types', 'complaint_type_id', 'complaint_type_summaries', 'complaint_type_summary_id', 'relatedComplaintIds', 'serial_number', 'categories', 'category_id', 'complaintDate', 'createdAt', 'updatedAt'));
+        return view('complaints.index', compact('complaints', 'daterange', 'search_text', 'statuses', 'status_id', 'org_id', 'orgs', 'energy_type_id', 'energy_types', 'channel_id', 'channels', 'controlled_user_id', 'controlled_users', 'second_org_id', 'phone', 'user_code', 'expire_status', 'complaint_types', 'complaint_type_id', 'complaint_type_summaries', 'complaint_type_summary_id', 'relatedComplaintIds', 'serial_number', 'categories', 'category_id', 'complaintDate', 'createdAt', 'updatedAt', 'complaint_maker_types', 'complaint_maker_type_id'));
     }
 
     public function ExportReportExcel(Request $request)
