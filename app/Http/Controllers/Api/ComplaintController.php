@@ -66,8 +66,6 @@ class ComplaintController extends Controller
     public function upload(Request $request, $complaint_id)
     {
         try {
-
-
             // Find the complaint
             $complaint = Complaint::find($complaint_id);
 
@@ -206,13 +204,30 @@ class ComplaintController extends Controller
     public function updateStatus(Request $request, Complaint $complaint)
     {
         // Validate request
-        $request->validate([
-            'status_id' => 'required|integer|in:2,3,4,6,8',
+        $validator = Validator::make($request->all(), [
+            'status_id' => 'required|integer|in:2,3,6,8',
             'desc' => 'required|string',
         ]);
 
+        // Check if validation fails
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Өгөгдөл буруу байна.',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
         // Get authenticated user
         $user = auth()->user();
+
+        // Check if the authenticated user is the controlled user
+        if ($complaint->controlled_user_id !== $user->id) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Танд энэ гомдлын төлөвийг шинэчлэх эрх байхгүй байна.'
+            ], 403);
+        }
 
         $complaint->update([
             'status_id' => $request->status_id,

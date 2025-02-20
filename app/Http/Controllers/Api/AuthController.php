@@ -176,26 +176,10 @@ class AuthController extends Controller
             ], 422);
         }
 
-        // $credentials = $request->only('email', 'password');
-
-        // // Check if the email and password match any user
-        // if (!Auth::attempt($credentials)) {
-        //     // Check if email exists
-        //     $user = User::where('email', $request->email)->first();
-        //     if ($user && !Hash::check($request->password, $user->password)) {
-        //         return response()->json(['error' => 'Нууц үг буруу'], 401);
-        //     }
-
-        //     return response()->json(['error' => 'Мэйл хаяг эсвэл нууц үг буруу байна.'], 401);
-        // }
-
-        // // Generate token and return response
-        // $user = Auth::user();
-
         // 2️⃣ Check if user exists
         $user = User::where('email', $request->email)->first();
 
-        if (!$user) {
+        if (!$user || $user->org_id === null) {
             return response()->json(['error' => 'Хэрэглэгчийн мэдээлэл олдсонгүй.'], 401);
         }
 
