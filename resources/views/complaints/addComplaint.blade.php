@@ -47,7 +47,8 @@
                                 <input
                                     class="bg-gray-200 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
                                     id="inline-register-name" type="text" name="companyRegnum"
-                                    value="{{ isset($danUser->companyRegnum) ? $danUser->companyRegnum : '' }}" disabled>
+                                    value="{{ isset($danUser->companyRegnum) ? $danUser->companyRegnum : '' }}"
+                                    disabled>
                             </div>
                         </div>
                     @else
@@ -290,9 +291,9 @@
                         <div class="md:w-2/3">
                             <select name="organization_id" id="sel_org"
                                 class="bg-gray-50 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500">
-                                {{-- <option value='0'>-- Холбогдох ТЗЭ сонгох --</option>
-                                @foreach ($orgs as $org)
-                                <option value="{{ $org->id }}">{{ $org->name }}</option>
+                                {{-- <option value='0'>-- онгох --</option> --}}
+                                {{-- @foreach ($orgs as $org)
+                                    <option value="{{ $org->id }}">{{ $org->name }}</option>
                                 @endforeach --}}
                             </select>
                             @error('organization_id')

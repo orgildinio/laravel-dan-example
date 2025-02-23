@@ -41,6 +41,7 @@ use App\Http\Requests\ComplaintStoreRequest;
 use App\Models\BagKhoroo;
 use App\Models\ComplaintStep as ModelsComplaintStep;
 use App\Models\Country;
+use App\Models\OrganizationServiceArea;
 use App\Models\SoumDistrict;
 
 class ComplaintController extends Controller
@@ -77,17 +78,27 @@ class ComplaintController extends Controller
         $danUser = Auth::user();
 
         $categories = Category::all();
-        $orgs = Organization::orderBy('name', 'asc')->get();
+
         $complaint_types = ComplaintType::all();
         $energy_types = EnergyType::all();
 
-        // $user_district = $danUser->danSoumDistrictName;
-        // $user_khoroo_number = intval(str_replace(['-р хороо'], '', $danUser->danBagKhorooName));
+        // Find country_id, soum_district_id, bag_khoroo_id based on names
+        $country = Country::where('name', $danUser->danAimagCityName)->first();
 
-        // $orgs = Organization::whereHas('serviceAreas', function ($query) use ($user_district, $user_khoroo_number) {
-        //     $query->where('district', 'LIKE', '%' . $user_district . '%')
-        //         ->where('khoroo', 'LIKE', '%' . $user_khoroo_number . '%');
-        // })->get();
+        // Find district_id only if country exists
+        $district = $country ? SoumDistrict::where('name', $danUser->danSoumDistrictName)
+            ->where('country_id', $country->id)
+            ->first()
+            : null;
+
+        // Find bag_khoroo_id only if district exists
+        $khoroo = $district ? BagKhoroo::where('name', $danUser->danBagKhorooName)
+            ->where('soum_district_id', $district->id)
+            ->first()
+            : null;
+
+        $organizationServiceArea = OrganizationServiceArea::where('bag_khoroo_id', $khoroo->id)->first();
+        $orgs = Organization::where('id', $organizationServiceArea->organization_id)->get();
 
         return view('complaints.addComplaint', compact('categories', 'orgs', 'complaint_types', 'energy_types', 'danUser'));
     }
