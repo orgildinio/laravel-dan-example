@@ -201,6 +201,7 @@ class ReportController extends Controller
             ->leftJoin('complaint_type_summaries as cts', 'cts.id', '=', 'c.complaint_type_summary_id')
             ->where('org.plant_id', '=', $energy_type_id)
             ->where('c.complaint_type_id', '=', $complaint_type_id)
+            ->where('c.organization_id', '!=', 99)
             ->whereBetween('c.created_at', [$startDate, $endDate])
             ->groupBy('org.name')
             ->orderBy('org.name')
