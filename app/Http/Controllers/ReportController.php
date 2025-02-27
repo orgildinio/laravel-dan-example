@@ -195,13 +195,14 @@ class ReportController extends Controller
         $complaints = DB::table('organizations as org')
             ->select($selectColumns)
             ->leftJoin('complaints as c', function ($join) use ($startDate, $endDate, $transferColumn) {
-                $join->on("c.$transferColumn", '=', 'org.id');
+                $join->on("c.$transferColumn", '=', 'org.id')
+                    ->where("c.$transferColumn", '!=', 99);
                 // ->whereBetween('c.created_at', [$startDate, $endDate]);
             })
             ->leftJoin('complaint_type_summaries as cts', 'cts.id', '=', 'c.complaint_type_summary_id')
             ->where('org.plant_id', '=', $energy_type_id)
             ->where('c.complaint_type_id', '=', $complaint_type_id)
-            ->where('c.organization_id', '!=', 99)
+            // ->where('c.organization_id', '!=', 99)
             ->whereBetween('c.created_at', [$startDate, $endDate])
             ->groupBy('org.name')
             ->orderBy('org.name')
