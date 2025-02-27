@@ -189,19 +189,46 @@ class ReportController extends Controller
 
         // **🔹 Combine Columns (Static + Dynamic)**
         $selectColumns = array_merge($staticColumns, $summaryColumns);
+        // dd($selectColumns);
 
         // **🔹 Build Query**
         $complaints = DB::table('organizations as org')
             ->select($selectColumns)
             ->leftJoin('complaints as c', function ($join) use ($startDate, $endDate, $transferColumn) {
-                $join->on("c.$transferColumn", '=', 'org.id')
-                    ->whereBetween('c.created_at', [$startDate, $endDate]);
+                $join->on("c.$transferColumn", '=', 'org.id');
+                // ->whereBetween('c.created_at', [$startDate, $endDate]);
             })
             ->leftJoin('complaint_type_summaries as cts', 'cts.id', '=', 'c.complaint_type_summary_id')
             ->where('org.plant_id', '=', $energy_type_id)
+            ->where('c.complaint_type_id', '=', $complaint_type_id)
+            ->whereBetween('c.created_at', [$startDate, $endDate])
             ->groupBy('org.name')
             ->orderBy('org.name')
             ->get();
+
+        // $complaints = DB::table('organizations as org')
+        //     ->select(
+        //         'org.name as organization_name',
+        //         DB::raw('SUM(CASE WHEN c.channel_id = 1 THEN 1 ELSE 0 END) AS c_1'),
+        //         DB::raw('SUM(CASE WHEN c.channel_id = 2 THEN 1 ELSE 0 END) AS c_2'),
+        //         DB::raw('SUM(CASE WHEN c.channel_id = 3 THEN 1 ELSE 0 END) AS c_3'),
+        //         DB::raw('SUM(CASE WHEN c.channel_id = 4 THEN 1 ELSE 0 END) AS c_4'),
+        //         DB::raw('SUM(CASE WHEN c.channel_id = 5 THEN 1 ELSE 0 END) AS c_5'),
+        //         DB::raw('SUM(CASE WHEN c.channel_id = 6 THEN 1 ELSE 0 END) AS c_6'),
+        //         DB::raw('SUM(CASE WHEN c.channel_id = 7 THEN 1 ELSE 0 END) AS c_7'),
+        //         DB::raw('COUNT(c.id) AS total_channel'),
+        //         DB::raw('SUM(CASE WHEN c.complaint_type_summary_id = 2 THEN 1 ELSE 0 END) AS c2_cnt'),
+        //         DB::raw('SUM(CASE WHEN c.complaint_type_summary_id = 17 THEN 1 ELSE 0 END) AS c17_cnt'),
+        //         DB::raw('SUM(CASE WHEN c.complaint_type_summary_id = 18 THEN 1 ELSE 0 END) AS c18_cnt'),
+        //         DB::raw('SUM(CASE WHEN c.complaint_type_summary_id = 16 THEN 1 ELSE 0 END) AS c16_cnt')
+        //     )
+        //     ->leftJoin('complaints as c', 'c.second_org_id', '=', 'org.id')
+        //     ->leftJoin('complaint_type_summaries as cts', 'cts.id', '=', 'c.complaint_type_summary_id')
+        //     ->where('org.plant_id', 1)
+        //     ->whereBetween('c.created_at', ['2025-01-01', '2025-02-01'])
+        //     ->groupBy('org.name')
+        //     ->orderBy('org.name', 'ASC')
+        //     ->get();
 
         // dd($complaints);
 
