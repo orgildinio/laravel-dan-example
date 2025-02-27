@@ -144,6 +144,14 @@ class ReportController extends Controller
         $energy_type_id = $request->query('energy_type_id');
         $complaint_type_id = $request->query('complaint_type_id');
 
+        $transfer_status = $request->query('transfer_status');
+
+        // Зөвхөн зөвшөөрөгдсөн баганыг ашиглах
+        $validColumns = ['second_org_id', 'organization_id'];
+        $transferColumn = in_array($transfer_status, $validColumns) ? $transfer_status : 'organization_id';
+
+        // dd($request->all());
+
         $complaint_type_summaries = collect();
         if (isset($energy_type_id) && isset($complaint_type_id)) {
             $complaint_type_summaries = ComplaintTypeSummary::where('energy_type_id', $energy_type_id)
@@ -185,20 +193,12 @@ class ReportController extends Controller
         // **🔹 Build Query**
         $complaints = DB::table('organizations as org')
             ->select($selectColumns)
-            ->leftJoin('complaints as c', function ($join) use ($startDate, $endDate, $energy_type_id, $complaint_type_id) {
-                $join->on('c.second_org_id', '=', 'org.id')
+            ->leftJoin('complaints as c', function ($join) use ($startDate, $endDate, $transferColumn) {
+                $join->on("c.$transferColumn", '=', 'org.id')
                     ->whereBetween('c.created_at', [$startDate, $endDate]);
-
-                if ($energy_type_id) {
-                    $join->where('c.energy_type_id', '=', $energy_type_id);
-                }
-
-                if ($complaint_type_id) {
-                    $join->where('c.complaint_type_id', '=', $complaint_type_id);
-                }
             })
             ->leftJoin('complaint_type_summaries as cts', 'cts.id', '=', 'c.complaint_type_summary_id')
-            // ->where('org.plant_id', '=', 1)
+            ->where('org.plant_id', '=', $energy_type_id)
             ->groupBy('org.name')
             ->orderBy('org.name')
             ->get();

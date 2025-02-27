@@ -54,22 +54,19 @@
     <form method="GET" autocomplete="off" class="">
         <div class="flex flex-row gap-2">
             <div>
-                {{-- <label for="startdate" class="text-sm font-medium">Эхлэх огноо</label> --}}
                 <input type="date" id="startdate" name="startdate"
                     value="{{ request('startdate', now()->subMonth()->toDateString()) }}"
                     class="w-36 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
             </div>
             <div>
-                {{-- <label for="enddate" class="text-sm font-medium">Дуусах огноо</label> --}}
                 <input type="date" id="enddate" name="enddate"
                     value="{{ request('enddate', now()->toDateString()) }}"
                     class="w-36 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
             </div>
             <div>
-                {{-- <label for="energy_type_id" class="text-sm font-medium">Энергийн төрөл</label> --}}
                 <select name="energy_type_id" id="energy_type_id"
                     class="w-40 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
-                    <option value="">-- Сонгох --</option>
+                    {{-- <option value="">-- Сонгох --</option> --}}
                     @foreach ($energy_types as $type)
                         <option value="{{ $type->id }}"
                             {{ request('energy_type_id') == $type->id ? 'selected' : '' }}>
@@ -79,16 +76,27 @@
                 </select>
             </div>
             <div>
-                {{-- <label for="complaint_type_id" class="text-sm font-medium">Гомдлын төрөл</label> --}}
                 <select name="complaint_type_id" id="complaint_type_id"
                     class="w-40 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
-                    <option value="">-- Сонгох --</option>
+                    {{-- <option value="">-- Сонгох --</option> --}}
                     @foreach ($complaint_types as $type)
                         <option value="{{ $type->id }}"
                             {{ request('complaint_type_id') == $type->id ? 'selected' : '' }}>
                             {{ $type->name }}
                         </option>
                     @endforeach
+                </select>
+            </div>
+            <div>
+                <select name="transfer_status" id="transfer_status"
+                    class="w-40 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
+                    <option value="second_org_id" {{ request('transfer_status') == 'second_org_id' ? 'selected' : '' }}>
+                        Шилжүүлсэн
+                    </option>
+                    <option value="organization_id"
+                        {{ request('transfer_status') == 'organization_id' ? 'selected' : '' }}>
+                        Шилжүүлээгүй
+                    </option>
                 </select>
             </div>
             <div class="flex items-end">
