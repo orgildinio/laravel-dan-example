@@ -28,6 +28,7 @@
                 <div class="mr-1">
                     <select name="complaint_type_id" id="complaint_type_id"
                         class="w-32 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
+                        <option value="">-- Сонгох --</option>
                         @foreach ($complaint_types as $type)
                             <option value="{{ $type->id }}"
                                 {{ old('complaint_type_id', $complaint_type_id) == $type->id ? 'selected' : '' }}>
@@ -38,7 +39,7 @@
                 <div>
                     <select name="transfer_status" id="transfer_status"
                         class="w-40 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
-                        <option value="">-- Сонгох --</option>
+                        {{-- <option value="">-- Сонгох --</option> --}}
                         <option value="second_org_id"
                             {{ request('transfer_status') == 'second_org_id' ? 'selected' : '' }}>
                             Шилжүүлсэн

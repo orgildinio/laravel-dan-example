@@ -21,6 +21,10 @@ class ReportController extends Controller
 
         $transfer_status = $request->query('transfer_status');
 
+        // Зөвхөн зөвшөөрөгдсөн баганыг ашиглах
+        $validColumns = ['second_org_id', 'organization_id'];
+        $transferColumn = in_array($transfer_status, $validColumns) ? $transfer_status : 'organization_id';
+
         // If start_date is null, set it to 1 month before the current date
         $startDate = $start_date != null ? $start_date : Carbon::now()->subMonth()->toDateString();
 
@@ -115,8 +119,8 @@ class ReportController extends Controller
         );
 
         $reportData = DB::table('organizations as o')
-            ->leftJoin('complaints as c', function ($join) use ($transfer_status) {
-                $join->on("c.$transfer_status", "=", "o.id");
+            ->leftJoin('complaints as c', function ($join) use ($transferColumn) {
+                $join->on("c.$transferColumn", "=", "o.id");
             })
             ->when(!is_null($energy_type_id), function ($query) use ($energy_type_id) {
                 return $query->where('c.energy_type_id', $energy_type_id);
