@@ -28,7 +28,6 @@
                 <div class="mr-1">
                     <select name="complaint_type_id" id="complaint_type_id"
                         class="w-32 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
-                        <option value="">-- Сонгох --</option>
                         @foreach ($complaint_types as $type)
                             <option value="{{ $type->id }}"
                                 {{ old('complaint_type_id', $complaint_type_id) == $type->id ? 'selected' : '' }}>
