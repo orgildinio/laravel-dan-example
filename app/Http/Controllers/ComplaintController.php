@@ -314,13 +314,22 @@ class ComplaintController extends Controller
 
         // Нэвтэрсэн хэрэглэгч ЭХЗХ биш ТЗЭ бол зөвхөн тухайн байгууллагын мэдээллийг харуулна
         $logged_user_org_id = Auth::user()->org_id;
+        // if ($logged_user_org_id != 99) {
+        //     $query->where(function ($subQuery) use ($logged_user_org_id) {
+        //         $subQuery->where('organization_id', $logged_user_org_id)
+        //             ->orWhere('second_org_id', $logged_user_org_id);
+        //     });
+        // }
         if ($logged_user_org_id != 99) {
-            // $query->where('organization_id', $logged_user_org_id);
             $query->where(function ($subQuery) use ($logged_user_org_id) {
                 $subQuery->where('organization_id', $logged_user_org_id)
-                    ->orWhere('second_org_id', $logged_user_org_id);
+                    ->orWhere(function ($orQuery) use ($logged_user_org_id) {
+                        $orQuery->where('second_org_id', $logged_user_org_id)
+                            ->where('status_id', 1); // status_id=1 нөхцөл нэмэх
+                    });
             });
         }
+
 
         if ($energy_type_id !== null) {
             $query->where('energy_type_id', $energy_type_id);
