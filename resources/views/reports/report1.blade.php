@@ -17,6 +17,7 @@
                 <div class="mr-1">
                     <select name="energy_type_id" id="energy_type_id"
                         class="w-32 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
+                        <option value="">-- Сонгох --</option>
                         @foreach ($energy_types as $type)
                             <option value="{{ $type->id }}"
                                 {{ old('energy_type_id', $energy_type_id) == $type->id ? 'selected' : '' }}>
@@ -27,11 +28,26 @@
                 <div class="mr-1">
                     <select name="complaint_type_id" id="complaint_type_id"
                         class="w-32 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
+                        <option value="">-- Сонгох --</option>
                         @foreach ($complaint_types as $type)
                             <option value="{{ $type->id }}"
                                 {{ old('complaint_type_id', $complaint_type_id) == $type->id ? 'selected' : '' }}>
                                 {{ $type->name }}</option>
                         @endforeach
+                    </select>
+                </div>
+                <div>
+                    <select name="transfer_status" id="transfer_status"
+                        class="w-40 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
+                        <option value="">-- Сонгох --</option>
+                        <option value="second_org_id"
+                            {{ request('transfer_status') == 'second_org_id' ? 'selected' : '' }}>
+                            Шилжүүлсэн
+                        </option>
+                        <option value="organization_id"
+                            {{ request('transfer_status') == 'organization_id' ? 'selected' : '' }}>
+                            Шилжүүлээгүй
+                        </option>
                     </select>
                 </div>
                 <div class="flex flex-row items-center space-x-2">
@@ -57,6 +73,9 @@
                 <th class="border border-gray-300 px-4 py-2">Гар утас</th>
                 <th class="border border-gray-300 px-4 py-2">Бичгээр</th>
                 <th class="border border-gray-300 px-4 py-2">1111</th>
+                <th class="border border-gray-300 px-4 py-2">ЭХЯ-аас</th>
+                <th class="border border-gray-300 px-4 py-2">Нийслэлийн ЗДТГ-аас</th>
+                <th class="border border-gray-300 px-4 py-2">Аймгийн ЗДТГ-аас</th>
                 <th class="border border-gray-300 px-4 py-2">Нийт</th>
             </tr>
         </thead>
@@ -72,10 +91,29 @@
                     <td class="border border-gray-300 px-4 py-2 text-center">{{ $data->channel5_all }}</td>
                     <td class="border border-gray-300 px-4 py-2 text-center">{{ $data->channel6_all }}</td>
                     <td class="border border-gray-300 px-4 py-2 text-center">{{ $data->channel7_all }}</td>
+                    <td class="border border-gray-300 px-4 py-2 text-center">{{ $data->channel8_all }}</td>
+                    <td class="border border-gray-300 px-4 py-2 text-center">{{ $data->channel9_all }}</td>
+                    <td class="border border-gray-300 px-4 py-2 text-center">{{ $data->channel10_all }}</td>
                     <td class="border border-gray-300 px-4 py-2 font-bold text-center">{{ $data->total_channels }}</td>
                 </tr>
             @endforeach
         </tbody>
+        <tfoot class="bg-gray-200 font-bold">
+            <tr>
+                <td class="border border-gray-300 px-4 py-2 text-center" colspan="2">Нийт</td>
+                <td class="border border-gray-300 px-4 py-2 text-center" id="sum_channel1"></td>
+                <td class="border border-gray-300 px-4 py-2 text-center" id="sum_channel2"></td>
+                <td class="border border-gray-300 px-4 py-2 text-center" id="sum_channel3"></td>
+                <td class="border border-gray-300 px-4 py-2 text-center" id="sum_channel4"></td>
+                <td class="border border-gray-300 px-4 py-2 text-center" id="sum_channel5"></td>
+                <td class="border border-gray-300 px-4 py-2 text-center" id="sum_channel6"></td>
+                <td class="border border-gray-300 px-4 py-2 text-center" id="sum_channel7"></td>
+                <td class="border border-gray-300 px-4 py-2 text-center" id="sum_channel8"></td>
+                <td class="border border-gray-300 px-4 py-2 text-center" id="sum_channel9"></td>
+                <td class="border border-gray-300 px-4 py-2 text-center" id="sum_channel10"></td>
+                <td class="border border-gray-300 px-4 py-2 text-center" id="sum_total"></td>
+            </tr>
+        </tfoot>
     </table>
 </x-admin-layout>
 
@@ -96,14 +134,14 @@
             // Initialize Flatpickr for start date
             flatpickr("#startdate", {
                 defaultDate: "{{ $start_date ?? '' }}" ||
-                formattedStartDate, // Use Laravel variable or fallback
+                    formattedStartDate, // Use Laravel variable or fallback
                 dateFormat: "Y-m-d"
             });
 
             // Initialize Flatpickr for end date
             flatpickr("#enddate", {
                 defaultDate: "{{ $end_date ?? '' }}" ||
-                formattedEndDate, // Use Laravel variable or fallback
+                    formattedEndDate, // Use Laravel variable or fallback
                 dateFormat: "Y-m-d"
             });
 
@@ -116,6 +154,27 @@
                 XLSX.writeFile(wb, filename + ".xlsx");
             }
 
+            function calculateSum(columnIndex, outputId) {
+                let sum = 0;
+                $("#report1 tbody tr").each(function() {
+                    let value = parseInt($(this).find("td").eq(columnIndex).text()) || 0;
+                    sum += value;
+                });
+                $("#" + outputId).text(sum);
+            }
+
+            // Calculate sum for each column
+            calculateSum(2, "sum_channel1"); // Веб
+            calculateSum(3, "sum_channel2"); // Утсаар
+            calculateSum(4, "sum_channel3"); // Имэйл
+            calculateSum(5, "sum_channel4"); // Биечлэн
+            calculateSum(6, "sum_channel5"); // Гар утас
+            calculateSum(7, "sum_channel6"); // Бичгээр
+            calculateSum(8, "sum_channel7"); // 1111
+            calculateSum(9, "sum_channel8"); // Нийт
+            calculateSum(10, "sum_channel9"); // Нийт
+            calculateSum(11, "sum_channel10"); // Нийт
+            calculateSum(12, "sum_total"); // Нийт
 
         });
     </script>

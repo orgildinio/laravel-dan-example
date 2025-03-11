@@ -19,7 +19,7 @@ class ReportController extends Controller
         $start_date = $request->query('startdate');
         $end_date = $request->query('enddate');
 
-        $energyTypeId = $energy_type_id != null ? $energy_type_id : 1;
+        $transfer_status = $request->query('transfer_status');
 
         // If start_date is null, set it to 1 month before the current date
         $startDate = $start_date != null ? $start_date : Carbon::now()->subMonth()->toDateString();
@@ -27,35 +27,110 @@ class ReportController extends Controller
         // If end_date is null, set it to the current date
         $endDate = $end_date != null ? $end_date : Carbon::now()->toDateString();
 
-        $reportData = DB::table('complaints as c')
-            ->join('organizations as o', 'c.second_org_id', '=', 'o.id')
-            ->join('complaint_types as ct', 'c.complaint_type_id', '=', 'ct.id')
-            ->select(
-                'o.id as second_org_id',
-                'o.name',
-                DB::raw("COUNT(CASE WHEN c.channel_id = 1 THEN 1 END) AS channel1_all"),
-                DB::raw("COUNT(CASE WHEN c.channel_id = 2 THEN 1 END) AS channel2_all"),
-                DB::raw("COUNT(CASE WHEN c.channel_id = 3 THEN 1 END) AS channel3_all"),
-                DB::raw("COUNT(CASE WHEN c.channel_id = 4 THEN 1 END) AS channel4_all"),
-                DB::raw("COUNT(CASE WHEN c.channel_id = 5 THEN 1 END) AS channel5_all"),
-                DB::raw("COUNT(CASE WHEN c.channel_id = 6 THEN 1 END) AS channel6_all"),
-                DB::raw("COUNT(CASE WHEN c.channel_id = 7 THEN 1 END) AS channel7_all"),
-                DB::raw("(
-                    COUNT(CASE WHEN c.channel_id = 1 THEN 1 END) +
-                    COUNT(CASE WHEN c.channel_id = 2 THEN 1 END) +
-                    COUNT(CASE WHEN c.channel_id = 3 THEN 1 END) +
-                    COUNT(CASE WHEN c.channel_id = 4 THEN 1 END) +
-                    COUNT(CASE WHEN c.channel_id = 5 THEN 1 END) +
-                    COUNT(CASE WHEN c.channel_id = 6 THEN 1 END) +
-                    COUNT(CASE WHEN c.channel_id = 7 THEN 1 END)
-                ) AS total_channels")
-            )
+        // $reportData = DB::table('complaints as c')
+        //     ->join('organizations as o', 'c.second_org_id', '=', 'o.id')
+        //     ->join('complaint_types as ct', 'c.complaint_type_id', '=', 'ct.id')
+        //     ->select(
+        //         'o.id as second_org_id',
+        //         'o.name',
+        //         DB::raw("COUNT(CASE WHEN c.channel_id = 1 THEN 1 END) AS channel1_all"),
+        //         DB::raw("COUNT(CASE WHEN c.channel_id = 2 THEN 1 END) AS channel2_all"),
+        //         DB::raw("COUNT(CASE WHEN c.channel_id = 3 THEN 1 END) AS channel3_all"),
+        //         DB::raw("COUNT(CASE WHEN c.channel_id = 4 THEN 1 END) AS channel4_all"),
+        //         DB::raw("COUNT(CASE WHEN c.channel_id = 5 THEN 1 END) AS channel5_all"),
+        //         DB::raw("COUNT(CASE WHEN c.channel_id = 6 THEN 1 END) AS channel6_all"),
+        //         DB::raw("COUNT(CASE WHEN c.channel_id = 7 THEN 1 END) AS channel7_all"),
+        //         DB::raw("(
+        //             COUNT(CASE WHEN c.channel_id = 1 THEN 1 END) +
+        //             COUNT(CASE WHEN c.channel_id = 2 THEN 1 END) +
+        //             COUNT(CASE WHEN c.channel_id = 3 THEN 1 END) +
+        //             COUNT(CASE WHEN c.channel_id = 4 THEN 1 END) +
+        //             COUNT(CASE WHEN c.channel_id = 5 THEN 1 END) +
+        //             COUNT(CASE WHEN c.channel_id = 6 THEN 1 END) +
+        //             COUNT(CASE WHEN c.channel_id = 7 THEN 1 END)
+        //         ) AS total_channels")
+        //     )
+        //     ->whereBetween('c.created_at', [$startDate, $endDate])
+        //     ->where('c.energy_type_id', $energyTypeId)
+        //     ->where('c.complaint_type_id', $complaint_type_id)
+        //     ->groupBy('o.id', 'o.name')
+        //     ->orderBy('o.id')
+        //     ->get();
+        // $reportData = DB::table('organizations as o')
+        //     ->leftJoin('complaints as c', function ($join) {
+        //         $join->on('c.second_org_id', '=', 'o.id');
+        //     })
+        //     ->when(!is_null($energy_type_id), function ($query) use ($energy_type_id) {
+        //         return $query->where('c.energy_type_id', $energy_type_id);
+        //     })
+        //     ->when(!is_null($complaint_type_id), function ($query) use ($complaint_type_id) {
+        //         return $query->where('c.complaint_type_id', $complaint_type_id);
+        //     })
+        //     ->whereBetween('c.created_at', [$startDate, $endDate]) // Moved here
+        //     ->leftJoin('complaint_types as ct', 'c.complaint_type_id', '=', 'ct.id')
+        //     ->select(
+        //         'o.id as second_org_id',
+        //         'o.name',
+        //         DB::raw("COALESCE(COUNT(CASE WHEN c.channel_id = 1 THEN 1 END), 0) AS channel1_all"),
+        //         DB::raw("COALESCE(COUNT(CASE WHEN c.channel_id = 2 THEN 1 END), 0) AS channel2_all"),
+        //         DB::raw("COALESCE(COUNT(CASE WHEN c.channel_id = 3 THEN 1 END), 0) AS channel3_all"),
+        //         DB::raw("COALESCE(COUNT(CASE WHEN c.channel_id = 4 THEN 1 END), 0) AS channel4_all"),
+        //         DB::raw("COALESCE(COUNT(CASE WHEN c.channel_id = 5 THEN 1 END), 0) AS channel5_all"),
+        //         DB::raw("COALESCE(COUNT(CASE WHEN c.channel_id = 6 THEN 1 END), 0) AS channel6_all"),
+        //         DB::raw("COALESCE(COUNT(CASE WHEN c.channel_id = 7 THEN 1 END), 0) AS channel7_all"),
+        //         DB::raw("COALESCE(
+        //     COUNT(CASE WHEN c.channel_id = 1 THEN 1 END) +
+        //     COUNT(CASE WHEN c.channel_id = 2 THEN 1 END) +
+        //     COUNT(CASE WHEN c.channel_id = 3 THEN 1 END) +
+        //     COUNT(CASE WHEN c.channel_id = 4 THEN 1 END) +
+        //     COUNT(CASE WHEN c.channel_id = 5 THEN 1 END) +
+        //     COUNT(CASE WHEN c.channel_id = 6 THEN 1 END) +
+        //     COUNT(CASE WHEN c.channel_id = 7 THEN 1 END),
+        // 0) AS total_channels")
+        //     )
+        //     ->groupBy('o.id', 'o.name')
+        //     ->orderBy(DB::raw("total_channels"), 'desc')
+        //     ->get();
+
+        // Fetch all available channels dynamically
+        $channels = DB::table('channels')->select('id', 'name')->get();
+
+        $channelSelects = [];
+        $channelSums = [];
+
+        foreach ($channels as $channel) {
+            $alias = "channel{$channel->id}_all";
+            $channelSelects[] = DB::raw("COALESCE(COUNT(CASE WHEN c.channel_id = {$channel->id} THEN 1 END), 0) AS $alias");
+            $channelSums[] = "COUNT(CASE WHEN c.channel_id = {$channel->id} THEN 1 END)";
+        }
+
+        // Construct the total sum dynamically
+        $totalSumQuery = DB::raw("COALESCE(" . implode(" + ", $channelSums) . ", 0) AS total_channels");
+
+        // Merge all selected columns into an array
+        $selectFields = array_merge(
+            ['o.id', 'o.name'],                   // Static fields
+            $channelSelects,                      // Dynamically generated fields
+            [$totalSumQuery]                      // Total count field
+        );
+
+        $reportData = DB::table('organizations as o')
+            ->leftJoin('complaints as c', function ($join) use ($transfer_status) {
+                $join->on("c.$transfer_status", "=", "o.id");
+            })
+            ->when(!is_null($energy_type_id), function ($query) use ($energy_type_id) {
+                return $query->where('c.energy_type_id', $energy_type_id);
+            })
+            ->when(!is_null($complaint_type_id), function ($query) use ($complaint_type_id) {
+                return $query->where('c.complaint_type_id', $complaint_type_id);
+            })
             ->whereBetween('c.created_at', [$startDate, $endDate])
-            ->where('c.energy_type_id', $energyTypeId)
-            ->where('c.complaint_type_id', $complaint_type_id)
+            ->leftJoin('complaint_types as ct', 'c.complaint_type_id', '=', 'ct.id')
+            ->select($selectFields)  // Pass as a single array
             ->groupBy('o.id', 'o.name')
-            ->orderBy('o.id')
+            ->orderBy(DB::raw("total_channels"), 'desc')
             ->get();
+
 
 
         $energy_types = EnergyType::all();
