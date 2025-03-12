@@ -66,7 +66,11 @@ class ReportController extends Controller
             ->when(!is_null($transferred), function ($query) use ($transferred) {
                 return $query->where('c.transferred', $transferred);
             })
-            ->whereBetween('c.created_at', [$startDate, $endDate])
+            // ->whereBetween('c.created_at', [$startDate, $endDate])
+            ->whereBetween('c.created_at', [
+                \Carbon\Carbon::parse($startDate)->startOfDay(),
+                \Carbon\Carbon::parse($endDate)->endOfDay()
+            ])
             ->leftJoin('complaint_types as ct', 'c.complaint_type_id', '=', 'ct.id')
             ->select($selectFields)  // Pass as a single array
             ->groupBy('o.id', 'o.name')
@@ -235,7 +239,11 @@ class ReportController extends Controller
             })
             // ->where('org.plant_id', '=', $energy_type_id)
             // ->where('c.complaint_type_id', '=', $complaint_type_id)
-            ->whereBetween('c.created_at', [$startDate, $endDate])
+            // ->whereBetween('c.created_at', [$startDate, $endDate])
+            ->whereBetween('c.created_at', [
+                \Carbon\Carbon::parse($startDate)->startOfDay(),
+                \Carbon\Carbon::parse($endDate)->endOfDay()
+            ])
             ->groupBy('org.name')
             ->orderBy(DB::raw("total_channel"), 'desc')
             ->get();
