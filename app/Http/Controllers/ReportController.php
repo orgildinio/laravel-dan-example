@@ -21,7 +21,9 @@ class ReportController extends Controller
 
         $transferred = $request->query('transferred') ?? 1;
 
-        $org_id = $request->query('transferred') ? 'second_org_id' : 'organization_id';
+        // $org_id = $request->query('transferred') ? 'second_org_id' : 'organization_id';
+        $org_id = $request->query('transferred', 'second_org_id') ? 'second_org_id' : 'organization_id';
+
 
         // If start_date is null, set it to 1 month before the current date
         $startDate = $start_date != null ? $start_date : Carbon::now()->subMonth()->toDateString();
