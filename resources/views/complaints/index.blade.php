@@ -154,6 +154,9 @@
                                 <th
                                     class="p-2 font-medium leading-4 tracking-wider text-center text-gray-800 uppercase border bg-gray-50">
                                     Гомдлын төрөл</th>
+                                <th
+                                    class="p-2 font-medium leading-4 tracking-wider text-center text-gray-800 uppercase border bg-gray-50">
+                                    Шилжүүлсэн эсэх</th>
                             @endif
                             <th
                                 class="p-2 font-medium leading-4 tracking-wider text-center text-gray-800 uppercase border bg-gray-50">
@@ -263,6 +266,8 @@
                                                 {{ $org->name }}</option>
                                         @endforeach
                                     </select>
+                                </th>
+                                <th>
                                 </th>
                                 <th>
                                 </th>
@@ -397,6 +402,11 @@
                                     </td>
                                     <td class="p-2 whitespace-no-wrap border">
                                         <div class="leading-5 text-gray-900">{{ $complaint->complaintType?->name }}
+                                        </div>
+                                    </td>
+                                    <td class="p-2 whitespace-no-wrap border">
+                                        <div class="leading-5 text-gray-900">
+                                            {{ $complaint->transferred ? 'Тийм' : 'Үгүй' }}
                                         </div>
                                     </td>
                                 @endif
