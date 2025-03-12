@@ -66,7 +66,7 @@
             <div>
                 <select name="energy_type_id" id="energy_type_id"
                     class="w-40 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
-                    {{-- <option value="">-- Сонгох --</option> --}}
+                    <option value="">-- Сонгох --</option>
                     @foreach ($energy_types as $type)
                         <option value="{{ $type->id }}"
                             {{ request('energy_type_id') == $type->id ? 'selected' : '' }}>
@@ -78,7 +78,7 @@
             <div>
                 <select name="complaint_type_id" id="complaint_type_id"
                     class="w-40 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
-                    {{-- <option value="">-- Сонгох --</option> --}}
+                    <option value="">-- Сонгох --</option>
                     @foreach ($complaint_types as $type)
                         <option value="{{ $type->id }}"
                             {{ request('complaint_type_id') == $type->id ? 'selected' : '' }}>
@@ -88,7 +88,7 @@
                 </select>
             </div>
             <div>
-                <select name="transfer_status" id="transfer_status"
+                {{-- <select name="transfer_status" id="transfer_status"
                     class="w-40 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
                     <option value="second_org_id" {{ request('transfer_status') == 'second_org_id' ? 'selected' : '' }}>
                         Шилжүүлсэн
@@ -96,6 +96,13 @@
                     <option value="organization_id"
                         {{ request('transfer_status') == 'organization_id' ? 'selected' : '' }}>
                         Шилжүүлээгүй
+                    </option>
+                </select> --}}
+                <select name="transferred" id="transferred"
+                    class="w-40 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2"
+                    onchange="this.form.submit()">
+                    <option value="1" {{ request('transferred') == '1' ? 'selected' : '' }}>Шилжүүлсэн</option>
+                    <option value="0" {{ request('transferred') == '0' ? 'selected' : '' }}>Шилжүүлээгүй
                     </option>
                 </select>
             </div>
@@ -141,6 +148,15 @@
                         <div><span style="border-bottom: 1px solid blue;">1111</span></div>
                     </th>
                     <th class="rotate">
+                        <div><span style="border-bottom: 1px solid blue;">ЭХЯ-аас</span></div>
+                    </th>
+                    <th class="rotate">
+                        <div><span style="border-bottom: 1px solid blue;">Нийслэлийн ЗДТГ-аас</span></div>
+                    </th>
+                    <th class="rotate">
+                        <div><span style="border-bottom: 1px solid blue;">Аймгийн ЗДТГ-аас</span></div>
+                    </th>
+                    <th class="rotate">
                         <div><span style="border-bottom: 1px solid blue;">Нийт</span></div>
                     </th>
                     @foreach ($complaint_type_summaries as $summary)
@@ -163,6 +179,9 @@
                         'c_5' => 0,
                         'c_6' => 0,
                         'c_7' => 0,
+                        'c_8' => 0,
+                        'c_9' => 0,
+                        'c_10' => 0,
                         'total_channel' => 0,
                     ];
                     $summary_totals = [];
@@ -176,6 +195,9 @@
                         $totals['c_5'] += $complaint->c_5;
                         $totals['c_6'] += $complaint->c_6;
                         $totals['c_7'] += $complaint->c_7;
+                        $totals['c_8'] += $complaint->c_8;
+                        $totals['c_9'] += $complaint->c_9;
+                        $totals['c_10'] += $complaint->c_10;
                         $totals['total_channel'] += $complaint->total_channel;
 
                         foreach ($complaint_type_summaries as $summary) {
@@ -194,6 +216,9 @@
                         <td>{{ $complaint->c_5 }}</td>
                         <td>{{ $complaint->c_6 }}</td>
                         <td>{{ $complaint->c_7 }}</td>
+                        <td>{{ $complaint->c_8 }}</td>
+                        <td>{{ $complaint->c_9 }}</td>
+                        <td>{{ $complaint->c_10 }}</td>
                         <td style="font-weight: bold; background-color: lightgray;">{{ $complaint->total_channel }}
                         </td>
                         @foreach ($complaint_type_summaries as $summary)
@@ -226,6 +251,9 @@
                     <td>{{ $totals['c_5'] }}</td>
                     <td>{{ $totals['c_6'] }}</td>
                     <td>{{ $totals['c_7'] }}</td>
+                    <td>{{ $totals['c_8'] }}</td>
+                    <td>{{ $totals['c_9'] }}</td>
+                    <td>{{ $totals['c_10'] }}</td>
                     <td>{{ $totals['total_channel'] }}</td>
 
                     @foreach ($complaint_type_summaries as $summary)
