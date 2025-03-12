@@ -246,6 +246,8 @@ class ComplaintController extends Controller
         $complaint_type_id = $request->query('complaint_type_id');
         $complaint_type_summary_id = $request->query('complaint_type_summary_id');
 
+        $transferred = $request->query('transferred');
+
         // Retrieve the related complaint IDs from the query parameters
         $relatedComplaintIds = $request->query('related_complaints', []);
 
@@ -357,6 +359,10 @@ class ComplaintController extends Controller
 
         if ($complaint_maker_type_id !== null) {
             $query->where('complaint_maker_type_id', $complaint_maker_type_id);
+        }
+
+        if ($transferred !== null) {
+            $query->where('transferred', $transferred);
         }
 
         $complaints = $query->paginate(15);

@@ -272,6 +272,15 @@
                                 <th>
                                 </th>
                                 <th>
+                                    <select name="transferred" id="transferred"
+                                        class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
+                                        <option value=""></option>
+                                        <option value="1" {{ request('transferred') == '1' ? 'selected' : '' }}>
+                                            Шилжүүлсэн</option>
+                                        <option value="0" {{ request('transferred') == '0' ? 'selected' : '' }}>
+                                            Шилжүүлээгүй
+                                        </option>
+                                    </select>
                                 </th>
                             @endif
                             <th
