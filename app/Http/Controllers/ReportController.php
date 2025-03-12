@@ -19,7 +19,9 @@ class ReportController extends Controller
         $start_date = $request->query('startdate');
         $end_date = $request->query('enddate');
 
-        $transfer_status = $request->query('transfer_status') ?? 'second_org_id';
+        $transferred = $request->query('transferred') ?? 1;
+
+        $org_id = $request->query('transferred') ? 'second_org_id' : 'organization_id';
 
         // If start_date is null, set it to 1 month before the current date
         $startDate = $start_date != null ? $start_date : Carbon::now()->subMonth()->toDateString();
@@ -50,17 +52,18 @@ class ReportController extends Controller
         );
 
         $reportData = DB::table('organizations as o')
-            ->leftJoin('complaints as c', function ($join) use ($transfer_status) {
-                $join->on("c.$transfer_status", "=", "o.id");
+            ->leftJoin('complaints as c', function ($join) use ($org_id) {
+                $join->on("c.$org_id", "=", "o.id");
             })
+            // ->leftJoin('complaints as c', 'c.organization_id', '=', 'o.id')
             ->when(!is_null($energy_type_id), function ($query) use ($energy_type_id) {
                 return $query->where('c.energy_type_id', $energy_type_id);
             })
             ->when(!is_null($complaint_type_id), function ($query) use ($complaint_type_id) {
                 return $query->where('c.complaint_type_id', $complaint_type_id);
             })
-            ->when($transfer_status === 'organization_id', function ($query) {
-                return $query->whereNull('c.second_org_id'); // second_org_id нь NULL байх нөхцөл
+            ->when(!is_null($transferred), function ($query) use ($transferred) {
+                return $query->where('c.transferred', $transferred);
             })
             ->whereBetween('c.created_at', [$startDate, $endDate])
             ->leftJoin('complaint_types as ct', 'c.complaint_type_id', '=', 'ct.id')
