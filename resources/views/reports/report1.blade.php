@@ -78,7 +78,9 @@
             @foreach ($reportData as $data)
                 <tr class="hover:bg-blue-100">
                     <td class="border border-gray-300 px-4 py-2 text-center">{{ $loop->iteration }}</td>
-                    <td class="border border-gray-300 px-4 py-2">{{ $data->name }}</td>
+                    <td
+                        class="border border-gray-300 px-4 py-2 @if ($data->name == 'Эрчим хүчний зохицуулах хороо') text-blue-600 font-bold @endif">
+                        {{ $data->name }}</td>
                     <td class="border border-gray-300 px-4 py-2 text-center">{{ $data->channel1_all }}</td>
                     <td class="border border-gray-300 px-4 py-2 text-center">{{ $data->channel2_all }}</td>
                     <td class="border border-gray-300 px-4 py-2 text-center">{{ $data->channel3_all }}</td>
