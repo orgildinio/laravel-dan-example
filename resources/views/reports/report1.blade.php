@@ -38,8 +38,7 @@
                 </div>
                 <div class="mr-1">
                     <select name="transferred" id="transferred"
-                        class="w-40 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2"
-                        onchange="this.form.submit()">
+                        class="w-40 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
                         <option value="1" {{ request('transferred') == '1' ? 'selected' : '' }}>Шилжүүлсэн</option>
                         <option value="0" {{ request('transferred') == '0' ? 'selected' : '' }}>Шилжүүлээгүй
                         </option>

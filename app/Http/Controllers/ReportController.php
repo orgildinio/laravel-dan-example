@@ -53,10 +53,10 @@ class ReportController extends Controller
         );
 
         $reportData = DB::table('organizations as o')
-            // ->leftJoin('complaints as c', function ($join) use ($org_id) {
-            //     $join->on("c.$org_id", "=", "o.id");
-            // })
-            ->leftJoin('complaints as c', 'c.organization_id', '=', 'o.id')
+            ->leftJoin('complaints as c', function ($join) use ($org_id) {
+                $join->on("c.$org_id", "=", "o.id");
+            })
+            // ->leftJoin('complaints as c', 'c.organization_id', '=', 'o.id')
             ->when(!is_null($energy_type_id), function ($query) use ($energy_type_id) {
                 return $query->where('c.energy_type_id', $energy_type_id);
             })
