@@ -203,7 +203,7 @@ class ComplaintStep extends Component
                 break;
             case 'ТЗЭ-рүү шилжүүлэх':
                 // ТЗЭ рүү шилжүүлэхэд төлөв хянаж байгаа төлөвтэй болно
-                $complaint->update(['status_id' => 1, 'second_org_id' => $this->org_id, 'second_status_id' => 0]);
+                $complaint->update(['status_id' => 1, 'second_org_id' => $this->org_id, 'second_status_id' => 0, 'transferred' => true,]);
                 $stepData['status_id'] = 1;
                 $stepData['org_id'] = $complaint->organization_id;
                 $additionalDesc = $complaint->secondOrg?->name . ' рүү шилжүүлэв.';
