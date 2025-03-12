@@ -59,6 +59,9 @@ class ReportController extends Controller
             ->when(!is_null($complaint_type_id), function ($query) use ($complaint_type_id) {
                 return $query->where('c.complaint_type_id', $complaint_type_id);
             })
+            ->when($transfer_status === 'organization_id', function ($query) {
+                return $query->whereNull('c.second_org_id'); // second_org_id нь NULL байх нөхцөл
+            })
             ->whereBetween('c.created_at', [$startDate, $endDate])
             ->leftJoin('complaint_types as ct', 'c.complaint_type_id', '=', 'ct.id')
             ->select($selectFields)  // Pass as a single array
