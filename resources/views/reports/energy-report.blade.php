@@ -208,7 +208,8 @@
                     @endphp
                     <tr>
                         <td>{{ $index + 1 }}</td>
-                        <td>{{ $complaint->organization_name }}</td>
+                        <td class="@if ($complaint->organization_name == 'Эрчим хүчний зохицуулах хороо') text-blue-600 font-bold @endif">
+                            {{ $complaint->organization_name }}</td>
                         <td>{{ $complaint->c_1 }}</td>
                         <td>{{ $complaint->c_2 }}</td>
                         <td>{{ $complaint->c_3 }}</td>

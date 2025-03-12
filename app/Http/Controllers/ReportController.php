@@ -237,7 +237,7 @@ class ReportController extends Controller
             // ->where('c.complaint_type_id', '=', $complaint_type_id)
             ->whereBetween('c.created_at', [$startDate, $endDate])
             ->groupBy('org.name')
-            ->orderBy('org.name')
+            ->orderBy(DB::raw("total_channel"), 'desc')
             ->get();
 
         $energy_types = EnergyType::all();
