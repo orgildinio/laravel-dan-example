@@ -163,7 +163,7 @@ class ReportController extends Controller
         $validColumns = ['second_org_id', 'organization_id'];
         $transferColumn = in_array($transfer_status, $validColumns) ? $transfer_status : 'organization_id';
 
-        dd($transferColumn);
+        // dd($transferColumn);
 
         // dd($request->all());
 
