@@ -363,7 +363,7 @@ class ReportController extends Controller
         //     ->get();
 
         $complaints = DB::table('complaints as c')
-            ->leftJoin('organizations as o', function ($join) use ($org_id) {
+            ->join('organizations as o', function ($join) use ($org_id) {
                 $join->on("c.$org_id", "=", "o.id");
             })
             ->select(
