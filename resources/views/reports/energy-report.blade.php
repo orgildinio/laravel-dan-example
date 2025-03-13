@@ -87,17 +87,7 @@
                     @endforeach
                 </select>
             </div>
-            <div>
-                {{-- <select name="transfer_status" id="transfer_status"
-                    class="w-40 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
-                    <option value="second_org_id" {{ request('transfer_status') == 'second_org_id' ? 'selected' : '' }}>
-                        Шилжүүлсэн
-                    </option>
-                    <option value="organization_id"
-                        {{ request('transfer_status') == 'organization_id' ? 'selected' : '' }}>
-                        Шилжүүлээгүй
-                    </option>
-                </select> --}}
+            <div class="mr-1">
                 <select name="transferred" id="transferred"
                     class="w-40 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
                     <option value="1" {{ request('transferred') == '1' ? 'selected' : '' }}>Шилжүүлсэн</option>

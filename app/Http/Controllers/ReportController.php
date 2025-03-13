@@ -66,7 +66,6 @@ class ReportController extends Controller
             ->when(!is_null($transferred), function ($query) use ($transferred) {
                 return $query->where('c.transferred', $transferred);
             })
-            // ->whereBetween('c.created_at', [$startDate, $endDate])
             ->whereBetween('c.created_at', [
                 \Carbon\Carbon::parse($startDate)->startOfDay(),
                 \Carbon\Carbon::parse($endDate)->endOfDay()
@@ -310,11 +309,13 @@ class ReportController extends Controller
 
     public function reportStatus(Request $request)
     {
-        $energy_type_id = $request->query('energy_type_id');
+        $energy_type_id = $request->query('energy_type_id') ?? 1;
         $start_date = $request->query('startdate');
         $end_date = $request->query('enddate');
 
-        $energyTypeId = $energy_type_id != null ? $energy_type_id : 1;
+        $transferred = $request->query('transferred') ?? 1;
+
+        $org_id = $request->query('transferred', 'second_org_id') ? 'second_org_id' : 'organization_id';
 
         // If start_date is null, set it to 1 month before the current date
         $startDate = $start_date != null ? $start_date : Carbon::now()->subMonth()->toDateString();
@@ -323,8 +324,48 @@ class ReportController extends Controller
         $endDate = $end_date != null ? $end_date : Carbon::now()->toDateString();
 
         // $complaints = Complaint::with('complaintSteps')->first();
+        // $complaints = DB::table('complaints as c')
+        //     ->leftJoin('complaints as c', function ($join) use ($org_id) {
+        //         $join->on("c.$org_id", "=", "o.id");
+        //     })
+        //     // ->join('organizations as o', 'o.id', '=', 'c.second_org_id')
+        //     ->select(
+        //         'o.name as organization_name',
+        //         DB::raw('COUNT(CASE WHEN c.second_status_id = 0 THEN 1 END) AS s_0_cnt'),
+        //         DB::raw('COUNT(CASE WHEN c.second_status_id = 2 THEN 1 END) AS s_2_cnt'),
+        //         DB::raw('COUNT(CASE WHEN c.second_status_id = 3 THEN 1 END) AS s_3_cnt'),
+        //         DB::raw('COUNT(CASE WHEN c.second_status_id = 4 THEN 1 END) AS s_4_cnt'),
+        //         DB::raw('COUNT(CASE WHEN c.second_status_id = 6 THEN 1 END) AS s_6_cnt'),
+        //         // DB::raw('COUNT(*) AS total_count'),
+        //         DB::raw('(
+        //             COUNT(CASE WHEN c.second_status_id = 0 THEN 1 END) +
+        //             COUNT(CASE WHEN c.second_status_id = 2 THEN 1 END) +
+        //             COUNT(CASE WHEN c.second_status_id = 3 THEN 1 END) +
+        //             COUNT(CASE WHEN c.second_status_id = 4 THEN 1 END) +
+        //             COUNT(CASE WHEN c.second_status_id = 6 THEN 1 END)
+        //         ) AS total_count'),
+        //         DB::raw('COUNT(CASE WHEN c.expire_date < CURRENT_DATE AND c.second_status_id != 6 AND c.status_id != 6 THEN 1 END) AS expired_count')
+        //     )
+        //     // ->where('c.energy_type_id', $energyTypeId)
+        //     ->when(!is_null($energy_type_id), function ($query) use ($energy_type_id) {
+        //         return $query->where('c.energy_type_id', $energy_type_id);
+        //     })
+        //     // ->where('c.second_org_id', '!=', 99)
+        //     ->whereBetween('c.created_at', [
+        //         \Carbon\Carbon::parse($startDate)->startOfDay(),
+        //         \Carbon\Carbon::parse($endDate)->endOfDay()
+        //     ])
+        //     ->when(!is_null($transferred), function ($query) use ($transferred) {
+        //         return $query->where('c.transferred', $transferred);
+        //     })
+        //     ->groupBy('o.name')
+        //     ->orderBy('total_count', 'DESC')
+        //     ->get();
+
         $complaints = DB::table('complaints as c')
-            ->join('organizations as o', 'o.id', '=', 'c.second_org_id')
+            ->leftJoin('organizations as o', function ($join) use ($org_id) {
+                $join->on("c.$org_id", "=", "o.id");
+            })
             ->select(
                 'o.name as organization_name',
                 DB::raw('COUNT(CASE WHEN c.second_status_id = 0 THEN 1 END) AS s_0_cnt'),
@@ -332,22 +373,29 @@ class ReportController extends Controller
                 DB::raw('COUNT(CASE WHEN c.second_status_id = 3 THEN 1 END) AS s_3_cnt'),
                 DB::raw('COUNT(CASE WHEN c.second_status_id = 4 THEN 1 END) AS s_4_cnt'),
                 DB::raw('COUNT(CASE WHEN c.second_status_id = 6 THEN 1 END) AS s_6_cnt'),
-                // DB::raw('COUNT(*) AS total_count'),
                 DB::raw('(
-                    COUNT(CASE WHEN c.second_status_id = 0 THEN 1 END) +
-                    COUNT(CASE WHEN c.second_status_id = 2 THEN 1 END) +
-                    COUNT(CASE WHEN c.second_status_id = 3 THEN 1 END) +
-                    COUNT(CASE WHEN c.second_status_id = 4 THEN 1 END) +
-                    COUNT(CASE WHEN c.second_status_id = 6 THEN 1 END)
-                ) AS total_count'),
+            COUNT(CASE WHEN c.second_status_id = 0 THEN 1 END) +
+            COUNT(CASE WHEN c.second_status_id = 2 THEN 1 END) +
+            COUNT(CASE WHEN c.second_status_id = 3 THEN 1 END) +
+            COUNT(CASE WHEN c.second_status_id = 4 THEN 1 END) +
+            COUNT(CASE WHEN c.second_status_id = 6 THEN 1 END)
+        ) AS total_count'),
                 DB::raw('COUNT(CASE WHEN c.expire_date < CURRENT_DATE AND c.second_status_id != 6 AND c.status_id != 6 THEN 1 END) AS expired_count')
             )
-            ->where('c.energy_type_id', $energyTypeId)
-            ->where('c.second_org_id', '!=', 99)
-            ->whereBetween('c.created_at', [$startDate, $endDate])
+            ->when(!is_null($energy_type_id), function ($query) use ($energy_type_id) {
+                return $query->where('c.energy_type_id', $energy_type_id);
+            })
+            ->whereBetween('c.created_at', [
+                \Carbon\Carbon::parse($startDate)->startOfDay(),
+                \Carbon\Carbon::parse($endDate)->endOfDay()
+            ])
+            ->when(!is_null($transferred), function ($query) use ($transferred) {
+                return $query->where('c.transferred', $transferred);
+            })
             ->groupBy('o.name')
             ->orderBy('total_count', 'DESC')
             ->get();
+
 
         // dd($complaints);
 
