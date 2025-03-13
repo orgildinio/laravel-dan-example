@@ -368,19 +368,19 @@ class ReportController extends Controller
             })
             ->select(
                 'o.name as organization_name',
-                DB::raw('COUNT(CASE WHEN c.second_status_id = 0 THEN 1 END) AS s_0_cnt'),
-                DB::raw('COUNT(CASE WHEN c.second_status_id = 2 THEN 1 END) AS s_2_cnt'),
-                DB::raw('COUNT(CASE WHEN c.second_status_id = 3 THEN 1 END) AS s_3_cnt'),
-                DB::raw('COUNT(CASE WHEN c.second_status_id = 4 THEN 1 END) AS s_4_cnt'),
-                DB::raw('COUNT(CASE WHEN c.second_status_id = 6 THEN 1 END) AS s_6_cnt'),
+                DB::raw('COUNT(*) FILTER (WHERE c.second_status_id = 0) AS s_0_cnt'),
+                DB::raw('COUNT(*) FILTER (WHERE c.second_status_id = 2) AS s_2_cnt'),
+                DB::raw('COUNT(*) FILTER (WHERE c.second_status_id = 3) AS s_3_cnt'),
+                DB::raw('COUNT(*) FILTER (WHERE c.second_status_id = 4) AS s_4_cnt'),
+                DB::raw('COUNT(*) FILTER (WHERE c.second_status_id = 6) AS s_6_cnt'),
                 DB::raw('(
-            COUNT(CASE WHEN c.second_status_id = 0 THEN 1 END) +
-            COUNT(CASE WHEN c.second_status_id = 2 THEN 1 END) +
-            COUNT(CASE WHEN c.second_status_id = 3 THEN 1 END) +
-            COUNT(CASE WHEN c.second_status_id = 4 THEN 1 END) +
-            COUNT(CASE WHEN c.second_status_id = 6 THEN 1 END)
+            COUNT(*) FILTER (WHERE c.second_status_id = 0) +
+            COUNT(*) FILTER (WHERE c.second_status_id = 2) +
+            COUNT(*) FILTER (WHERE c.second_status_id = 3) +
+            COUNT(*) FILTER (WHERE c.second_status_id = 4) +
+            COUNT(*) FILTER (WHERE c.second_status_id = 6)
         ) AS total_count'),
-                DB::raw('COUNT(CASE WHEN c.expire_date < CURRENT_DATE AND c.second_status_id != 6 AND c.status_id != 6 THEN 1 END) AS expired_count')
+                DB::raw('COUNT(*) FILTER (WHERE c.expire_date < NOW() AND c.second_status_id != 6 AND c.status_id != 6) AS expired_count')
             )
             ->when(!is_null($energy_type_id), function ($query) use ($energy_type_id) {
                 return $query->where('c.energy_type_id', $energy_type_id);
@@ -395,6 +395,7 @@ class ReportController extends Controller
             ->groupBy('o.name')
             ->orderBy('total_count', 'DESC')
             ->get();
+
 
 
         // dd($complaints);
