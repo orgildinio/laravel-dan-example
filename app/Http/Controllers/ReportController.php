@@ -362,41 +362,97 @@ class ReportController extends Controller
         //     ->orderBy('total_count', 'DESC')
         //     ->get();
 
-        $complaints = DB::table('complaints as c')
-            ->join('organizations as o', function ($join) use ($org_id) {
-                $join->on("c.$org_id", "=", "o.id");
-            })
-            ->select(
-                'o.name as organization_name',
-                DB::raw('COUNT(*) FILTER (WHERE c.second_status_id = 0) AS s_0_cnt'),
-                DB::raw('COUNT(*) FILTER (WHERE c.second_status_id = 2) AS s_2_cnt'),
-                DB::raw('COUNT(*) FILTER (WHERE c.second_status_id = 3) AS s_3_cnt'),
-                DB::raw('COUNT(*) FILTER (WHERE c.second_status_id = 4) AS s_4_cnt'),
-                DB::raw('COUNT(*) FILTER (WHERE c.second_status_id = 6) AS s_6_cnt'),
-                DB::raw('(
-            COUNT(*) FILTER (WHERE c.second_status_id = 0) +
-            COUNT(*) FILTER (WHERE c.second_status_id = 2) +
-            COUNT(*) FILTER (WHERE c.second_status_id = 3) +
-            COUNT(*) FILTER (WHERE c.second_status_id = 4) +
-            COUNT(*) FILTER (WHERE c.second_status_id = 6)
-        ) AS total_count'),
-                DB::raw('COUNT(*) FILTER (WHERE c.expire_date < NOW() AND c.second_status_id != 6 AND c.status_id != 6) AS expired_count')
-            )
-            ->when(!is_null($energy_type_id), function ($query) use ($energy_type_id) {
-                return $query->where('c.energy_type_id', $energy_type_id);
-            })
-            ->whereBetween('c.created_at', [
-                \Carbon\Carbon::parse($startDate)->startOfDay(),
-                \Carbon\Carbon::parse($endDate)->endOfDay()
-            ])
-            ->when(!is_null($transferred), function ($query) use ($transferred) {
-                return $query->where('c.transferred', $transferred);
-            })
-            ->groupBy('o.name')
-            ->orderBy('total_count', 'DESC')
-            ->get();
+        // $complaints = DB::table('complaints as c')
+        //     ->join('organizations as o', function ($join) use ($org_id) {
+        //         $join->on("c.$org_id", "=", "o.id");
+        //     })
+        //     ->select(
+        //         'o.name as organization_name',
+        //         DB::raw('COUNT(*) FILTER (WHERE c.second_status_id = 0) AS s_0_cnt'),
+        //         DB::raw('COUNT(*) FILTER (WHERE c.second_status_id = 2) AS s_2_cnt'),
+        //         DB::raw('COUNT(*) FILTER (WHERE c.second_status_id = 3) AS s_3_cnt'),
+        //         DB::raw('COUNT(*) FILTER (WHERE c.second_status_id = 4) AS s_4_cnt'),
+        //         DB::raw('COUNT(*) FILTER (WHERE c.second_status_id = 6) AS s_6_cnt'),
+        //         DB::raw('(
+        //     COUNT(*) FILTER (WHERE c.second_status_id = 0) +
+        //     COUNT(*) FILTER (WHERE c.second_status_id = 2) +
+        //     COUNT(*) FILTER (WHERE c.second_status_id = 3) +
+        //     COUNT(*) FILTER (WHERE c.second_status_id = 4) +
+        //     COUNT(*) FILTER (WHERE c.second_status_id = 6)
+        // ) AS total_count'),
+        //         DB::raw('COUNT(*) FILTER (WHERE c.expire_date < NOW() AND c.second_status_id != 6 AND c.status_id != 6) AS expired_count')
+        //     )
+        //     ->when(!is_null($energy_type_id), function ($query) use ($energy_type_id) {
+        //         return $query->where('c.energy_type_id', $energy_type_id);
+        //     })
+        //     ->whereBetween('c.created_at', [
+        //         \Carbon\Carbon::parse($startDate)->startOfDay(),
+        //         \Carbon\Carbon::parse($endDate)->endOfDay()
+        //     ])
+        //     ->when(!is_null($transferred), function ($query) use ($transferred) {
+        //         return $query->where('c.transferred', $transferred);
+        //     })
+        //     ->groupBy('o.name')
+        //     ->orderBy('total_count', 'DESC')
+        //     ->get();
 
-
+        if ($transferred == 0) {
+            $complaints = DB::table('complaints as c')
+                ->join('organizations as o', 'c.organization_id', '=', 'o.id')
+                ->select(
+                    'o.name as organization_name',
+                    DB::raw('COUNT(*) FILTER (WHERE c.status_id = 0) AS s_0_cnt'),
+                    DB::raw('COUNT(*) FILTER (WHERE c.status_id = 1) AS s_1_cnt'),
+                    DB::raw('COUNT(*) FILTER (WHERE c.status_id = 2) AS s_2_cnt'),
+                    DB::raw('COUNT(*) FILTER (WHERE c.status_id = 3) AS s_3_cnt'),
+                    DB::raw('COUNT(*) FILTER (WHERE c.status_id = 4) AS s_4_cnt'),
+                    DB::raw('COUNT(*) FILTER (WHERE c.status_id = 5) AS s_5_cnt'),
+                    DB::raw('COUNT(*) FILTER (WHERE c.status_id = 6) AS s_6_cnt'),
+                    DB::raw('COUNT(*) FILTER (WHERE c.status_id = 7) AS s_7_cnt'),
+                    DB::raw('COUNT(*) FILTER (WHERE c.status_id = 8) AS s_8_cnt'),
+                    DB::raw('COUNT(*) AS total_count'),
+                    DB::raw('COUNT(*) FILTER (WHERE c.expire_date < NOW() AND c.second_status_id != 6 AND c.status_id != 6) AS expired_count')
+                )
+                ->whereBetween('c.created_at', [
+                    \Carbon\Carbon::parse($startDate)->startOfDay(),
+                    \Carbon\Carbon::parse($endDate)->endOfDay()
+                ])
+                ->when(!is_null($energy_type_id), function ($query) use ($energy_type_id) {
+                    return $query->where('c.energy_type_id', $energy_type_id);
+                })
+                ->where('c.transferred', false)
+                ->groupBy('o.name')
+                ->orderByDesc('total_count')
+                ->get();
+        } else {
+            $complaints = DB::table('complaints as c')
+                ->join('organizations as o', 'c.second_org_id', '=', 'o.id')
+                ->select(
+                    'o.name as organization_name',
+                    DB::raw('COUNT(*) FILTER (WHERE c.second_status_id = 0) AS s_0_cnt'),
+                    DB::raw('COUNT(*) FILTER (WHERE c.second_status_id = 1) AS s_1_cnt'),
+                    DB::raw('COUNT(*) FILTER (WHERE c.second_status_id = 2) AS s_2_cnt'),
+                    DB::raw('COUNT(*) FILTER (WHERE c.second_status_id = 3) AS s_3_cnt'),
+                    DB::raw('COUNT(*) FILTER (WHERE c.second_status_id = 4) AS s_4_cnt'),
+                    DB::raw('COUNT(*) FILTER (WHERE c.second_status_id = 5) AS s_5_cnt'),
+                    DB::raw('COUNT(*) FILTER (WHERE c.second_status_id = 6) AS s_6_cnt'),
+                    DB::raw('COUNT(*) FILTER (WHERE c.second_status_id = 7) AS s_7_cnt'),
+                    DB::raw('COUNT(*) FILTER (WHERE c.second_status_id = 8) AS s_8_cnt'),
+                    DB::raw('COUNT(*) AS total_count'),
+                    DB::raw('COUNT(*) FILTER (WHERE c.expire_date < NOW() AND c.second_status_id != 6 AND c.status_id != 6) AS expired_count')
+                )
+                ->when(!is_null($energy_type_id), function ($query) use ($energy_type_id) {
+                    return $query->where('c.energy_type_id', $energy_type_id);
+                })
+                ->whereBetween('c.created_at', [
+                    \Carbon\Carbon::parse($startDate)->startOfDay(),
+                    \Carbon\Carbon::parse($endDate)->endOfDay()
+                ])
+                ->where('c.transferred', true)
+                ->groupBy('o.name')
+                ->orderByDesc('total_count')
+                ->get();
+        }
 
         // dd($complaints);
 

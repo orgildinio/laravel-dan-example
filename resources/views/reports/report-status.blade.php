@@ -79,6 +79,7 @@
                 <th>№</th>
                 <th>Байгууллага</th>
                 <th style="background-color: blue;">Шинээр ирсэн</th>
+                <th style="background-color: blue;">Шилжүүлсэн</th>
                 <th style="background-color: blue;">Хүлээн авсан</th>
                 <th style="background-color: blue;">Хянаж байгаа</th>
                 <th style="background-color: blue;">Цуцалсан</th>
@@ -93,15 +94,29 @@
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $data->organization_name }}</td>
                     <td>{{ $data->s_0_cnt }}</td>
+                    <td>{{ $data->s_1_cnt }}</td>
                     <td>{{ $data->s_2_cnt }}</td>
                     <td>{{ $data->s_3_cnt }}</td>
                     <td>{{ $data->s_4_cnt }}</td>
                     <td>{{ $data->s_6_cnt }}</td>
-                    <td>{{ $data->total_count }}</td>
-                    <td>{{ $data->expired_count }}</td>
+                    <td class="font-bold">{{ $data->total_count }}</td>
+                    <td class="text-red-500">{{ $data->expired_count }}</td>
                 </tr>
             @endforeach
         </tbody>
+        <tfoot>
+            <tr>
+                <th colspan="2" class="text-right font-bold">Нийт:</th>
+                <th style="background-color: blue;">{{ $complaints->sum('s_0_cnt') }}</th>
+                <th style="background-color: blue;">{{ $complaints->sum('s_1_cnt') }}</th>
+                <th style="background-color: blue;">{{ $complaints->sum('s_2_cnt') }}</th>
+                <th style="background-color: blue;">{{ $complaints->sum('s_3_cnt') }}</th>
+                <th style="background-color: blue;">{{ $complaints->sum('s_4_cnt') }}</th>
+                <th style="background-color: blue;">{{ $complaints->sum('s_6_cnt') }}</th>
+                <th style="background-color: blue;" class="font-bold">{{ $complaints->sum('total_count') }}</th>
+                <th style="background-color: red;" class="text-red-500">{{ $complaints->sum('expired_count') }}</th>
+            </tr>
+        </tfoot>
     </table>
 </x-admin-layout>
 
