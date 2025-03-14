@@ -15,9 +15,7 @@ class SidebarMenu extends Component
      * @return void
      */
 
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     /**
      * Get the view / contents that represent the component.
@@ -29,10 +27,13 @@ class SidebarMenu extends Component
         $org_id = Auth::user()->org_id;
         $user_id = Auth::user()->id;
 
+        $currentYear = date('Y');
+
         // Шинээр ирсэн гомдлын тоо
         if (Auth::user()->org_id == 99) {
             $new_complaints = Complaint::where('organization_id', Auth::user()->org_id)
                 ->where('status_id', 0)
+                ->whereYear('created_at', $currentYear)
                 ->count();
         } else {
             $new_complaints = Complaint::where(function ($query) {
@@ -43,6 +44,7 @@ class SidebarMenu extends Component
                     $query->where('status_id', 0)
                         ->orWhere('second_status_id', 0);
                 })
+                ->whereYear('created_at', $currentYear)
                 ->count();
         }
 
@@ -51,6 +53,7 @@ class SidebarMenu extends Component
             $received_complaints = Complaint::where('organization_id', Auth::user()->org_id)
                 ->where('status_id', 2)
                 ->where('controlled_user_id', Auth::user()->id)
+                ->whereYear('created_at', $currentYear)
                 ->count();
         } else {
             $received_complaints = Complaint::where(function ($query) {
@@ -65,6 +68,7 @@ class SidebarMenu extends Component
                     $query->where('controlled_user_id', Auth::user()->id)
                         ->orWhere('second_user_id', Auth::user()->id);
                 })
+                ->whereYear('created_at', $currentYear)
                 ->count();
         }
 
@@ -74,6 +78,7 @@ class SidebarMenu extends Component
             $under_control_complaints = Complaint::where('organization_id', Auth::user()->org_id)
                 ->where('status_id', 3)
                 ->where('controlled_user_id', Auth::user()->id)
+                ->whereYear('created_at', $currentYear)
                 ->count();
         } else {
             $under_control_complaints = Complaint::where(function ($query) {
@@ -89,12 +94,14 @@ class SidebarMenu extends Component
                     $query->where('controlled_user_id', Auth::user()->id)
                         ->orWhere('second_user_id', Auth::user()->id);
                 })
+                ->whereYear('created_at', $currentYear)
                 ->count();
         }
         // Шилжүүлсэн гомдлын тоо
         $sent_complaints = Complaint::where('organization_id', Auth::user()->org_id)
             ->where('status_id', 1)
             ->where('controlled_user_id', Auth::user()->id)
+            ->whereYear('created_at', $currentYear)
             ->count();
 
         // Шийдвэрлэсэн гомдлын тоо
@@ -103,6 +110,7 @@ class SidebarMenu extends Component
             $solved_complaints = Complaint::where('organization_id', Auth::user()->org_id)
                 ->where('status_id', 6)
                 ->where('controlled_user_id', Auth::user()->id)
+                ->whereYear('created_at', $currentYear)
                 ->count();
         } else {
             $solved_complaints = Complaint::where(function ($query) {
@@ -117,15 +125,16 @@ class SidebarMenu extends Component
                     $query->where('controlled_user_id', Auth::user()->id)
                         ->orWhere('second_user_id', Auth::user()->id);
                 })
+                ->whereYear('created_at', $currentYear)
                 ->count();
         }
 
         // Цуцалсан гомдлын тоо
-        $canceled_complaints = Complaint::where('status_id', 4)->where('organization_id', $org_id)->where('controlled_user_id', $user_id)->count();
+        $canceled_complaints = Complaint::where('status_id', 4)->where('organization_id', $org_id)->where('controlled_user_id', $user_id)->whereYear('created_at', $currentYear)->count();
 
         $all_complaints = Complaint::all()->count();
 
-        $currentYear = date('Y');
+
         $source_complaints = SourceComplaint::whereNull('complaint_id')->where('is_modified', false)->whereYear('created_date', $currentYear)->count();
 
         return view('components.sidebar-menu', ['new_complaints' => $new_complaints, 'received_complaints' => $received_complaints, 'under_control_complaints' => $under_control_complaints, 'solved_complaints' => $solved_complaints, 'canceled_complaints' => $canceled_complaints, 'all_complaints' => $all_complaints, 'sent_complaints' => $sent_complaints, 'source_complaints' => $source_complaints]);
