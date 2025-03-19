@@ -1,3 +1,33 @@
+<div x-data="{ showPopup: true }">
+    <!-- Popup Modal -->
+    <div x-show="showPopup" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+        <div class="bg-white p-6 rounded-lg shadow-xl relative max-w-lg w-full">
+            <button @click="showPopup = false"
+                class="absolute top-4 right-4 text-gray-700 text-3xl font-bold focus:outline-none">
+                &times;
+            </button>
+            <div class="flex justify-center mb-4">
+                <img src="{{ asset('images/ip-phone.png') }}" alt="Banner" class="w-[200px] h-auto">
+            </div>
+            <div class="text-center">
+                <p class="text-lg text-gray-800 font-medium">
+                    Та бүхний ашиглаж буй IP дугаарыг SIP протокол дэмждэг суурин утасны төхөөрөмжид холбож, тохируулан
+                    ашиглах боломжтой.
+                </p>
+                <p>
+                    <a href="{{ route('banner-detail') }}"
+                        class="inline-block mt-4 px-6 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors duration-300">
+                        Дэлгэрэнгүй
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
 <div class="bg-white">
     <h2 class="text-md text-gray-900 shadow bg-blue-50 p-2 mb-4 border-l-8 border-primary">Хянах самбар: <span
             class="text-primary font-bold">{{ Auth::user()->org?->name }}</span></h2>
@@ -57,7 +87,7 @@
             </div>
         </div>
     </section>
-            
+
     <section class="grid grid-cols-6 gap-2 mt-2">
         <div class="col-span-3">
             <div class="border border-gray-300">

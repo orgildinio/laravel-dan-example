@@ -30,16 +30,30 @@ class DashboardEhzh extends Component
     public function render()
     {
         $org_id = Auth::user()->org_id;
+        $currentYear = date('Y');
 
-        $all_comp = Complaint::where('organization_id', $org_id)->count();
-        $new_comp = Complaint::where('status_id', 0)->where('organization_id', $org_id)->count();
-        $snt_comp = Complaint::where('status_id', 1)->where('organization_id', $org_id)->count();
-        $rec_comp = Complaint::where('status_id', 2)->where('organization_id', $org_id)->count();
-        $ctl_comp = Complaint::where('status_id', 3)->where('organization_id', $org_id)->count();
-        $cnc_comp = Complaint::where('status_id', 4)->where('organization_id', $org_id)->count();
-        $rtn_comp = Complaint::where('status_id', 5)->where('organization_id', $org_id)->count();
-        $slv_comp = Complaint::where('status_id', 6)->where('organization_id', $org_id)->count();
-        $exp_comp = Complaint::where('expire_date', '<=', Carbon::now())->where('status_id', '!=', 6)->where('organization_id', $org_id)->count();
+        // Get the date range from the request
+        $start_date = request('startdate', Carbon::now()->subMonth()->toDateString());
+        $end_date = request('enddate', Carbon::now()->toDateString());
+
+        // If start_date is null, set it to 1 month before the current date
+        $startDate = $start_date != null ? $start_date : Carbon::now()->subMonth()->toDateString();
+
+        // If end_date is null, set it to the current date
+        $endDate = $end_date != null ? $end_date : Carbon::now()->toDateString();
+
+        $ehzh_tog_count = Complaint::where('energy_type_id', 1)->whereBetween('created_at', [$startDate, $endDate])->where('organization_id', $org_id)->count();
+        $ehzh_dulaan_count = Complaint::where('energy_type_id', 2)->whereBetween('created_at', [$startDate, $endDate])->where('organization_id', $org_id)->count();
+
+        $all_comp = Complaint::where('organization_id', $org_id)->whereYear('created_at', $currentYear)->whereBetween('created_at', [$startDate, $endDate])->count();
+        $new_comp = Complaint::where('status_id', 0)->where('organization_id', $org_id)->whereYear('created_at', $currentYear)->count();
+        $snt_comp = Complaint::where('status_id', 1)->where('organization_id', $org_id)->whereYear('created_at', $currentYear)->count();
+        $rec_comp = Complaint::where('status_id', 2)->where('organization_id', $org_id)->whereYear('created_at', $currentYear)->count();
+        $ctl_comp = Complaint::where('status_id', 3)->where('organization_id', $org_id)->whereYear('created_at', $currentYear)->count();
+        $cnc_comp = Complaint::where('status_id', 4)->where('organization_id', $org_id)->whereYear('created_at', $currentYear)->count();
+        $rtn_comp = Complaint::where('status_id', 5)->where('organization_id', $org_id)->whereYear('created_at', $currentYear)->count();
+        $slv_comp = Complaint::where('status_id', 6)->where('organization_id', $org_id)->whereYear('created_at', $currentYear)->count();
+        $exp_comp = Complaint::where('expire_date', '<=', Carbon::now())->where('status_id', '!=', 6)->whereYear('created_at', $currentYear)->where('organization_id', $org_id)->count();
 
         $statusCount = DB::table('statuses as s')
             ->select('s.id as status_id', 's.name as status_name', DB::raw('COUNT(c.id) as status_count'))
@@ -52,8 +66,7 @@ class DashboardEhzh extends Component
             ->orderBy('s.id')
             ->get();
 
-        $ehzh_tog_count = Complaint::where('energy_type_id', 1)->where('organization_id', $org_id)->count();
-        $ehzh_dulaan_count = Complaint::where('energy_type_id', 2)->where('organization_id', $org_id)->count();
+
 
         $compCategory = Complaint::from('complaints as c')
             ->select('ct.name', DB::raw('COUNT(c.id) as y'))

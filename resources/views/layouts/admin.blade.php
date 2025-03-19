@@ -30,6 +30,26 @@
         sidebarOpen = window.innerWidth >= 1024;
     });">
         <x-admin-header></x-admin-header>
+
+        <div x-data="{
+            showPopup: localStorage.getItem('bannerSeen') ? false : true,
+            timeout: null
+        }" x-init="if (showPopup) {
+            localStorage.setItem('bannerSeen', 'true');
+            timeout = setTimeout(() => { showPopup = false; }, 5000);
+        }">
+
+            <!-- Popup Modal -->
+            <div x-show="showPopup" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+                <div class="bg-white p-5 rounded-lg shadow-lg relative">
+                    <button @click="showPopup = false"
+                        class="absolute top-2 right-2 text-gray-700 text-2xl font-bold">&times;</button>
+                    <img src="{{ asset('images/telephone.png') }}" alt="Banner" class="w-[400px] h-auto rounded-md">
+                </div>
+            </div>
+        </div>
+
+
         <div class="flex overflow-hidden bg-white pt-16">
             <x-sidebar-menu :class="{ 'block': sidebarOpen, 'hidden': !sidebarOpen }"
                 class="fixed lg:relative z-20 bg-white w-64 transition-all duration-300 ease-in-out lg:block">

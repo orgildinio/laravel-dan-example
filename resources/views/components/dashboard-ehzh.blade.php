@@ -1,66 +1,70 @@
 <div class="bg-white">
-    {{-- <section class="grid grid-cols-8 gap-2">
-        <div class="col-span-6 ...">
-            <div class="border border-gray-300">
-                <span class="block text-black font-bold text-lg p-2 my-3 uppercase">Эрчим хүчний зохицуулах хороо</span>
+    <form method="GET" autocomplete="off" class="">
+        <div class="flex flex-row gap-2 p-2">
+            <div>
+                <input type="date" id="startdate" name="startdate"
+                    value="{{ request('startdate', now()->subMonth()->toDateString()) }}"
+                    class="w-36 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
+            </div>
+            <div>
+                <input type="date" id="enddate" name="enddate"
+                    value="{{ request('enddate', now()->toDateString()) }}"
+                    class="w-36 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
+            </div>
+            <div class="flex items-end">
+                <button type="submit"
+                    class="bg-primary hover:bg-primaryHover text-white font-medium rounded-lg px-4 py-2 mr-2">
+                    Хайх
+                </button>
             </div>
         </div>
-        <div class="col-span-2 ...">
-            <div class="border border-gray-300">
-                <span class="block text-black font-bold text-lg p-2 my-3 uppercase">Огноо филтер</span>
+    </form>
+    <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-8 gap-2 mt-2">
+        <div class="border border-gray-300 flex items-center justify-center p-4">
+            <div class="border-l-4 border-green-500 px-3">
+                <div class="block text-primary font-bold text-xs sm:text-sm">Нийт гомдол</div>
+                <div class="block text-black font-bold text-lg sm:text-xl">{{ $ehzh_tog_count + $ehzh_dulaan_count }}
+                </div>
             </div>
         </div>
-    </section> --}}
-    <section class="grid grid-cols-8 gap-2 mt-2">
-        <div class="border border-gray-300 flex items-center justify-center">
-            <div class="border-l-4 border-green-500 my-5 px-2">
-                <div class="block text-primary font-bold text-xs">Нийт гомдол</div>
-                <div class="block text-black font-bold text-lg">{{ $ehzh_tog_count + $ehzh_dulaan_count }}</div>
+        <div class="border border-gray-300 flex items-center justify-center p-4">
+            <div class="border-l-4 border-green-500 px-3">
+                <div class="block text-primary font-bold text-xs sm:text-sm">Шинээр ирсэн</div>
+                <div class="block text-black font-bold text-lg sm:text-xl">{{ $new_comp }}</div>
             </div>
         </div>
-        <div class="border border-gray-300 flex items-center justify-center">
-            <div class="border-l-4 border-green-500 my-5 px-2">
-                <div class="block text-primary font-bold text-xs">Шинээр ирсэн</div>
-                <div class="block text-black font-bold text-lg">{{ $new_comp }}</div>
+        <div class="border border-gray-300 flex items-center justify-center p-4">
+            <div class="border-l-4 border-green-500 px-3">
+                <div class="block text-primary font-bold text-xs sm:text-sm">Хүлээн авсан</div>
+                <div class="block text-black font-bold text-lg sm:text-xl">{{ $rec_comp }}</div>
             </div>
         </div>
-        <div class="border border-gray-300 flex items-center justify-center">
-            <div class="border-l-4 border-green-500 my-5 px-2">
-                <div class="block text-primary font-bold text-xs">Хүлээн авсан</div>
-                <div class="block text-black font-bold text-lg">{{ $rec_comp }}</div>
+        <div class="border border-gray-300 flex items-center justify-center p-4">
+            <div class="border-l-4 border-green-500 px-3">
+                <div class="block text-primary font-bold text-xs sm:text-sm">Хянаж байгаа</div>
+                <div class="block text-black font-bold text-lg sm:text-xl">{{ $ctl_comp }}</div>
             </div>
         </div>
-        <div class="border border-gray-300 flex items-center justify-center">
-            <div class="border-l-4 border-green-500 my-5 px-2">
-                <div class="block text-primary font-bold text-xs">Хянаж байгаа</div>
-                <div class="block text-black font-bold text-lg">{{ $ctl_comp }}</div>
+        <div class="border border-gray-300 flex items-center justify-center p-4">
+            <div class="border-l-4 border-green-500 px-3">
+                <div class="block text-primary font-bold text-xs sm:text-sm">Шийдвэрлэсэн</div>
+                <div class="block text-black font-bold text-lg sm:text-xl">{{ $slv_comp }}</div>
             </div>
         </div>
-        <div class="border border-gray-300 flex items-center justify-center">
-            <div class="border-l-4 border-green-500 my-5 px-2">
-                <div class="block text-primary font-bold text-xs">Шийдвэрлэсэн</div>
-                <div class="block text-black font-bold text-lg">{{ $slv_comp }}</div>
+        <div class="border border-gray-300 flex items-center justify-center p-4">
+            <div class="border-l-4 border-red-500 px-3">
+                <div class="block text-primary font-bold text-xs sm:text-sm">Хугацаа хэтэрсэн</div>
+                <div class="block text-black font-bold text-lg sm:text-xl">{{ $exp_comp }}</div>
             </div>
         </div>
-        <div class="border border-gray-300 flex items-center justify-center">
-            <div class="border-l-4 border-green-500 my-5 px-2">
-                <div class="block text-primary font-bold text-xs">Хугацаа хэтэрсэн</div>
-                <div class="block text-black font-bold text-lg">{{ $exp_comp }}</div>
-            </div>
-        </div>
-        <div class="border border-gray-300 flex items-center justify-center">
-            <div class="border-l-4 border-green-500 my-5 px-2">
-                <div class="block text-primary font-bold text-xs">Шилжүүлсэн</div>
-                <div class="block text-black font-bold text-lg">{{ $snt_comp }}</div>
-            </div>
-        </div>
-        <div class="border border-gray-300 flex items-center justify-center">
-            <div class="border-l-4 border-green-500 my-5 px-2">
-                <div class="block text-primary font-bold text-xs">Буцаасан</div>
-                <div class="block text-black font-bold text-lg">{{ $rtn_comp }}</div>
+        <div class="border border-gray-300 flex items-center justify-center p-4">
+            <div class="border-l-4 border-blue-500 px-3">
+                <div class="block text-primary font-bold text-xs sm:text-sm">Шилжүүлсэн</div>
+                <div class="block text-black font-bold text-lg sm:text-xl">{{ $snt_comp }}</div>
             </div>
         </div>
     </section>
+
 
     <section class="grid grid-cols-8 gap-2 mt-2">
         <div class="col-span-2">
@@ -110,112 +114,6 @@
             </div>
         </div>
     </section>
-
-    
-
-    {{-- <section class="grid md:grid-cols-2 xl:grid-cols-4 gap-4 my-4">
-        <div class="flex flex-col justify-between items-start px-8 py-4 bg-white shadow rounded-lg">
-            <div class="">
-                <span class="block text-gray-700 font-bold text-lg">Нийт өргөдөл, гомдол</span>
-            </div>
-            <div class="w-full flex items-center justify-between">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="w-8 h-8 rounded-full text-purple-700"
-                    viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25ZM6.75 12h.008v.008H6.75V12Zm0 3h.008v.008H6.75V15Zm0 3h.008v.008H6.75V18Z" />
-                </svg>
-                <div>
-                    <span class="block text-4xl font-bold">{{ $ehzh_tog_count + $ehzh_dulaan_count }}</span>
-                </div>
-            </div>
-        </div>
-        <div class="flex flex-col justify-between items-start px-8 py-4 bg-white shadow rounded-lg">
-            <div class="pb-4">
-                <span class="block text-gray-700 font-bold text-lg">Нийт өргөдөл, гомдол /Цахилгаан/</span>
-            </div>
-            <div class="w-full flex items-center justify-between">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="w-8 h-8 rounded-full text-blue-700">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z" />
-                </svg>
-                <div>
-                    <span class="block text-4xl font-bold">{{ $ehzh_tog_count }}</span>
-                </div>
-            </div>
-        </div>
-        <div class="flex flex-col justify-between items-start px-8 py-4 bg-white shadow rounded-lg">
-            <div class="">
-                <span class="block text-gray-700 font-bold text-lg">Нийт өргөдөл, гомдол /Дулаан/</span>
-            </div>
-            <div class="w-full flex items-center justify-between">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="w-8 h-8 rounded-full text-orange-700">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M15.362 5.214A8.252 8.252 0 0 1 12 21 8.25 8.25 0 0 1 6.038 7.047 8.287 8.287 0 0 0 9 9.601a8.983 8.983 0 0 1 3.361-6.867 8.21 8.21 0 0 0 3 2.48Z" />
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M12 18a3.75 3.75 0 0 0 .495-7.468 5.99 5.99 0 0 0-1.925 3.547 5.975 5.975 0 0 1-2.133-1.001A3.75 3.75 0 0 0 12 18Z" />
-                </svg>
-                <div>
-                    <span class="inline-block text-4xl font-bold">{{ $ehzh_dulaan_count }}</span>
-                </div>
-            </div>
-        </div>
-        <div class="flex flex-col justify-between items-start px-8 py-4 bg-white shadow rounded-lg">
-            <div class="">
-                <span class="block text-gray-700 font-bold text-lg">Хугацаа хэтэрсэн өргөдөл, гомдол</span>
-            </div>
-            <div class="w-full flex items-center justify-between">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="w-8 h-8 rounded-full text-red-700">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                </svg>
-                <div>
-                    <span class="block text-4xl font-bold">{{ $exp_comp }}</span>
-                </div>
-            </div>
-        </div>
-
-    </section> --}}
-    {{-- <section class="grid md:grid-cols-3 xl:grid-cols-3 gap-4">
-        <div class="bg-white shadow rounded-lg p-4">
-            <div id="chartStatus"></div>
-        </div>
-        <div class="bg-white shadow rounded-lg">
-            <div id="chartEnergyType"></div>
-        </div>
-        <div class="bg-white shadow rounded-lg">
-            <div id="donutChartChannel"></div>
-        </div>
-    </section> --}}
-    {{-- <section class="grid md:grid-cols-3 xl:grid-cols-3 gap-4 mt-4">
-        <div class="bg-white shadow rounded-lg md:col-span-2 lg:col-span-2 overflow-y-auto">
-            <div id="stackedChartTog"></div>
-        </div>
-        <div class="bg-white shadow rounded-lg">
-            <div id="pieChartMaker"></div>
-        </div>
-    </section>
-    <section class="grid md:grid-cols-3 xl:grid-cols-3 gap-4 mt-4">
-        <div class="bg-white shadow rounded-lg md:col-span-2 lg:col-span-2 overflow-y-auto">
-            <div id="stackedChartDulaan"></div>
-        </div>
-        <div class="bg-white shadow rounded-lg">
-            <div id="pieChartStatus"></div>
-        </div>
-    </section>
-    <section class="grid md:grid-cols-3 xl:grid-cols-3 gap-4 mt-4">
-        <div class="bg-white shadow rounded-lg">
-            <div id="chartAreaEhzh"></div>
-        </div>
-        <div class="bg-white shadow rounded-lg">
-            <div id="pieCharTypeSummary"></div>
-        </div>
-        <div class="bg-white shadow rounded-lg">
-            <div id="chartBarChannel"></div>
-        </div>
-    </section> --}}
 
 </div>
 
@@ -673,7 +571,9 @@
                 }
             }
         },
-        legend:{ enabled:false },
+        legend: {
+            enabled: false
+        },
         plotOptions: {
             series: {
                 stacking: 'normal',
@@ -767,5 +667,4 @@
             color: '#6366f1'
         }]
     });
-
 </script>

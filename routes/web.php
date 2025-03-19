@@ -73,6 +73,10 @@ Route::middleware([
     Route::get('/user-guide', function () {
         return view('user-guide');
     })->name('user-guide');
+
+    Route::get('/banner-detail', function () {
+        return view('banner-detail'); // Load the details page view
+    })->name('banner-detail');
 });
 
 // Энгийн хэрэглэгчид
