@@ -1,29 +1,92 @@
+<!-- Swiper CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
 <div x-data="{ showPopup: true }">
     <!-- Popup Modal -->
     <div x-show="showPopup" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-        <div class="bg-white p-6 rounded-lg shadow-xl relative max-w-lg w-full">
+        <div
+            class="bg-white p-8 rounded-2xl shadow-2xl relative max-w-lg w-full min-h-[350px] transition-all transform scale-100">
+
+            <!-- Close Button -->
             <button @click="showPopup = false"
-                class="absolute top-4 right-4 text-gray-700 text-3xl font-bold focus:outline-none">
+                class="absolute top-4 right-4 text-gray-600 text-3xl font-bold hover:text-red-600 transition">
                 &times;
             </button>
-            <div class="flex justify-center mb-4">
-                <img src="{{ asset('images/ip-phone.png') }}" alt="Banner" class="w-[200px] h-auto">
-            </div>
-            <div class="text-center">
-                <p class="text-lg text-gray-800 font-medium">
-                    Та бүхний ашиглаж буй IP дугаарыг SIP протокол дэмждэг суурин утасны төхөөрөмжид холбож, тохируулан
-                    ашиглах боломжтой.
-                </p>
-                <p>
-                    <a href="{{ route('banner-detail') }}"
-                        class="inline-block mt-4 px-6 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors duration-300">
-                        Дэлгэрэнгүй
-                    </a>
-                </p>
+
+            <!-- Swiper Slider -->
+            <div class="swiper mySwiper">
+                <div class="swiper-wrapper">
+                    <!-- Slide 1 -->
+                    <div class="swiper-slide flex flex-col items-center text-center px-6">
+                        <div class="flex justify-center w-full mb-4">
+                            <img src="{{ asset('images/ip-phone.png') }}" alt="IP Phone" class="w-[200px] h-auto">
+                        </div>
+                        <p class="text-lg text-gray-800 font-medium leading-relaxed mb-4">
+                            📞 Та бүхний ашиглаж буй IP дугаарыг SIP протокол дэмждэг суурин утасны төхөөрөмжид холбож,
+                            тохируулан ашиглах боломжтой.
+                        </p>
+                        <a href="{{ route('banner-detail') }}"
+                            class="mt-5 px-6 py-2 text-white bg-blue-600 rounded-full shadow-lg hover:bg-blue-700 transition-all">
+                            🔍 Дэлгэрэнгүй
+                        </a>
+                    </div>
+
+                    <!-- Slide 2 -->
+                    <div class="swiper-slide flex flex-col items-center text-center px-6">
+                        <h2 class="text-xl text-gray-900 font-semibold">📞 Дуудлага шилжүүлэх заавар</h2>
+                        <p class="text-lg text-gray-700 mt-3 leading-relaxed">
+                            Та бүхний ашиглаж буй IP дугаарт ирсэн дуудлагыг өөр утасны дугаар руу шилжүүлэх боломжтой.
+                        </p>
+                        <p class="text-lg text-gray-700 mt-2">
+                            <strong>✅ Дуудлага шилжүүлэх:</strong> <br>
+                            *72* дуудлага шилжүүлэх утасны дугаар оруулаад дуудлага хийх товчийг дарна.
+                        </p>
+                        <p class="text-lg text-gray-700 mt-2">
+                            <strong>Жишээ:</strong> <br>
+                            *72*99999999 гэж оруулаад дуудлага хийх товчлуур дээр дарахад автомат хариулагчаас хариу
+                            өгнө.
+                        </p>
+                        <p class="text-lg text-gray-700 mt-2 mb-6">
+                            <strong>❌ Дуудлага шилжүүлгийг цуцлах:</strong> <br>
+                            *72* гэж залгахад шилжүүлсэн дуудлага цуцлагдана.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Pagination -->
+                <div class="swiper-pagination mt-4"></div>
             </div>
         </div>
     </div>
 </div>
+
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        new Swiper(".mySwiper", {
+            // loop: false, // Сүүлчийн слайд дуусаад эхнийх рүү автоматаар шилжинэ
+            // autoplay: {
+            //     delay: 5000
+            // }, // Автоматаар 5 секунд тутамд шилжинэ
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true
+            }, // Доорхи цэгүүдээр удирдах боломжтой
+            effect: "fade", // Шилжилтийн эффект илүү зөөлөн болно
+            fadeEffect: {
+                crossFade: true
+            },
+            speed: 800, // Илүү зөөлөн шилжилт
+        });
+    });
+</script>
+
+
+
+
+
+
 
 
 
