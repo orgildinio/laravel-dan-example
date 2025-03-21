@@ -65,10 +65,10 @@
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         new Swiper(".mySwiper", {
-            // loop: false, // Сүүлчийн слайд дуусаад эхнийх рүү автоматаар шилжинэ
-            // autoplay: {
-            //     delay: 5000
-            // }, // Автоматаар 5 секунд тутамд шилжинэ
+            loop: true, // Сүүлчийн слайд дуусаад эхнийх рүү автоматаар шилжинэ
+            autoplay: {
+                delay: 5000
+            }, // Автоматаар 5 секунд тутамд шилжинэ
             pagination: {
                 el: ".swiper-pagination",
                 clickable: true
