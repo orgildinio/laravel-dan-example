@@ -264,7 +264,7 @@
                             <div class="md:w-3/4">
                                 <input id="consumer_code"
                                     class="bg-orange-50 appearance-none  rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight border-gray-200"
-                                    type="text" name="consumer_code" value="{{ old('consumer_code') }}">
+                                    type="text" name="user_code" value="{{ old('user_code') }}">
                                 <span id="empty" class="hidden text-xs text-red-500">Мэдээлэл олдсонгүй</span>
                             </div>
                         </div>

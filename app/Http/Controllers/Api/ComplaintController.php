@@ -305,11 +305,7 @@ class ComplaintController extends Controller
             $input['energy_tyoe_id'] = $user->org->plant_id;
             $input['status_id'] = 0; // Шинээр ирсэн
             $input['channel_id'] = 2; // Утас
-
-            if (empty($input['complaint_maker_type_id'])) {
-                $input['complaint_maker_type_id'] = 1; // Иргэн
-            }
-
+            $input['is_from_api'] = true;
 
             if (empty($input['complaint_maker_type_id'])) {
                 $input['complaint_maker_type_id'] = 1; // Иргэн

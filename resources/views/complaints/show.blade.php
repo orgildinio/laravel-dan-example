@@ -246,6 +246,15 @@
                                 </audio>
                             </div>
                         @endif
+                        @if ($complaint->audio_file_url != null)
+                            <div class="text-sm px-2 mb-2">
+                                <p>Бичлэг</p>
+                                <audio controls class="w-full">
+                                    <source src="{{ $complaint->audio_file_url }}" type="audio/mpeg">
+                                    Your browser does not support the audio tag.
+                                </audio>
+                            </div>
+                        @endif
 
                         @if ($complaint->file_id != null)
                             <div class="flex space-x-4 py-4">
@@ -255,11 +264,11 @@
                         @if ($complaint->files->isNotEmpty())
                             <div class="flex flex-row flex-wrap">
                                 @foreach ($complaint->files as $file)
-                                <div class="m-2">
+                                    <div class="m-2">
                                         <x-file-list-component :fileName="$file->filename" :fileExt="pathinfo($file->filename, PATHINFO_EXTENSION)" :fileUrl="url('files/' . $file->filename)"
                                             :fileSizeInKilobytes="10" />
-                                        </div>
-                                    @endforeach
+                                    </div>
+                                @endforeach
                             </div>
                         @endif
 
