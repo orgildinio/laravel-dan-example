@@ -82,23 +82,25 @@ class ComplaintController extends Controller
         $complaint_types = ComplaintType::all();
         $energy_types = EnergyType::all();
 
-        // Find country_id, soum_district_id, bag_khoroo_id based on names
-        $country = Country::where('name', $danUser->danAimagCityName)->first();
+        // // Find country_id, soum_district_id, bag_khoroo_id based on names
+        // $country = Country::where('name', $danUser->danAimagCityName)->first();
 
-        // Find district_id only if country exists
-        $district = $country ? SoumDistrict::where('name', $danUser->danSoumDistrictName)
-            ->where('country_id', $country->id)
-            ->first()
-            : null;
+        // // Find district_id only if country exists
+        // $district = $country ? SoumDistrict::where('name', $danUser->danSoumDistrictName)
+        //     ->where('country_id', $country->id)
+        //     ->first()
+        //     : null;
 
-        // Find bag_khoroo_id only if district exists
-        $khoroo = $district ? BagKhoroo::where('name', $danUser->danBagKhorooName)
-            ->where('soum_district_id', $district->id)
-            ->first()
-            : null;
+        // // Find bag_khoroo_id only if district exists
+        // $khoroo = $district ? BagKhoroo::where('name', $danUser->danBagKhorooName)
+        //     ->where('soum_district_id', $district->id)
+        //     ->first()
+        //     : null;
 
-        $organizationServiceArea = OrganizationServiceArea::where('bag_khoroo_id', $khoroo->id)->first();
-        $orgs = Organization::where('id', $organizationServiceArea->organization_id)->get();
+        // $organizationServiceArea = OrganizationServiceArea::where('bag_khoroo_id', $khoroo->id)->first();
+        // $orgs = Organization::where('id', $organizationServiceArea->organization_id)->get();
+
+        $orgs = Organization::all();
 
         return view('complaints.addComplaint', compact('categories', 'orgs', 'complaint_types', 'energy_types', 'danUser'));
     }
