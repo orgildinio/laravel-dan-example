@@ -1,5 +1,24 @@
 <div class="bg-white">
-
+    <form method="GET" autocomplete="off" class="">
+        <div class="flex flex-row gap-2 p-2">
+            <div>
+                <input type="date" id="startdate" name="startdate"
+                    value="{{ request('startdate', now()->subMonth()->toDateString()) }}"
+                    class="w-36 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
+            </div>
+            <div>
+                <input type="date" id="enddate" name="enddate"
+                    value="{{ request('enddate', now()->toDateString()) }}"
+                    class="w-36 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
+            </div>
+            <div class="flex items-end">
+                <button type="submit"
+                    class="bg-primary hover:bg-primaryHover text-white font-medium rounded-lg p-2 mr-2">
+                    Хайх
+                </button>
+            </div>
+        </div>
+    </form>
     <section class="grid grid-cols-8 gap-2 mt-2">
         <div class="col-span-2">
             <div class="border border-gray-300 flex items-center justify-start">
@@ -36,50 +55,32 @@
     </section>
 
     <section class="grid grid-cols-8 gap-2 mt-2">
-        <div class="col-span-2">
+        <div class="col-span-8">
             <div class="border border-gray-300">
-                <div id="chartEnergyTypeTze"></div>
+                <div id="stackedChartContainerTze1"></div>
             </div>
         </div>
-        <div class="col-span-2">
+        <div class="col-span-8">
             <div class="border border-gray-300">
-                <div id="pieChartStatusTze"></div>
+                <div id="stackedChartContainerTze2"></div>
+            </div>
+        </div>
+        <div class="col-span-8">
+            <div class="border border-gray-300">
+                <div id="complaintsChart"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="grid grid-cols-8 gap-2 mt-2">
+        <div class="col-span-4">
+            <div class="border border-gray-300">
+                <div id="barChartElectric"></div>
             </div>
         </div>
         <div class="col-span-4">
             <div class="border border-gray-300">
                 <div id="lineChartTze"></div>
-            </div>
-        </div>
-    </section>
-
-    <section class="grid grid-cols-8 gap-2 mt-2">
-        <div class="col-span-4">
-            <div class="border border-gray-300">
-                <div id="stackedChartContainerTze1"></div>
-            </div>
-        </div>
-        <div class="col-span-4">
-            <div class="border border-gray-300">
-                <div id="stackedChartContainerTze2"></div>
-            </div>
-        </div>
-    </section>
-
-    <section class="grid grid-cols-8 gap-2 mt-2">
-        <div class="col-span-2">
-            <div class="border border-gray-300">
-                <div id="pieChartMakerElectric"></div>
-            </div>
-        </div>
-        <div class="col-span-2">
-            <div class="border border-gray-300">
-                <div id="pieChartMakerDulaan"></div>
-            </div>
-        </div>
-        <div class="col-span-4">
-            <div class="border border-gray-300">
-                <div id="barChartElectric"></div>
             </div>
         </div>
     </section>
@@ -107,177 +108,7 @@
         '#86efac',
     ];
 
-    // ЭХЗХ Chart энергийн төрлөөр 
-    Highcharts.chart('chartEnergyTypeTze', {
-        chart: {
-            type: 'pie',
-            height: 250,
-            // marginTop: 10
-            // width: 300
-        },
-        title: {
-            text: 'Цахилгаан ба Дулаан',
-            align: 'left',
-            style: {
-                fontSize: '14px',
-                color: '#3e4095',
-                fontWeight: 'bold',
-            }
-        },
-        plotOptions: {
-            pie: {
-                innerSize: '50%',
-                size: 150,
-                dataLabels: {
-                    enabled: true,
-                    format: '{point.name}:<br> {point.y}',
-                    style: {
-                        fontSize: '9px',
-                    },
-                    connectorPadding: 0.01
-                },
-            }
-        },
-        colors: ['#818cf8', '#3730a3'],
-        series: [{
-            name: 'Өргөдөл, гомдол',
-            colorByPoint: true,
-            data: [{
-                    name: 'Цахилгаан',
-                    y: {{ $tze_tog }}
-                },
-                {
-                    name: 'Дулаан',
-                    y: {{ $tze_dulaan }}
-                },
-            ]
-        }],
-    });
-    const customColorsStacked = ['#fca5a5', '#d1d5db', '#86efac', '#fde047', '#93c5fd', '#fdba74', '#f9fafb'];
-    // Create the pie chart Иргэн ААН СӨХ ТЗЭ Төрийн байгууллага
-    Highcharts.chart('pieChartStatusTze', {
-        chart: {
-            type: 'pie',
-            height: 250
-        },
-        title: {
-            text: 'Гомдлын төрөл',
-            align: 'left',
-            style: {
-                fontSize: '14px',
-                color: '#3e4095',
-                fontWeight: 'bold',
-            }
-        },
-        plotOptions: {
-            pie: {
-                innerSize: '50%',
-                size: 150,
-                dataLabels: {
-                    enabled: true,
-                    format: '{point.name}:<br> {point.y}',
-                    style: {
-                        fontSize: '9px',
-                    },
-                    connectorPadding: 0.01
-                },
-            }
-        },
-        colors: ['#342BC2', '#6F68F1', '#9993FF', '#407ED9', '#2465C3', '#1897BF'],
-        series: [{
-            name: 'Өргөдөл, гомдол',
-            colorByPoint: true,
-            data: [{
-                    name: 'Шинээр ирсэн',
-                    y: {{ $new_comp }}
-                },
-                {
-                    name: 'Хүлээн авсан',
-                    y: {{ $rec_comp }}
-                },
-                {
-                    name: 'Хянаж байгаа',
-                    y: {{ $ctl_comp }}
-                },
-                {
-                    name: 'Шилжүүлсэн',
-                    y: {{ $snt_comp }}
-                },
-                {
-                    name: 'Шийдвэрлэсэн',
-                    y: {{ $slv_comp }}
-                },
-                {
-                    name: 'Буцаасан',
-                    y: {{ $rtn_comp }}
-                },
-                {
-                    name: 'Хугацаа хэтэрсэн',
-                    y: {{ $exp_comp }}
-                },
-            ]
-        }]
-    });
-    // Line chart санал гомдлын тоо
-    var compCountsCurrentYear = <?php echo $lineChartData; ?>;
 
-    var monthLabels = compCountsCurrentYear.map(function(obj) {
-        return obj[Object.keys(obj)[0]] + ' сар';
-    });
-    var monthDatas = compCountsCurrentYear.map(function(obj) {
-        return obj[Object.keys(obj)[1]];
-    });
-    Highcharts.chart('lineChartTze', {
-        chart: {
-            type: 'areaspline',
-            height: 250
-        },
-        title: {
-            text: 'Санал гомдол',
-            align: 'left',
-            style: {
-                fontSize: '14px',
-                color: '#3e4095',
-                fontWeight: 'bold',
-            }
-        },
-        xAxis: {
-            categories: monthLabels
-        },
-        yAxis: {
-            title: {
-                text: ''
-            }
-        },
-        legend: {
-            enabled: false
-        },
-        plotOptions: {
-            area: {
-                fillOpacity: 0.5
-            },
-            series: {
-                dataLabels: {
-                    enabled: true,
-                    backgroundColor: 'rgba(255,255,255,0.8)',
-                    borderColor: 'black',
-                    borderWidth: 1,
-                    padding: 5,
-                    borderRadius: 3,
-                    shape: 'callout',
-                    align: 'center',
-                    verticalAlign: 'bottom',
-                    x: 0,
-                    y: 30
-                }
-            }
-        },
-        series: [{
-            name: 'Санал гомдол',
-            data: monthDatas,
-            color: '#6366f1'
-        }]
-    });
 
     var allTzeTogTab2 = <?php echo $stackedChartDataTog; ?>;
 
@@ -486,105 +317,6 @@
         series: seriesDulaanTab2
     });
 
-    // Bar chart status tog
-    let statusCountTog = @json($statusTog);
-    let dataStatusTog = statusCountTog.map((obj, index) => ({
-        y: obj['status_count'],
-        color: statusBarColors[index]
-    }));
-    let statusExpireTog = {
-        y: {{ $statusExpireTog }},
-        color: '#fca5a5'
-    };
-    let statusTogDataset = [...dataStatusTog, statusExpireTog];
-
-    // Bar chart status dulaan
-    let statusCountDulaan = @json($statusDulaan);
-    let dataStatusDulaan = statusCountDulaan.map((obj, index) => ({
-        y: obj['status_count'],
-        color: statusBarColors[index]
-    }));
-    let statusExpireDulaan = {
-        y: {{ $statusExpireDulaan }},
-        color: '#fca5a5'
-    };
-    let statusDulaanDataset = [...dataStatusDulaan, statusExpireDulaan];
-
-    var compMakerTogCount = <?php echo $compMakerTogCount; ?>;
-    // Create the pie chart Иргэн ААН СӨХ ТЗЭ Төрийн байгууллага
-    Highcharts.chart('pieChartMakerElectric', {
-        chart: {
-            type: 'pie',
-            height: 250
-        },
-        title: {
-            text: 'Цахилгаан',
-            align: 'left',
-            style: {
-                fontSize: '14px',
-                color: '#3e4095',
-                fontWeight: 'bold',
-            }
-        },
-        plotOptions: {
-            pie: {
-                innerSize: '50%',
-                size: 150,
-                dataLabels: {
-                    enabled: true,
-                    format: '{point.name}:<br> {point.y}',
-                    style: {
-                        fontSize: '9px',
-                    },
-                    connectorPadding: 0.01
-                },
-            }
-        },
-        colors: ['#342BC2', '#6F68F1', '#9993FF', '#407ED9', '#2465C3', '#1897BF'],
-        series: [{
-            name: 'Өргөдөл, гомдол',
-            data: compMakerTogCount
-        }]
-    });
-    var compMakerDulaanCount = <?php echo $compMakerDulaanCount; ?>;
-    // Create the pie chart Иргэн ААН СӨХ ТЗЭ Төрийн байгууллага
-    Highcharts.chart('pieChartMakerDulaan', {
-        chart: {
-            type: 'pie',
-            height: 250
-        },
-        title: {
-            text: 'Дулаан',
-            align: 'left',
-            style: {
-                fontSize: '14px',
-                color: '#3e4095',
-                fontWeight: 'bold',
-            }
-        },
-        plotOptions: {
-            pie: {
-                innerSize: '50%',
-                size: 150,
-                dataLabels: {
-                    enabled: true,
-                    format: '{point.name}:<br> {point.y}',
-                    style: {
-                        fontSize: '9px',
-                    },
-                    connectorPadding: 0.1,
-                },
-            }
-        },
-        colors: ['#342BC2', '#6F68F1', '#9993FF', '#407ED9', '#2465C3', '#1897BF'],
-        series: [{
-            name: 'Өргөдөл, гомдол',
-            data: compMakerDulaanCount
-        }]
-    });
-
-
-
     // Хүлээн авсан суваг
     var compTogChannelsCount = <?php echo $compTogChannelsCount; ?>;
     var channelTogLabels = compTogChannelsCount.map(function(obj) {
@@ -593,8 +325,6 @@
     var channelTogDatas = compTogChannelsCount.map(function(obj) {
         return obj[Object.keys(obj)[1]];
     });
-    console.log("chTogLabel", compTogChannelsCount);
-    console.log("chTog", channelTogDatas);
 
     var compDulaanChannelsCount = <?php echo $compDulaanChannelsCount; ?>;
     var channelDulaanLabels = compDulaanChannelsCount.map(function(obj) {
@@ -633,7 +363,6 @@
         },
         plotOptions: {
             series: {
-                // stacking: 'percent',
                 dataLabels: {
                     enabled: true,
                     style: {
@@ -672,4 +401,135 @@
         ],
     });
 
+    // Line chart санал гомдлын тоо
+    var compCountsCurrentYear = <?php echo $lineChartData; ?>;
+    var monthLabels = compCountsCurrentYear.map(function(obj) {
+        return obj[Object.keys(obj)[0]] + ' сар';
+    });
+    var monthDatas = compCountsCurrentYear.map(function(obj) {
+        return obj[Object.keys(obj)[1]];
+    });
+    Highcharts.chart('lineChartTze', {
+        chart: {
+            type: 'areaspline',
+            height: 250
+        },
+        title: {
+            text: 'Санал гомдол',
+            align: 'left',
+            style: {
+                fontSize: '14px',
+                color: '#3e4095',
+                fontWeight: 'bold',
+            }
+        },
+        xAxis: {
+            categories: monthLabels
+        },
+        yAxis: {
+            title: {
+                text: ''
+            }
+        },
+        legend: {
+            enabled: false
+        },
+        plotOptions: {
+            area: {
+                fillOpacity: 0.5
+            },
+            series: {
+                dataLabels: {
+                    enabled: true,
+                    backgroundColor: 'rgba(255,255,255,0.8)',
+                    borderColor: 'black',
+                    borderWidth: 1,
+                    padding: 5,
+                    borderRadius: 3,
+                    shape: 'callout',
+                    align: 'center',
+                    verticalAlign: 'bottom',
+                    x: 0,
+                    y: 30
+                }
+            }
+        },
+        series: [{
+            name: 'Санал гомдол',
+            data: monthDatas,
+            color: '#6366f1'
+        }]
+    });
+
+    /*========================================================*/
+    Highcharts.chart('complaintsChart', {
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Complaints by Status and Organization'
+        },
+        xAxis: {
+            categories: {!! json_encode($categories) !!},
+            title: {
+                text: 'Organizations'
+            }
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Number of Complaints'
+            },
+            stackLabels: {
+                enabled: true
+            }
+        },
+        legend: {
+            align: 'right',
+            verticalAlign: 'top',
+            floating: true,
+            backgroundColor: Highcharts.defaultOptions.legend.backgroundColor || 'white',
+            borderColor: '#CCC',
+            borderWidth: 1,
+            shadow: false
+        },
+        tooltip: {
+            headerFormat: '<b>{point.x}</b><br/>',
+            pointFormat: '{series.name}: {point.y}<br/>Total: {point.stackTotal}'
+        },
+        plotOptions: {
+            column: {
+                stacking: 'normal',
+                dataLabels: {
+                    enabled: true
+                }
+            }
+        },
+        series: [{
+                name: 'Шинээр ирсэн',
+                data: {!! json_encode($statusCounts['Status 0']) !!},
+                color: '#7cb5ec'
+            },
+            {
+                name: 'Шилжүүлсэн',
+                data: {!! json_encode($statusCounts['Status 1']) !!},
+                color: '#8085e9'
+            },
+            {
+                name: 'Хүлээн авсан',
+                data: {!! json_encode($statusCounts['Status 2']) !!},
+                color: '#434348'
+            },
+            {
+                name: 'Хянаж байгаа',
+                data: {!! json_encode($statusCounts['Status 3']) !!},
+                color: '#f7a35c'
+            },
+            {
+                name: 'Шийдвэрлэсэн',
+                data: {!! json_encode($statusCounts['Status 6']) !!},
+                color: '#90ed7d'
+            }
+        ]
+    });
 </script>

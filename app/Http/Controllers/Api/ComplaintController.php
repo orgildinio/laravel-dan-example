@@ -222,12 +222,12 @@ class ComplaintController extends Controller
         $user = auth()->user();
 
         // Check if the authenticated user is the controlled user
-        if ($complaint->controlled_user_id !== $user->id) {
-            return response()->json([
-                'status' => 'failed',
-                'message' => 'Танд энэ гомдлын төлөвийг шинэчлэх эрх байхгүй байна.'
-            ], 403);
-        }
+        // if ($complaint->controlled_user_id !== $user->id) {
+        //     return response()->json([
+        //         'status' => 'failed',
+        //         'message' => 'Танд энэ гомдлын төлөвийг шинэчлэх эрх байхгүй байна.'
+        //     ], 403);
+        // }
 
         $complaint->update([
             'status_id' => $request->status_id,
