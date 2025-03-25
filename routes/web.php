@@ -101,7 +101,7 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified'
 ])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+    // Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
     Route::get('/dashboardEhzh', [DashboardController::class, 'dashboardEhzh'])->name('dashboardEhzh');
     Route::get('/dashboardTze', [DashboardController::class, 'dashboardTze'])->name('dashboardTze');
     Route::get('/dashboardEhs', [DashboardController::class, 'dashboardEhs'])->name('dashboardEhs');

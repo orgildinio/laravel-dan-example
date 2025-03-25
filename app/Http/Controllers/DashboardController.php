@@ -7,10 +7,10 @@ use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
-    public function dashboard()
-    {
-        return view('dashboard');
-    }
+    // public function dashboard()
+    // {
+    //     return view('dashboard');
+    // }
     public function dashboardEhzh()
     {
         return view('dashboard.ehzh');

@@ -16,7 +16,7 @@
                         {{ __('Нүүр') }}
                     </x-nav-link>
                 </div>
-                
+
                 @guest
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-nav-link href="{{ route('addComplaint') }}" :active="request()->routeIs('addComplaint')">
@@ -32,7 +32,7 @@
                 </div>
 
                 @auth
-                    @if (Auth::user()->role?->name === 'dan' || Auth::user()->role?->name === 'admin')
+                    @if (Auth::user()->role?->name === 'dan')
                         <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                             <x-nav-link href="{{ route('addComplaint') }}" :active="request()->routeIs('addComplaint')">
                                 {{ __('Өргөдөл, гомдол илгээх') }}
@@ -44,9 +44,16 @@
                             </x-nav-link>
                         </div>
                     @endif
-                    @if (Auth::user()->role?->name !== 'dan')
+                    @if (Auth::user()->role?->name == 'ehzh')
                         <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                            <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
+                            <x-nav-link href="{{ route('dashboardEhzh') }}" :active="request()->routeIs('dashboardEhzh')">
+                                {{ __('Хянах самбар') }}
+                            </x-nav-link>
+                        </div>
+                    @endif
+                    @if (Auth::user()->role?->name == 'tze')
+                        <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                            <x-nav-link href="{{ route('dashboardTzeShow') }}" :active="request()->routeIs('dashboardTzeShow')">
                                 {{ __('Хянах самбар') }}
                             </x-nav-link>
                         </div>
@@ -69,14 +76,14 @@
                                             src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
                                     </button>
                                 @elseif(Auth::user()->danImage != null)
-                                <span class="inline-flex rounded-md">
-                                    <button type="button"
-                                        class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150">
-                                        <span class="mr-3">{{ Auth::user()->name }}</span>
-                                        <img class="h-8 w-8 rounded-full object-cover"
-                                            src="data:image/png;base64,{{ Auth::user()->danImage }}" alt="profile">
-                                    </button>
-                                </span>
+                                    <span class="inline-flex rounded-md">
+                                        <button type="button"
+                                            class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150">
+                                            <span class="mr-3">{{ Auth::user()->name }}</span>
+                                            <img class="h-8 w-8 rounded-full object-cover"
+                                                src="data:image/png;base64,{{ Auth::user()->danImage }}" alt="profile">
+                                        </button>
+                                    </span>
                                 @else
                                     <button
                                         class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150">
@@ -175,7 +182,7 @@
             </div>
         @endguest
         @auth
-            @if (Auth::user()->role?->name === 'dan' || Auth::user()->role?->name === 'admin')
+            @if (Auth::user()->role?->name === 'dan')
                 <div class="pt-2 pb-3 space-y-1">
                     <x-responsive-nav-link href="{{ route('addComplaint') }}" :active="request()->routeIs('addComplaint')">
                         {{ __('Өргөдөл, гомдол илгээх') }}
@@ -187,9 +194,16 @@
                     </x-responsive-nav-link>
                 </div>
             @endif
-            @if (Auth::user()->role?->name !== 'dan')
+            @if (Auth::user()->role?->name == 'ehzh')
                 <div class="pt-2 pb-3 space-y-1">
-                    <x-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
+                    <x-responsive-nav-link href="{{ route('dashboardEhzh') }}" :active="request()->routeIs('dashboardEhzh')">
+                        {{ __('Хянах самбар') }}
+                    </x-responsive-nav-link>
+                </div>
+            @endif
+            @if (Auth::user()->role?->name == 'tze')
+                <div class="pt-2 pb-3 space-y-1">
+                    <x-responsive-nav-link href="{{ route('dashboardTzeShow') }}" :active="request()->routeIs('dashboardTzeShow')">
                         {{ __('Хянах самбар') }}
                     </x-responsive-nav-link>
                 </div>

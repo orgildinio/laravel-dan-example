@@ -13,13 +13,13 @@
             </div>
             <div class="flex items-end">
                 <button type="submit"
-                    class="bg-primary hover:bg-primaryHover text-white font-medium rounded-lg px-4 py-2 mr-2">
+                    class="bg-primary hover:bg-primaryHover text-white font-medium rounded-lg p-2 mr-2">
                     Хайх
                 </button>
             </div>
         </div>
     </form>
-    <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-8 gap-2 mt-2">
+    <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6 gap-2 mt-2">
         <div class="border border-gray-300 flex items-center justify-center p-4">
             <div class="border-l-4 border-green-500 px-3">
                 <div class="block text-primary font-bold text-xs sm:text-sm">Нийт гомдол</div>
@@ -46,25 +46,18 @@
             </div>
         </div>
         <div class="border border-gray-300 flex items-center justify-center p-4">
-            <div class="border-l-4 border-green-500 px-3">
-                <div class="block text-primary font-bold text-xs sm:text-sm">Шийдвэрлэсэн</div>
-                <div class="block text-black font-bold text-lg sm:text-xl">{{ $slv_comp }}</div>
-            </div>
-        </div>
-        <div class="border border-gray-300 flex items-center justify-center p-4">
-            <div class="border-l-4 border-red-500 px-3">
-                <div class="block text-primary font-bold text-xs sm:text-sm">Хугацаа хэтэрсэн</div>
-                <div class="block text-black font-bold text-lg sm:text-xl">{{ $exp_comp }}</div>
-            </div>
-        </div>
-        <div class="border border-gray-300 flex items-center justify-center p-4">
             <div class="border-l-4 border-blue-500 px-3">
                 <div class="block text-primary font-bold text-xs sm:text-sm">Шилжүүлсэн</div>
                 <div class="block text-black font-bold text-lg sm:text-xl">{{ $snt_comp }}</div>
             </div>
         </div>
+        <div class="border border-gray-300 flex items-center justify-center p-4">
+            <div class="border-l-4 border-green-500 px-3">
+                <div class="block text-primary font-bold text-xs sm:text-sm">Шийдвэрлэсэн</div>
+                <div class="block text-black font-bold text-lg sm:text-xl">{{ $slv_comp }}</div>
+            </div>
+        </div>
     </section>
-
 
     <section class="grid grid-cols-8 gap-2 mt-2">
         <div class="col-span-2">
@@ -80,19 +73,6 @@
         <div class="col-span-4">
             <div class="border border-gray-300">
                 <div id="chartAreaEhzh"></div>
-            </div>
-        </div>
-    </section>
-
-    <section class="grid grid-cols-8 gap-2 mt-2">
-        <div class="col-span-4">
-            <div class="border border-gray-300">
-                <div id="stackedChartTog" class="w-full overflow-x-auto"></div>
-            </div>
-        </div>
-        <div class="col-span-4">
-            <div class="border border-gray-300">
-                <div id="stackedChartDulaan"></div>
             </div>
         </div>
     </section>
@@ -114,103 +94,11 @@
             </div>
         </div>
     </section>
-
 </div>
 
 <script type="text/javascript">
-    var chartCategoryData = <?php echo $compCategoryCounts; ?>;
-    var chartDataCompTypes = <?php echo $compTypeCounts; ?>;
-    var compTypeMakersCount = <?php echo $compTypeMakersCount; ?>;
-
-    var compCountsCurrentYear = <?php echo $compCountsCurrentYear; ?>;
-
-    var monthLabels = compCountsCurrentYear.map(function(obj) {
-        return obj[Object.keys(obj)[0]] + ' сар';
-    });
-    var monthDatas = compCountsCurrentYear.map(function(obj) {
-        return obj[Object.keys(obj)[1]];
-    });
-
-    var compChannelsCount = <?php echo $compChannelsCount; ?>;
-    // console.log(compChannelsCount);
-
-    var channelLabels = compChannelsCount.map(function(obj) {
-        return obj[Object.keys(obj)[0]];
-    });
-    var channelDatas = compChannelsCount.map(function(obj) {
-        return obj[Object.keys(obj)[1]];
-    });
-
-    var allTzeTog = <?php echo $allTzeComplaintsWithStatusTog; ?>;
-    var allTzeDulaan = <?php echo $allTzeComplaintsWithStatusDulaan; ?>;
-
-    // Define the mapping of status_id to category names
-    const statusCategoryMapping = {
-        0: 'Шинээр ирсэн',
-        1: 'Шилжүүлсэн',
-        2: 'Хүлээн авсан',
-        3: 'Хянаж байгаа',
-        4: 'Хугацаа хэтэрсэн',
-        5: 'Буцаасан',
-        6: 'Шийдвэрлэсэн'
-    };
-    const customColors = ['#fca5a5', '#d1d5db', '#fde047', '#93c5fd', '#fdba74', '#f9fafb', '#86efac'];
-
-    const filteredDataTog = allTzeTog.filter(item => {
-        return item.total_count !== 0 || allTzeTog.some(otherItem => otherItem.name === item.name && otherItem
-            .total_count !== 0);
-    });
-
-    const uniqueOrganizationNamesTog = [...new Set(filteredDataTog.map(item => item.name))];
-
-    // Group the total_count by status_id
-    const groupedData = filteredDataTog.reduce((acc, curr) => {
-        const {
-            status,
-            total_count
-        } = curr;
-        if (!acc[status]) {
-            acc[status] = {
-                status,
-                values: [total_count]
-            };
-        } else {
-            acc[status].values.push(total_count);
-        }
-        return acc;
-    }, {});
-
-    // Create a new array with the grouped data and category names
-    const newArray = Object.values(groupedData).map(item => ({
-        category: statusCategoryMapping[item.status],
-        status_id: item.status,
-        values: item.values
-    }));
-
-    statusBarColors = [
-        '#f9fafb',
-        '#d1d5db',
-        '#fde047',
-        '#93c5fd',
-        '#fdba74',
-        '#fca5a5',
-        '#86efac',
-    ];
-
-    var statusCount = @json($statusCount);
-
-    let dataStatus = statusCount.map((obj, index) => ({
-        y: obj['status_count'],
-        color: statusBarColors[index]
-    }));
-    let expireComp = {
-        y: {{ $exp_comp }},
-        color: '#fca5a5'
-    };
-    let statusDataset = [...dataStatus, expireComp];
-    // console.log(statusDataset);
-
-    // ЭХЗХ Chart энергийн төрлөөр 
+    // **ЭХЗХ Chart энергийн төрлөөр**  
+    // Энэ график нь "Цахилгаан" болон "Дулаан" гэсэн хоёр төрлийн өгөгдлийг харуулна.
     Highcharts.chart('chartEnergyType', {
         chart: {
             type: 'pie',
@@ -225,18 +113,19 @@
                 fontWeight: 'bold',
             }
         },
+        credits: {
+            enabled: false
+        },
         plotOptions: {
             pie: {
                 innerSize: '50%',
                 size: 150,
-                // depth: 45,
                 dataLabels: {
                     enabled: true,
                     format: '{point.name}:<br> {point.y}',
                     style: {
                         fontSize: '9px',
                     },
-                    connectorPadding: 0.01
                 },
             }
         },
@@ -256,14 +145,19 @@
         }]
     });
 
+
+    // **Treemap Chart - Өргөдлийн төрлөөр**  
+    // Энэ treemap нь өргөдлийн төрлүүдийг нийт тоогоор нь ангилж харуулна.
     var compSumType = <?php echo $compSumType; ?>;
     compSumType.forEach((obj, index) => {
         obj.colorValue = index + 1;
     });
-
     Highcharts.chart('chartTreemap', {
         chart: {
             height: 250
+        },
+        credits: {
+            enabled: false
         },
         colorAxis: {
             minColor: '#a5b4fc',
@@ -301,11 +195,17 @@
             }
         }
     });
-    // ЭХЗХ Donut Chart Өргөдлийн ангилал аар
+
+    // **Өргөдлийн ангилал (Donut Chart)**  
+    // Энэ график нь өргөдөл, гомдлын ангиллуудыг харуулна.
+    var chartCategoryData = <?php echo $compCategoryCounts; ?>;
     Highcharts.chart('donutChartChannel', {
         chart: {
             type: 'pie',
             height: 250
+        },
+        credits: {
+            enabled: false
         },
         title: {
             text: 'Өргөдлийн ангилал',
@@ -337,178 +237,17 @@
         }]
     });
 
-    // Extract series data from the sample data
-    const seriesDataTog = newArray.map((item, index) => ({
-        name: item.category,
-        data: item.values,
-        maxPointWidth: 50,
-        // color: customColors[index]
-    }));
 
-    // Create the stacked bar chart
-    Highcharts.chart('stackedChartTog', {
-        chart: {
-            type: 'column',
-            height: 300,
-            // width: 600
-        },
-        title: {
-            text: 'Цахилгаан түгээх, хангах ТЗЭ-чид',
-            align: 'left',
-            style: {
-                fontSize: '14px',
-                color: '#3e4095',
-                fontWeight: 'bold',
-            }
-        },
-        xAxis: {
-            categories: uniqueOrganizationNamesTog,
-            labels: {
-                style: {
-                    fontSize: '10px'
-                }
-            },
-        },
-        yAxis: {
-            title: {
-                text: ''
-            },
-        },
-        plotOptions: {
-            series: {
-                stacking: 'percent',
-                dataLabels: {
-                    enabled: true,
-                    style: {
-                        textOutline: '1px contrast',
-                        color: 'black',
-                        textOutline: 'none',
-                        fontSize: 10
-                    },
-                    backgroundColor: 'rgba(255,255,255,0.8)',
-                    borderColor: 'black',
-                    borderWidth: 1,
-                    padding: 2,
-                    borderRadius: 1,
-                    shape: 'square'
-                }
-            }
-        },
-        legend: {
-            itemStyle: {
-                fontSize: '9px'
-            },
-            align: 'left',
-            verticalAlign: 'top',
-            itemMarginTop: 0
-        },
-        colors: ['#342BC2', '#6F68F1', '#9993FF', '#407ED9', '#2465C3', '#1897BF'],
-        series: seriesDataTog
-    });
-
-    const filteredDataDulaan = allTzeDulaan.filter(item => {
-        return item.total_count !== 0 || allTzeDulaan.some(otherItem => otherItem.name === item.name &&
-            otherItem.total_count !== 0);
-    });
-
-    const uniqueOrganizationNamesDulaan = [...new Set(filteredDataDulaan.map(item => item.name))];
-
-    // Group the total_count by status_id
-    const groupedDataDulaan = filteredDataDulaan.reduce((acc, curr) => {
-        const {
-            status,
-            total_count
-        } = curr;
-        if (!acc[status]) {
-            acc[status] = {
-                status,
-                values: [total_count]
-            };
-        } else {
-            acc[status].values.push(total_count);
-        }
-        return acc;
-    }, {});
-
-    // Create a new array with the grouped data and category names
-    const newArrayDulaan = Object.values(groupedDataDulaan).map(item => ({
-        category: statusCategoryMapping[item.status],
-        status_id: item.status,
-        values: item.values
-    }));
-
-    // Extract series data from the sample data
-    const seriesData2 = newArrayDulaan.map((item, index) => ({
-        name: item.category,
-        data: item.values,
-        maxPointWidth: 50,
-    }));
-
-    // Create the stacked bar chart
-    Highcharts.chart('stackedChartDulaan', {
-        chart: {
-            type: 'column',
-            height: 300,
-        },
-        title: {
-            text: 'Дулаан түгээх, хангах ТЗЭ-чид',
-            align: 'left',
-            style: {
-                fontSize: '14px',
-                color: '#3e4095',
-                fontWeight: 'bold',
-            }
-        },
-        xAxis: {
-            categories: uniqueOrganizationNamesDulaan,
-            labels: {
-                style: {
-                    fontSize: '10px' // Set the font size of x-axis labels
-                }
-            },
-        },
-        yAxis: {
-            title: {
-                text: ''
-            },
-        },
-        plotOptions: {
-            series: {
-                stacking: 'percent',
-                dataLabels: {
-                    enabled: true,
-                    style: {
-                        textOutline: '1px contrast',
-                        color: 'black',
-                        textOutline: 'none',
-                        fontSize: 10
-                    },
-                    backgroundColor: 'rgba(255,255,255,0.8)',
-                    borderColor: 'black',
-                    borderWidth: 1,
-                    padding: 2,
-                    borderRadius: 1,
-                    shape: 'square'
-                }
-            }
-        },
-        legend: {
-            itemStyle: {
-                fontSize: '9px'
-            },
-            align: 'left',
-            verticalAlign: 'top',
-            itemMarginTop: 0
-        },
-        colors: ['#342BC2', '#6F68F1', '#9993FF', '#407ED9', '#2465C3', '#1897BF'],
-        series: seriesData2
-    });
-
-    // Create the pie chart Иргэн ААН СӨХ ТЗЭ Төрийн байгууллага
+    // **Гомдол гаргагчийн ангилал (Pie Chart)**  
+    // Иргэн, ААН, ТЗЭ, төрийн байгууллага гэх мэт ангиллаар гомдол гаргагчдыг харуулна.
+    var compTypeMakersCount = <?php echo $compTypeMakersCount; ?>;
     Highcharts.chart('pieChartMaker', {
         chart: {
             type: 'pie',
             height: 250
+        },
+        credits: {
+            enabled: false
         },
         title: {
             text: 'Гомдол гаргагч',
@@ -529,7 +268,6 @@
                     style: {
                         fontSize: '9px',
                     },
-                    connectorPadding: 0.1,
                 },
             }
         },
@@ -540,11 +278,23 @@
         }]
     });
 
-    // Хүлээн авсан суваг
+
+    // **Хүлээн авсан суваг (Bar Chart)**  
+    // Өргөдөл, гомдлыг ямар сувгаар хүлээн авсныг харуулна.
+    var compChannelsCount = <?php echo $compChannelsCount; ?>;
+    var channelLabels = compChannelsCount.map(function(obj) {
+        return obj[Object.keys(obj)[0]];
+    });
+    var channelDatas = compChannelsCount.map(function(obj) {
+        return obj[Object.keys(obj)[1]];
+    });
     Highcharts.chart('chartBarChannel', {
         chart: {
             type: 'bar',
             height: 250
+        },
+        credits: {
+            enabled: false
         },
         title: {
             text: 'Хүлээн авсан суваг',
@@ -598,28 +348,26 @@
         series: [{
             name: 'Нийт',
             data: channelDatas
-        }],
-        responsive: {
-            rules: [{
-                condition: {
-                    maxWidth: 1000
-                },
-                chartOptions: {
-                    legend: {
-                        layout: 'horizontal',
-                        align: 'center',
-                        verticalAlign: 'bottom'
-                    }
-                }
-            }]
-        }
+        }]
     });
 
-    // Line chart санал гомдлын тоо
+
+    // **Санал гомдлын тоо (Area Spline Chart)**  
+    // Сарын дотор өргөдөл, гомдлын өөрчлөлтийг харуулна.
+    var compCountsCurrentYear = <?php echo $compCountsCurrentYear; ?>;
+    var monthLabels = compCountsCurrentYear.map(function(obj) {
+        return obj[Object.keys(obj)[0]] + ' сар';
+    });
+    var monthDatas = compCountsCurrentYear.map(function(obj) {
+        return obj[Object.keys(obj)[1]];
+    });
     Highcharts.chart('chartAreaEhzh', {
         chart: {
             type: 'areaspline',
             height: 250
+        },
+        credits: {
+            enabled: false
         },
         title: {
             text: 'Санал гомдол',
