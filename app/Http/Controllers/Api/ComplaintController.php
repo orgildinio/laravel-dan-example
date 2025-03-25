@@ -228,6 +228,15 @@ class ComplaintController extends Controller
         //         'message' => 'Танд энэ гомдлын төлөвийг шинэчлэх эрх байхгүй байна.'
         //     ], 403);
         // }
+        // Хэрэв хүсэлт status_id=2 бол controlled_user_id шалгахгүй
+        if ($request->status_id !== 2) {
+            if ($complaint->controlled_user_id !== $user->id) {
+                return response()->json([
+                    'status' => 'failed',
+                    'message' => 'Танд энэ гомдлын төлөвийг шинэчлэх эрх байхгүй байна.'
+                ], 403);
+            }
+        }
 
         $complaint->update([
             'status_id' => $request->status_id,
