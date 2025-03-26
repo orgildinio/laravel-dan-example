@@ -249,13 +249,13 @@
                         @if ($complaint->audio_file_url != null)
                             <div class="text-sm px-2 mb-2">
                                 <p>Бичлэг</p>
-                                <audio controls class="w-full">
+                                {{-- <audio controls class="w-full">
                                     <source src="{{ $complaint->audio_file_url }}" type="audio/mpeg">
                                     Your browser does not support the audio tag.
-                                </audio>
+                                </audio> --}}
                                 <a href="{{ $complaint->audio_file_url }}" target="_blank"
                                     class="bg-blue-500 text-white px-4 py-2 rounded">
-                                    Play Audio
+                                    Бичлэг сонсох
                                 </a>
                             </div>
                         @endif
