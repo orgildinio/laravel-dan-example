@@ -253,9 +253,10 @@
                                     <source src="{{ $complaint->audio_file_url }}" type="audio/mpeg">
                                     Your browser does not support the audio tag.
                                 </audio>
-                                <video controls autoplay name="media">
-                                    <source src="{{ $complaint->audio_file_url }}" type="audio/x-wav">
-                                </video>
+                                <a href="{{ $complaint->audio_file_url }}" target="_blank"
+                                    class="bg-blue-500 text-white px-4 py-2 rounded">
+                                    Play Audio
+                                </a>
                             </div>
                         @endif
 
