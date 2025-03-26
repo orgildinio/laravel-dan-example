@@ -248,7 +248,6 @@
                         @endif
                         @if ($complaint->audio_file_url != null)
                             <div class="text-sm px-2 mb-2">
-                                <p>Бичлэг</p>
                                 {{-- <audio controls class="w-full">
                                     <source src="{{ $complaint->audio_file_url }}" type="audio/mpeg">
                                     Your browser does not support the audio tag.
