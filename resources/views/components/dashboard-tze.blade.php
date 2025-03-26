@@ -467,18 +467,18 @@
             type: 'column'
         },
         title: {
-            text: 'Complaints by Status and Organization'
+            text: ''
         },
         xAxis: {
             categories: {!! json_encode($categories) !!},
             title: {
-                text: 'Organizations'
+                text: 'ТЗЭ'
             }
         },
         yAxis: {
             min: 0,
             title: {
-                text: 'Number of Complaints'
+                text: 'Өргөдөл, гомдлын тоо'
             },
             stackLabels: {
                 enabled: true
@@ -494,8 +494,8 @@
             shadow: false
         },
         tooltip: {
-            headerFormat: '<b>{point.x}</b><br/>',
-            pointFormat: '{series.name}: {point.y}<br/>Total: {point.stackTotal}'
+            headerFormat: '<b>{point.category}</b><br/>',
+            pointFormat: '{series.name}: {point.y}<br/>Нийт: {point.stackTotal}'
         },
         plotOptions: {
             column: {

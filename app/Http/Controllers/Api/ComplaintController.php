@@ -218,16 +218,25 @@ class ComplaintController extends Controller
             ], 422);
         }
 
+        // // 🔹 Хэрэв одоогийн `status_id` нь хүсэлттэй ижил байвал өөрчлөхгүй
+        // if ($complaint->status_id == $request->status_id) {
+        //     return response()->json([
+        //         'status' => 'failed',
+        //         'message' => 'Гомдол аль хэдийн энэ төлөвт байна.'
+        //     ], 400);
+        // }
+
+        // // 🔹 Шинэ `status_id` нь одоогийнхоос бага байхыг хориглох
+        // if ($request->status_id < $complaint->status_id) {
+        //     return response()->json([
+        //         'status' => 'failed',
+        //         'message' => 'Гомдлын төлөвийг буцаах боломжгүй.'
+        //     ], 400);
+        // }
+
         // Get authenticated user
         $user = auth()->user();
 
-        // Check if the authenticated user is the controlled user
-        // if ($complaint->controlled_user_id !== $user->id) {
-        //     return response()->json([
-        //         'status' => 'failed',
-        //         'message' => 'Танд энэ гомдлын төлөвийг шинэчлэх эрх байхгүй байна.'
-        //     ], 403);
-        // }
         // Хэрэв хүсэлт status_id=2 бол controlled_user_id шалгахгүй
         if ($request->status_id !== 2) {
             if ($complaint->controlled_user_id !== $user->id) {

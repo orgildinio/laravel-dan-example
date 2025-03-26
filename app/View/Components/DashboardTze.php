@@ -174,9 +174,9 @@ class DashboardTze extends Component
         $data = DB::table('organizations as o')
             ->leftJoin('complaints as c', 'o.id', '=', 'c.organization_id')
             ->leftJoin('statuses as s', 'c.status_id', '=', 's.id')
-            ->where('o.plant_id', 2)
+            ->where('o.plant_id', 1)
             ->whereNotIn('o.id', [99])
-            ->whereNotIn('s.id', [7, 8])
+            // ->whereNotIn('s.id', [7, 8])
             ->groupBy('o.id', 'o.name')
             ->havingRaw('COUNT(c.id) > 0') // Зөвхөн гомдолтой байгууллагуудыг үлдээх
             ->orderBy('o.name')
