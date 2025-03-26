@@ -253,10 +253,9 @@
                                     <source src="{{ $complaint->audio_file_url }}" type="audio/mpeg">
                                     Your browser does not support the audio tag.
                                 </audio>
-                                <button onclick="openAudioPopup('{{ $complaint->audio_file_url }}')"
-                                    class="bg-blue-500 text-white px-4 py-2 rounded">
-                                    Play Audio
-                                </button>
+                                <video controls="" autoplay="" name="media">
+                                    <source src="{{ $complaint->audio_file_url }}" type="audio/x-wav">
+                                </video>
                             </div>
                         @endif
 
@@ -287,29 +286,4 @@
                 </div>
             </div>
         </div>
-        <script>
-            function openAudioPopup(audioUrl) {
-                // Ensure HTTPS to avoid Mixed Content issues
-                audioUrl = audioUrl.replace('http://', 'https://');
-
-                // Open a new popup window
-                let popup = window.open("", "_blank", "width=400,height=150");
-
-                // Write HTML content inside the popup
-                popup.document.write(`
-                    <html>
-                        <head>
-                            <title>Audio Player</title>
-                        </head>
-                        <body style="text-align: center; padding: 20px;">
-                            <h3>Audio Player</h3>
-                            <audio controls autoplay>
-                                <source src="${audioUrl}" type="audio/mpeg">
-                                Your browser does not support the audio tag.
-                            </audio>
-                        </body>
-                    </html>
-                `);
-            }
-        </script>
 </x-admin-layout>
