@@ -289,7 +289,7 @@ class ComplaintController extends Controller
 
             // Custom validation rules
             $request->validate([
-                'lastname' => 'required|string|min:2|max:50',
+                // 'lastname' => 'required|string|min:2|max:50',
                 'firstname' => 'required|string|min:2|max:50',
                 // 'registerNumber' => 'required|string|min:8|max:12|regex:/^[0-9]+$/',
                 'country' => 'required|string|max:100',
