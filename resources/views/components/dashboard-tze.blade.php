@@ -11,6 +11,14 @@
                     value="{{ request('enddate', now()->toDateString()) }}"
                     class="w-36 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
             </div>
+            <div>
+                <select name="energy_type" id="energy_type"
+                    class="w-36 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
+                    <option value="">-- Сонгох --</option>
+                    <option value="1" {{ request('energy_type') == '1' ? 'selected' : '' }}>Цахилгаан</option>
+                    <option value="2" {{ request('energy_type') == '2' ? 'selected' : '' }}>Дулаан</option>
+                </select>
+            </div>
             <div class="flex items-end">
                 <button type="submit"
                     class="bg-primary hover:bg-primaryHover text-white font-medium rounded-lg p-2 mr-2">
@@ -57,16 +65,6 @@
     <section class="grid grid-cols-8 gap-2 mt-2">
         <div class="col-span-8">
             <div class="border border-gray-300">
-                <div id="stackedChartContainerTze1"></div>
-            </div>
-        </div>
-        <div class="col-span-8">
-            <div class="border border-gray-300">
-                <div id="stackedChartContainerTze2"></div>
-            </div>
-        </div>
-        <div class="col-span-8">
-            <div class="border border-gray-300">
                 <div id="complaintsChart"></div>
             </div>
         </div>
@@ -87,236 +85,6 @@
 </div>
 
 <script type="text/javascript">
-    const statusCategoryMapping = {
-        0: 'Шинээр ирсэн',
-        1: 'Шилжүүлсэн',
-        2: 'Хүлээн авсан',
-        3: 'Хянаж байгаа',
-        4: 'Хугацаа хэтэрсэн',
-        5: 'Буцаасан',
-        6: 'Шийдвэрлэсэн'
-    };
-    const customColors = ['#fca5a5', '#d1d5db', '#fde047', '#93c5fd', '#fdba74', '#f9fafb', '#86efac'];
-
-    const statusBarColors = [
-        '#f9fafb',
-        '#d1d5db',
-        '#fde047',
-        '#93c5fd',
-        '#fdba74',
-        '#fca5a5',
-        '#86efac',
-    ];
-
-
-
-    var allTzeTogTab2 = <?php echo $stackedChartDataTog; ?>;
-
-    const filteredDataTogTab2 = allTzeTogTab2.filter(item => {
-        return item.total_count !== 0 || allTzeTogTab2.some(otherItem => otherItem.name === item.name &&
-            otherItem
-            .total_count !== 0);
-    });
-
-    const orgNametogTab2 = [...new Set(filteredDataTogTab2.map(item => item.name))];
-
-    // Group the total_count by status_id
-    const groupedDataTab2 = filteredDataTogTab2.reduce((acc, curr) => {
-        const {
-            status,
-            total_count
-        } = curr;
-        if (!acc[status]) {
-            acc[status] = {
-                status,
-                values: [total_count]
-            };
-        } else {
-            acc[status].values.push(total_count);
-        }
-        return acc;
-    }, {});
-
-    // Create a new array with the grouped data and category names
-    const dataTogTab2 = Object.values(groupedDataTab2).map(item => ({
-        category: statusCategoryMapping[item.status],
-        status_id: item.status,
-        values: item.values
-    }));
-
-    // Extract series data from the sample data
-    const seriesTogTab2 = dataTogTab2.map((item, index) => ({
-        name: item.category,
-        data: item.values,
-        maxPointWidth: 50,
-    }));
-
-    // Create the stacked bar chart
-    Highcharts.chart('stackedChartContainerTze1', {
-        chart: {
-            type: 'column',
-            height: 300,
-        },
-        title: {
-            text: 'Цахилгаан түгээх, хангах ТЗЭ-чид',
-            align: 'left',
-            style: {
-                fontSize: '14px',
-                color: '#3e4095',
-                fontWeight: 'bold',
-            }
-        },
-        xAxis: {
-            categories: orgNametogTab2,
-            labels: {
-                style: {
-                    fontSize: '10px'
-                }
-            },
-        },
-        yAxis: {
-            title: {
-                text: ''
-            },
-        },
-        plotOptions: {
-            series: {
-                stacking: 'percent',
-                dataLabels: {
-                    enabled: true,
-                    style: {
-                        textOutline: '1px contrast',
-                        color: 'black',
-                        textOutline: 'none',
-                        fontSize: 10
-                    },
-                    backgroundColor: 'rgba(255,255,255,0.8)',
-                    borderColor: 'black',
-                    borderWidth: 1,
-                    padding: 2,
-                    borderRadius: 1,
-                    shape: 'square'
-                }
-            }
-        },
-        legend: {
-            itemStyle: {
-                fontSize: '9px'
-            },
-            align: 'left',
-            verticalAlign: 'top',
-            itemMarginTop: 0
-        },
-        colors: ['#342BC2', '#6F68F1', '#9993FF', '#407ED9', '#2465C3', '#1897BF'],
-        series: seriesTogTab2
-    });
-
-    // Stacked Chart 2
-
-    var allTzeDulaanTab2 = <?php echo $stackedChartDataDulaan; ?>;
-
-    const filteredDataDulaanTab2 = allTzeDulaanTab2.filter(item => {
-        return item.total_count !== 0 || allTzeDulaanTab2.some(otherItem => otherItem.name === item.name &&
-            otherItem
-            .total_count !== 0);
-    });
-
-    const orgNameDulaanTab2 = [...new Set(filteredDataDulaanTab2.map(item => item.name))];
-
-    // Group the total_count by status_id
-    const groupedDataDulaanTab2 = filteredDataDulaanTab2.reduce((acc, curr) => {
-        const {
-            status,
-            total_count
-        } = curr;
-        if (!acc[status]) {
-            acc[status] = {
-                status,
-                values: [total_count]
-            };
-        } else {
-            acc[status].values.push(total_count);
-        }
-        return acc;
-    }, {});
-
-    // Create a new array with the grouped data and category names
-    const dataDulaanTab2 = Object.values(groupedDataDulaanTab2).map(item => ({
-        category: statusCategoryMapping[item.status],
-        status_id: item.status,
-        values: item.values
-    }));
-
-    // Extract series data from the sample data
-    const seriesDulaanTab2 = dataDulaanTab2.map((item, index) => ({
-        name: item.category,
-        data: item.values,
-        maxPointWidth: 50,
-    }));
-
-    // Stacked Chart 2
-    Highcharts.chart('stackedChartContainerTze2', {
-        chart: {
-            type: 'column',
-            height: 300,
-            scrollablePlotArea: {
-                minWidth: orgNameDulaanTab2 * 70
-            }
-        },
-        title: {
-            text: 'Дулаан түгээх, хангах ТЗЭ-чид',
-            align: 'left',
-            style: {
-                fontSize: '14px',
-                color: '#3e4095',
-                fontWeight: 'bold',
-            }
-        },
-        xAxis: {
-            categories: orgNameDulaanTab2,
-            labels: {
-                style: {
-                    fontSize: '10px' // Set the font size of x-axis labels
-                }
-            },
-        },
-        yAxis: {
-            title: {
-                text: ''
-            }
-        },
-        plotOptions: {
-            series: {
-                stacking: 'percent',
-                dataLabels: {
-                    enabled: true,
-                    style: {
-                        textOutline: '1px contrast',
-                        color: 'black',
-                        textOutline: 'none',
-                        fontSize: 10
-                    },
-                    backgroundColor: 'rgba(255,255,255,0.8)',
-                    borderColor: 'black',
-                    borderWidth: 1,
-                    padding: 2,
-                    borderRadius: 1,
-                    shape: 'square'
-                }
-            }
-        },
-        legend: {
-            itemStyle: {
-                fontSize: '9px'
-            },
-            align: 'left',
-            verticalAlign: 'top',
-            itemMarginTop: 0
-        },
-        colors: ['#342BC2', '#6F68F1', '#9993FF', '#407ED9', '#2465C3', '#1897BF'],
-        series: seriesDulaanTab2
-    });
-
     // Хүлээн авсан суваг
     var compTogChannelsCount = <?php echo $compTogChannelsCount; ?>;
     var channelTogLabels = compTogChannelsCount.map(function(obj) {
@@ -338,6 +106,9 @@
         chart: {
             type: 'column',
             height: 250,
+        },
+        credits: {
+            enabled: false
         },
         title: {
             text: 'Хүлээн авсан суваг',
@@ -414,6 +185,9 @@
             type: 'areaspline',
             height: 250
         },
+        credits: {
+            enabled: false
+        },
         title: {
             text: 'Санал гомдол',
             align: 'left',
@@ -466,6 +240,9 @@
         chart: {
             type: 'column'
         },
+        credits: {
+            enabled: false
+        },
         title: {
             text: ''
         },
@@ -506,29 +283,29 @@
             }
         },
         series: [{
-                name: 'Шинээр ирсэн',
+                name: 'Шинээр ирсэн', // Хөх (шинээр ирсэн гомдол)
                 data: {!! json_encode($statusCounts['Status 0']) !!},
-                color: '#7cb5ec'
+                color: '#d1d5db' // Bright Blue
             },
             {
-                name: 'Шилжүүлсэн',
+                name: 'Шилжүүлсэн', // Ягаан туяатай хөх (процессын дунд шат)
                 data: {!! json_encode($statusCounts['Status 1']) !!},
-                color: '#8085e9'
+                color: '#6f42c1' // Purple
             },
             {
-                name: 'Хүлээн авсан',
+                name: 'Хүлээн авсан', // Саарал (мэдээлэл хүлээн авсан, хараахан шийдвэр гараагүй)
                 data: {!! json_encode($statusCounts['Status 2']) !!},
-                color: '#434348'
+                color: '#fde047' // Gray
             },
             {
-                name: 'Хянаж байгаа',
+                name: 'Хянаж байгаа', // Улбар шар (идэвхтэй ажиллаж байгаа)
                 data: {!! json_encode($statusCounts['Status 3']) !!},
-                color: '#f7a35c'
+                color: '#93c5fd' // Orange
             },
             {
-                name: 'Шийдвэрлэсэн',
+                name: 'Шийдвэрлэсэн', // Ногоон (шийдвэр гарсан, амжилттай дууссан)
                 data: {!! json_encode($statusCounts['Status 6']) !!},
-                color: '#90ed7d'
+                color: '#86efac' // Green
             }
         ]
     });

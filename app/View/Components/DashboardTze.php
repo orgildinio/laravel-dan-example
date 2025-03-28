@@ -34,81 +34,22 @@ class DashboardTze extends Component
         $startDate = $start_date != null ? $start_date : Carbon::now()->subMonth()->toDateString();
         $endDate = $end_date != null ? $end_date : Carbon::now()->toDateString();
 
+        $energy_type = request('energy_type');
+        // dd($energy_type);
+
         $tze_tog = Complaint::where('energy_type_id', 1)->whereBetween('created_at', [$startDate, $endDate])->whereNotIn('organization_id', [99])->count();
         $tze_dulaan = Complaint::where('energy_type_id', 2)->whereBetween('created_at', [$startDate, $endDate])->whereNotIn('organization_id', [99])->count();
 
-        // $new_comp = Complaint::where('status_id', 0)->whereNotIn('organization_id', [99])->count();
-        // $snt_comp = Complaint::where('status_id', 1)->whereNotIn('organization_id', [99])->count();
-        // $rec_comp = Complaint::where('status_id', 2)->whereNotIn('organization_id', [99])->count();
-        // $ctl_comp = Complaint::where('status_id', 3)->whereNotIn('organization_id', [99])->count();
-        // $cnc_comp = Complaint::where('status_id', 4)->whereNotIn('organization_id', [99])->count();
-        // $rtn_comp = Complaint::where('status_id', 5)->whereNotIn('organization_id', [99])->count();
-        // $slv_comp = Complaint::where('status_id', 6)->whereNotIn('organization_id', [99])->count();
         $exp_comp = Complaint::where('expire_date', '<=', Carbon::now())->whereBetween('created_at', [$startDate, $endDate])->whereNotIn('organization_id', [99])->where('status_id', '!=', 6)->count();
 
         $compByMonth = Complaint::select(DB::raw('EXTRACT(\'MONTH\' FROM complaint_date) AS published_month, COUNT(id) AS count'))
             ->whereNotIn('organization_id', [99])
             ->whereRaw('date_part(\'year\', complaint_date) = date_part(\'year\', CURRENT_DATE)')
+            ->whereBetween('created_at', [$startDate, $endDate])
             ->groupBy(DB::raw('EXTRACT(\'MONTH\' FROM complaint_date)'))
             ->orderBy(DB::raw('EXTRACT(\'MONTH\' FROM complaint_date)'))
             ->get();
         $lineChartData = json_encode($compByMonth);
-
-        $resultTog = DB::table('organizations as o')
-            ->crossJoin('statuses as s')
-            ->leftJoin('complaints as c', function ($join) {
-                $join->on('o.id', '=', 'c.organization_id')
-                    ->on('s.id', '=', 'c.status_id');
-            })
-            ->where(function ($query) {
-                $query->whereNull('s.id')
-                    ->orWhereNotIn('s.id', [7, 8]);
-            })
-            ->where('o.plant_id', 1)
-            ->whereNotIn('o.id', [99])
-            ->groupBy('o.id', 'o.name', 's.id')
-            ->orderBy('o.name')
-            ->orderBy('s.id')
-            ->select('o.name', DB::raw('COALESCE(COUNT(c.status_id), 0) as total_count'), 's.id as status')
-            ->get();
-        $stackedChartDataTog = json_encode($resultTog);
-        // dd($resultTog);
-
-        $resultDulaan = DB::table('organizations as o')
-            ->crossJoin('statuses as s')
-            ->leftJoin('complaints as c', function ($join) {
-                $join->on('o.id', '=', 'c.organization_id')
-                    ->on('s.id', '=', 'c.status_id');
-            })
-            ->where(function ($query) {
-                $query->whereNull('s.id')
-                    ->orWhereNotIn('s.id', [7, 8]);
-            })
-            ->where('o.plant_id', 2)
-            ->groupBy('o.id', 'o.name', 's.id')
-            ->orderBy('o.name')
-            ->orderBy('s.id')
-            ->select('o.name', DB::raw('COALESCE(COUNT(c.status_id), 0) as total_count'), 's.id as status')
-            ->get();
-        $stackedChartDataDulaan = json_encode($resultDulaan);
-
-        // $compTypeMakersTog = DB::table('complaints as c')
-        //     ->leftJoin('complaint_maker_types as ct', 'ct.id', '=', 'c.complaint_maker_type_id')
-        //     ->where('c.energy_type_id', '=', 1)
-        //     ->whereNotIn('c.organization_id', [99])
-        //     ->groupBy('ct.name')
-        //     ->select('ct.name', DB::raw('COUNT(c.id) AS y'))
-        //     ->get();
-        // $compMakerTogCount = json_encode($compTypeMakersTog);
-
-        // $compTypeMakersDulaan = DB::table('complaints as c')
-        //     ->leftJoin('complaint_maker_types as ct', 'ct.id', '=', 'c.complaint_maker_type_id')
-        //     ->where('c.energy_type_id', '=', 2)
-        //     ->whereNotIn('c.organization_id', [99])
-        //     ->groupBy('ct.name')
-        //     ->select('ct.name', DB::raw('COUNT(c.id) AS y'))
-        //     ->get();
-        // $compMakerDulaanCount = json_encode($compTypeMakersDulaan);
 
         $compTogChannels = DB::table('channels as ct')
             ->leftJoin('complaints as c', function ($join) {
@@ -117,6 +58,7 @@ class DashboardTze extends Component
                     ->where('c.energy_type_id', '=', 1);
             })
             ->selectRaw('ct.name, COUNT(c.id) as y')
+            ->whereBetween('c.created_at', [$startDate, $endDate])
             ->groupBy('ct.name')
             ->orderBy('ct.name', 'asc')
             ->get();
@@ -129,6 +71,7 @@ class DashboardTze extends Component
                     ->where('c.organization_id', '<>', 99)
                     ->where('c.energy_type_id', '=', 2);
             })
+            ->whereBetween('c.created_at', [$startDate, $endDate])
             ->selectRaw('ct.name, COUNT(c.id) as y')
             ->groupBy('ct.name')
             ->orderBy('ct.name', 'asc')
@@ -136,47 +79,15 @@ class DashboardTze extends Component
 
         $compDulaanChannelsCount = json_encode($compDulaanChannels);
 
-        $statusExpireTog = Complaint::where('expire_date', '<=', Carbon::now())
-            ->whereNotIn('organization_id', [99])
-            ->where('energy_type_id', 1)
-            ->where('status_id', '!=', 6)
-            ->count();
-        $statusExpireDulaan = Complaint::where('expire_date', '<=', Carbon::now())
-            ->whereNotIn('organization_id', [99])
-            ->where('energy_type_id', 2)
-            ->where('status_id', '!=', 6)
-            ->count();
 
-
-        // $data = DB::table('organizations as o')
-        //     ->crossJoin('statuses as s')
-        //     ->leftJoin('complaints as c', function ($join) {
-        //         $join->on('o.id', '=', 'c.organization_id')
-        //             ->on('s.id', '=', 'c.status_id');
-        //     })
-        //     ->where('o.plant_id', 2)
-        //     ->whereNotIn('o.id', [99])
-        //     ->where(function ($query) {
-        //         $query->whereNull('s.id')->orWhereNotIn('s.id', [7, 8]);
-        //     })
-        //     ->groupBy('o.id', 'o.name')
-        //     ->orderBy('o.name')
-        //     ->select(
-        //         'o.name as organization_name',
-        //         DB::raw('COUNT(CASE WHEN s.id = 1 THEN c.status_id END) AS status_1_count'),
-        //         DB::raw('COUNT(CASE WHEN s.id = 2 THEN c.status_id END) AS status_2_count'),
-        //         DB::raw('COUNT(CASE WHEN s.id = 3 THEN c.status_id END) AS status_3_count'),
-        //         DB::raw('COUNT(CASE WHEN s.id = 4 THEN c.status_id END) AS status_4_count'),
-        //         DB::raw('COUNT(CASE WHEN s.id = 5 THEN c.status_id END) AS status_5_count'),
-        //         DB::raw('COUNT(CASE WHEN s.id = 6 THEN c.status_id END) AS status_6_count')
-        //     )
-        //     ->get();
         $data = DB::table('organizations as o')
             ->leftJoin('complaints as c', 'o.id', '=', 'c.organization_id')
             ->leftJoin('statuses as s', 'c.status_id', '=', 's.id')
-            ->where('o.plant_id', 1)
+            ->when(!is_null($energy_type), function ($query) use ($energy_type) {
+                return $query->where('o.plant_id', $energy_type);
+            })
             ->whereNotIn('o.id', [99])
-            // ->whereNotIn('s.id', [7, 8])
+            ->whereBetween('c.created_at', [$startDate, $endDate])
             ->groupBy('o.id', 'o.name')
             ->havingRaw('COUNT(c.id) > 0') // Зөвхөн гомдолтой байгууллагуудыг үлдээх
             ->orderBy('o.name')
@@ -186,8 +97,6 @@ class DashboardTze extends Component
                 DB::raw('COUNT(CASE WHEN s.id = 1 THEN c.id END) AS status_1_count'),
                 DB::raw('COUNT(CASE WHEN s.id = 2 THEN c.id END) AS status_2_count'),
                 DB::raw('COUNT(CASE WHEN s.id = 3 THEN c.id END) AS status_3_count'),
-                DB::raw('COUNT(CASE WHEN s.id = 4 THEN c.id END) AS status_4_count'),
-                DB::raw('COUNT(CASE WHEN s.id = 5 THEN c.id END) AS status_5_count'),
                 DB::raw('COUNT(CASE WHEN s.id = 6 THEN c.id END) AS status_6_count')
             )
             ->get();
@@ -202,8 +111,6 @@ class DashboardTze extends Component
             'Status 1' => [],
             'Status 2' => [],
             'Status 3' => [],
-            'Status 4' => [],
-            'Status 5' => [],
             'Status 6' => [],
         ];
 
@@ -213,14 +120,9 @@ class DashboardTze extends Component
             $statusCounts['Status 1'][] = (int) $row->status_1_count;
             $statusCounts['Status 2'][] = (int) $row->status_2_count;
             $statusCounts['Status 3'][] = (int) $row->status_3_count;
-            $statusCounts['Status 4'][] = (int) $row->status_4_count;
-            $statusCounts['Status 5'][] = (int) $row->status_5_count;
             $statusCounts['Status 6'][] = (int) $row->status_6_count;
         }
 
-
-
-
-        return view('components.dashboard-tze', ['tze_tog' => $tze_tog, 'tze_dulaan' => $tze_dulaan, 'exp_comp' => $exp_comp, 'lineChartData' => $lineChartData, 'stackedChartDataTog' => $stackedChartDataTog, 'stackedChartDataDulaan' => $stackedChartDataDulaan, 'compTogChannelsCount' => $compTogChannelsCount, 'compDulaanChannelsCount' => $compDulaanChannelsCount, 'statusExpireTog' => $statusExpireTog, 'statusExpireDulaan' => $statusExpireDulaan, 'categories' => $categories, 'statusCounts' => $statusCounts]);
+        return view('components.dashboard-tze', ['tze_tog' => $tze_tog, 'tze_dulaan' => $tze_dulaan, 'exp_comp' => $exp_comp, 'lineChartData' => $lineChartData, 'compTogChannelsCount' => $compTogChannelsCount, 'compDulaanChannelsCount' => $compDulaanChannelsCount, 'categories' => $categories, 'statusCounts' => $statusCounts]);
     }
 }
