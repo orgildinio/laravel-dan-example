@@ -85,22 +85,27 @@
 </div>
 
 <script type="text/javascript">
-    // Хүлээн авсан суваг
     var compTogChannelsCount = <?php echo $compTogChannelsCount; ?>;
+    var compDulaanChannelsCount = <?php echo $compDulaanChannelsCount; ?>;
+
+    // Fix xAxis categories mapping
     var channelTogLabels = compTogChannelsCount.map(function(obj) {
-        return obj[Object.keys(obj)[0]];
+        return obj.category; // Use 'category' explicitly
     });
     var channelTogDatas = compTogChannelsCount.map(function(obj) {
-        return obj[Object.keys(obj)[1]];
+        return obj.value; // Use 'value' explicitly
     });
 
-    var compDulaanChannelsCount = <?php echo $compDulaanChannelsCount; ?>;
     var channelDulaanLabels = compDulaanChannelsCount.map(function(obj) {
-        return obj[Object.keys(obj)[0]];
+        return obj.category;
     });
     var channelDulaanDatas = compDulaanChannelsCount.map(function(obj) {
-        return obj[Object.keys(obj)[1]];
+        return obj.value;
     });
+
+    // Ensure labels match (for consistent xAxis)
+    var allLabels = [...new Set([...channelTogLabels, ...channelDulaanLabels])];
+
 
     Highcharts.chart('barChartElectric', {
         chart: {
@@ -120,7 +125,7 @@
             }
         },
         xAxis: {
-            categories: channelTogLabels,
+            categories: allLabels,
             labels: {
                 style: {
                     fontSize: '10px' // Set the font size of x-axis labels
@@ -163,11 +168,17 @@
         colors: ['#342BC2', '#6F68F1', '#9993FF', '#407ED9', '#2465C3', '#1897BF'],
         series: [{
                 name: 'Цахилгаан',
-                data: channelTogDatas
+                data: allLabels.map(label => {
+                    let index = channelTogLabels.indexOf(label);
+                    return index !== -1 ? channelTogDatas[index] : 0; // Fill missing data with 0
+                })
             },
             {
                 name: 'Дулаан',
-                data: channelDulaanDatas
+                data: allLabels.map(label => {
+                    let index = channelDulaanLabels.indexOf(label);
+                    return index !== -1 ? channelDulaanDatas[index] : 0;
+                })
             }
         ],
     });

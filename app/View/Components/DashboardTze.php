@@ -57,13 +57,11 @@ class DashboardTze extends Component
                     ->where('c.organization_id', '<>', 99)
                     ->where('c.energy_type_id', '=', 1);
             })
-            ->selectRaw('ct.name, COUNT(c.id) as y')
             ->whereBetween('c.created_at', [$startDate, $endDate])
+            ->selectRaw('ct.name as category, COUNT(c.id) as value')
             ->groupBy('ct.name')
             ->orderBy('ct.name', 'asc')
             ->get();
-
-        $compTogChannelsCount = json_encode($compTogChannels);
 
         $compDulaanChannels = DB::table('channels as ct')
             ->leftJoin('complaints as c', function ($join) {
@@ -72,11 +70,12 @@ class DashboardTze extends Component
                     ->where('c.energy_type_id', '=', 2);
             })
             ->whereBetween('c.created_at', [$startDate, $endDate])
-            ->selectRaw('ct.name, COUNT(c.id) as y')
+            ->selectRaw('ct.name as category, COUNT(c.id) as value')
             ->groupBy('ct.name')
             ->orderBy('ct.name', 'asc')
             ->get();
 
+        $compTogChannelsCount = json_encode($compTogChannels);
         $compDulaanChannelsCount = json_encode($compDulaanChannels);
 
 
