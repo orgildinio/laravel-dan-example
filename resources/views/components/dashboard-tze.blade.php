@@ -273,13 +273,13 @@
             }
         },
         legend: {
-            align: 'right',
+            align: 'left',
             verticalAlign: 'top',
             floating: true,
             backgroundColor: Highcharts.defaultOptions.legend.backgroundColor || 'white',
             borderColor: '#CCC',
             borderWidth: 1,
-            shadow: false
+            shadow: false,
         },
         tooltip: {
             headerFormat: '<b>{point.category}</b><br/>',
