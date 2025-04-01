@@ -9,6 +9,7 @@ use App\Models\File;
 use App\Models\Complaint;
 use Illuminate\Http\Request;
 use App\Models\ComplaintStep;
+use App\Helpers\ComplaintHelper;
 use PhpParser\Node\Stmt\TryCatch;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -307,6 +308,8 @@ class ComplaintController extends Controller
                 'desc' => $request->desc,
                 'status_id' => $request->status_id,
             ]);
+
+            ComplaintHelper::send1111API($complaint, false, $request->desc);
         }
 
         return response()->json([
