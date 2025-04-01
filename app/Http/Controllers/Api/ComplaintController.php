@@ -56,7 +56,7 @@ class ComplaintController extends Controller
         })
             ->where(function ($query) {
                 $query->whereNull("second_org_id")->where("status_id", 0)
-                    ->orWhereNotNull("second_org_id")->where("status_id", 1);
+                    ->orWhereNotNull("second_org_id")->where("second_status_id", 0);
             })
             ->orderBy("created_at", "desc")
             ->get();
