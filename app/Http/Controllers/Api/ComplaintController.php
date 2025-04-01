@@ -45,10 +45,22 @@ class ComplaintController extends Controller
         }
 
         // Өөрийн байгууллагын гомдлуудыг буцаах
-        $complaints = Complaint::where("organization_id", $id)
-            ->where('status_id', 0)
+        // $complaints = Complaint::where("organization_id", $id)
+        //     ->where('status_id', 0)
+        //     ->orderBy("created_at", "desc")
+        //     ->get();
+
+        $complaints = Complaint::where(function ($query) use ($id) {
+            $query->where("organization_id", $id)
+                ->orWhere("second_org_id", $id);
+        })
+            ->where(function ($query) {
+                $query->whereNull("second_org_id")->where("status_id", 0)
+                    ->orWhereNotNull("second_org_id")->where("status_id", 1);
+            })
             ->orderBy("created_at", "desc")
             ->get();
+
 
         return ComplaintResource::collection($complaints);
     }
@@ -247,20 +259,55 @@ class ComplaintController extends Controller
         //     }
         // }
 
-        $complaint->update([
-            'status_id' => $request->status_id,
-            'controlled_user_id' => $complaint->status_id == 0 ? $user->id : $complaint->controlled_user_id,
-        ]);
+        // $complaint->update([
+        //     'status_id' => $request->status_id,
+        //     'controlled_user_id' => $complaint->status_id == 0 ? $user->id : $complaint->controlled_user_id,
+        // ]);
 
-        // Create a new ComplaintStep record
-        $complaintStep = ComplaintStep::create([
-            'org_id' => $complaint->organization_id,
-            'complaint_id' => $complaint->id,
-            'sent_user_id' => $user->id,
-            'sent_date' => now(),
-            'desc' => $request->desc,
-            'status_id' => $request->status_id,
-        ]);
+        // // Create a new ComplaintStep record
+        // $complaintStep = ComplaintStep::create([
+        //     'org_id' => $complaint->organization_id,
+        //     'complaint_id' => $complaint->id,
+        //     'sent_user_id' => $user->id,
+        //     'sent_date' => now(),
+        //     'desc' => $request->desc,
+        //     'status_id' => $request->status_id,
+        // ]);
+
+        // 🔹 First, check the transferred flag
+        if (!$complaint->transferred) {
+            // 🔹 If NOT transferred, update main status
+            $complaint->update([
+                'status_id' => $request->status_id,
+                'controlled_user_id' => $complaint->status_id == 0 ? $user->id : $complaint->controlled_user_id,
+            ]);
+
+            // Create a ComplaintStep for main status update
+            $complaintStep = ComplaintStep::create([
+                'org_id' => $complaint->organization_id,
+                'complaint_id' => $complaint->id,
+                'sent_user_id' => $user->id,
+                'sent_date' => now(),
+                'desc' => $request->desc,
+                'status_id' => $request->status_id,
+            ]);
+        } else {
+            // 🔹 If transferred, update second status
+            $complaint->update([
+                'second_status_id' => $request->status_id,
+                'second_user_id' => $user->id,
+            ]);
+
+            // Create a ComplaintStep for second status update
+            $complaintStep = ComplaintStep::create([
+                'org_id' => $complaint->second_org_id, // Use second_org_id for transferred cases
+                'complaint_id' => $complaint->id,
+                'sent_user_id' => $user->id,
+                'sent_date' => now(),
+                'desc' => $request->desc,
+                'status_id' => $request->status_id,
+            ]);
+        }
 
         return response()->json([
             'message' => 'Гомдлын төлөв амжилттай шинэчлэгдлээ.',
