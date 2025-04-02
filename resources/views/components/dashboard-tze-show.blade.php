@@ -51,6 +51,19 @@
                             *72* гэж залгахад шилжүүлсэн дуудлага цуцлагдана.
                         </p>
                     </div>
+                    <!-- Slide 3 -->
+                    <div class="swiper-slide flex flex-col items-center text-center px-6">
+                        <div class="flex justify-center w-full mb-4">
+                            <img src="{{ asset('images/ip-phone.png') }}" alt="IP Phone" class="w-[200px] h-auto">
+                        </div>
+                        <p class="text-lg text-gray-800 font-medium leading-relaxed mb-4">
+                            📞 IP дугаарын суурь хураамж, ярианы тарифын мэдээлэл
+                        </p>
+                        <a href="{{ asset('image/ip-price.pdf') }}"
+                            class="mt-5 px-6 py-3 text-white bg-blue-600 rounded-full shadow-lg hover:bg-blue-700 hover:scale-105 transition-transform duration-200 ease-in-out flex items-center gap-2">
+                            📄 <span class="font-medium">Татах (PDF)</span>
+                        </a>
+                    </div>
                 </div>
 
                 <!-- Pagination -->
