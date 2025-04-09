@@ -734,9 +734,9 @@ class ComplaintController extends Controller
         // Mail::to($user->email)->send(new ComplaintNotification($user, $complaint));
 
         if (Auth::user()->role_id == 5) {
-            return redirect()->route('addComplaint')->with('success', 'Санал хүсэлт амжилттай бүртгэлээ.');
+            return redirect()->route('addComplaint')->with('success', 'Өргөдөл гомдол амжилттай бүртгэлээ.');
         } else {
-            return redirect()->route('complaint.create')->with('success', 'Санал хүсэлт амжилттай бүртгэлээ.');
+            return redirect()->route('complaint.create')->with('success', 'Өргөдөл гомдол амжилттай бүртгэлээ.');
         }
     }
 

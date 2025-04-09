@@ -151,7 +151,23 @@ class ComplaintController extends Controller
      */
     public function store(Request $request)
     {
+        $user = Auth::user();
+
         try {
+            if ($user->role_id == 5) {
+                // Хэрэглэгчийн хамгийн сүүлд гаргасан гомдлыг created_at-аар буурахаар эрэмбэлж нэгийг нь авах
+                $lastComplaint = Complaint::where('created_user_id', $user->id)
+                    ->orderBy('created_at', 'desc')
+                    ->first();
+
+                if ($lastComplaint && $lastComplaint->status_id != 6) {
+                    return response()->json([
+                        'status' => 'failed',
+                        'message' => 'Таны хамгийн сүүлд гаргасан гомдол шийдвэрлэгдээгүй байна. Шийдвэрлэсний дараа дахин гомдол гаргах боломжтой.',
+                    ], 429);
+                }
+            }
+
             $input = $request->all();
             $input['complaint_date'] = Carbon::now();
             $register_date = Carbon::parse($input['complaint_date']);
