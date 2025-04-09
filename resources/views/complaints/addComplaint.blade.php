@@ -11,6 +11,11 @@
                 <p>{{ $message }}</p>
             </div>
         @endif
+        @if ($message = Session::get('error'))
+            <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-2 mb-4" role="alert">
+                <p>{{ $message }}</p>
+            </div>
+        @endif
     </div>
 
     <div class="py-8 bg-slate-50">

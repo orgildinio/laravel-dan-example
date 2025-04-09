@@ -557,6 +557,19 @@ class ComplaintController extends Controller
 
         $user = Auth::user();
 
+        // ДАН системээр нэвтэрсэн хэрэглэгчийн хувьд
+        if ($user->role_id == 5) {
+            // Хэрэглэгчийн хамгийн сүүлд гаргасан гомдлыг created_at-аар буурахаар эрэмбэлж нэгийг нь авах
+            $lastComplaint = Complaint::where('created_user_id', $user->id)
+                ->orderBy('created_at', 'desc')
+                ->first();
+
+            if ($lastComplaint && $lastComplaint->status_id != 6) {
+                return redirect()->back()
+                    ->with(['error' => 'Таны хамгийн сүүлд гаргасан гомдол шийдвэрлэгдээгүй байна. Шийдвэрлэсний дараа дахин гомдол гаргах боломжтой.']);
+            }
+        }
+
         if ($audio_file = $request->file('audio_file')) {
             $name = time() . $audio_file->getClientOriginalName();
 
@@ -720,10 +733,10 @@ class ComplaintController extends Controller
         // Send email
         // Mail::to($user->email)->send(new ComplaintNotification($user, $complaint));
 
-        if (Auth::user()->org_id != null) {
-            return redirect()->route('complaint.create')->with('success', 'Санал хүсэлт амжилттай бүртгэлээ.');
+        if (Auth::user()->role_id == 5) {
+            return redirect()->route('addComplaint')->with('success', 'Санал хүсэлт амжилттай бүртгэлээ.');
         } else {
-            return redirect()->route('userComplaints', ['id' => $complaint->id])->with('success', 'Санал хүсэлт амжилттай бүртгэлээ.');
+            return redirect()->route('complaint.create')->with('success', 'Санал хүсэлт амжилттай бүртгэлээ.');
         }
     }
 
