@@ -5,23 +5,26 @@
         </h2>
     </x-slot>
 
-    <div class="container mx-auto">
-        @if ($message = Session::get('success'))
-            <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-2 mb-4" role="alert">
-                <p>{{ $message }}</p>
-            </div>
-        @endif
-        @if ($message = Session::get('error'))
-            <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-2 mb-4" role="alert">
-                <p>{{ $message }}</p>
-            </div>
-        @endif
-    </div>
+
 
     <div class="py-8 bg-slate-50">
         <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
+
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-5 m-5">
                 <h1 class="text-center text-2xl font-bold text-gray-900 mb-10">Өргөдөл, гомдол илгээх</h1>
+
+                <div class="container mx-auto">
+                    @if ($message = Session::get('success'))
+                        <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-2 mb-4" role="alert">
+                            <p>{{ $message }}</p>
+                        </div>
+                    @endif
+                    @if ($message = Session::get('error'))
+                        <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-2 mb-4" role="alert">
+                            <p>{{ $message }}</p>
+                        </div>
+                    @endif
+                </div>
 
                 <form id="submitForm" method="POST" action="{{ route('complaint.store') }}"
                     enctype="multipart/form-data">
