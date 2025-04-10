@@ -162,7 +162,7 @@ class ComplaintController extends Controller
             if ($user->role_id == 5) {
                 // Хэрэглэгчийн хамгийн сүүлд гаргасан гомдлыг created_at-аар буурахаар эрэмбэлж нэгийг нь авах
                 $lastComplaint = Complaint::where('created_user_id', $user->id)
-                    ->where('category_id', $categoryId)
+                    ->whereIn('category_id', [2, 8])
                     ->where('complaint_type_id', $complaintTypeId)
                     ->where('complaint_type_summary_id', $complaintTypeSummaryId)
                     ->where('organization_id', $organizationId)
@@ -172,7 +172,7 @@ class ComplaintController extends Controller
                 if ($lastComplaint && $lastComplaint->status_id != 6) {
                     return response()->json([
                         'status' => 'failed',
-                        'message' => 'Таны хамгийн сүүлд гаргасан гомдол шийдвэрлэгдээгүй байна. Шийдвэрлэсний дараа дахин гомдол гаргах боломжтой.',
+                        'message' => 'Таны өмнө нь гаргасан ижил төрлийн гомдол хараахан шийдвэрлэгдээгүй байна. Шийдвэрлэсний дараа дахин гомдол гаргах боломжтой болно.',
                     ], 429);
                 }
             }
