@@ -159,10 +159,10 @@ class ComplaintController extends Controller
         $organizationId = $input['organization_id'];
 
         try {
-            if ($user->role_id == 5) {
+            if ($user->role_id == 5 && in_array($categoryId, [2, 8])) {
                 // Хэрэглэгчийн хамгийн сүүлд гаргасан гомдлыг created_at-аар буурахаар эрэмбэлж нэгийг нь авах
                 $lastComplaint = Complaint::where('created_user_id', $user->id)
-                    ->whereIn('category_id', [2, 8])
+                    // ->whereIn('category_id', [2, 8])
                     ->where('complaint_type_id', $complaintTypeId)
                     ->where('complaint_type_summary_id', $complaintTypeSummaryId)
                     ->where('organization_id', $organizationId)
