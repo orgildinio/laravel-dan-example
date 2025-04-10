@@ -152,11 +152,20 @@ class ComplaintController extends Controller
     public function store(Request $request)
     {
         $user = Auth::user();
+        $input = $request->all();
+        $categoryId = $input['category_id'];
+        $complaintTypeId = $input['complaint_type_id'];
+        $complaintTypeSummaryId = $input['complaint_type_summary_id'];
+        $organizationId = $input['organization_id'];
 
         try {
             if ($user->role_id == 5) {
                 // Хэрэглэгчийн хамгийн сүүлд гаргасан гомдлыг created_at-аар буурахаар эрэмбэлж нэгийг нь авах
                 $lastComplaint = Complaint::where('created_user_id', $user->id)
+                    ->where('category_id', $categoryId)
+                    ->where('complaint_type_id', $complaintTypeId)
+                    ->where('complaint_type_summary_id', $complaintTypeSummaryId)
+                    ->where('organization_id', $organizationId)
                     ->orderBy('created_at', 'desc')
                     ->first();
 
@@ -168,7 +177,7 @@ class ComplaintController extends Controller
                 }
             }
 
-            $input = $request->all();
+
             $input['complaint_date'] = Carbon::now();
             $register_date = Carbon::parse($input['complaint_date']);
             $input['expire_date'] = $register_date->addDays(7);
