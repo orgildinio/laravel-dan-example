@@ -553,20 +553,28 @@ class ComplaintController extends Controller
     public function store(ComplaintStoreRequest $request)
     {
         $input = $request->all();
+        $categoryId = $input['category_id'];
+        $complaintTypeId = $input['complaint_type_id'];
+        $complaintTypeSummaryId = $input['complaint_type_summary_id'];
+        $organizationId = $input['organization_id'];
         // dd($input);
 
         $user = Auth::user();
 
         // ДАН системээр нэвтэрсэн хэрэглэгчийн хувьд
-        if ($user->role_id == 5) {
+        if ($user->role_id == 5 && in_array($categoryId, [2, 8])) {
             // Хэрэглэгчийн хамгийн сүүлд гаргасан гомдлыг created_at-аар буурахаар эрэмбэлж нэгийг нь авах
             $lastComplaint = Complaint::where('created_user_id', $user->id)
+                ->where('category_id', $categoryId)
+                ->where('complaint_type_id', $complaintTypeId)
+                ->where('complaint_type_summary_id', $complaintTypeSummaryId)
+                ->where('organization_id', $organizationId)
                 ->orderBy('created_at', 'desc')
                 ->first();
 
             if ($lastComplaint && $lastComplaint->status_id != 6) {
                 return redirect()->back()
-                    ->with(['error' => 'Таны хамгийн сүүлд гаргасан гомдол шийдвэрлэгдээгүй байна. Шийдвэрлэсний дараа дахин гомдол гаргах боломжтой.']);
+                    ->with(['error' => 'Таны өмнө нь гаргасан ижил төрлийн гомдол хараахан шийдвэрлэгдээгүй байна. Шийдвэрлэсний дараа дахин гомдол гаргах боломжтой болно.']);
             }
         }
 
