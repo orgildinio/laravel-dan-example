@@ -556,13 +556,13 @@ class ComplaintController extends Controller
         $categoryId = $input['category_id'];
         $complaintTypeId = $input['complaint_type_id'];
         $complaintTypeSummaryId = $input['complaint_type_summary_id'];
-        $organizationId = $input['organization_id'];
+        $organizationId = $input['organization_id'] ?? null;
         // dd($input);
 
         $user = Auth::user();
 
         // ДАН системээр нэвтэрсэн хэрэглэгчийн хувьд
-        if ($user->role_id == 5 && in_array($categoryId, [2, 8])) {
+        if ($user->role_id == 5 && in_array($categoryId, [2, 8]) && $organizationId !== null) {
             // Хэрэглэгчийн хамгийн сүүлд гаргасан гомдлыг created_at-аар буурахаар эрэмбэлж нэгийг нь авах
             $lastComplaint = Complaint::where('created_user_id', $user->id)
                 ->where('category_id', $categoryId)
