@@ -10,7 +10,7 @@ class OrganizationNumbers extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['phone_number', 'organization_id'];
+    protected $fillable = ['phone_number', 'organization_id', 'forwarded_number'];
 
     public function org()
     {

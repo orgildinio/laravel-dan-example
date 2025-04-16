@@ -15,35 +15,28 @@ class OrganizationController extends Controller
      */
     public function index(Request $request)
     {
-        $name = $request->query('name');
-        $plant_id = $request->query('plant_id');
-        $phone = $request->query('phone');
+        $query = Organization::query()->with('orgNumbers')->orderBy('name');
 
-        $query = Organization::query();
-
-        if ($request->filled('name')) {
-            $query->where('name', 'LIKE', '%' . $name . '%');
+        // Filter by name
+        if ($request->has('name') && !empty($request->name)) {
+            $query->where('name', 'like', '%' . $request->name . '%');
         }
 
         // Filter by plant_id
-        if ($request->filled('plant_id')) {
-            $query->where('plant_id', $plant_id);
+        if ($request->has('plant_id') && !empty($request->plant_id)) {
+            $query->where('plant_id', $request->plant_id);
         }
 
-        // Filter by phone number in the orgNumber relationship
-        if ($request->filled('phone')) {
-            $query->whereHas('orgNumber', function ($q) use ($phone) {
-                $q->where('phone_number', 'LIKE', '%' . $phone . '%');
+        // Filter by phone number
+        if ($request->has('phone') && !empty($request->phone)) {
+            $query->whereHas('orgNumbers', function ($q) use ($request) {
+                $q->where('phone_number', 'like', '%' . $request->phone . '%');
             });
         }
 
-        $orgs = $query->with('orgNumber')->orderBy('name', 'asc')->paginate(15)->appends($request->query());
+        $orgs = $query->paginate(10);
 
-        return view('organizations.index', compact('orgs'))->with([
-            'name' => $request->name,
-            'plant_id' => $request->plant_id,
-            'phone' => $request->phone,
-        ]);
+        return view('organizations.index', compact('orgs'));
     }
 
     /**
@@ -83,7 +76,8 @@ class OrganizationController extends Controller
      */
     public function show($id)
     {
-        //
+        $organization = Organization::with(['orgNumbers', 'serviceAreas'])->findOrFail($id);
+        return view('organizations.show', compact('organization'));
     }
 
     /**

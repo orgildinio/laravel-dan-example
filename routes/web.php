@@ -118,6 +118,8 @@ Route::middleware([
     Route::resource('/cdr', CdrController::class);
     Route::resource('/orgNumber', OrgNumberController::class);
     Route::post('/orgNumber/{id}', [OrgNumberController::class, 'save'])->name('orgNumber.save');
+    Route::post('/org-number/forward', [OrgNumberController::class, 'forward']);
+    Route::patch('/org-numbers/{id}/clear-forwarded', [OrgNumberController::class, 'clearForwarded'])->name('orgNumber.clearForwarded');
     Route::resource('/organization', OrganizationController::class);
     Route::get('/report1', [ReportController::class, 'showReport'])->name('report1.show');
     Route::get('/energyReport', [ReportController::class, 'energyReport'])->name('energyReport');

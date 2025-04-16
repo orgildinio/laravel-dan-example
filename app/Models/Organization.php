@@ -18,7 +18,7 @@ class Organization extends Model
         return $this->hasMany(Complaint::class);
     }
 
-    public function orgNumber()
+    public function orgNumbers()
     {
         // return $this->hasMany(OrganizationNumbers::class);
         return $this->hasMany(OrganizationNumbers::class, 'organization_id', 'id');
