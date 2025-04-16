@@ -1,19 +1,17 @@
 <x-admin-layout>
     <div class="bg-white shadow rounded-lg p-6">
-        <h1 class="text-2xl font-bold mb-6">Байгууллагын мэдээлэл</h1>
-
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-xl font-bold">Байгууллагын мэдээлэл</h1>
+            <a href="{{ route('organization.create') }}"
+                class="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700">
+                Нэмэх
+            </a>
+        </div>
         @if ($message = Session::get('success'))
             <div class="bg-green-100 border-l-4 border-green-500 text-green-700 text-sm p-4 mb-6 rounded" role="alert">
                 <p>{{ $message }}</p>
             </div>
         @endif
-
-        <div class="flex justify-between items-center mb-6">
-            <a href="{{ route('organization.create') }}"
-                class="px-4 py-2 rounded-md bg-blue-500 text-white hover:bg-blue-600 transition duration-200">
-                Нэмэх
-            </a>
-        </div>
 
         <form id="filterForm" method="GET" action="{{ route('organization.index') }}" class="mb-6">
             <div class="bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
