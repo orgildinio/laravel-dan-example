@@ -33,7 +33,7 @@
     });">
         <x-admin-header></x-admin-header>
 
-        <div x-data="{
+        {{-- <div x-data="{
             showPopup: localStorage.getItem('bannerSeen') ? false : true,
             timeout: null
         }" x-init="if (showPopup) {
@@ -49,7 +49,7 @@
                     <img src="{{ asset('images/telephone.png') }}" alt="Banner" class="w-[400px] h-auto rounded-md">
                 </div>
             </div>
-        </div>
+        </div> --}}
 
 
         <div class="flex overflow-hidden bg-white pt-16">

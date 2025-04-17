@@ -95,15 +95,6 @@
     });
 </script>
 
-
-
-
-
-
-
-
-
-
 <div class="bg-white">
     <h2 class="text-md text-gray-900 shadow bg-blue-50 p-2 mb-4 border-l-8 border-primary">Хянах самбар: <span
             class="text-primary font-bold">{{ Auth::user()->org?->name }}</span></h2>
