@@ -98,6 +98,26 @@
 <div class="bg-white">
     <h2 class="text-md text-gray-900 shadow bg-blue-50 p-2 mb-4 border-l-8 border-primary">Хянах самбар: <span
             class="text-primary font-bold">{{ Auth::user()->org?->name }}</span></h2>
+    <form method="GET" autocomplete="off" class="">
+        <div class="flex flex-row gap-2 p-2">
+            <div>
+                <input type="date" id="startdate" name="startdate"
+                    value="{{ request('startdate', now()->subMonth()->toDateString()) }}"
+                    class="w-36 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
+            </div>
+            <div>
+                <input type="date" id="enddate" name="enddate"
+                    value="{{ request('enddate', now()->toDateString()) }}"
+                    class="w-36 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
+            </div>
+            <div class="flex items-end">
+                <button type="submit"
+                    class="bg-primary hover:bg-primaryHover text-white font-medium rounded-lg p-2 mr-2">
+                    Хайх
+                </button>
+            </div>
+        </div>
+    </form>
     <section class="grid grid-cols-6 gap-2 mt-2">
         <div class="border border-gray-300 flex items-center justify-center">
             <div class="border-l-4 border-green-500 my-5 px-2">
@@ -130,7 +150,7 @@
             </div>
         </div>
         <div class="border border-gray-300 flex items-center justify-center">
-            <div class="border-l-4 border-green-500 my-5 px-2">
+            <div class="border-l-4 border-red-500 my-5 px-2">
                 <div class="block text-primary font-bold text-xs">Хугацаа хэтэрсэн</div>
                 <div class="block text-black font-bold text-lg">{{ $exp_comp }}</div>
             </div>

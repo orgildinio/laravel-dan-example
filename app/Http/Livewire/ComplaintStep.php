@@ -12,12 +12,13 @@ use App\Jobs\SendEmailJob;
 use App\Models\Organization;
 use App\Jobs\SendTzeEmailJob;
 use Livewire\WithFileUploads;
+use App\Helpers\ComplaintHelper;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
+use App\Helpers\PushNotificationHelper;
 use Illuminate\Support\Facades\Response;
 use App\Models\ComplaintStep as ModelsComplaintStep;
-use App\Helpers\ComplaintHelper;
 
 class ComplaintStep extends Component
 {
@@ -239,6 +240,10 @@ class ComplaintStep extends Component
 
                 // Хэрвээ 1111-ээс ирсэн гомдол байвал 1111 рүү мэдээлэл дамжуулах
                 ComplaintHelper::send1111API($complaint, false, $this->desc);
+
+                // Test Push notification to mobile
+                $user = User::where('created_user_id', $complaint->created_user_id)->first();
+                PushNotificationHelper::sendExpoNotification($user->expo_token, 'Сайн байна уу!', 'Таны гомдол хянаж байгаа төлөвт орсон байна!');
 
                 break;
             case 'Цуцлах':

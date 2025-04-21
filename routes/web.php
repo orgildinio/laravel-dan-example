@@ -13,6 +13,7 @@ use App\Http\Controllers\DanAuthController;
 use App\Http\Controllers\ComplaintController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\OrgNumberController;
+use App\Http\Controllers\PushTokenController;
 use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\SourceComplaintController;
 use App\Http\Controllers\OrgUserDataImportController;
@@ -32,6 +33,8 @@ use App\Http\Controllers\OrganizationServiceAreaController;
 Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
+
+Route::middleware('auth:sanctum')->post('/save-token', [PushTokenController::class, 'store']);
 
 Route::get('/tze-contacts', [HomeController::class, 'showTable'])->name('tze-contacts');
 Route::get('/download-app', [HomeController::class, 'showQrCode'])->name('download-app');

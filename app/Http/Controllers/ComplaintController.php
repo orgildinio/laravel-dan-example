@@ -12,14 +12,17 @@ use App\Models\Aimag;
 use App\Models\Rating;
 use App\Models\Status;
 use App\Models\Channel;
+use App\Models\Country;
 use App\Models\DanUser;
 use App\Models\Category;
 use App\Mail\WelcomeMail;
+use App\Models\BagKhoroo;
 use App\Models\Complaint;
 use App\Jobs\SendEmailJob;
 use App\Models\EnergyType;
 use App\Models\Organization;
 use App\Models\Registration;
+use App\Models\SoumDistrict;
 use Illuminate\Http\Request;
 use App\Models\ComplaintStep;
 use App\Models\ComplaintType;
@@ -36,13 +39,11 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Redis;
+use App\Helpers\PushNotificationHelper;
+use App\Models\OrganizationServiceArea;
 use Symfony\Component\Console\Input\Input;
 use App\Http\Requests\ComplaintStoreRequest;
-use App\Models\BagKhoroo;
 use App\Models\ComplaintStep as ModelsComplaintStep;
-use App\Models\Country;
-use App\Models\OrganizationServiceArea;
-use App\Models\SoumDistrict;
 
 class ComplaintController extends Controller
 {
@@ -740,6 +741,9 @@ class ComplaintController extends Controller
         }
         // Send email
         // Mail::to($user->email)->send(new ComplaintNotification($user, $complaint));
+
+        // // Test Push notification to mobile
+        // PushNotificationHelper::sendExpoNotification($user->expo_token, 'Сайн байна уу!', 'Таны гомдол шийдэгдсэн байна!');
 
         if (Auth::user()->role_id == 5) {
             return redirect()->route('addComplaint')->with('success', 'Өргөдөл гомдол амжилттай бүртгэлээ.');

@@ -30,13 +30,23 @@ class DashboardTzeShow extends Component
     {
         $org_id = Auth::user()->org_id;
 
-        $all_comp = Complaint::where('organization_id', $org_id)->count();
-        $new_comp = Complaint::where('status_id', 0)->where('organization_id', $org_id)->count();
-        $rec_comp = Complaint::where('status_id', 2)->where('organization_id', $org_id)->count();
-        $ctl_comp = Complaint::where('status_id', 3)->where('organization_id', $org_id)->count();
-        $slv_comp = Complaint::where('status_id', 6)->where('organization_id', $org_id)->count();
-        $cnc_comp = Complaint::where('status_id', 4)->where('organization_id', $org_id)->count();
-        $exp_comp = Complaint::where('expire_date', '<=', Carbon::now())->where('status_id', '!=', 6)->where('organization_id', $org_id)->count();
+        // Get the date range from the request
+        $start_date = request('startdate', Carbon::now()->subMonth()->toDateString());
+        $end_date = request('enddate', Carbon::now()->toDateString());
+
+        // If start_date is null, set it to 1 month before the current date
+        $startDate = $start_date != null ? $start_date : Carbon::now()->subMonth()->toDateString();
+
+        // If end_date is null, set it to the current date
+        $endDate = $end_date != null ? $end_date : Carbon::now()->toDateString();
+
+        $all_comp = Complaint::where('organization_id', $org_id)->whereBetween('created_at', [$startDate, $endDate])->count();
+        $new_comp = Complaint::where('status_id', 0)->whereBetween('created_at', [$startDate, $endDate])->where('organization_id', $org_id)->count();
+        $rec_comp = Complaint::where('status_id', 2)->whereBetween('created_at', [$startDate, $endDate])->where('organization_id', $org_id)->count();
+        $ctl_comp = Complaint::where('status_id', 3)->whereBetween('created_at', [$startDate, $endDate])->where('organization_id', $org_id)->count();
+        $slv_comp = Complaint::where('status_id', 6)->whereBetween('created_at', [$startDate, $endDate])->where('organization_id', $org_id)->count();
+        $cnc_comp = Complaint::where('status_id', 4)->whereBetween('created_at', [$startDate, $endDate])->where('organization_id', $org_id)->count();
+        $exp_comp = Complaint::where('expire_date', '<=', Carbon::now())->where('status_id', '!=', 6)->whereBetween('created_at', [$startDate, $endDate])->where('organization_id', $org_id)->count();
 
         $tze_tog_count = Complaint::where('energy_type_id', 1)->where('organization_id', $org_id)->count();
         $tze_dulaan_count = Complaint::where('energy_type_id', 2)->where('organization_id', $org_id)->count();
@@ -44,6 +54,7 @@ class DashboardTzeShow extends Component
         $compCategory = Complaint::from('complaints as c')
             ->select('ct.name', DB::raw('COUNT(c.id) as y'))
             ->leftJoin('categories as ct', 'c.category_id', '=', 'ct.id')
+            ->whereBetween('c.created_at', [$startDate, $endDate])
             ->where('c.organization_id', $org_id)
             ->groupBy('ct.name')
             ->get();
@@ -53,6 +64,7 @@ class DashboardTzeShow extends Component
         $compType = Complaint::from('complaints as c')
             ->select('ct.name', DB::raw('COUNT(c.id) as y'))
             ->leftJoin('complaint_types as ct', 'c.complaint_type_id', '=', 'ct.id')
+            ->whereBetween('c.created_at', [$startDate, $endDate])
             ->where('c.organization_id', $org_id)
             ->groupBy('ct.name')
             ->get();
@@ -61,6 +73,7 @@ class DashboardTzeShow extends Component
         $compTypeMakers = Complaint::from('complaints as c')
             ->select('ct.name', DB::raw('COUNT(c.id) as y'))
             ->leftJoin('complaint_maker_types as ct', 'c.complaint_maker_type_id', '=', 'ct.id')
+            ->whereBetween('c.created_at', [$startDate, $endDate])
             ->where('c.organization_id', $org_id)
             ->groupBy('ct.name')
             ->get();
@@ -69,6 +82,7 @@ class DashboardTzeShow extends Component
         $compChannels = Complaint::from('complaints as c')
             ->select('ct.name', DB::raw('COUNT(c.id) as y'))
             ->leftJoin('channels as ct', 'c.channel_id', '=', 'ct.id')
+            ->whereBetween('c.created_at', [$startDate, $endDate])
             ->where('c.organization_id', $org_id)
             ->groupBy('ct.name')
             ->get();
@@ -76,6 +90,7 @@ class DashboardTzeShow extends Component
 
         $compCounts = Complaint::select(DB::raw('EXTRACT(\'MONTH\' FROM complaint_date) AS published_month, COUNT(id) AS count'))
             ->where('organization_id', $org_id)
+            ->whereBetween('created_at', [$startDate, $endDate])
             ->whereRaw('date_part(\'year\', complaint_date) = date_part(\'year\', CURRENT_DATE)')
             ->groupBy(DB::raw('EXTRACT(\'MONTH\' FROM complaint_date)'))
             ->orderBy(DB::raw('EXTRACT(\'MONTH\' FROM complaint_date)'))
@@ -89,6 +104,7 @@ class DashboardTzeShow extends Component
                     ->where('c.organization_id', '=', Auth::user()->org_id);
             })
             ->whereNotIn('s.id', [7, 8])
+            ->whereBetween('c.created_at', [$startDate, $endDate])
             ->groupBy('s.id', 's.name')
             ->orderBy('s.id')
             ->get();
