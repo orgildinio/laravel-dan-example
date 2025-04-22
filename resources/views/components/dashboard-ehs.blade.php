@@ -1,4 +1,24 @@
 <div class="bg-white">
+    <form method="GET" autocomplete="off" class="">
+        <div class="flex flex-row gap-2 p-2">
+            <div>
+                <input type="date" id="startdate" name="startdate"
+                    value="{{ request('startdate', now()->subMonth()->toDateString()) }}"
+                    class="w-36 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
+            </div>
+            <div>
+                <input type="date" id="enddate" name="enddate"
+                    value="{{ request('enddate', now()->toDateString()) }}"
+                    class="w-36 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
+            </div>
+            <div class="flex items-end">
+                <button type="submit"
+                    class="bg-primary hover:bg-primaryHover text-white font-medium rounded-lg p-2 mr-2">
+                    Хайх
+                </button>
+            </div>
+        </div>
+    </form>
     <section class="grid grid-cols-8 gap-2 mt-2">
         <div class="col-span-2">
             <div class="border border-gray-300 flex items-center justify-start">
@@ -81,8 +101,7 @@
 </div>
 
 <script type="text/javascript">
-
-const statusCategoryMapping = {
+    const statusCategoryMapping = {
         0: 'Шинээр ирсэн',
         1: 'Шилжүүлсэн',
         2: 'Хүлээн авсан',
@@ -103,11 +122,11 @@ const statusCategoryMapping = {
         '#86efac',
     ];
 
-   // bar chart status
+    // bar chart status
 
-   const statusCountEhs = @json($ehs_status_count);
+    const statusCountEhs = @json($ehs_status_count);
 
-   const expireEhs = {
+    const expireEhs = {
         y: {{ $exp_comp }},
         color: '#fca5a5'
     };
@@ -153,11 +172,11 @@ const statusCategoryMapping = {
             colorByPoint: true,
             data: [{
                     name: 'Цахилгаан',
-                    y: {{$ehs_tog_count}}
+                    y: {{ $ehs_tog_count }}
                 },
                 {
                     name: 'Дулаан',
-                    y: {{$ehs_dulaan_count}}
+                    y: {{ $ehs_dulaan_count }}
                 },
             ]
         }]

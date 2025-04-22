@@ -26,17 +26,30 @@ class DashboardEhs extends Component
      */
     public function render()
     {
-        $ehs_tog_count = Complaint::where('energy_type_id', 1)->count();
-        $ehs_dulaan_count = Complaint::where('energy_type_id', 2)->count();
+        // Get the date range from the request
+        $start_date = request('startdate', Carbon::now()->subMonth()->toDateString());
+        $end_date = request('enddate', Carbon::now()->toDateString());
+
+        // If start_date is null, set it to 1 month before the current date
+        $startDate = $start_date != null ? $start_date : Carbon::now()->subMonth()->toDateString();
+
+        // If end_date is null, set it to the current date
+        $endDate = $end_date != null ? $end_date : Carbon::now()->toDateString();
+
+
+        $ehs_tog_count = Complaint::where('energy_type_id', 1)->whereBetween('created_at', [$startDate, $endDate])->count();
+        $ehs_dulaan_count = Complaint::where('energy_type_id', 2)->whereBetween('created_at', [$startDate, $endDate])->count();
 
         $exp_comp = DB::table('complaints')
             ->where('expire_date', '<', now())
             ->where('status_id', '!=', 6)
+            ->whereBetween('created_at', [$startDate, $endDate])
             ->count();
 
         $ehs_category = Complaint::from('complaints as c')
             ->select('ct.name', DB::raw('COUNT(c.id) as y'))
             ->leftJoin('categories as ct', 'c.category_id', '=', 'ct.id')
+            ->whereBetween('c.created_at', [$startDate, $endDate])
             ->groupBy('ct.name')
             ->get();
 
@@ -46,6 +59,7 @@ class DashboardEhs extends Component
                 $join->on('s.id', '=', 'c.status_id');
             })
             ->whereNotIn('s.id', [7, 8])
+            ->whereBetween('c.created_at', [$startDate, $endDate])
             ->groupBy('s.id', 's.name')
             ->orderBy('s.id')
             ->get();
@@ -53,24 +67,28 @@ class DashboardEhs extends Component
         $ehs_type_count = Complaint::from('complaints as c')
             ->select('ct.name', DB::raw('COUNT(c.id) as value'))
             ->leftJoin('complaint_types as ct', 'c.complaint_type_id', '=', 'ct.id')
+            ->whereBetween('c.created_at', [$startDate, $endDate])
             ->groupBy('ct.name')
             ->get();
 
         $ehs_maker_count = Complaint::from('complaints as c')
             ->select('ct.name', DB::raw('COUNT(c.id) as y'))
             ->leftJoin('complaint_maker_types as ct', 'c.complaint_maker_type_id', '=', 'ct.id')
+            ->whereBetween('c.created_at', [$startDate, $endDate])
             ->groupBy('ct.name')
             ->get();
 
         $ehs_month_count = Complaint::select(DB::raw('EXTRACT(\'MONTH\' FROM complaint_date) AS published_month, COUNT(id) AS count'))
             ->whereRaw('date_part(\'year\', complaint_date) = date_part(\'year\', CURRENT_DATE)')
             ->groupBy(DB::raw('EXTRACT(\'MONTH\' FROM complaint_date)'))
+            ->whereBetween('created_at', [$startDate, $endDate])
             ->orderBy(DB::raw('EXTRACT(\'MONTH\' FROM complaint_date)'))
             ->get();
 
         $ehs_channels_count = Complaint::from('complaints as c')
             ->select('ct.name', DB::raw('COUNT(c.id) as y'))
             ->leftJoin('channels as ct', 'c.channel_id', '=', 'ct.id')
+            ->whereBetween('c.created_at', [$startDate, $endDate])
             ->groupBy('ct.name')
             ->get();
 
