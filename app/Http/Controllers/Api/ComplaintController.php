@@ -339,8 +339,11 @@ class ComplaintController extends Controller
         }
         // 🔴 Ижил төлөвт дахин шинэчлэхээс сэргийлэх
         if (
-            (!$complaint->transferred && $complaint->status_id == $request->status_id) ||
-            ($complaint->transferred && $complaint->second_status_id == $request->status_id)
+            $request->status_id != 8 &&
+            (
+                (!$complaint->transferred && $complaint->status_id == $request->status_id) ||
+                ($complaint->transferred && $complaint->second_status_id == $request->status_id)
+            )
         ) {
             return response()->json([
                 'status' => 'failed',
