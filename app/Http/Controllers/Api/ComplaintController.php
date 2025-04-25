@@ -337,6 +337,16 @@ class ComplaintController extends Controller
                 'message' => 'Гомдлын шийдвэрлэх хугацаа дууссан байна.',
             ], 403);
         }
+        // 🔴 Ижил төлөвт дахин шинэчлэхээс сэргийлэх
+        if (
+            (!$complaint->transferred && $complaint->status_id == $request->status_id) ||
+            ($complaint->transferred && $complaint->second_status_id == $request->status_id)
+        ) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Гомдол аль хэдийн энэ төлөвт байна.',
+            ], 409);
+        }
 
         $validator = Validator::make($request->all(), [
             'status_id' => 'required|integer|in:2,3,6,8',
