@@ -89,4 +89,13 @@ class User extends Authenticatable
     {
         return $this->hasOne(DanUser::class);
     }
+
+    public function routeNotificationForExpo()
+    {
+        // Return an array of Expo push tokens
+        return $this->expoPushTokens()->pluck('token')->toArray();
+
+        // Or return a single token if user has one:
+        // return $this->expo_push_token;
+    }
 }

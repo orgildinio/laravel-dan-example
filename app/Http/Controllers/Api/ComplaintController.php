@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use App\Models\ComplaintStep;
 use App\Helpers\ComplaintHelper;
 use PhpParser\Node\Stmt\TryCatch;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\ComplaintResource;
@@ -239,15 +240,109 @@ class ComplaintController extends Controller
         return new ComplaintResource($complaint);
     }
 
-    public function updateStatus(Request $request, Complaint $complaint)
+    // public function updateStatus(Request $request, Complaint $complaint)
+    // {
+    //     // Validate request
+    //     $validator = Validator::make($request->all(), [
+    //         'status_id' => 'required|integer|in:2,3,6,8',
+    //         'desc' => 'required|string',
+    //     ]);
+
+    //     // Check if validation fails
+    //     if ($validator->fails()) {
+    //         return response()->json([
+    //             'status' => 'failed',
+    //             'message' => 'Өгөгдөл буруу байна.',
+    //             'errors' => $validator->errors()
+    //         ], 422);
+    //     }
+
+    //     // 🔹 Хэрэв одоогийн `status_id` нь хүсэлттэй ижил байвал өөрчлөхгүй
+    //     if ($complaint->status_id == $request->status_id) {
+    //         return response()->json([
+    //             'status' => 'failed',
+    //             'message' => 'Гомдол аль хэдийн энэ төлөвт байна.'
+    //         ], 400);
+    //     }
+
+    //     // // 🔹 Шинэ `status_id` нь одоогийнхоос бага байхыг хориглох
+    //     // if ($request->status_id < $complaint->status_id) {
+    //     //     return response()->json([
+    //     //         'status' => 'failed',
+    //     //         'message' => 'Гомдлын төлөвийг буцаах боломжгүй.'
+    //     //     ], 400);
+    //     // }
+
+    //     // Get authenticated user
+    //     $user = auth()->user();
+
+    //     // 🔹 First, check the transferred flag
+    //     if (!$complaint->transferred) {
+    //         // 🔹 If NOT transferred, update main status
+    //         $complaint->update([
+    //             'status_id' => $request->status_id,
+    //             'controlled_user_id' => $complaint->status_id == 0 ? $user->id : $complaint->controlled_user_id,
+    //         ]);
+
+    //         // Create a ComplaintStep for main status update
+    //         $complaintStep = ComplaintStep::create([
+    //             'org_id' => $complaint->organization_id,
+    //             'complaint_id' => $complaint->id,
+    //             'sent_user_id' => $user->id,
+    //             'sent_date' => now(),
+    //             'desc' => $request->desc,
+    //             'status_id' => $request->status_id,
+    //         ]);
+    //     } else {
+    //         // 🔹 If transferred, update second status
+    //         $complaint->update([
+    //             'second_status_id' => $request->status_id,
+    //             'second_user_id' => $user->id,
+    //         ]);
+
+    //         // Create a ComplaintStep for second status update
+    //         $complaintStep = ComplaintStep::create([
+    //             'org_id' => $complaint->second_org_id, // Use second_org_id for transferred cases
+    //             'complaint_id' => $complaint->id,
+    //             'sent_user_id' => $user->id,
+    //             'sent_date' => now(),
+    //             'desc' => $request->desc,
+    //             'status_id' => $request->status_id,
+    //         ]);
+
+    //         ComplaintHelper::send1111API($complaint, false, $request->desc);
+    //     }
+
+    //     return response()->json([
+    //         'message' => 'Гомдлын төлөв амжилттай шинэчлэгдлээ.',
+    //         'complaint' => new ComplaintResource($complaint),
+    //         'complaint_step' => $complaintStep,
+    //     ]);
+    // }
+    public function updateStatus(Request $request, $id)
     {
-        // Validate request
+        $complaint = Complaint::find($id);
+
+        if (!$complaint) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Гомдол олдсонгүй эсвэл устгагдсан байна.',
+            ], 404);
+        }
+
+        // 🔴 Шийдвэрлэх хугацаа хэтэрсэн эсэхийг шалгах
+        if ($complaint->expire_date && Carbon::parse($complaint->expire_date)->lt(Carbon::now())) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Гомдлын шийдвэрлэх хугацаа дууссан байна.',
+            ], 403);
+        }
+
         $validator = Validator::make($request->all(), [
             'status_id' => 'required|integer|in:2,3,6,8',
             'desc' => 'required|string',
         ]);
 
-        // Check if validation fails
         if ($validator->fails()) {
             return response()->json([
                 'status' => 'failed',
@@ -256,92 +351,59 @@ class ComplaintController extends Controller
             ], 422);
         }
 
-        // // 🔹 Хэрэв одоогийн `status_id` нь хүсэлттэй ижил байвал өөрчлөхгүй
-        // if ($complaint->status_id == $request->status_id) {
-        //     return response()->json([
-        //         'status' => 'failed',
-        //         'message' => 'Гомдол аль хэдийн энэ төлөвт байна.'
-        //     ], 400);
-        // }
-
-        // // 🔹 Шинэ `status_id` нь одоогийнхоос бага байхыг хориглох
-        // if ($request->status_id < $complaint->status_id) {
-        //     return response()->json([
-        //         'status' => 'failed',
-        //         'message' => 'Гомдлын төлөвийг буцаах боломжгүй.'
-        //     ], 400);
-        // }
-
-        // Get authenticated user
         $user = auth()->user();
 
-        // Хэрэв хүсэлт status_id=2 бол controlled_user_id шалгахгүй
-        // if ($request->status_id !== 2) {
-        //     if ($complaint->controlled_user_id !== $user->id) {
-        //         return response()->json([
-        //             'status' => 'failed',
-        //             'message' => 'Танд энэ гомдлын төлөвийг шинэчлэх эрх байхгүй байна.'
-        //         ], 403);
-        //     }
-        // }
+        DB::beginTransaction();
 
-        // $complaint->update([
-        //     'status_id' => $request->status_id,
-        //     'controlled_user_id' => $complaint->status_id == 0 ? $user->id : $complaint->controlled_user_id,
-        // ]);
+        try {
+            if (!$complaint->transferred) {
+                $complaint->update([
+                    'status_id' => $request->status_id,
+                    'controlled_user_id' => $complaint->status_id == 0 ? $user->id : $complaint->controlled_user_id,
+                ]);
 
-        // // Create a new ComplaintStep record
-        // $complaintStep = ComplaintStep::create([
-        //     'org_id' => $complaint->organization_id,
-        //     'complaint_id' => $complaint->id,
-        //     'sent_user_id' => $user->id,
-        //     'sent_date' => now(),
-        //     'desc' => $request->desc,
-        //     'status_id' => $request->status_id,
-        // ]);
+                $complaintStep = ComplaintStep::create([
+                    'org_id' => $complaint->organization_id,
+                    'complaint_id' => $complaint->id,
+                    'sent_user_id' => $user->id,
+                    'sent_date' => now(),
+                    'desc' => $request->desc,
+                    'status_id' => $request->status_id,
+                ]);
+            } else {
+                $complaint->update([
+                    'second_status_id' => $request->status_id,
+                    'second_user_id' => $user->id,
+                ]);
 
-        // 🔹 First, check the transferred flag
-        if (!$complaint->transferred) {
-            // 🔹 If NOT transferred, update main status
-            $complaint->update([
-                'status_id' => $request->status_id,
-                'controlled_user_id' => $complaint->status_id == 0 ? $user->id : $complaint->controlled_user_id,
+                $complaintStep = ComplaintStep::create([
+                    'org_id' => $complaint->second_org_id,
+                    'complaint_id' => $complaint->id,
+                    'sent_user_id' => $user->id,
+                    'sent_date' => now(),
+                    'desc' => $request->desc,
+                    'status_id' => $request->status_id,
+                ]);
+
+                ComplaintHelper::send1111API($complaint, false, $request->desc);
+            }
+
+            DB::commit();
+
+            return response()->json([
+                'message' => 'Гомдлын төлөв амжилттай шинэчлэгдлээ.',
+                'complaint' => new ComplaintResource($complaint),
+                'complaint_step' => $complaintStep,
             ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
 
-            // Create a ComplaintStep for main status update
-            $complaintStep = ComplaintStep::create([
-                'org_id' => $complaint->organization_id,
-                'complaint_id' => $complaint->id,
-                'sent_user_id' => $user->id,
-                'sent_date' => now(),
-                'desc' => $request->desc,
-                'status_id' => $request->status_id,
-            ]);
-        } else {
-            // 🔹 If transferred, update second status
-            $complaint->update([
-                'second_status_id' => $request->status_id,
-                'second_user_id' => $user->id,
-            ]);
-
-            // Create a ComplaintStep for second status update
-            $complaintStep = ComplaintStep::create([
-                'org_id' => $complaint->second_org_id, // Use second_org_id for transferred cases
-                'complaint_id' => $complaint->id,
-                'sent_user_id' => $user->id,
-                'sent_date' => now(),
-                'desc' => $request->desc,
-                'status_id' => $request->status_id,
-            ]);
-
-            ComplaintHelper::send1111API($complaint, false, $request->desc);
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Төлөв шинэчлэх явцад алдаа гарлаа.',
+                'error' => $e->getMessage(), // dev үеийн хувьд
+            ], 500);
         }
-
-        return response()->json([
-            'message' => 'Гомдлын төлөв амжилттай шинэчлэгдлээ.',
-            'complaint' => new ComplaintResource($complaint),
-            'complaint_step' => $complaintStep,
-        ]);
     }
 
 
