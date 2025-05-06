@@ -6,6 +6,41 @@
         font-size: 10px;
     }
 
+    thead th,
+    thead td {
+        border: 1px solid #999;
+        text-align: center;
+        vertical-align: middle;
+        padding: 5px;
+    }
+
+    thead th div {
+        writing-mode: vertical-lr;
+        transform: rotate(180deg);
+        white-space: nowrap;
+    }
+
+    thead tr:nth-child(1) th {
+        background-color: #f2f2f2;
+        border-top: 2px solid #000;
+    }
+
+    thead tr:nth-child(2) th {
+        background-color: #fff;
+    }
+
+    th[colspan="11"][style*="background-color: #e6f7ff;"] {
+        border: 2px solid #007acc;
+    }
+
+    th[colspan="11"][style*="background-color: #ffe6e6;"] {
+        border: 2px solid #cc0000;
+    }
+
+    th[colspan="{{ count($complaint_type_summaries) + 1 }}"] {
+        border: 2px solid #666;
+    }
+
     tbody th {
         padding: 4px 15px 4px 0px;
         text-align: right;
@@ -20,26 +55,6 @@
     th,
     td {
         padding: 5px;
-    }
-
-    th.rotate {
-        /* Something you can count on */
-        height: 140px;
-        white-space: nowrap;
-    }
-
-    th.rotate>div {
-        transform:
-            /* Magic Numbers */
-            translate(25px, 51px)
-            /* 45 is really 360 - 45 */
-            rotate(315deg);
-        width: 30px;
-    }
-
-    th.rotate>div>span {
-        border-bottom: 1px solid purple;
-        padding: 5px 10px;
     }
 
     /* Hover effect */
@@ -62,6 +77,18 @@
                 <input type="date" id="enddate" name="enddate"
                     value="{{ request('enddate', now()->toDateString()) }}"
                     class="w-36 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
+            </div>
+            <div>
+                <select name="category_id" id="category_id"
+                    class="w-40 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
+                    <option value="">-- Сонгох --</option>
+                    @foreach ($categories as $category)
+                        <option value="{{ $category->id }}"
+                            {{ request('category_id') == $category->id ? 'selected' : '' }}>
+                            {{ $category->name }}
+                        </option>
+                    @endforeach
+                </select>
             </div>
             <div>
                 <select name="energy_type_id" id="energy_type_id"
@@ -87,14 +114,14 @@
                     @endforeach
                 </select>
             </div>
-            <div class="mr-1">
+            {{-- <div class="mr-1">
                 <select name="transferred" id="transferred"
                     class="w-40 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
                     <option value="1" {{ request('transferred') == '1' ? 'selected' : '' }}>Шилжүүлсэн</option>
                     <option value="0" {{ request('transferred') == '0' ? 'selected' : '' }}>Шилжүүлээгүй
                     </option>
                 </select>
-            </div>
+            </div> --}}
             <div class="flex items-end">
                 <button type="submit"
                     class="bg-primary hover:bg-primaryHover text-white font-medium rounded-lg px-4 py-2 mr-2">
@@ -111,53 +138,95 @@
         <table id="tailan2">
             <thead>
                 <tr>
-                    <th><span>№</span></th>
+                    <th rowspan="2">№</th>
+                    <th rowspan="2">ТЗЭ</th>
+                    <th colspan="11" style="background-color: #e6f7ff;">Шилжүүлсэн</th>
+                    <th colspan="11" style="background-color: #ffe6e6;">Шилжүүлээгүй</th>
+                    <th colspan="{{ count($complaint_type_summaries) + 1 }}">Төрлөөр</th>
+                </tr>
+                <tr>
+                    <!-- Шилжүүлсэн -->
                     <th>
-                        <div><span>Байгууллага</span></div>
+                        <div><span>Веб</span></div>
                     </th>
-                    <th class="rotate">
-                        <div><span style="border-bottom: 1px solid blue;">Веб</span></div>
+                    <th>
+                        <div><span>Утсаар</span></div>
                     </th>
-                    <th class="rotate">
-                        <div><span style="border-bottom: 1px solid blue;">Утсаар</span></div>
+                    <th>
+                        <div><span>И-мэйл</span></div>
                     </th>
-                    <th class="rotate">
-                        <div><span style="border-bottom: 1px solid blue;">И-мэйл</span></div>
+                    <th>
+                        <div><span>Биечлэн</span></div>
                     </th>
-                    <th class="rotate">
-                        <div><span style="border-bottom: 1px solid blue;">Биечлэн</span></div>
+                    <th>
+                        <div><span>Гар утас</span></div>
                     </th>
-                    <th class="rotate">
-                        <div><span style="border-bottom: 1px solid blue;">Гар утас</span></div>
+                    <th>
+                        <div><span>Бичгээр</span></div>
                     </th>
-                    <th class="rotate">
-                        <div><span style="border-bottom: 1px solid blue;">Бичгээр</span></div>
+                    <th>
+                        <div><span>1111</span></div>
                     </th>
-                    <th class="rotate">
-                        <div><span style="border-bottom: 1px solid blue;">1111</span></div>
+                    <th>
+                        <div><span>ЭХЯ-аас</span></div>
                     </th>
-                    <th class="rotate">
-                        <div><span style="border-bottom: 1px solid blue;">ЭХЯ-аас</span></div>
+                    <th>
+                        <div><span>НЗДТГ-аас</span></div>
                     </th>
-                    <th class="rotate">
-                        <div><span style="border-bottom: 1px solid blue;">Нийслэлийн ЗДТГ-аас</span></div>
+                    <th>
+                        <div><span>АЗДТГ-аас</span></div>
                     </th>
-                    <th class="rotate">
-                        <div><span style="border-bottom: 1px solid blue;">Аймгийн ЗДТГ-аас</span></div>
+                    <th>
+                        <div><span>Нийт</span></div>
                     </th>
-                    <th class="rotate">
-                        <div><span style="border-bottom: 1px solid blue;">Нийт</span></div>
+
+                    <!-- Шилжүүлээгүй -->
+                    <th>
+                        <div><span style="border-bottom: 1px solid red;">Веб</span></div>
                     </th>
+                    <th>
+                        <div><span style="border-bottom: 1px solid red;">Утсаар</span></div>
+                    </th>
+                    <th>
+                        <div><span style="border-bottom: 1px solid red;">И-мэйл</span></div>
+                    </th>
+                    <th>
+                        <div><span style="border-bottom: 1px solid red;">Биечлэн</span></div>
+                    </th>
+                    <th>
+                        <div><span style="border-bottom: 1px solid red;">Гар утас</span></div>
+                    </th>
+                    <th>
+                        <div><span style="border-bottom: 1px solid red;">Бичгээр</span></div>
+                    </th>
+                    <th>
+                        <div><span style="border-bottom: 1px solid red;">1111</span></div>
+                    </th>
+                    <th>
+                        <div><span style="border-bottom: 1px solid red;">ЭХЯ</span></div>
+                    </th>
+                    <th>
+                        <div><span style="border-bottom: 1px solid red;">НЗДТГ</span></div>
+                    </th>
+                    <th>
+                        <div><span style="border-bottom: 1px solid red;">АЗДТГ</span></div>
+                    </th>
+                    <th>
+                        <div><span style="border-bottom: 1px solid red;">Нийт</span></div>
+                    </th>
+
+                    <!-- complaint_type_summaries -->
                     @foreach ($complaint_type_summaries as $summary)
-                        <th class="rotate">
+                        <th>
                             <div><span>{{ $summary->name }}</span></div>
                         </th>
                     @endforeach
-                    <th class="rotate">
+                    <th>
                         <div><span>Нийт</span></div>
                     </th>
                 </tr>
             </thead>
+
             <tbody>
                 @php
                     $totals = [
@@ -175,7 +244,7 @@
                     ];
                     $summary_totals = [];
                 @endphp
-                @foreach ($complaints as $index => $complaint)
+                @foreach ($complaintsTransferred as $index => $complaint)
                     @php
                         $totals['c_1'] += $complaint->c_1;
                         $totals['c_2'] += $complaint->c_2;
@@ -211,51 +280,49 @@
                         <td>{{ $complaint->c_10 }}</td>
                         <td style="font-weight: bold; background-color: lightgray;">{{ $complaint->total_channel }}
                         </td>
+                        <td>{{ $complaintsNotTransferred[$index]->c_1 ?? 0 }}</td>
+                        <td>{{ $complaintsNotTransferred[$index]->c_2 ?? 0 }}</td>
+                        <td>{{ $complaintsNotTransferred[$index]->c_3 ?? 0 }}</td>
+                        <td>{{ $complaintsNotTransferred[$index]->c_4 ?? 0 }}</td>
+                        <td>{{ $complaintsNotTransferred[$index]->c_5 ?? 0 }}</td>
+                        <td>{{ $complaintsNotTransferred[$index]->c_6 ?? 0 }}</td>
+                        <td>{{ $complaintsNotTransferred[$index]->c_7 ?? 0 }}</td>
+                        <td>{{ $complaintsNotTransferred[$index]->c_8 ?? 0 }}</td>
+                        <td>{{ $complaintsNotTransferred[$index]->c_9 ?? 0 }}</td>
+                        <td>{{ $complaintsNotTransferred[$index]->c_10 ?? 0 }}</td>
+                        <td style="font-weight: bold; background-color: lightgray;">
+                            {{ $complaintsNotTransferred[$index]->total_channel ?? 0 }}</td>
+
                         @foreach ($complaint_type_summaries as $summary)
                             @php
-                                $columnName = 'c' . $summary->id . '_cnt';
+                                $transferredColumn = 'c' . $summary->id . '_transferred';
+                                $notTransferredColumn = 'c' . $summary->id . '_not_transferred';
+                                $totalPerType =
+                                    ($complaint->$transferredColumn ?? 0) + ($complaint->$notTransferredColumn ?? 0);
                             @endphp
-                            <td>{{ $complaint->$columnName ?? 0 }}</td>
+                            <td>{{ $totalPerType }}</td>
                         @endforeach
+
                         <td style="font-weight: bold; background-color: lightgray;">
                             @php
                                 $totalSummary = 0;
                                 foreach ($complaint_type_summaries as $summary) {
-                                    $columnName = 'c' . $summary->id . '_cnt';
-                                    $totalSummary += $complaint->$columnName ?? 0;
+                                    $transferredColumn = 'c' . $summary->id . '_transferred';
+                                    $notTransferredColumn = 'c' . $summary->id . '_not_transferred';
+                                    $totalSummary +=
+                                        ($complaint->$transferredColumn ?? 0) +
+                                        ($complaint->$notTransferredColumn ?? 0);
                                 }
                             @endphp
                             {{ $totalSummary }}
                         </td>
+
                     </tr>
                 @endforeach
             </tbody>
-            <!-- Footer for totals -->
-            <tfoot>
-                <tr style="font-weight: bold; background-color: lightgray; text-align: center;">
-                    <td colspan="2">Нийт</td>
-                    <td>{{ $totals['c_1'] }}</td>
-                    <td>{{ $totals['c_2'] }}</td>
-                    <td>{{ $totals['c_3'] }}</td>
-                    <td>{{ $totals['c_4'] }}</td>
-                    <td>{{ $totals['c_5'] }}</td>
-                    <td>{{ $totals['c_6'] }}</td>
-                    <td>{{ $totals['c_7'] }}</td>
-                    <td>{{ $totals['c_8'] }}</td>
-                    <td>{{ $totals['c_9'] }}</td>
-                    <td>{{ $totals['c_10'] }}</td>
-                    <td>{{ $totals['total_channel'] }}</td>
-
-                    @foreach ($complaint_type_summaries as $summary)
-                        @php $columnName = 'c' . $summary->id . '_cnt'; @endphp
-                        <td>{{ $summary_totals[$columnName] ?? 0 }}</td>
-                    @endforeach
-
-                    <td>{{ array_sum($summary_totals) }}</td>
-                </tr>
-            </tfoot>
         </table>
     </div>
+
 </x-admin-layout>
 
 @push('scripts')

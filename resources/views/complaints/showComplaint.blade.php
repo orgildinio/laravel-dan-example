@@ -49,7 +49,18 @@
 
                                     <div>
                                         @if ($complaint->file_id != null)
-                                        <x-file-list-component :$fileName :$fileExt :$fileUrl :$fileSizeInKilobytes />
+                                            <x-file-list-component :$fileName :$fileExt :$fileUrl
+                                                :$fileSizeInKilobytes />
+                                        @endif
+                                        @if ($complaint->files->isNotEmpty())
+                                            <div class="flex flex-row flex-wrap">
+                                                @foreach ($complaint->files as $file)
+                                                    <div class="m-2">
+                                                        <x-file-list-component :fileName="$file->filename" :fileExt="pathinfo($file->filename, PATHINFO_EXTENSION)"
+                                                            :fileUrl="url('files/' . $file->filename)" :fileSizeInKilobytes="10" />
+                                                    </div>
+                                                @endforeach
+                                            </div>
                                         @endif
 
                                         @if ($complaint->audio_file_id != null)
@@ -131,13 +142,21 @@
                                                                     if ($step->file_id != null) {
                                                                         $fileName = $step->file?->filename; // Example dynamic image URL
                                                                         $fileUrl = 'files/' . $step->file?->filename; // Example dynamic image URL
-                                                                        $fileExt = pathinfo($step->file?->filename, PATHINFO_EXTENSION);
-                                                                        $fileSizeInBytes = filesize(public_path($fileUrl));
-                                                                        $fileSizeInKilobytes = round($fileSizeInBytes / 1024);
+                                                                        $fileExt = pathinfo(
+                                                                            $step->file?->filename,
+                                                                            PATHINFO_EXTENSION,
+                                                                        );
+                                                                        $fileSizeInBytes = filesize(
+                                                                            public_path($fileUrl),
+                                                                        );
+                                                                        $fileSizeInKilobytes = round(
+                                                                            $fileSizeInBytes / 1024,
+                                                                        );
                                                                     }
                                                                 @endphp
                                                                 <div class="flex space-x-4 py-4">
-                                                                    <x-file-list-component :$fileName :$fileExt :$fileUrl :$fileSizeInKilobytes />
+                                                                    <x-file-list-component :$fileName :$fileExt
+                                                                        :$fileUrl :$fileSizeInKilobytes />
                                                                 </div>
                                                             @endif
 

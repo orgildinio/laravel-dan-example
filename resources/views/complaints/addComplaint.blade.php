@@ -1,11 +1,6 @@
 <x-app-layout>
-    {{-- <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Өргөдөл, гомдол илгээх') }}
-        </h2>
-    </x-slot> --}}
     <div class="py-8 bg-slate-50">
-        <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-5 m-5">
                 <h1 class="text-center text-2xl font-bold text-gray-900 mb-10">Өргөдөл, гомдол илгээх</h1>
@@ -38,7 +33,7 @@
                                 <input
                                     class="bg-gray-200 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
                                     id="inline-full-name" type="text" name="companyName"
-                                    value="{{ isset($danUser->companyName) ? $danUser->companyName : '' }}" disabled>
+                                    value="{{ isset($danUser->companyName) ? $danUser->companyName : '' }}" readonly>
                             </div>
                         </div>
                         <div class="md:flex md:items-center mb-2">
@@ -53,7 +48,7 @@
                                     class="bg-gray-200 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
                                     id="inline-register-name" type="text" name="companyRegnum"
                                     value="{{ isset($danUser->companyRegnum) ? $danUser->companyRegnum : '' }}"
-                                    disabled>
+                                    readonly>
                             </div>
                         </div>
                     @else
@@ -68,7 +63,7 @@
                                 <input
                                     class="bg-gray-200 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
                                     id="inline-full-name" type="text" name="lastname"
-                                    value="{{ isset($danUser->danLastname) ? $danUser->danLastname : '' }}" disabled>
+                                    value="{{ isset($danUser->danLastname) ? $danUser->danLastname : '' }}" readonly>
                             </div>
                         </div>
                         <div class="md:flex md:items-center mb-2">
@@ -82,7 +77,7 @@
                                 <input
                                     class="bg-gray-200 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
                                     id="inline-first-name" type="text" name="firstname"
-                                    value="{{ isset($danUser->danFirstname) ? $danUser->danFirstname : '' }}" disabled>
+                                    value="{{ isset($danUser->danFirstname) ? $danUser->danFirstname : '' }}" readonly>
                             </div>
                         </div>
                         <div class="md:flex md:items-center mb-2">
@@ -96,7 +91,7 @@
                                 <input
                                     class="bg-gray-200 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
                                     id="inline-register-name" type="text" name="registerNumber"
-                                    value="{{ isset($danUser->danRegnum) ? $danUser->danRegnum : '' }}" disabled>
+                                    value="{{ isset($danUser->danRegnum) ? $danUser->danRegnum : '' }}" readonly>
                             </div>
                         </div>
                     @endif
@@ -109,9 +104,9 @@
                         </div>
                         <div class="md:w-2/3">
                             <input
-                                class="bg-gray-50 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
+                                class="bg-gray-200 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
                                 id="inline-phone" type="text" name="phone"
-                                value="{{ isset($danUser->phone) ? $danUser->phone : '' }}">
+                                value="{{ isset($danUser->phone) ? $danUser->phone : '' }}" readonly>
                             @error('phone')
                                 <div class="text-red-500 text-sm mt-1 mb-1">{{ $message }}</div>
                             @enderror
@@ -126,9 +121,9 @@
                         </div>
                         <div class="md:w-2/3">
                             <input
-                                class="bg-gray-50 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
+                                class="bg-gray-200 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
                                 id="inline-email" type="email" name="email"
-                                value="{{ isset($danUser->email) ? $danUser->email : '' }}">
+                                value="{{ isset($danUser->email) ? $danUser->email : '' }}" readonly>
                         </div>
                     </div>
                     <div class="md:flex md:items-center mb-2">
@@ -143,7 +138,7 @@
                                 class="bg-gray-200 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
                                 id="inline-country" type="text" name="country"
                                 value="{{ isset($danUser->danAimagCityName) ? $danUser->danAimagCityName : '' }}"
-                                disabled>
+                                readonly>
                         </div>
                     </div>
                     <div class="md:flex md:items-center mb-2">
@@ -158,7 +153,7 @@
                                 class="bg-gray-200 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
                                 id="inline-discrict-name" type="text" name="district"
                                 value="{{ isset($danUser->danSoumDistrictName) ? $danUser->danSoumDistrictName : '' }}"
-                                disabled>
+                                readonly>
                         </div>
                     </div>
                     <div class="md:flex md:items-center mb-2">
@@ -173,7 +168,7 @@
                                 class="bg-gray-200 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
                                 id="inline-khoroo-name" type="text" name="khoroo"
                                 value="{{ isset($danUser->danBagKhorooName) ? $danUser->danBagKhorooName : '' }}"
-                                disabled>
+                                readonly>
                         </div>
                     </div>
                     <div class="md:flex md:items-center mb-2">
@@ -306,7 +301,7 @@
                             @enderror
                         </div>
                     </div>
-                    <div class="md:flex md:items-center mb-2">
+                    {{-- <div class="md:flex md:items-center mb-2">
                         <div class="md:w-1/3">
                             <label class="block text-gray-700 text-sm font-bold md:text-right mb-1 md:mb-0 pr-4"
                                 for="inline-full-name">
@@ -321,9 +316,23 @@
                                 <div class="text-red-500 text-sm mt-1 mb-1">{{ $message }}</div>
                             @enderror
                         </div>
+                    </div> --}}
+                    <div class="md:flex md:items-center mb-2">
+                        <div class="md:w-1/3">
+                            <label
+                                class="block text-gray-700 text-sm font-bold md:text-right mb-1 md:mb-0 pr-4">Гомдлын
+                                агуулга</label>
+                        </div>
+                        <div class="md:w-2/3">
+                            <textarea name="complaint" rows="5"
+                                class="bg-gray-50 appearance-none border-1 border-gray-200 rounded w-full py-2 px-4 text-gray-700 text-sm leading-tight focus:outline-none focus:bg-white focus:border-indigo-500z">{{ old('complaint') }}</textarea>
+                            @error('complaint')
+                                <div class="text-red-500 text-sm mt-1 mb-1">{{ $message }}</div>
+                            @enderror
+                        </div>
                     </div>
 
-                    <div class="md:flex md:items-center mb-2">
+                    {{-- <div class="md:flex md:items-center mb-2">
                         <div class="md:w-1/3">
                             <label class="block text-gray-700 text-sm font-bold md:text-right mb-1 md:mb-0 pr-4"
                                 for="inline-full-name">
@@ -335,9 +344,21 @@
                                 class="block w-full text-gray-900 text-sm border border-gray-300 rounded-lg cursor-pointer bg-gray-50"
                                 id="inline-file-name" type="file" name="file">
                         </div>
+                    </div> --}}
+                    <div class="md:flex md:items-center mb-2">
+                        <div class="md:w-1/3">
+                            <label class="block text-gray-700 text-sm font-bold md:text-right mb-1 md:mb-0 pr-4">Файл
+                                хавсаргах</label>
+                        </div>
+                        <div class="md:w-2/3">
+                            <input type="file" name="files[]" multiple class="...">
+                            @error('files')
+                                <div class="text-red-500 text-sm mt-1 mb-1">{{ $message }}</div>
+                            @enderror
+                        </div>
                     </div>
 
-                    <div class="md:flex md:items-center mb-2">
+                    {{-- <div class="md:flex md:items-center mb-2">
                         <div class="md:w-1/3">
                             <label class="block text-gray-700 text-sm font-bold md:text-right mb-1 md:mb-0 pr-4"
                                 for="inline-full-name">
@@ -367,13 +388,22 @@
                                 <input type="file" id="audio_file_upload" name="audio_file" />
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
 
-                    <div class="md:flex md:items-center mb-6">
+                    {{-- <div class="md:flex md:items-center mb-6">
                         <div class="md:w-1/3">
                         </div>
                         <div class="md:w-2/3">
                             <x-button id="sbmBtn">Илгээх</x-button>
+                        </div>
+                    </div> --}}
+                    <div class="md:flex md:items-center">
+                        <div class="md:w-1/3"></div>
+                        <div class="md:w-2/3">
+                            <button type="submit"
+                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none">
+                                Илгээх
+                            </button>
                         </div>
                     </div>
                 </form>
@@ -383,71 +413,66 @@
     </div>
     @push('scripts')
         <script type="module">
-            const button = document.getElementById("micBtn");
-            const submitButton = document.getElementById("sbmBtn");
-            const audioFile = document.getElementById('audio');
-            // const audioInputFile = document.getElementById('audio_input');
-            const audio_file_upload = document.getElementById('audio_file_upload');
+            // const button = document.getElementById("micBtn");
+            // const submitButton = document.getElementById("sbmBtn");
+            // const audioFile = document.getElementById('audio');
+            // const audio_file_upload = document.getElementById('audio_file_upload');
 
-            // const form = document.getElementById("submitForm");
-            // const data = new FormData(form);
+            // const recorder = new MicRecorder({
+            //     bitRate: 128
+            // });
 
-            const recorder = new MicRecorder({
-                bitRate: 128
-            });
+            // button.addEventListener("click", startRecording);
 
-            button.addEventListener("click", startRecording);
-            // submitButton.addEventListener("click", submitFormData);
+            // function startRecording(event) {
+            //     event.preventDefault();
 
-            function startRecording(event) {
-                event.preventDefault();
+            //     console.log("Record started...")
+            //     recorder
+            //         .start()
+            //         .then(() => {
+            //             console.log("record start...");
+            //             button.classList.add("bg-red-600", "animation-pulse", "text-white");
+            //             button.removeEventListener("click", startRecording);
+            //             button.addEventListener("click", stopRecording);
+            //         })
+            //         .catch((e) => {
+            //             console.error(e);
+            //         });
+            // }
 
-                console.log("Record started...")
-                recorder
-                    .start()
-                    .then(() => {
-                        console.log("record start...");
-                        button.classList.add("bg-red-600", "animation-pulse", "text-white");
-                        button.removeEventListener("click", startRecording);
-                        button.addEventListener("click", stopRecording);
-                    })
-                    .catch((e) => {
-                        console.error(e);
-                    });
-            }
+            // function stopRecording(event) {
+            //     event.preventDefault();
 
-            function stopRecording(event) {
-                event.preventDefault();
+            //     recorder.stop().getMp3().then(([buffer, blob]) => {
+            //         // console.log(buffer);
+            //         const file = new File(buffer, 'record.mp3', {
+            //             type: blob.type,
+            //             lastModified: Date.now()
+            //         });
+            //         console.log(URL.createObjectURL(blob));
+            //         // audioInputFile.type = "file";
+            //         // audioInputFile.value = file;
 
-                recorder.stop().getMp3().then(([buffer, blob]) => {
-                    // console.log(buffer);
-                    const file = new File(buffer, 'record.mp3', {
-                        type: blob.type,
-                        lastModified: Date.now()
-                    });
-                    console.log(URL.createObjectURL(blob));
-                    // audioInputFile.type = "file";
-                    // audioInputFile.value = file;
+            //         const dataTransfer = new DataTransfer();
+            //         dataTransfer.items.add(file);
+            //         audio_file_upload.files = dataTransfer.files;
 
-                    const dataTransfer = new DataTransfer();
-                    dataTransfer.items.add(file);
-                    audio_file_upload.files = dataTransfer.files;
+            //         let playlist = document.getElementById('playlist');
+            //         const li = document.createElement('li');
+            //         const player = new Audio(URL.createObjectURL(file));
+            //         player.controls = true;
+            //         li.appendChild(player);
+            //         playlist.replaceChild(li, playlist.firstElementChild);
 
-                    let playlist = document.getElementById('playlist');
-                    const li = document.createElement('li');
-                    const player = new Audio(URL.createObjectURL(file));
-                    player.controls = true;
-                    li.appendChild(player);
-                    playlist.replaceChild(li, playlist.firstElementChild);
+            //         button.classList.remove("bg-red-600", "animation-pulse", "text-white");
+            //         button.removeEventListener('click', stopRecording);
+            //         button.addEventListener('click', startRecording);
 
-                    button.classList.remove("bg-red-600", "animation-pulse", "text-white");
-                    button.removeEventListener('click', stopRecording);
-                    button.addEventListener('click', startRecording);
-
-                }).catch((e) => {
-                    console.error(e);
-                });
-            }
+            //     }).catch((e) => {
+            //         console.error(e);
+            //     });
+            // }
 
             // Initialize the map
             // var map = L.map('map').setView([47.93077880351261, 106.91095779606707], 12);
