@@ -140,9 +140,9 @@
                 <tr>
                     <th rowspan="2">№</th>
                     <th rowspan="2">ТЗЭ</th>
-                    <th colspan="11" style="background-color: #e6f7ff;">Шилжүүлсэн</th>
-                    <th colspan="11" style="background-color: #ffe6e6;">Шилжүүлээгүй</th>
-                    <th colspan="{{ count($complaint_type_summaries) + 1 }}">Төрлөөр</th>
+                    <th colspan="11" style="background-color: #e6f7ff;">ЭХЗХ-оос шилжүүлсэн</th>
+                    <th colspan="11" style="background-color: #ffe6e6;">ТЗЭ-чид ирсэн</th>
+                    <th colspan="{{ count($complaint_type_summaries) + 1 }}">Гомдлын ангилал</th>
                 </tr>
                 <tr>
                     <!-- Шилжүүлсэн -->
