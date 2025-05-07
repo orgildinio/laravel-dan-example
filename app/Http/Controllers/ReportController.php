@@ -200,6 +200,45 @@ class ReportController extends Controller
 
         // dd($complaintsTransferred);
 
+        // Combine both collections
+        $allComplaints = $complaintsTransferred->concat($complaintsNotTransferred);
+
+        // Group by organization and sum the values
+        $mergedComplaints = $allComplaints->groupBy('organization_name')->map(function ($group) use ($complaint_type_summaries) {
+            $merged = (object)[
+                'organization_name' => $group->first()->organization_name,
+                'total_channel' => $group->sum('total_channel'),
+            ];
+
+            // Sum complaint type summary counts
+            foreach ($complaint_type_summaries as $summary) {
+                $key = 'c' . $summary->id . '_cnt';
+                $merged->{$key} = $group->sum($key);
+            }
+
+            // Keep channels separate but with clear labels
+            foreach ($group as $item) {
+                foreach (range(1, 10) as $i) {
+                    $channelKey = 'c_' . $i;
+                    $transferredKey = 'transferred_c_' . $i;
+                    $notTransferredKey = 'not_transferred_c_' . $i;
+
+                    // Determine if transferred (you might need to adjust this logic)
+                    $isTransferred = isset($item->transferred) ? $item->transferred : (strpos(json_encode($item), 'second_org_id') !== false);
+
+                    if ($isTransferred) {
+                        $merged->{$transferredKey} = ($merged->{$transferredKey} ?? 0) + ($item->{$channelKey} ?? 0);
+                    } else {
+                        $merged->{$notTransferredKey} = ($merged->{$notTransferredKey} ?? 0) + ($item->{$channelKey} ?? 0);
+                    }
+                }
+            }
+
+            return $merged;
+        })->values();
+
+        // dd($mergedComplaints);
+
 
         $energy_types = EnergyType::all();
         $complaint_types = ComplaintType::all();
@@ -216,6 +255,7 @@ class ReportController extends Controller
             'complaint_type_id' => $complaint_type_id,
             'complaint_type_summaries' => $complaint_type_summaries,
             'categories' => $categories,
+            'mergedComplaints' => $mergedComplaints,
         ]);
     }
 

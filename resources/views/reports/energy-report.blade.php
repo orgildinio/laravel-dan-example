@@ -134,7 +134,7 @@
         </div>
     </form>
 
-    <div class="table-container">
+    {{-- <div class="table-container">
         <table id="tailan2">
             <thead>
                 <tr>
@@ -321,6 +321,133 @@
                 @endforeach
             </tbody>
         </table>
+    </div> --}}
+
+    {{-- <div class="w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="mb-10">
+            <h2 class="text-xl font-bold mb-4 text-blue-600">Шилжүүлсэн гомдлууд</h2>
+            <div class="overflow-auto">
+                <table class="min-w-full bg-white border border-gray-200 text-sm">
+                    <thead class="bg-blue-100 text-gray-700">
+                        <tr>
+                            <th class="px-4 py-2 border">Байгууллага</th>
+                            <th class="px-4 py-2 border">Нийт гомдол</th>
+                            @foreach ($complaint_type_summaries as $summary)
+                                <th class="px-4 py-2 border">{{ $summary->name }}</th>
+                            @endforeach
+                            @for ($i = 1; $i <= 10; $i++)
+                                <th class="px-4 py-2 border">Сувгийн {{ $i }}</th>
+                            @endfor
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($complaintsTransferred as $row)
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-4 py-2 border">{{ $row->organization_name }}</td>
+                                <td class="px-4 py-2 border">{{ $row->total_channel }}</td>
+                                @foreach ($complaint_type_summaries as $summary)
+                                    <td class="px-4 py-2 border">{{ $row->{'c' . $summary->id . '_cnt'} ?? 0 }}</td>
+                                @endforeach
+                                @for ($i = 1; $i <= 10; $i++)
+                                    <td class="px-4 py-2 border">{{ $row->{'c_' . $i} ?? 0 }}</td>
+                                @endfor
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="20" class="px-4 py-2 text-center text-gray-500">Мэдээлэл олдсонгүй</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="mb-10">
+            <h2 class="text-xl font-bold mb-4 text-red-600">Шилжүүлээгүй гомдлууд</h2>
+            <div class="overflow-auto">
+                <table class="min-w-full bg-white border border-gray-200 text-sm">
+                    <thead class="bg-red-100 text-gray-700">
+                        <tr>
+                            <th class="px-4 py-2 border">Байгууллага</th>
+                            <th class="px-4 py-2 border">Нийт гомдол</th>
+                            @foreach ($complaint_type_summaries as $summary)
+                                <th class="px-4 py-2 border">{{ $summary->name }}</th>
+                            @endforeach
+                            @for ($i = 1; $i <= 10; $i++)
+                                <th class="px-4 py-2 border">Сувгийн {{ $i }}</th>
+                            @endfor
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($complaintsNotTransferred as $row)
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-4 py-2 border">{{ $row->organization_name }}</td>
+                                <td class="px-4 py-2 border">{{ $row->total_channel }}</td>
+                                @foreach ($complaint_type_summaries as $summary)
+                                    <td class="px-4 py-2 border">{{ $row->{'c' . $summary->id . '_cnt'} ?? 0 }}</td>
+                                @endforeach
+                                @for ($i = 1; $i <= 10; $i++)
+                                    <td class="px-4 py-2 border">{{ $row->{'c_' . $i} ?? 0 }}</td>
+                                @endfor
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="20" class="px-4 py-2 text-center text-gray-500">Мэдээлэл олдсонгүй</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div> --}}
+    <div class="w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="mb-10">
+            <h2 class="text-xl font-bold mb-4">Нийт гомдлууд (Шилжүүлсэн ба шилжүүлээгүй)</h2>
+            <div class="overflow-auto">
+                <table class="min-w-full bg-white border border-gray-200 text-sm">
+                    <thead class="bg-gray-100 text-gray-700">
+                        <tr>
+                            <th class="px-4 py-2 border">Байгууллага</th>
+                            <th class="px-4 py-2 border">Нийт гомдол</th>
+                            @foreach ($complaint_type_summaries as $summary)
+                                <th class="px-4 py-2 border">{{ $summary->name }}</th>
+                            @endforeach
+                            @for ($i = 1; $i <= 10; $i++)
+                                <th class="px-4 py-2 border" colspan="2">
+                                    Сувгийн {{ $i }}
+                                    <div class="flex justify-between">
+                                        <span class="text-blue-600">Шилж.</span>
+                                        <span class="text-red-600">Шилжүүлээгүй</span>
+                                    </div>
+                                </th>
+                            @endfor
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($mergedComplaints as $row)
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-4 py-2 border">{{ $row->organization_name }}</td>
+                                <td class="px-4 py-2 border">{{ $row->total_channel }}</td>
+                                @foreach ($complaint_type_summaries as $summary)
+                                    <td class="px-4 py-2 border">{{ $row->{'c' . $summary->id . '_cnt'} ?? 0 }}</td>
+                                @endforeach
+                                @for ($i = 1; $i <= 10; $i++)
+                                    <td class="px-4 py-2 border text-blue-600">{{ $row->{'transferred_c_' . $i} ?? 0 }}
+                                    </td>
+                                    <td class="px-4 py-2 border text-red-600">
+                                        {{ $row->{'not_transferred_c_' . $i} ?? 0 }}</td>
+                                @endfor
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="{{ 2 + count($complaint_type_summaries) + 20 }}"
+                                    class="px-4 py-2 text-center text-gray-500">Мэдээлэл олдсонгүй</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 
 </x-admin-layout>
