@@ -61,6 +61,12 @@
     tbody tr:hover {
         background-color: #f0f0f0;
     }
+
+    .rotate-text {
+        writing-mode: vertical-rl;
+        transform: rotate(180deg);
+        white-space: nowrap;
+    }
 </style>
 <x-admin-layout>
     <h3 class="text-xl font-bold mb-4">Эрчим хүчний гомдлын тайлан</h3>
@@ -405,42 +411,66 @@
             <h2 class="text-xl font-bold mb-4">Нийт гомдлууд (Шилжүүлсэн ба шилжүүлээгүй)</h2>
             <div class="overflow-auto">
                 <table class="min-w-full bg-white border border-gray-200 text-sm">
-                    <thead class="bg-gray-100 text-gray-700">
-                        <tr>
-                            <th class="px-4 py-2 border">Байгууллага</th>
-                            <th class="px-4 py-2 border">Нийт гомдол</th>
-                            @foreach ($complaint_type_summaries as $summary)
-                                <th class="px-4 py-2 border">{{ $summary->name }}</th>
-                            @endforeach
+                    <thead>
+                        <tr class="bg-gray-100 text-gray-700 text-center font-semibold">
+                            <th class="px-4 py-2 border align-middle" rowspan="2">Байгууллага</th>
+                            <th class="px-4 py-2 border" colspan="2">Веб</th>
+                            <th class="px-4 py-2 border" colspan="2">Утсаар</th>
+                            <th class="px-4 py-2 border" colspan="2">И-мэйл</th>
+                            <th class="px-4 py-2 border" colspan="2">Биечлэн</th>
+                            <th class="px-4 py-2 border" colspan="2">Гар утас</th>
+                            <th class="px-4 py-2 border" colspan="2">Бичгээр</th>
+                            <th class="px-4 py-2 border" colspan="2">1111</th>
+                            <th class="px-4 py-2 border" colspan="2">ЭХЯ-аас</th>
+                            <th class="px-4 py-2 border" colspan="2">НЗДТГ-аас</th>
+                            <th class="px-4 py-2 border" colspan="2">АЗДТГ-аас</th>
+                            <th class="px-4 py-2 border" rowspan="2">Суваг Нийт</th>
+                            <th class="px-4 py-2 border text-center" colspan="{{ count($complaint_type_summaries) }}">
+                                Гомдлын ангилал</th>
+                            <th class="px-4 py-2 border" rowspan="2">Ангилал Нийт</th>
+                        </tr>
+                        <tr class="bg-gray-100 text-gray-600 text-xs text-center">
                             @for ($i = 1; $i <= 10; $i++)
-                                <th class="px-4 py-2 border" colspan="2">
-                                    Сувгийн {{ $i }}
-                                    <div class="flex justify-between">
-                                        <span class="text-blue-600">Шилж.</span>
-                                        <span class="text-red-600">Шилжүүлээгүй</span>
-                                    </div>
+                                <th class="px-1 py-1 border text-blue-600">
+                                    <div class="rotate-text">ЭХЗХ-оос шилжүүлсэн</div>
+                                </th>
+                                <th class="px-1 py-1 border text-red-600">
+                                    <div class="rotate-text">ТЗЭ-чид ирсэн</div>
                                 </th>
                             @endfor
+                            @foreach ($complaint_type_summaries as $summary)
+                                <th class="px-1 py-1 border">
+                                    <div class="rotate-text">{{ $summary->name }}</div>
+                                </th>
+                            @endforeach
                         </tr>
                     </thead>
                     <tbody>
                         @forelse ($mergedComplaints as $row)
-                            <tr class="hover:bg-gray-50">
-                                <td class="px-4 py-2 border">{{ $row->organization_name }}</td>
-                                <td class="px-4 py-2 border">{{ $row->total_channel }}</td>
-                                @foreach ($complaint_type_summaries as $summary)
-                                    <td class="px-4 py-2 border">{{ $row->{'c' . $summary->id . '_cnt'} ?? 0 }}</td>
-                                @endforeach
+                            <tr class="hover:bg-gray-50 text-center">
+                                <td class="px-4 py-2 border text-left">{{ $row->organization_name }}</td>
                                 @for ($i = 1; $i <= 10; $i++)
-                                    <td class="px-4 py-2 border text-blue-600">{{ $row->{'transferred_c_' . $i} ?? 0 }}
+                                    <td class="px-2 py-2 border text-blue-600">{{ $row->{'transferred_c_' . $i} ?? 0 }}
                                     </td>
-                                    <td class="px-4 py-2 border text-red-600">
+                                    <td class="px-2 py-2 border text-red-600">
                                         {{ $row->{'not_transferred_c_' . $i} ?? 0 }}</td>
                                 @endfor
+                                <td class="px-4 py-2 border">{{ $row->total_channel }}</td>
+                                @php
+                                    $categoryTotal = 0; // Initialize sum variable
+                                @endphp
+                                @foreach ($complaint_type_summaries as $summary)
+                                    <td class="px-2 py-2 border">{{ $row->{'c' . $summary->id . '_cnt'} ?? 0 }}</td>
+                                    @php
+                                        $count = $row->{'c' . $summary->id . '_cnt'} ?? 0;
+                                        $categoryTotal += $count;
+                                    @endphp
+                                @endforeach
+                                <td class="px-2 py-2 border font-bold text-indigo-700">{{ $categoryTotal }}</td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="{{ 2 + count($complaint_type_summaries) + 20 }}"
+                                <td colspan="{{ 1 + 10 * 2 + count($complaint_type_summaries) + 1 }}"
                                     class="px-4 py-2 text-center text-gray-500">Мэдээлэл олдсонгүй</td>
                             </tr>
                         @endforelse
