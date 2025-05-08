@@ -455,7 +455,7 @@
                                     <td class="px-2 py-2 border text-red-600">
                                         {{ $row->{'not_transferred_c_' . $i} ?? 0 }}</td>
                                 @endfor
-                                <td class="px-4 py-2 border">{{ $row->total_channel }}</td>
+                                <td class="px-4 py-2 border font-bold text-indigo-700">{{ $row->total_channel }}</td>
                                 @php
                                     $categoryTotal = 0; // Initialize sum variable
                                 @endphp

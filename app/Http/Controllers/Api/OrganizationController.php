@@ -10,6 +10,11 @@ class OrganizationController extends Controller
 {
     public function index()
     {
-        return response()->json(Organization::orderBy('name', 'asc')->get());
+        // return response()->json(Organization::orderBy('name', 'asc')->get());
+        return response()->json(
+            Organization::whereNot('id', 99)
+                ->orderBy('name', 'asc')
+                ->get()
+        );
     }
 }
