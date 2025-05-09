@@ -94,10 +94,6 @@ class ReportController extends Controller
         $complaint_type_id = $request->query('complaint_type_id');
         $category_id = $request->query('category_id');
 
-        $transferred = $request->query('transferred') ?? 1;
-
-        $org_id = $request->query('transferred', 'second_org_id') ? 'second_org_id' : 'organization_id';
-
         $complaint_type_summaries = collect();
         if (isset($energy_type_id) && isset($complaint_type_id)) {
             $complaint_type_summaries = ComplaintTypeSummary::where('energy_type_id', $energy_type_id)
@@ -200,6 +196,30 @@ class ReportController extends Controller
 
         // dd($complaintsTransferred);
 
+        // Шилжүүлсэн гомдлын шийдвэрлэсэн тоо
+        $resolvedTransferred = Complaint::where('transferred', true)
+            ->where('second_status_id', 6)
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->when(!is_null($category_id), fn($q) => $q->where('category_id', $category_id))
+            ->when(!is_null($complaint_type_id), fn($q) => $q->where('complaint_type_id', $complaint_type_id))
+            ->when(!is_null($energy_type_id), fn($q) => $q->whereHas('secondOrg', fn($q2) => $q2->where('plant_id', $energy_type_id)))
+            ->select('second_org_id as org_id', DB::raw('COUNT(*) as resolved_count'))
+            ->groupBy('second_org_id')
+            ->pluck('resolved_count', 'org_id');
+
+
+        // Шилжүүлээгүй гомдлын шийдвэрлэсэн тоо
+        $resolvedNotTransferred = Complaint::where('transferred', false)
+            ->where('status_id', 6)
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->when(!is_null($category_id), fn($q) => $q->where('category_id', $category_id))
+            ->when(!is_null($complaint_type_id), fn($q) => $q->where('complaint_type_id', $complaint_type_id))
+            ->when(!is_null($energy_type_id), fn($q) => $q->whereHas('organization', fn($q2) => $q2->where('plant_id', $energy_type_id)))
+            ->select('organization_id as org_id', DB::raw('COUNT(*) as resolved_count'))
+            ->groupBy('organization_id')
+            ->pluck('resolved_count', 'org_id');
+
+
         // Combine both collections
         $allComplaints = $complaintsTransferred->concat($complaintsNotTransferred);
 
@@ -234,10 +254,24 @@ class ReportController extends Controller
                 }
             }
 
+
+
             return $merged;
         })->values();
 
         // dd($mergedComplaints);
+
+        $mergedComplaints = $mergedComplaints->map(function ($item) use ($resolvedTransferred, $resolvedNotTransferred) {
+            // id олж авах (нэрээр харьцуулах тул organizations хүснэгттэй тохирох name → id map байх шаардлагатай)
+            $organization = \App\Models\Organization::where('name', $item->organization_name)->first();
+            $orgId = $organization?->id;
+
+            $item->resolved_transferred = $resolvedTransferred[$orgId] ?? 0;
+            $item->resolved_not_transferred = $resolvedNotTransferred[$orgId] ?? 0;
+            $item->resolved_total = $item->resolved_transferred + $item->resolved_not_transferred;
+
+            return $item;
+        });
 
 
         $energy_types = EnergyType::all();

@@ -428,6 +428,10 @@
                             <th class="px-4 py-2 border text-center" colspan="{{ count($complaint_type_summaries) }}">
                                 Гомдлын ангилал</th>
                             <th class="px-4 py-2 border" rowspan="2">Ангилал Нийт</th>
+                            <th class="px-4 py-2 border" rowspan="2">Шийдвэрлэсэн (ЭХЗХ-оос шилжүүлсэн)</th>
+                            <th class="px-4 py-2 border" rowspan="2">Шийдвэрлэсэн (ТЗЭ-чид ирсэн)</th>
+                            <th class="px-4 py-2 border" rowspan="2">Шийдвэрлэсэн Нийт</th>
+                            <th class="px-4 py-2 border" rowspan="2">Хувь</th>
                         </tr>
                         <tr class="bg-gray-100 text-gray-600 text-xs text-center">
                             @for ($i = 1; $i <= 10; $i++)
@@ -467,6 +471,16 @@
                                     @endphp
                                 @endforeach
                                 <td class="px-2 py-2 border font-bold text-indigo-700">{{ $categoryTotal }}</td>
+                                <td>{{ $row->resolved_not_transferred }}</td>
+                                <td>{{ $row->resolved_transferred }}</td>
+                                <td>{{ $row->resolved_total }}</td>
+                                <td>
+                                    @if ($row->total_channel > 0)
+                                        {{ number_format(($row->resolved_total * 100) / $row->total_channel, 1) }}%
+                                    @else
+                                        0%
+                                    @endif
+                                </td>
                             </tr>
                         @empty
                             <tr>
